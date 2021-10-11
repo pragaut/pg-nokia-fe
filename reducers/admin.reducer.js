@@ -12,6 +12,11 @@ const initialState = {
     groups: undefined,
     groupRecordsCount: 0,
 
+    orgRelationTypeActiontype: actions.GROUPMASTER_INIT,
+    orgRelationType: undefined,
+    orgRelationTypes: undefined,
+    orgRelationTypeRecordsCount: 0,
+
     moduleActiontype: actions.MODULEMASTER_INIT,
     module: undefined,
     modules: undefined,
@@ -180,6 +185,59 @@ const adminReducer = (state, action) => {
                 groups: state.groups,
                 groupActiontype: action.type,
                 groupRecordsCount: state.recordsCount,
+
+                type: action.type,
+            };
+
+        //#endregion 
+
+         //#region  Org Relation Type Reducer
+         case actions.ORGRELATIONTYPEMASTER_LIST_SUCCESS:
+            return {
+                orgRelationType: state.orgRelationType,
+                orgRelationTypes: action.data,
+                orgRelationType: action.type,
+                orgRelationTypeRecordsCount: action.recordsCount,
+
+                type: action.type,
+            };
+
+        case actions.ORGRELATIONTYPEMASTER_GET_BY_ID_SUCCESS:
+            return {
+                orgRelationTypes: state.orgRelationTypes,
+                orgRelationType: action.data,
+                orgRelationTypeActiontype: action.type,
+                orgRelationTypeRecordsCount: state.recordsCount,
+
+                type: action.type,
+            };
+
+        case actions.ORGRELATIONTYPEMASTER_SAVE_SUCCESS:
+            return {
+                orgRelationType: action.data,
+                orgRelationTypes: state.orgRelationTypes,
+                orgRelationType: action.type,
+                orgRelationTypeRecordsCount: state.recordsCount,
+
+                type: action.type,
+            };
+
+        case actions.ORGRELATIONTYPEMASTER_DELETE_SUCCESS:
+            return {
+                orgRelationType: state.data,
+                orgRelationTypes: state.orgRelationTypes,
+                orgRelationTypeActiontype: action.type,
+                orgRelationTypeRecordsCount: state.recordsCount,
+
+                type: action.type,
+            };
+
+        case actions.ORGRELATIONTYPEMASTER_INIT:
+            return {
+                orgRelationType: state.orgRelationType,
+                orgRelationTypes: state.orgRelationTypes,
+                orgRelationTypeActiontype: action.type,
+                orgRelationTypeRecordsCount: state.recordsCount,
 
                 type: action.type,
             };

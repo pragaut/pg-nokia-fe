@@ -31,7 +31,6 @@ const dispatchAction = (dispatch, type, data, error, message, recordsCount) => {
 export const initGroupMaster = () => dispatch => {
     dispatchAction(dispatch, adminTypes.GROUPMASTER_INIT, null, null, null, null);
 };
-
 export const saveGroupMasterData = groupMaster => async dispatch => {
     //  dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
@@ -61,11 +60,9 @@ export const saveGroupMasterData = groupMaster => async dispatch => {
         dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
     }
 };
-
-
-export const getGroupMasterDataById = (group_id) => async dispatch => {
+export const getGroupMasterDataById = (id) => async dispatch => {
     try {
-        let url = config.AUTH_URL + `tmc/admin/groupMaster?group_id=${group_id}`;
+        let url = config.AUTH_URL + `tmc/admin/groupMaster?id=${id}`;
         const data = await service.get(url, true);
         if (data && !data.errorMessage) {
             //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
@@ -82,7 +79,6 @@ export const getGroupMasterDataById = (group_id) => async dispatch => {
     }
 
 };
-
 export const getGroupMasterData = (pageIndex, rowsToReturn, order, where) => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
@@ -110,7 +106,6 @@ export const getGroupMasterData = (pageIndex, rowsToReturn, order, where) => asy
         dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
     }
 };
-
 export const deleteGroupMasterData = id => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
@@ -138,6 +133,115 @@ export const deleteGroupMasterData = id => async dispatch => {
         dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
     }
 };
+//#endregion
+
+//#region Org Relation Type Master
+
+export const initOrgRelationTypeMaster = () => dispatch => {
+    dispatchAction(dispatch, adminTypes.ORGRELATIONTYPEMASTER_INIT, null, null, null, null);
+};
+export const saveOrgRelationTypeMasterData = OrgRelationTypeMaster => async dispatch => {
+    //  dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
+    try {
+        let url = config.AUTH_URL + `tmc/admin/orgRelationTypeMaster/`;
+        const data = (typeof OrgRelationTypeMaster.id === 'undefined' || OrgRelationTypeMaster.id === -1) ? await service.post(url, OrgRelationTypeMaster, true)
+            : await service.put(url, OrgRelationTypeMaster, true);
+
+        if (data && !data.errorMessage) {
+
+
+            dispatchAction(dispatch, adminTypes.ORGRELATIONTYPEMASTER_SAVE_SUCCESS, OrgRelationTypeMaster, null, data.message, null);
+
+            dispatch({
+                type: commonTypes.NOTIFICATION_SHOW,
+                message: 'Org relation type master updated successfully',
+                error: undefined,
+                notification: true
+            });
+        }
+        else {
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Org Relation Type Master error'), null, null);
+        }
+    }
+    catch (error) {
+        //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+    }
+};
+export const getOrgRelationTypeMasterDataById = (id) => async dispatch => {
+    try {
+        let url = config.AUTH_URL + `tmc/admin/orgRelationTypeMaster?id=${id}`;
+        const data = await service.get(url, true);
+        if (data && !data.errorMessage) {
+            //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+            dispatchAction(dispatch, adminTypes.ORGRELATIONTYPEMASTER_GET_BY_ID_SUCCESS, data.data, null, data.message, null);
+        }
+        else {
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Org Relation Type Master error'), null, null);
+        }
+    }
+    catch (error) {
+        console.error('error: ', error);
+        //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+    }
+
+};
+export const getOrgRelationTypeMasterData = (pageIndex, rowsToReturn, order, where) => async dispatch => {
+    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
+    try {
+        let url = config.AUTH_URL + `tmc/admin/orgRelationTypeMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
+
+        if (order && order.length > 0) {
+            url = url + `&order=${JSON.stringify(order)}`;
+        }
+
+        if (order && order.length > 0) {
+            url = url + `&where=${JSON.stringify(where)}`;
+        }
+        const data = await service.get(url, true);
+        console.log("Org Relation Type Master : ", data)
+        if (data && !data.errorMessage) {
+            //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+            dispatchAction(dispatch, adminTypes.ORGRELATIONTYPEMASTER_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
+        }
+        else {
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Org Relation Type Master error'), null, null);
+        }
+    }
+    catch (error) {
+        console.error('error: ', error);
+        //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+    }
+};
+export const deleteOrgRelationTypeMasterData = id => async dispatch => {
+    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
+    try {
+        let url = config.AUTH_URL + `tmc/admin/orgRelationTypeMaster`;
+
+        const data = await service._delete(url + '?id=' + id, true);
+
+        if (data && !data.errorMessage) {
+            dispatchAction(dispatch, adminTypes.ORGRELATIONTYPEMASTER_DELETE_SUCCESS, null, null, null, data.message);
+
+            setTimeout(() =>
+                dispatch({
+                    type: commonTypes.NOTIFICATION_SHOW,
+                    message: 'Org Relation Type Master(s) deleted successfully',
+                    error: undefined,
+                    notification: true
+                }), 500);
+        }
+        else {
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Org Relation Type Master Error'), null, null);
+        }
+    }
+    catch (error) {
+        //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+    }
+};
 
 //#endregion
 
@@ -146,7 +250,6 @@ export const deleteGroupMasterData = id => async dispatch => {
 export const initModuleMaster = () => dispatch => {
     dispatchAction(dispatch, adminTypes.MODULEMASTER_INIT, null, null, null, null);
 };
-
 export const saveModuleMasterData = moduleMaster => async dispatch => {
     //  dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
@@ -176,8 +279,6 @@ export const saveModuleMasterData = moduleMaster => async dispatch => {
         dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
     }
 };
-
-
 export const getModuleMasterDataById = (id) => async dispatch => {
     try {
         let url = config.AUTH_URL + `audit/admin/moduleMaster?id=${id}`;
@@ -197,7 +298,6 @@ export const getModuleMasterDataById = (id) => async dispatch => {
     }
 
 };
-
 export const getModuleMasterData = (pageIndex, rowsToReturn, order, where) => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
@@ -225,7 +325,6 @@ export const getModuleMasterData = (pageIndex, rowsToReturn, order, where) => as
         dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
     }
 };
-
 export const getModuleMasterByGroupId = (id) => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null); 
     try {
@@ -247,7 +346,6 @@ export const getModuleMasterByGroupId = (id) => async dispatch => {
         dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
     }
 };
-
 export const deleteModuleMasterData = moduleMasterId => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
