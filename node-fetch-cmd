@@ -1,0 +1,6 @@
+cd node_modules
+sudo rm -r node-fetch
+cd ..
+sudo cp -r node-fetch node_modules/node-fetch
+sudo npm run build
+sudo pm2 restart 0

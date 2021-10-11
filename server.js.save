@@ -1,0 +1,320 @@
+const next = require('next');
+const dev = process.env.MODE !== 'production';
+const app = next({ dev: false }) //true for development server and false for production server
+const fs = require('fs');   
+
+const express = require('express');
+const fetch = require('node-fetch');
+
+const handle = app.getRequestHandler();
+
+//const site_url = 'https://thebigstack.com';
+
+
+app.prepare()
+	.then(() => {
+		const server = express();
+	  
+
+		const render = (req, res, pageName) => {
+			app.render(req, res, '/', {
+				page: pageName,
+				query: {
+					tab: '',
+					id: '',
+					pageName: ''
+				}
+			})
+		}
+
+		server.get('/robots.txt', (req, res) => {
+			res.type('text/plain');
+
+			// if (process.env.SITE_ALLOW === 'y') {
+			// 	const robotsText = fs.readFileSync('prod.robots.txt');
+			// 	res.send(robotsText);
+			// }
+			// else {
+			// 	const robotsText = fs.readFileSync('staging.robots.txt');
+			// 	res.send(robotsText);
+			// }
+		});
+
+
+		server.get('/sitemap.xml', (req, res) => {
+			let data;
+			const staticRoutes = [
+				{
+					url: {
+						loc: site_url + '/',
+					},
+				},
+				{
+					url: {
+						loc: site_url + '/About',
+					},
+				},
+				{
+					url: {
+						loc: site_url + '/contact-us',
+					},
+				},
+				{
+					url: {
+						loc: site_url + '/privacy-policy',
+					},
+				},
+			];
+
+			const apiURL = process.env.MODE === 'production' ? 'https://Reconcilation.api.prod.anandgroup.com/' : 'http://localhost:36224/';
+
+			const jsonxml = obj => {
+				const items = obj.urlset.map(o => {
+					return `<url><loc>${o.url.loc}</loc></url> \n`;
+				});
+
+				return items.join('\n');
+			};
+
+		});
+
+		server.get('/switch-role', (req, res) => {
+			const q = req.query;
+			return app.render(req, res, '/switchRole', {
+				page: 'switchRole',
+				...q,
+			});
+		});
+		server.get('/my-account', (req, res) => {
+			const q = req.query;
+			return app.render(req, res, '/switchRole', {
+				page: 'switchRole',
+				...q,
+			});
+		});
+
+		server.get('/admin/voucherType', (req, res) => {
+			const q = req.query;
+
+			//console.log("Query voucherType", q);
+			return app.render(req, res, '/admin', {
+				page: 'voucherType',
+				...q,
+			});
+		});
+
+		server.get('/master-category', (req, res) => {
+			return app.render(req, res, '/admin', {
+				page: 'master-category'
+			});
+		});
+		server.get('/admin/master-category', (req, res) => {
+			return app.render(req, res, '/admin', {
+				page: 'master-category'
+			});
+		});
+		server.get('/admin/group-master', (req, res) => {
+			return app.render(req, res, '/admin', {
+				page: 'group-master'
+			});
+		});
+		server.get('/admin/module-master', (req, res) => {
+			return app.render(req, res, '/admin', {
+				page: 'module-master'
+			});
+		});
+		server.get('/admin/role-master', (req, res) => {
+			return app.render(req, res, '/admin', {
+				page: 'role-master'
+			});
+		});
+		server.get('/admin/group-company', (req, res) => {
+			return app.render(req, res, '/admin', {
+				page: 'group-company'
+			});
+		});
+		server.get('/admin/company-plant', (req, res) => {
+			const q = req.query;
+			return app.render(req, res, '/admin', {
+				page: 'company-plant',
+				...q,
+			});
+		});
+		server.get('/admin/user-master', (req, res) => {
+			return app.render(req, res, '/admin', {
+				page: 'user-master'
+			});
+		});
+		server.get('/subAdmin/user-master', (req, res) => {
+			return app.render(req, res, '/subAdmin', {
+				page: 'user-master'
+			});
+		});
+		server.get('/admin/dueDays-master', (req, res) => {
+			return app.render(req, res, '/admin', {
+				page: 'dueDays-master'
+			});
+		});
+
+		server.get('/admin/country', (req, res) => {
+			return app.render(req, res, '/admin', {
+				page: 'country'
+			});
+		});
+		server.get('/admin/state', (req, res) => {
+			return app.render(req, res, '/admin', {
+				page: 'state'
+			});
+		});
+		server.get('/admin/department', (req, res) => {
+			return app.render(req, res, '/admin', {
+				page: 'department'
+			});
+		});
+		server.get('/invoice-details', (req, res) => {
+			return app.render(req, res, '/anchor', {
+				page: 'invoice-details'
+			});
+		});
+		server.get('/anchor/invoice-details', (req, res) => {
+			return app.render(req, res, '/anchor', {
+				page: 'invoice-details',
+				tab: 'invoice-details',
+				section:'working',
+				query:{
+					tab: 'invoice-details',
+					id: undefined,
+					pageName: 'Invoice Details'
+				}
+			});
+		});
+		server.get('/anchor/accept-invoice', (req, res) => {
+			const q = req.query;
+			return app.render(req, res, '/anchor', {
+				page: 'accept-invoice',
+				tab: 'accept-invoice',
+				section:'working',
+				...q,
+			});
+		});
+		server.get('/anchor/update-invoice-acceptance', (req, res) => {
+			const q = req.query;
+			return app.render(req, res, '/anchor', {
+				page: 'update-invoice-acceptance',
+				tab: 'update-invoice-acceptance',
+				section:'working',
+				...q,
+			});
+		});
+		server.get('/anchor/pending-payment-invoice', (req, res) => {
+			const q = req.query;
+			return app.render(req, res, '/anchor', {
+				page: 'pending-payment-invoice',
+				tab: 'pending-payment-invoice',
+				section:'working',
+				...q,
+			});
+		});
+		server.get('/anchor/upload-invoice-document', (req, res) => {
+			const q = req.query;
+			return app.render(req, res, '/anchor', {
+				page: 'upload-invoice-document',
+				tab: 'upload-invoice-document',
+				section:'working',
+				...q,
+			});
+		});
+		server.get('/anchor/not-accepted-invoice', (req, res) => {
+			const q = req.query;
+			return app.render(req, res, '/anchor', {
+				page: 'not-accepted-invoice',
+				tab: 'not-accepted-invoice',
+				section:'working',
+				...q,
+			});
+		});
+		server.get('/anchor/invoice-payment-details', (req, res) => {
+			const q = req.query;
+			return app.render(req, res, '/anchor', {
+				page: 'invoice-payment-details',
+				tab: 'invoice-payment-details',
+				section:'working',
+				...q,
+			});
+		});
+		server.get('/anchor/update-invoice-payment', (req, res) => {
+			const q = req.query;
+			return app.render(req, res, '/anchor', {
+				page: 'update-invoice-payment',
+				tab: 'update-invoice-payment',
+				section:'working',
+				...q,
+			});
+		});
+		server.get('/anchor/upload-payment-document', (req, res) => {
+			const q = req.query;
+			return app.render(req, res, '/anchor', {
+				page: 'upload-payment-document',
+				tab: 'upload-payment-document',
+				section:'working',
+				...q,
+			});
+		});
+		server.get('/anchor/update-invoice-knockoff', (req, res) => {
+			const q = req.query;
+			return app.render(req, res, '/anchor', {
+				page: 'update-invoice-knockoff',
+				tab: 'update-invoice-knockoff',
+				section:'working',
+				...q,
+			});
+		});
+		server.get('/management/invoice-status-count', (req, res) => {
+			const q = req.query;
+			return app.render(req, res, '/management', {
+				page: 'invoice-status-count',
+				tab: 'invoice-status-count',
+				section:'reports',
+				...q,
+			});
+		});
+		server.get('/management/reconcilition-report', (req, res) => {
+			const q = req.query;
+			return app.render(req, res, '/management', {
+				page: 'reconcilition-report',
+				tab: 'reconcilition-report',
+				section:'reports',
+				...q,
+			});
+		});
+		server.get('/anchor/invoice-status-count', (req, res) => {
+			const q = req.query;
+			return app.render(req, res, '/anchor', {
+				page: 'invoice-status-count',
+				tab: 'invoice-status-count',
+				section:'dashboard',
+				...q,
+			});
+		});
+		server.get('/anchor/reconcilition-report', (req, res) => {
+			const q = req.query;
+			return app.render(req, res, '/anchor', {
+				page: 'reconcilition-report',
+				tab: 'reconcilition-report',
+				section:'dashboard',
+				...q,
+			});
+		});
+		server.get('*', (req, res, err) => {
+			return handle(req, res)
+		});
+
+		server.listen(process.env.PORT, (err) => {
+			if (err) throw err
+			console.log('> Ready on http://localhost:' + process.env.PORT + " MODE " + process.env.MODE);
+		});
+	})
+	.catch((ex) => {
+		console.error(ex.stack)
+		process.exit(1)
+	});
