@@ -19,7 +19,7 @@ class banner extends Wrapper {
             <div >
                 <CommonStyle.DivWithBgImage
                     backgroundimage="../../static/Banner_Image_01.jpg"
-                    padding={small ? "0px 20px" : "0px 60px"}
+                    padding={small ? "0px 20px" : "123px 60px"}
                     flexdirection="row"
                 >
                     <CommonStyle.MainDiv

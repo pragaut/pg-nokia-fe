@@ -140,6 +140,23 @@ app.prepare()
 				}
 			});
 		});
+		
+		server.get('/admin/alarmType-master', (req, res) => {
+			const q = req.query;
+			q.tab = 'alarmType-master';
+			q.pathname = 'alarmType-master';
+			q.pageName = 'Alarm Type Master';
+			q.MasterName = 'Alarm Type Master';
+			return app.render(req, res, '/admin', {
+				page: q.pageName,
+				MasterName: q.MasterName,
+				tab: q.tab,
+				section: 'master',
+				query: {
+					...q
+				}
+			});
+		});
 		server.get('/admin/module-master', (req, res) => {
 			const q = req.query;
 			q.tab = 'module-master';
@@ -188,6 +205,7 @@ app.prepare()
 				}
 			});
 		});
+
 		server.get('/admin/company-plant', (req, res) => {
 			const q = req.query;
 			q.tab = 'company-plant';

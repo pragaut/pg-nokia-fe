@@ -12,6 +12,11 @@ const initialState = {
     groups: undefined,
     groupRecordsCount: 0,
 
+    alarmActiontype: actions.ALARMTYPEMASTER_INIT,
+    alarm: undefined,
+    alarms: undefined,
+    alarmRecordsCount: 0,
+
     moduleActiontype: actions.MODULEMASTER_INIT,
     module: undefined,
     modules: undefined,
@@ -185,6 +190,59 @@ const adminReducer = (state, action) => {
             };
 
         //#endregion 
+
+        //#region  Alarm Type Master Reducer
+        case actions.ALARMTYPEMASTER_LIST_SUCCESS:
+            return {
+                alarm: state.alarm,
+                alarms: action.data,
+                alarmActiontype: action.type,
+                alarmRecordsCount: action.recordsCount,
+
+                type: action.type,
+            };
+
+        case actions.ALARMTYPEMASTER_GET_BY_ID_SUCCESS:
+            return {
+                alarms: state.alarmRecordsCount,
+                alarm: action.data,
+                alarmActiontype: action.type,
+                alarmRecordsCount: state.recordsCount,
+
+                type: action.type,
+            };
+
+        case actions.ALARMTYPEMASTER_SAVE_SUCCESS:
+            return {
+                alarm: action.data,
+                alarms: state.alarms,
+                alarmActiontype: action.type,
+                alarmRecordsCount: state.recordsCount,
+
+                type: action.type,
+            };
+
+        case actions.ALARMTYPEMASTER_DELETE_SUCCESS:
+            return {
+                alarm: state.data,
+                alarms: state.alarms,
+                alarmActiontype: action.type,
+                alarmRecordsCount: state.recordsCount,
+
+                type: action.type,
+            };
+
+        case actions.ALARMTYPEMASTER_INIT:
+            return {
+                alarm: state.alarm,
+                alarms: state.alarms,
+                alarmActiontype: action.type,
+                alarmRecordsCount: state.recordsCount,
+
+                type: action.type,
+            };
+
+        //#endregion
 
         //#region Module Master Reducer
         case actions.MODULEMASTER_LIST_SUCCESS:
@@ -1469,6 +1527,11 @@ const adminReducer = (state, action) => {
                 groups: state.groups,
                 groupActiontype: state.groupActiontype,
                 groupRecordsCount: state.groupRecordsCount,
+
+                alarm: state.alarm,
+                alarms: state.alarms,
+                alarmActiontype: state.alarmActiontype,
+                alarmRecordsCount: state.alarmRecordsCount,
 
                 module: state.module,
                 modules: state.modules,
