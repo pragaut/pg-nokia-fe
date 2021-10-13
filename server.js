@@ -140,6 +140,38 @@ app.prepare()
 				}
 			});
 		});
+		server.get('/admin/org-relation-type-master', (req, res) => {
+			const q = req.query;
+			q.tab = 'org-relation-type-master';
+			q.pathname = 'org-relation-type-master';
+			q.pageName = 'Org Relation Type Master';
+			q.MasterName = 'Org Relation Type Master';
+			return app.render(req, res, '/admin', {
+				page: q.pageName,
+				MasterName: q.MasterName,
+				tab: q.tab,
+				section: 'master',
+				query: {
+					...q
+				}
+			});
+		});
+		server.get('/admin/organisation-details', (req, res) => {
+			const q = req.query;
+			q.tab = 'organisation-details';
+			q.pathname = 'organisation-details';
+			q.pageName = 'Organisation Details';
+			q.MasterName = 'Organisation Details';
+			return app.render(req, res, '/admin', {
+				page: q.pageName,
+				MasterName: q.MasterName,
+				tab: q.tab,
+				section: 'master',
+				query: {
+					...q
+				}
+			});
+		});
 		
 		server.get('/admin/alarm-type-master', (req, res) => {
 			const q = req.query;

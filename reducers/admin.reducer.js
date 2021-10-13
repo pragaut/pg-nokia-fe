@@ -22,6 +22,31 @@ const initialState = {
     orgRelationTypes: undefined,
     orgRelationTypeRecordsCount: 0,
 
+    countryActiontype: actions.COUNTRYMASTER_INIT,
+    country: undefined,
+    countrys: undefined,
+    countryRecordsCount: 0,
+
+    stateActiontype: actions.STATEMASTER_INIT,
+    state: undefined,
+    states: undefined,
+    stateRecordsCount: 0,
+
+    cityActiontype: actions.CITYMASTER_INIT,
+    city: undefined,
+    citys: undefined,
+    cityRecordsCount: 0,
+
+    genderActiontype: actions.GENDERMASTER_INIT,
+    gender: undefined,
+    genders: undefined,
+    genderRecordsCount: 0,
+
+    organisationActiontype: actions.ORGANISATIONDETAILS_INIT,
+    organisation: undefined,
+    organisations: undefined,
+    organisationRecordsCount: 0,
+
     moduleActiontype: actions.MODULEMASTER_INIT,
     module: undefined,
     modules: undefined,
@@ -342,6 +367,187 @@ const adminReducer = (state, action) => {
         //#endregion 
 
         
+        //#region  Country Master Reducer
+        case actions.COUNTRYMASTER_LIST_SUCCESS:
+            return {
+                country: state.country,
+                countrys: action.data,
+                country: action.type,
+                countryRecordsCount: action.recordsCount,
+
+                type: action.type,
+            };
+
+        //#endregion 
+
+        //#region  State Master Reducer
+        case actions.STATEMASTER_LIST_SUCCESS:
+            return {
+                state: state.state,
+                states: action.data,
+                state: action.type,
+                stateRecordsCount: action.recordsCount,
+
+                type: action.type,
+            };
+
+        //#endregion 
+
+        //#region  City Master Reducer
+        case actions.CITYMASTER_LIST_SUCCESS:
+            return {
+                city: state.city,
+                citys: action.data,
+                city: action.type,
+                cityRecordsCount: action.recordsCount,
+
+                type: action.type,
+            };
+
+        //#endregion 
+
+        //#region  Gender Master Reducer
+        case actions.GENDERMASTER_LIST_SUCCESS:
+            return {
+                gender: state.gender,
+                genders: action.data,
+                gender: action.type,
+                genderRecordsCount: action.recordsCount,
+
+                type: action.type,
+            };
+
+        //#endregion 
+
+
+        //#region Module Master Reducer
+        case actions.ORGANISATIONDETAILS_LIST_SUCCESS:
+            return {
+                organisation: state.organisation,
+                organisations: action.data,
+                organisationActiontype: action.type,
+                organisationRecordsCount: action.recordsCount,
+
+                type: action.type,
+            };
+        case actions.ORGANISATIONDETAILS_GET_BY_ID_SUCCESS:
+            return {
+                organisations: state.organisations,
+                organisation: action.data,
+                organisationActiontype: action.type,
+                organisationRecordsCount: state.recordsCount,
+
+                type: action.type,
+            };
+        case actions.ORGANISATIONDETAILS_GET_BY_GROUPID_SUCCESS:
+            return {
+                organisations: state.organisations,
+                organisation: action.data,
+                organisationActiontype: action.type,
+                organisationRecordsCount: state.recordsCount,
+
+                type: action.type,
+            };
+        case actions.ORGANISATIONDETAILS_GET_BY_ORGRELATIONTYPEID_SUCCESS:
+            return {
+                organisations: state.organisations,
+                organisation: action.data,
+                organisationActiontype: action.type,
+                organisationRecordsCount: state.recordsCount,
+
+                type: action.type,
+            };
+        case actions.ORGANISATIONDETAILS_SAVE_SUCCESS:
+            return {
+                organisation: action.data,
+                organisations: state.organisations,
+                organisationActiontype: action.type,
+                organisationRecordsCount: state.recordsCount,
+
+                type: action.type,
+            };
+        case actions.ORGANISATIONDETAILS_DELETE_SUCCESS:
+            return {
+                organisation: state.data,
+                organisations: state.organisations,
+                organisationActiontype: action.type,
+                organisationRecordsCount: state.recordsCount,
+
+                type: action.type,
+            };
+        case actions.ORGANISATIONDETAILS_INIT:
+            return {
+                organisation: state.organisation,
+                organisations: state.organisations,
+                organisationActiontype: action.type,
+                organisationRecordsCount: state.recordsCount,
+
+                type: action.type,
+            };
+        //#endregion
+
+
+        //#region Module Master Reducer
+        case actions.MODULEMASTER_LIST_SUCCESS:
+            return {
+                module: state.module,
+                modules: action.data,
+                moduleActiontype: action.type,
+                moduleRecordsCount: action.recordsCount,
+
+                type: action.type,
+            };
+
+        case actions.MODULEMASTER_GET_BY_ID_SUCCESS:
+            return {
+                modules: state.modules,
+                module: action.data,
+                moduleActiontype: action.type,
+                moduleRecordsCount: state.recordsCount,
+
+                type: action.type,
+            };
+
+        case actions.MODULEMASTER_GET_BY_GROUPID_SUCCESS:
+            return {
+                module: state.module,
+                modules: action.data,
+                moduleActiontype: action.type,
+                moduleRecordsCount: action.recordsCount,
+
+                type: action.type,
+            };
+
+        case actions.MODULEMASTER_SAVE_SUCCESS:
+            return {
+                module: action.data,
+                modules: state.modules,
+                moduleActiontype: action.type,
+                moduleRecordsCount: state.recordsCount,
+
+                type: action.type,
+            };
+
+        case actions.MODULEMASTER_DELETE_SUCCESS:
+            return {
+                module: state.data,
+                modules: state.modules,
+                moduleActiontype: action.type,
+                moduleRecordsCount: state.recordsCount,
+
+                type: action.type,
+            };
+
+        case actions.MODULEMASTER_INIT:
+            return {
+                module: state.module,
+                modules: state.modules,
+                moduleActiontype: action.type,
+                moduleRecordsCount: state.recordsCount,
+
+                type: action.type,
+            };
+        //#endregion
 
         //#region Role Master Reducer
         case actions.ROLEMASTER_LIST_SUCCESS:
@@ -1565,6 +1771,30 @@ const adminReducer = (state, action) => {
                 groupActiontype: state.groupActiontype,
                 groupRecordsCount: state.groupRecordsCount,
 
+                orgRelationType: state.orgRelationType,
+                orgRelationTypes: state.orgRelationTypes,
+                orgRelationType: state.orgRelationTypeActiontype,
+                orgRelationTypeRecordsCount: state.orgRelationTypeRecordsCount,
+
+                country: state.country,
+                countrys: state.countrys,
+                countryActiontype: state.countryActiontype,
+                countryRecordsCount: state.countryRecordsCount,
+
+                state: state.state,
+                states: state.states,
+                stateryActiontype: state.stateActiontype,
+                stateRecordsCount: state.stateRecordsCount,
+
+                city: state.city,
+                citys: state.citys,
+                cityActiontype: state.cityActiontype,
+                cityRecordsCount: state.cityRecordsCount,
+
+                gender: state.gender,
+                genders: state.genders,
+                genderActiontype: state.genderActiontype,
+                genderRecordsCount: state.genderRecordsCount,
                 alarm: state.alarm,
                 alarms: state.alarms,
                 alarmActiontype: state.alarmActiontype,

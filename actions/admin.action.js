@@ -640,7 +640,6 @@ export const getYearMasterData = (pageIndex, rowsToReturn, order, where) => asyn
         dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
     }
 };
-
 //#endregion
 
 //#region Role Master
@@ -1465,555 +1464,6 @@ export const deleteNotificationMasterDetails = id => async dispatch => {
 
 //#endregion
 
-//#region  Escalation Matrix Master
-
-export const initEscalationMatrixDetails = () => dispatch => {
-    dispatchAction(dispatch, adminTypes.ESCALATIONMATRIXDETAILS_INIT, null, null, null, null);
-};
-
-export const saveEscalationMatrixDetails = escalationMatrix => async dispatch => {
-    //  dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/escalationmatrix/`;
-
-        const data = (typeof escalationMatrix.id === 'undefined' || escalationMatrix.id === -1) ? await service.post(url, escalationMatrix, true)
-            : await service.put(url, escalationMatrix, true);
-
-        if (data && !data.errorMessage) {
-
-            //if (typeof escalationMatrix.id === 'undefined') escalationMatrix.id = data.data.id;
-
-            dispatchAction(dispatch, adminTypes.ESCALATIONMATRIXDETAILS_SAVE_SUCCESS, escalationMatrix, null, data.message, null);
-
-            dispatch({
-                type: commonTypes.NOTIFICATION_SHOW,
-                message: 'Escalation Matrix Details  updated successfully',
-                error: undefined,
-                notification: true
-            });
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'DueDays Master error'), null, null);
-        }
-    }
-    catch (error) {
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-
-export const getEscalationMatrixDetails = (pageIndex, rowsToReturn, order, where) => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/escalationmatrix?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
-
-        if (order && order.length > 0) {
-            url = url + `&order=${JSON.stringify(order)}`;
-        }
-
-        if (order && order.length > 0) {
-            url = url + `&where=${JSON.stringify(where)}`;
-        }
-        const data = await service.get(url, true);
-        if (data && !data.errorMessage) {
-            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-            dispatchAction(dispatch, adminTypes.ESCALATIONMATRIXDETAILS_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'DueDays Master error'), null, null);
-        }
-    }
-    catch (error) {
-        console.error('error: ', error);
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-
-
-
-export const getEscalationMatrixDetailsById = (id) => async dispatch => {
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/escalationmatrix?id=${id}`;
-        const data = await service.get(url, true);
-        if (data && !data.errorMessage) {
-            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-            dispatchAction(dispatch, adminTypes.ESCALATIONMATRIXDETAILS_GET_BY_ID_SUCCESS, data.data, null, data.message, null);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Notification Master error'), null, null);
-        }
-    }
-    catch (error) {
-        console.error('error: ', error);
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-
-export const deleteEscalationMatrixDetails = id => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/escalationmatrix`;
-
-        const data = await service._delete(url + '?id=' + id, true);
-
-        if (data && !data.errorMessage) {
-            dispatchAction(dispatch, adminTypes.ESCALATIONMATRIXDETAILS_DELETE_SUCCESS, null, null, null, data.message);
-
-            setTimeout(() =>
-                dispatch({
-                    type: commonTypes.NOTIFICATION_SHOW,
-                    message: 'Escalation Matrix Details (s) deleted successfully',
-                    error: undefined,
-                    notification: true
-                }), 500);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'DueDays Master error'), null, null);
-        }
-    }
-    catch (error) {
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-
-//#endregion
-
-//#region  Escalation Duration Master
-
-export const initEscalationDurationDetails = () => dispatch => {
-    dispatchAction(dispatch, adminTypes.ESCALATIONDURATIONDETAILS_INIT, null, null, null, null);
-};
-
-export const saveEscalationDurationDetails = escalationDuration => async dispatch => {
-    //  dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/escalationDuration/`;
-
-        const data = (typeof escalationDuration.id === 'undefined' || escalationDuration.id === -1) ? await service.post(url, escalationDuration, true)
-            : await service.put(url, escalationDuration, true);
-
-        if (data && !data.errorMessage) {
-
-            //if (typeof escalationDuration.id === 'undefined') escalationDuration.id = data.data.id;
-
-            dispatchAction(dispatch, adminTypes.ESCALATIONDURATIONDETAILS_SAVE_SUCCESS, escalationDuration, null, data.message, null);
-
-            dispatch({
-                type: commonTypes.NOTIFICATION_SHOW,
-                message: 'Escalation Duration Details  updated successfully',
-                error: undefined,
-                notification: true
-            });
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'DueDays Master error'), null, null);
-        }
-    }
-    catch (error) {
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-
-export const getEscalationDurationDetails = (pageIndex, rowsToReturn, order, where) => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/escalationDuration?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
-
-        if (order && order.length > 0) {
-            url = url + `&order=${JSON.stringify(order)}`;
-        }
-
-        if (order && order.length > 0) {
-            url = url + `&where=${JSON.stringify(where)}`;
-        }
-        const data = await service.get(url, true);
-        if (data && !data.errorMessage) {
-            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-            dispatchAction(dispatch, adminTypes.ESCALATIONDURATIONDETAILS_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'DueDays Master error'), null, null);
-        }
-    }
-    catch (error) {
-        console.error('error: ', error);
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-
-export const getEscalationMatrixDurationById = (id) => async dispatch => {
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/escalationDuration?id=${id}`;
-        const data = await service.get(url, true);
-        if (data && !data.errorMessage) {
-            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-            dispatchAction(dispatch, adminTypes.ESCALATIONDURATIONDETAILS_GET_BY_ID_SUCCESS, data.data, null, data.message, null);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Notification Master error'), null, null);
-        }
-    }
-    catch (error) {
-        console.error('error: ', error);
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-
-export const deleteEscalationDurationDetails = id => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/escalationDuration`;
-
-        const data = await service._delete(url + '?id=' + id, true);
-
-        if (data && !data.errorMessage) {
-            dispatchAction(dispatch, adminTypes.ESCALATIONDURATIONDETAILS_DELETE_SUCCESS, null, null, null, data.message);
-
-            setTimeout(() =>
-                dispatch({
-                    type: commonTypes.NOTIFICATION_SHOW,
-                    message: 'Escalation Duration Details (s) deleted successfully',
-                    error: undefined,
-                    notification: true
-                }), 500);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'DueDays Master error'), null, null);
-        }
-    }
-    catch (error) {
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-
-//#endregion
-
-//#region  Escalation Duration Master
-
-export const initSupportingDocumentMaster = () => dispatch => {
-    dispatchAction(dispatch, adminTypes.SUPPORTINGDOCUMENTMASTER_INIT, null, null, null, null);
-};
-
-export const saveSupportingDocumentMaster = supportingDocumentMaster => async dispatch => {
-    //  dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/supportingDocumentMaster/`;
-
-        const data = (typeof supportingDocumentMaster.id === 'undefined' || supportingDocumentMaster.id === -1) ? await service.post(url, supportingDocumentMaster, true)
-            : await service.put(url, supportingDocumentMaster, true);
-
-        if (data && !data.errorMessage) {
-
-            //if (typeof supportingDocumentMaster.id === 'undefined') supportingDocumentMaster.id = data.data.id;
-
-            dispatchAction(dispatch, adminTypes.SUPPORTINGDOCUMENTMASTER_SAVE_SUCCESS, supportingDocumentMaster, null, data.message, null);
-
-            dispatch({
-                type: commonTypes.NOTIFICATION_SHOW,
-                message: 'Supporting Document Master  updated successfully',
-                error: undefined,
-                notification: true
-            });
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Supporting Document Master error'), null, null);
-        }
-    }
-    catch (error) {
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-
-export const getSupportingDocumentMaster = (pageIndex, rowsToReturn, order, where) => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/supportingDocumentMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
-
-        if (order && order.length > 0) {
-            url = url + `&order=${JSON.stringify(order)}`;
-        }
-
-        if (order && order.length > 0) {
-            url = url + `&where=${JSON.stringify(where)}`;
-        }
-        const data = await service.get(url, true);
-
-        if (data && !data.errorMessage) {
-            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-            dispatchAction(dispatch, adminTypes.SUPPORTINGDOCUMENTMASTER_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Supporting Document Master error'), null, null);
-        }
-    }
-    catch (error) {
-        console.error('error: ', error);
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-
-export const getSupportingDocumentMasterById = (id) => async dispatch => {
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/supportingDocumentMaster?id=${id}`;
-        const data = await service.get(url, true);
-        if (data && !data.errorMessage) {
-            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-            dispatchAction(dispatch, adminTypes.SUPPORTINGDOCUMENTMASTER_GET_BY_ID_SUCCESS, data.data, null, data.message, null);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Supporting Document Master error'), null, null);
-        }
-    }
-    catch (error) {
-        console.error('error: ', error);
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-
-export const deleteSupportingDocumentMaster = id => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/supportingDocumentMaster`;
-
-        const data = await service._delete(url + '?id=' + id, true);
-
-        if (data && !data.errorMessage) {
-            dispatchAction(dispatch, adminTypes.SUPPORTINGDOCUMENTMASTER_DELETE_SUCCESS, null, null, null, data.message);
-
-            setTimeout(() =>
-                dispatch({
-                    type: commonTypes.NOTIFICATION_SHOW,
-                    message: 'Supporting Document Master (s) deleted successfully',
-                    error: undefined,
-                    notification: true
-                }), 500);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Supporting Document Master error'), null, null);
-        }
-    }
-    catch (error) {
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-
-//#endregion
-
-//#region Due Days Master
-
-export const initDueDaysMaster = () => dispatch => {
-    dispatchAction(dispatch, adminTypes.DUEDAYSMASTER_INIT, null, null, null, null);
-};
-
-export const saveDueDaysMasterData = dueDaysMaster => async dispatch => {
-    //  dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/dueDaysMaster/`;
-        const data = (typeof dueDaysMaster.id === 'undefined' || dueDaysMaster.id === -1) ? await service.post(url, dueDaysMaster, true)
-            : await service.put(url, dueDaysMaster, true);
-
-        if (data && !data.errorMessage) {
-
-            //if (typeof dueDaysMaster.id === 'undefined') dueDaysMaster.id = data.data.id;
-
-            dispatchAction(dispatch, adminTypes.DUEDAYSMASTER_SAVE_SUCCESS, dueDaysMaster, null, data.message, null);
-
-            dispatch({
-                type: commonTypes.NOTIFICATION_SHOW,
-                message: 'Due Days Master updated successfully',
-                error: undefined,
-                notification: true
-            });
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'DueDays Master error'), null, null);
-        }
-    }
-    catch (error) {
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-
-
-export const getDueDaysMasterDataById = (id) => async dispatch => {
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/dueDaysMaster?id=${id}`;
-        const data = await service.get(url, true);
-        if (data && !data.errorMessage) {
-            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-            dispatchAction(dispatch, adminTypes.DUEDAYSMASTER_GET_BY_ID_SUCCESS, data.data, null, data.message, null);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'DueDays Master error'), null, null);
-        }
-    }
-    catch (error) {
-        console.error('error: ', error);
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-
-};
-
-export const getDueDaysMasterData = (pageIndex, rowsToReturn, order, where) => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUDIT_URL + `audit/auditAdmin/dueDaysMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
-
-        if (order && order.length > 0) {
-            url = url + `&order=${JSON.stringify(order)}`;
-        }
-
-        if (order && order.length > 0) {
-            url = url + `&where=${JSON.stringify(where)}`;
-        }
-        console.log("url", url);
-        const data = await service.get(url, true);
-        console.log("url data", data);
-        if (data && !data.errorMessage) {
-            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-            dispatchAction(dispatch, adminTypes.DUEDAYSMASTER_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'DueDays Master error'), null, null);
-        }
-    }
-    catch (error) {
-        console.error('error: ', error);
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-
-export const deleteDueDaysMasterData = id => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/dueDaysMaster`;
-
-        const data = await service._delete(url + '?id=' + id, true);
-
-        if (data && !data.errorMessage) {
-            dispatchAction(dispatch, adminTypes.DUEDAYSMASTER_DELETE_SUCCESS, null, null, null, data.message);
-
-            setTimeout(() =>
-                dispatch({
-                    type: commonTypes.NOTIFICATION_SHOW,
-                    message: 'Due Days Master(s) deleted successfully',
-                    error: undefined,
-                    notification: true
-                }), 500);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'DueDays Master error'), null, null);
-        }
-    }
-    catch (error) {
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-
-//#endregion
-
-//#region Status Master
-
-export const initStatusMaster = () => dispatch => {
-    dispatchAction(dispatch, adminTypes.STATUSMASTER_INIT, null, null, null, null);
-};
-
-export const getStatusMasterDataById = (id) => async dispatch => {
-    try {
-        let url = config.AUTH_URL + `audit/admin/statusMaster?id=${id}`;
-        const data = await service.get(url, true);
-        if (data && !data.errorMessage) {
-            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-            dispatchAction(dispatch, adminTypes.STATUSMASTER_GET_BY_ID_SUCCESS, data.data, null, data.message, null);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Status Master error'), null, null);
-        }
-    }
-    catch (error) {
-        console.error('error: ', error);
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-
-};
-
-export const getStatusMasterData = (pageIndex, rowsToReturn, order, where) => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUTH_URL + `audit/admin/statusMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
-
-        if (order && order.length > 0) {
-            url = url + `&order=${JSON.stringify(order)}`;
-        }
-
-        if (order && order.length > 0) {
-            url = url + `&where=${JSON.stringify(where)}`;
-        }
-        const data = await service.get(url, true);
-        if (data && !data.errorMessage) {
-            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-            dispatchAction(dispatch, adminTypes.STATUSMASTER_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Status Master error'), null, null);
-        }
-    }
-    catch (error) {
-        console.error('error: ', error);
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-
-export const getStatusMasterData_ByCategory = (pageIndex, category, rowsToReturn, order, where) => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUTH_URL + `audit/admin/statusMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
-
-        if (order && order.length > 0) {
-            url = url + `&order=${JSON.stringify(order)}`;
-        }
-        if (category) {
-            url = url + `&category=${category}`;
-        }
-
-        if (order && order.length > 0) {
-            url = url + `&where=${JSON.stringify(where)}`;
-        }
-        const data = await service.get(url, true);
-        if (data && !data.errorMessage) {
-            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-            dispatchAction(dispatch, adminTypes.STATUSMASTER_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Status Master error'), null, null);
-        }
-    }
-    catch (error) {
-        console.error('error: ', error);
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-
-//#endregion
-
 //#region Year Type Master
 
 export const initYearTypeMaster = () => dispatch => {
@@ -2064,872 +1514,6 @@ export const getYearTypeMasterData = (pageIndex, rowsToReturn, order, where) => 
     }
 };
 
-//#endregion
-
-//#region  Section Master
-
-export const initSectionMaster = () => dispatch => {
-    dispatchAction(dispatch, adminTypes.SECTIONMASTER_INIT, null, null, null, null);
-};
-
-export const saveSectionMasterData = sectionMaster => async dispatch => {
-    //  dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/sectionMaster/`;
-        const data = (typeof sectionMaster.id === 'undefined' || sectionMaster.id === -1) ? await service.post(url, sectionMaster, true)
-            : await service.put(url, sectionMaster, true);
-
-        if (data && !data.errorMessage) {
-
-            //if (typeof roleMaster.id === 'undefined') roleMaster.id = data.data.id;
-
-            dispatchAction(dispatch, adminTypes.SECTIONMASTER_SAVE_SUCCESS, sectionMaster, null, data.message, null);
-
-            dispatch({
-                type: commonTypes.NOTIFICATION_SHOW,
-                message: 'Section Master updated successfully',
-                error: undefined,
-                notification: true
-            });
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Section Master error'), null, null);
-        }
-    }
-    catch (error) {
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-
-
-export const getSectionMasterDataById = (id) => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null); 
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/sectionMaster?id=${id}`;
-        const data = await service.get(url, true);
-        if (data && !data.errorMessage) {
-            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-            dispatchAction(dispatch, adminTypes.SECTIONMASTER_GET_BY_ID_SUCCESS, data.data, null, data.message, null);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Section Master error'), null, null);
-        }
-    }
-    catch (error) {
-        console.error('error: ', error);
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-
-};
-
-export const getSectionMasterData = (pageIndex, rowsToReturn, order, where) => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/sectionMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
-
-        if (order && order.length > 0) {
-            url = url + `&order=${JSON.stringify(order)}`;
-        }
-
-        if (order && order.length > 0) {
-            url = url + `&where=${JSON.stringify(where)}`;
-        }
-        const data = await service.get(url, true);
-        console.log("Section Master Data", data);
-        if (data && !data.errorMessage) {
-            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-            dispatchAction(dispatch, adminTypes.SECTIONMASTER_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Section Master error'), null, null);
-        }
-    }
-    catch (error) {
-        console.error('error: ', error);
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-
-
-export const getSectionMasterData_ExcluseInoperativeRecord = (pageIndex, rowsToReturn, order, where) => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let InoperativeData = 'false';
-
-        let url = config.AUDIT_URL + `audit/auditadmin/sectionMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}&isInOperativeRecord=${InoperativeData}`;
-
-        if (order && order.length > 0) {
-            url = url + `&order=${JSON.stringify(order)}`;
-        }
-
-        if (order && order.length > 0) {
-            url = url + `&where=${JSON.stringify(where)}`;
-        }
-        const data = await service.get(url, true);
-        console.log("Section Master Data", data);
-        if (data && !data.errorMessage) {
-            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-            dispatchAction(dispatch, adminTypes.SECTIONMASTER_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Section Master error'), null, null);
-        }
-    }
-    catch (error) {
-        console.error('error: ', error);
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-
-export const deleteSectionMasterData = roleMasterIds => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/sectionMaster`;
-
-        const data = await service._delete(url + '?id=' + roleMasterIds, true);
-
-        if (data && !data.errorMessage) {
-            dispatchAction(dispatch, adminTypes.SECTIONMASTER_DELETE_SUCCESS, null, null, null, data.message);
-
-            setTimeout(() =>
-                dispatch({
-                    type: commonTypes.NOTIFICATION_SHOW,
-                    message: 'Section Master(s) deleted successfully',
-                    error: undefined,
-                    notification: true
-                }), 500);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Section Master error'), null, null);
-        }
-    }
-    catch (error) {
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-//#endregion
-
-//#region Sub  Section Master
-
-export const initSubSectionMaster = () => dispatch => {
-    dispatchAction(dispatch, adminTypes.SUBSECTIONMASTER_INIT, null, null, null, null);
-};
-
-export const saveSubSectionMasterData = subSectionMaster => async dispatch => {
-    //  dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/subSectionMaster/`;
-        const data = (typeof subSectionMaster.id === 'undefined' || subSectionMaster.id === -1) ? await service.post(url, subSectionMaster, true)
-            : await service.put(url, subSectionMaster, true);
-
-        if (data && !data.errorMessage) {
-
-            //if (typeof roleMaster.id === 'undefined') roleMaster.id = data.data.id;
-
-            dispatchAction(dispatch, adminTypes.SUBSECTIONMASTER_SAVE_SUCCESS, subSectionMaster, null, data.message, null);
-
-            dispatch({
-                type: commonTypes.NOTIFICATION_SHOW,
-                message: 'Sub Section Master updated successfully',
-                error: undefined,
-                notification: true
-            });
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Sub Section Master error'), null, null);
-        }
-    }
-    catch (error) {
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-
-
-export const getSubSectionMasterDataById = (id) => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null); 
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/subSectionMaster?id=${id}`;
-        const data = await service.get(url, true);
-        if (data && !data.errorMessage) {
-            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-            dispatchAction(dispatch, adminTypes.SUBSECTIONMASTER_GET_BY_ID_SUCCESS, data.data, null, data.message, null);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Sub Section Master error'), null, null);
-        }
-    }
-    catch (error) {
-        console.error('error: ', error);
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-
-};
-
-export const getSubSectionMasterData = (pageIndex, rowsToReturn, order, where) => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/subSectionMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
-
-        if (order && order.length > 0) {
-            url = url + `&order=${JSON.stringify(order)}`;
-        }
-
-        if (order && order.length > 0) {
-            url = url + `&where=${JSON.stringify(where)}`;
-        }
-        const data = await service.get(url, true);
-        console.log("getSubSectionMasterData", data);
-        if (data && !data.errorMessage) {
-            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-            dispatchAction(dispatch, adminTypes.SUBSECTIONMASTER_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Sub Section Master error'), null, null);
-        }
-    }
-    catch (error) {
-        console.error('error: ', error);
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-
-
-export const getSubSectionMasterData_BySectionID = (pageIndex, rowsToReturn, order, where, sectionMasterId) => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/subSectionMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}&sectionMasterId=${sectionMasterId}`;
-
-        if (order && order.length > 0) {
-            url = url + `&order=${JSON.stringify(order)}`;
-        }
-
-        if (order && order.length > 0) {
-            url = url + `&where=${JSON.stringify(where)}`;
-        }
-        const data = await service.get(url, true);
-        console.log("getSubSectionMasterData", data);
-        if (data && !data.errorMessage) {
-            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-            dispatchAction(dispatch, adminTypes.SUBSECTIONMASTER_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Sub Section Master error'), null, null);
-        }
-    }
-    catch (error) {
-        console.error('error: ', error);
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-
-export const deleteSubSectionMasterData = roleMasterIds => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/subSectionMaster`;
-
-        const data = await service._delete(url + '?id=' + roleMasterIds, true);
-
-        if (data && !data.errorMessage) {
-            dispatchAction(dispatch, adminTypes.SUBSECTIONMASTER_DELETE_SUCCESS, null, null, null, data.message);
-
-            setTimeout(() =>
-                dispatch({
-                    type: commonTypes.NOTIFICATION_SHOW,
-                    message: 'Sub Section Master(s) deleted successfully',
-                    error: undefined,
-                    notification: true
-                }), 500);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Sub Section Master error'), null, null);
-        }
-    }
-    catch (error) {
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-//#endregion
-
-//#region Scoring Rule Master
-
-export const initScoringRuleMaster = () => dispatch => {
-    dispatchAction(dispatch, adminTypes.SCORINGRULEMASTER_INIT, null, null, null, null);
-};
-
-export const saveScoringRuleMasterData = scoringRuleMaster => async dispatch => {
-    //  dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/scoringRuleMaster/`;
-        const data = (typeof scoringRuleMaster.id === 'undefined' || scoringRuleMaster.id === -1) ? await service.post(url, scoringRuleMaster, true)
-            : await service.put(url, scoringRuleMaster, true);
-
-        if (data && !data.errorMessage) {
-
-            //if (typeof roleMaster.id === 'undefined') roleMaster.id = data.data.id;
-
-            dispatchAction(dispatch, adminTypes.SCORINGRULEMASTER_SAVE_SUCCESS, scoringRuleMaster, null, data.message, null);
-
-            dispatch({
-                type: commonTypes.NOTIFICATION_SHOW,
-                message: 'Scoring Rule Master updated successfully',
-                error: undefined,
-                notification: true
-            });
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Scoring Rule Master error'), null, null);
-        }
-    }
-    catch (error) {
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-
-
-export const getScoringRuleMasterDataById = (id) => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null); 
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/scoringRuleMaster?id=${id}`;
-        const data = await service.get(url, true);
-        if (data && !data.errorMessage) {
-            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-            dispatchAction(dispatch, adminTypes.SCORINGRULEMASTER_GET_BY_ID_SUCCESS, data.data, null, data.message, null);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Scoring Rule Master error'), null, null);
-        }
-    }
-    catch (error) {
-        console.error('error: ', error);
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-
-};
-
-export const getScoringRuleMasterData = (pageIndex, rowsToReturn, order, where) => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/scoringRuleMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
-
-        if (order && order.length > 0) {
-            url = url + `&order=${JSON.stringify(order)}`;
-        }
-
-        if (order && order.length > 0) {
-            url = url + `&where=${JSON.stringify(where)}`;
-        }
-        const data = await service.get(url, true);
-        console.log("getScoringRuleMasterData", data);
-        if (data && !data.errorMessage) {
-            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-            dispatchAction(dispatch, adminTypes.SCORINGRULEMASTER_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Scoring Rule Master error'), null, null);
-        }
-    }
-    catch (error) {
-        console.error('error: ', error);
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-
-export const deleteScoringRuleMasterData = roleMasterIds => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/scoringRuleMaster`;
-
-        const data = await service._delete(url + '?id=' + roleMasterIds, true);
-
-        if (data && !data.errorMessage) {
-            dispatchAction(dispatch, adminTypes.SCORINGRULEMASTER_DELETE_SUCCESS, null, null, null, data.message);
-
-            setTimeout(() =>
-                dispatch({
-                    type: commonTypes.NOTIFICATION_SHOW,
-                    message: 'Scoring Rule Master(s) deleted successfully',
-                    error: undefined,
-                    notification: true
-                }), 500);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Scoring Rule Master error'), null, null);
-        }
-    }
-    catch (error) {
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-//#endregion
-
-//#region  Audit Type 
-
-export const getAuditTypeMasterData = (pageIndex, rowsToReturn, order, where) => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/auditType?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
-
-        if (order && order.length > 0) {
-            url = url + `&order=${JSON.stringify(order)}`;
-        }
-
-        if (order && order.length > 0) {
-            url = url + `&where=${JSON.stringify(where)}`;
-        }
-        const data = await service.get(url, true);
-
-        if (data && !data.errorMessage) {
-            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-            dispatchAction(dispatch, adminTypes.AUDITTYPEMASTER_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Audit Type Master error'), null, null);
-        }
-    }
-    catch (error) {
-        console.error('error: ', error);
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-//#endregion
-
-//#region  Audit Flow 
-
-export const getAuditFlowMasterData = (pageIndex, rowsToReturn, order, where) => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/auditFlow?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
-
-        if (order && order.length > 0) {
-            url = url + `&order=${JSON.stringify(order)}`;
-        }
-
-        if (order && order.length > 0) {
-            url = url + `&where=${JSON.stringify(where)}`;
-        }
-        const data = await service.get(url, true);
-
-        if (data && !data.errorMessage) {
-            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-            dispatchAction(dispatch, adminTypes.AUDITFLOWMASTER_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Audit Flow Master error'), null, null);
-        }
-    }
-    catch (error) {
-        console.error('error: ', error);
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-//#endregion
-
-//#region  Process Flow Master
-
-export const initProcessFlowMaster = () => dispatch => {
-    dispatchAction(dispatch, adminTypes.PROCESSFLOWMASTER_INIT, null, null, null, null);
-};
-
-export const saveProcessFlowMasterData = processFlowMaster => async dispatch => {
-    //  dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/processFlowMaster/`;
-        const data = (typeof processFlowMaster.id === 'undefined' || processFlowMaster.id === -1) ? await service.post(url, processFlowMaster, true)
-            : await service.put(url, processFlowMaster, true);
-
-        if (data && !data.errorMessage) {
-
-            dispatchAction(dispatch, adminTypes.PROCESSFLOWMASTER_SAVE_SUCCESS, processFlowMaster, null, data.message, null);
-
-            dispatch({
-                type: commonTypes.NOTIFICATION_SHOW,
-                message: 'Process Flow Master updated successfully',
-                error: undefined,
-                notification: true
-            });
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Process Flow Master error'), null, null);
-        }
-    }
-    catch (error) {
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-
-
-export const getProcessFlowMasterDataById = (id) => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null); 
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/processFlowMaster?id=${id}`;
-        const data = await service.get(url, true);
-        if (data && !data.errorMessage) {
-            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-            dispatchAction(dispatch, adminTypes.PROCESSFLOWMASTER_GET_BY_ID_SUCCESS, data.data, null, data.message, null);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Process Flow Master error'), null, null);
-        }
-    }
-    catch (error) {
-        console.error('error: ', error);
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-
-};
-
-export const getProcessFlowMasterData = (pageIndex, rowsToReturn, order, where) => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/processFlowMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
-
-        if (order && order.length > 0) {
-            url = url + `&order=${JSON.stringify(order)}`;
-        }
-
-        if (order && order.length > 0) {
-            url = url + `&where=${JSON.stringify(where)}`;
-        }
-        const data = await service.get(url, true);
-        console.log("Process Flow Master Data", data);
-        if (data && !data.errorMessage) {
-            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-            dispatchAction(dispatch, adminTypes.PROCESSFLOWMASTER_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Process Flow Master error'), null, null);
-        }
-    }
-    catch (error) {
-        console.error('error: ', error);
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-
-export const deleteProcessFlowMasterData = roleMasterIds => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/processFlowMaster`;
-
-        const data = await service._delete(url + '?id=' + roleMasterIds, true);
-
-        if (data && !data.errorMessage) {
-            dispatchAction(dispatch, adminTypes.PROCESSFLOWMASTER_DELETE_SUCCESS, null, null, null, data.message);
-
-            setTimeout(() =>
-                dispatch({
-                    type: commonTypes.NOTIFICATION_SHOW,
-                    message: 'Process Flow Master(s) deleted successfully',
-                    error: undefined,
-                    notification: true
-                }), 500);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Process Flow Master error'), null, null);
-        }
-    }
-    catch (error) {
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-//#endregion
-
-//#region  AuditObservation Master
-
-export const initAuditObservationMaster = () => dispatch => {
-    dispatchAction(dispatch, adminTypes.AUDITOBSERVATIONMASTER_INIT, null, null, null, null);
-};
-
-export const saveAuditObservationMasterData = auditObservationMaster => async dispatch => {
-    //  dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/auditObservationMaster/`;
-        const data = (typeof auditObservationMaster.id === 'undefined' || auditObservationMaster.id === -1) ? await service.post(url, auditObservationMaster, true)
-            : await service.put(url, auditObservationMaster, true);
-
-        if (data && !data.errorMessage) {
-
-            //if (typeof auditObservationMaster.id === 'undefined') auditObservationMaster.id = data.data.id;
-
-            dispatchAction(dispatch, adminTypes.AUDITOBSERVATIONMASTER_SAVE_SUCCESS, auditObservationMaster, null, data.message, null);
-
-            dispatch({
-                type: commonTypes.NOTIFICATION_SHOW,
-                message: 'Audit Observation Master updated successfully',
-                error: undefined,
-                notification: true
-            });
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Audit observation master error !!'), null, null);
-        }
-    }
-    catch (error) {
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-
-
-export const getAuditObservationMasterDataById = (id) => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null); 
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/auditObservationMaster?id=${id}`;
-        const data = await service.get(url, true);
-        if (data && !data.errorMessage) {
-            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-            dispatchAction(dispatch, adminTypes.AUDITOBSERVATIONMASTER_GET_BY_ID_SUCCESS, data.data, null, data.message, null);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'AuditObservationMaster error'), null, null);
-        }
-    }
-    catch (error) {
-        console.error('error: ', error);
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-
-};
-
-export const getAuditObservationMasterData = (pageIndex, rowsToReturn, order, where) => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/auditObservationMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
-
-        if (order && order.length > 0) {
-            url = url + `&order=${JSON.stringify(order)}`;
-        }
-
-        if (order && order.length > 0) {
-            url = url + `&where=${JSON.stringify(where)}`;
-        }
-        const data = await service.get(url, true);
-
-        if (data && !data.errorMessage) {
-            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-            dispatchAction(dispatch, adminTypes.AUDITOBSERVATIONMASTER_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'AuditObservationMaster error'), null, null);
-        }
-    }
-    catch (error) {
-        console.error('error: ', error);
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-
-export const getAuditObservationMasterData_ExcludeInoperativeRecords = (pageIndex, rowsToReturn, order, where) => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let InoperativeData = 'false';
-        let url = config.AUDIT_URL + `audit/auditadmin/auditObservationMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}&isInOperativeRecord=${InoperativeData}`;
-
-        if (order && order.length > 0) {
-            url = url + `&order=${JSON.stringify(order)}`;
-        }
-
-        if (order && order.length > 0) {
-            url = url + `&where=${JSON.stringify(where)}`;
-        }
-        const data = await service.get(url, true);
-
-        if (data && !data.errorMessage) {
-            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-            dispatchAction(dispatch, adminTypes.AUDITOBSERVATIONMASTER_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'AuditObservationMaster error'), null, null);
-        }
-    }
-    catch (error) {
-        console.error('error: ', error);
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-export const deleteAuditObservationMasterData = roleMasterIds => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/auditObservationMaster`;
-
-        const data = await service._delete(url + '?id=' + roleMasterIds, true);
-
-        if (data && !data.errorMessage) {
-            dispatchAction(dispatch, adminTypes.AUDITOBSERVATIONMASTER_DELETE_SUCCESS, null, null, null, data.message);
-
-            setTimeout(() =>
-                dispatch({
-                    type: commonTypes.NOTIFICATION_SHOW,
-                    message: 'Audit observation master(s) deleted successfully !!',
-                    error: undefined,
-                    notification: true
-                }), 500);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'AuditObservation Master error'), null, null);
-        }
-    }
-    catch (error) {
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-//#endregion
-
-//#region  Critacality Master 
-export const getCriticalityMasterData = (pageIndex, rowsToReturn, order, where) => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/criticalityMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
-
-        if (order && order.length > 0) {
-            url = url + `&order=${JSON.stringify(order)}`;
-        }
-
-        if (order && order.length > 0) {
-            url = url + `&where=${JSON.stringify(where)}`;
-        }
-        const data = await service.get(url, true);
-
-        if (data && !data.errorMessage) {
-            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-            dispatchAction(dispatch, adminTypes.CRITICALITYMASTER_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Criticality Master error'), null, null);
-        }
-    }
-    catch (error) {
-        console.error('error: ', error);
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-export const initCriticalityMaster = () => dispatch => {
-    dispatchAction(dispatch, adminTypes.CRITICALITYMASTER_INIT, null, null, null, null);
-};
-export const saveCriticalityMasterData = criticalityMaster => async dispatch => {
-    //  dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/criticalityMaster/`;
-        const data = (typeof criticalityMaster.id === 'undefined' || criticalityMaster.id === -1) ? await service.post(url, criticalityMaster, true)
-            : await service.put(url, criticalityMaster, true);
-
-        if (data && !data.errorMessage) {
-            dispatchAction(dispatch, adminTypes.CRITICALITYMASTER_SAVE_SUCCESS, criticalityMaster, null, data.message, null);
-
-            dispatch({
-                type: commonTypes.NOTIFICATION_SHOW,
-                message: 'Criticality Master Master updated successfully',
-                error: undefined,
-                notification: true
-            });
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Criticality Master master error !!'), null, null);
-        }
-    }
-    catch (error) {
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-export const getCriticalityMasterDataById = (id) => async dispatch => {
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/criticalityMaster?id=${id}`;
-        const data = await service.get(url, true);
-        if (data && !data.errorMessage) {
-            dispatchAction(dispatch, adminTypes.CRITICALITYMASTER_GET_BY_ID_SUCCESS, data.data, null, data.message, null);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Criticality Master error'), null, null);
-        }
-    }
-    catch (error) {
-        console.error('error: ', error);
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-
-};
-export const getCriticalityMasterData_ExcludeInoperativeRecords = (pageIndex, rowsToReturn, order, where) => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let InoperativeData = 'false';
-        let url = config.AUDIT_URL + `audit/auditadmin/criticalityMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}&isInOperativeRecord=${InoperativeData}`;
-
-        if (order && order.length > 0) {
-            url = url + `&order=${JSON.stringify(order)}`;
-        }
-
-        if (order && order.length > 0) {
-            url = url + `&where=${JSON.stringify(where)}`;
-        }
-        const data = await service.get(url, true);
-
-        if (data && !data.errorMessage) {
-            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-            dispatchAction(dispatch, adminTypes.CRITICALITYMASTER_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Criticality Master error'), null, null);
-        }
-    }
-    catch (error) {
-        console.error('error: ', error);
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-export const deleteCriticalityMasterData = ids => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/criticalityMaster`;
-
-        const data = await service._delete(url + '?id=' + ids, true);
-
-        if (data && !data.errorMessage) {
-            dispatchAction(dispatch, adminTypes.CRITICALITYMASTER_DELETE_SUCCESS, null, null, null, data.message);
-
-            setTimeout(() =>
-                dispatch({
-                    type: commonTypes.NOTIFICATION_SHOW,
-                    message: 'Criticality Master master(s) deleted successfully !!',
-                    error: undefined,
-                    notification: true
-                }), 500);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Criticality Master error'), null, null);
-        }
-    }
-    catch (error) {
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
 //#endregion
 
 //#region  Audit Type Auditor Relation Master
@@ -3075,82 +1659,13 @@ export const deleteAuditTypeAuditorRelationMasterData = Ids => async dispatch =>
 };
 //#endregion
 
+//#region Country Master
 
-
-
-//#region  Scope Master
-
-export const initScopeMaster = () => dispatch => {
-    dispatchAction(dispatch, adminTypes.SCOPEMASTER_INIT, null, null, null, null);
-};
-
-export const saveScopeMasterData = Scope => async dispatch => {
-    //  dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/scopeMaster/`;
-        const data = (typeof Scope.id === 'undefined' || Scope.id === -1) ? await service.post(url, Scope, true)
-            : await service.put(url, Scope, true);
-
-        if (data && !data.errorMessage) {
-            dispatchAction(dispatch, adminTypes.SCOPEMASTER_SAVE_SUCCESS, Scope, null, data.message, null);
-
-            dispatch({
-                type: commonTypes.NOTIFICATION_SHOW,
-                message: 'Scope Master updated successfully',
-                error: undefined,
-                notification: true
-            });
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Scope master error !!'), null, null);
-        }
-    }
-    catch (error) {
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-
-
-export const getScopeMasterDataById = (id) => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null); 
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/scopeMaster?id=${id}`;
-        const data = await service.get(url, true);
-        if (data && !data.errorMessage) {
-            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-            dispatchAction(dispatch, adminTypes.SCOPEMASTER_GET_BY_ID_SUCCESS, data.data, null, data.message, null);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Scope Master error'), null, null);
-        }
-    }
-    catch (error) {
-        console.error('error: ', error);
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-
-};
-
-export const getScopeMasterData = (pageIndex, rowsToReturn, order, where, filterparameter) => async dispatch => {
+export const getCountryMasterData = (pageIndex, rowsToReturn, order, where) => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let getType = 'groupdata';
-        let url = config.AUDIT_URL + `audit/auditadmin/scopeMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}&getType=${getType}`;
+        let url = config.AUTH_URL + `tmc/admin/countryMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
 
-        if (filterparameter && filterparameter.sectionMasterId && filterparameter.sectionMasterId !== null && filterparameter.sectionMasterId !== 'undefined' && filterparameter.sectionMasterId !== '-1') {
-            url = url + `&sectionMasterId=${filterparameter.sectionMasterId}`;
-        }
-        if (filterparameter && filterparameter.subSectionMasterId && filterparameter.subSectionMasterId !== null && filterparameter.subSectionMasterId !== 'undefined' && filterparameter.subSectionMasterId !== '-1') {
-            url = url + `&subSectionMasterId=${filterparameter.subSectionMasterId}`;
-        }
-        if (filterparameter && filterparameter.auditModeMasterId && filterparameter.auditModeMasterId !== null && filterparameter.auditModeMasterId !== 'undefined' && filterparameter.auditModeMasterId !== '-1') {
-            url = url + `&auditModeMasterId=${filterparameter.auditModeMasterId}`;
-        }
-        if (filterparameter && filterparameter.criticalityMasterId && filterparameter.criticalityMasterId !== null && filterparameter.criticalityMasterId !== 'undefined' && filterparameter.criticalityMasterId !== '-1') {
-            url = url + `&criticalityMasterId=${filterparameter.criticalityMasterId}`;
-        }
         if (order && order.length > 0) {
             url = url + `&order=${JSON.stringify(order)}`;
         }
@@ -3159,13 +1674,192 @@ export const getScopeMasterData = (pageIndex, rowsToReturn, order, where, filter
             url = url + `&where=${JSON.stringify(where)}`;
         }
         const data = await service.get(url, true);
-
         if (data && !data.errorMessage) {
-            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-            dispatchAction(dispatch, adminTypes.SCOPEMASTER_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
+            //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+            dispatchAction(dispatch, adminTypes.COUNTRYMASTER_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
         }
         else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Scope Master error'), null, null);
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Country Master error'), null, null);
+        }
+    }
+    catch (error) {
+        console.error('error: ', error);
+         //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+    }
+};
+
+//#endregion
+
+//#region State Master
+
+
+export const getStateMasterData = (pageIndex, rowsToReturn, order, where, countryId) => async dispatch => {
+    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
+    try {
+        let url = config.AUTH_URL + `tmc/admin/stateMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
+
+        if (order && order.length > 0) {
+            url = url + `&order=${JSON.stringify(order)}`;
+        }
+
+        if (order && order.length > 0) {
+            url = url + `&where=${JSON.stringify(where)}`;
+        }
+        if (countryId) {
+            url = url + `&countryId=${countryId}`;
+        }
+        const data = await service.get(url, true);
+        if (data && !data.errorMessage) {
+            //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+            dispatchAction(dispatch, adminTypes.STATEMASTER_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
+        }
+        else {
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'State Master error'), null, null);
+                }
+    }
+    catch (error) {
+        console.error('error: ', error);
+        //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+    }
+    
+    };
+//#endregion
+
+//#region City Master
+
+export const getCityMasterData = (pageIndex, rowsToReturn, order, where,stateId) => async dispatch => {
+    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
+    try {
+        let url = config.AUTH_URL + `tmc/admin/cityMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
+              if (order && order.length > 0) {
+            url = url + `&order=${JSON.stringify(order)}`;
+        }
+
+        if (order && order.length > 0) {
+            url = url + `&where=${JSON.stringify(where)}`;
+        }
+           if (stateId) {
+            url = url + `&stateId=${stateId}`;
+        }
+        const data = await service.get(url, true);
+        if (data && !data.errorMessage) {
+            //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+            dispatchAction(dispatch, adminTypes.CITYMASTER_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
+        }
+        else {
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'City Master error'), null, null);
+              }
+    }
+    catch (error) {
+        console.error('error: ', error);
+        //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+    }
+};
+//#endregion
+
+//#region Gender Master
+
+export const getGenderMasterData = (pageIndex, rowsToReturn, order, where) => async dispatch => {
+    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
+    try {
+        let url = config.AUTH_URL + `tmc/admin/genderMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
+
+        if (order && order.length > 0) {
+            url = url + `&order=${JSON.stringify(order)}`;
+        }
+
+        if (order && order.length > 0) {
+            url = url + `&where=${JSON.stringify(where)}`;
+        }
+        const data = await service.get(url, true);
+        if (data && !data.errorMessage) {
+            //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+            dispatchAction(dispatch, adminTypes.GENDERMASTER_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
+        }
+        else {
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Gender Master error'), null, null);
+        }
+    }
+    catch (error) {
+        console.error('error: ', error);
+          //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+    }
+};
+//#endregion
+
+//#region  Organisation Details
+export const initOrganisationDetails = () => dispatch => {
+    dispatchAction(dispatch, adminTypes.ORGANISATIONDETAILS_INIT, null, null, null, null);
+};
+export const saveOrganisationDetails = Organisation => async dispatch => {
+    //  dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
+    try {
+        let url = config.AUTH_URL + `tmc/admin/organisationDetails/`;
+        const data = (typeof Organisation.id === 'undefined' || Organisation.id === -1) ? await service.post(url, Organisation, true)
+            : await service.put(url, Organisation, true);
+
+        if (data && !data.errorMessage) {
+            dispatchAction(dispatch, adminTypes.ORGANISATIONDETAILS_SAVE_SUCCESS, Organisation, null, data.message, null);
+
+            dispatch({
+                type: commonTypes.NOTIFICATION_SHOW,
+                message: 'Organisation Details updated successfully',
+                error: undefined,
+                notification: true
+            });
+        }
+        else {
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Organisation Master have some error pls check !!'), null, null);
+        }
+    }
+    catch (error) {
+        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+    }
+};
+export const getOrganisationDetailsDataById = (id) => async dispatch => {
+    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null); 
+    try {
+        let url = config.AUTH_URL + `tmc/admin/organisationDetails?id=${id}`;
+        const data = await service.get(url, true);
+        if (data && !data.errorMessage) {
+            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+            dispatchAction(dispatch, adminTypes.ORGANISATIONDETAILS_GET_BY_ID_SUCCESS, data.data, null, data.message, null);
+        }
+        else {
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Organisation Master have some error pls check !!'), null, null);
+        }
+    }
+    catch (error) {
+        console.error('error: ', error);
+        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+    }
+
+};
+export const getOrganisationDetailsData = (pageIndex, rowsToReturn, order, where, filterparameter) => async dispatch => {
+    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
+    try {
+        let url = config.AUTH_URL + `tmc/admin/organisationDetails`;
+
+        if (filterparameter && filterparameter.groupId && filterparameter.groupId !== null && filterparameter.groupId !== 'undefined' && filterparameter.groupId !== '-1') {
+            url = url + `&groupId=${filterparameter.groupId}`;
+        }
+        if (filterparameter && filterparameter.orgRelationTypeId && filterparameter.orgRelationTypeId !== null && filterparameter.orgRelationTypeId !== 'undefined' && filterparameter.orgRelationTypeId !== '-1') {
+            url = url + `&orgRelationTypeId=${filterparameter.orgRelationTypeId}`;
+        }
+        const data = await service.get(url, true);
+        console.log('Get Organisation Details Data', data);
+        if (data && !data.errorMessage) {
+            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+            dispatchAction(dispatch, adminTypes.ORGANISATIONDETAILS_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
+        }
+        else {
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Organisation Master have some error pls check !!'), null, null);
         }
     }
     catch (error) {
@@ -3174,27 +1868,26 @@ export const getScopeMasterData = (pageIndex, rowsToReturn, order, where, filter
         dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
     }
 };
-
-export const deleteScopeMasterData = Ids => async dispatch => {
+export const deleteOrganisationDetailsData = Ids => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.AUDIT_URL + `audit/auditadmin/scopeMaster`;
+        let url = config.AUTH_URL + `tmc/admin/organisationDetails`;
 
         const data = await service._delete(url + '?id=' + Ids, true);
 
         if (data && !data.errorMessage) {
-            dispatchAction(dispatch, adminTypes.SCOPEMASTER_DELETE_SUCCESS, null, null, null, data.message);
+            dispatchAction(dispatch, adminTypes.ORGANISATIONDETAILS_DELETE_SUCCESS, null, null, null, data.message);
 
             setTimeout(() =>
                 dispatch({
                     type: commonTypes.NOTIFICATION_SHOW,
-                    message: 'Scope master(s) deleted successfully !!',
+                    message: 'Organisation Detail(s) deleted successfully !!',
                     error: undefined,
                     notification: true
                 }), 500);
         }
         else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Scope Master error'), null, null);
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Organisation Master have some error pls check !!'), null, null);
         }
     }
     catch (error) {
@@ -3204,118 +1897,3 @@ export const deleteScopeMasterData = Ids => async dispatch => {
 };
 //#endregion
 
-
-
-//#region  Process Flow Responsibility Master
-
-export const initProcessFlowResponsibilityMaster = () => dispatch => {
-    dispatchAction(dispatch, adminTypes.PROCESSFLOWRESPONSIBILITYMASTER_INIT, null, null, null, null);
-};
-
-export const saveProcessFlowResponsibilityMasterData = processFlowResponsibilityMaster => async dispatch => {
-    //  dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/processFlowResponsibilityMaster/`;
-        const data = (typeof processFlowResponsibilityMaster.id === 'undefined' || processFlowResponsibilityMaster.id === -1) ? await service.post(url, processFlowResponsibilityMaster, true)
-            : await service.put(url, processFlowResponsibilityMaster, true);
-
-        if (data && !data.errorMessage) {
-
-            dispatchAction(dispatch, adminTypes.PROCESSFLOWRESPONSIBILITYMASTER_SAVE_SUCCESS, processFlowResponsibilityMaster, null, data.message, null);
-
-            dispatch({
-                type: commonTypes.NOTIFICATION_SHOW,
-                message: 'Process Flow Responsibility Master updated successfully',
-                error: undefined,
-                notification: true
-            });
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Process Flow  Responsibility Master error'), null, null);
-        }
-    }
-    catch (error) {
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-
-
-export const getProcessFlowResponsibilityMasterDataById = (id) => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null); 
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/processFlowResponsibilityMaster?id=${id}`;
-        const data = await service.get(url, true);
-        if (data && !data.errorMessage) {
-            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-            dispatchAction(dispatch, adminTypes.PROCESSFLOWRESPONSIBILITYMASTER_GET_BY_ID_SUCCESS, data.data, null, data.message, null);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Process Flow Responsibility Master error'), null, null);
-        }
-    }
-    catch (error) {
-        console.error('error: ', error);
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-
-};
-
-export const getProcessFlowResponsibilityMasterData = (pageIndex, rowsToReturn, order, where) => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/processFlowResponsibilityMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
-
-        if (order && order.length > 0) {
-            url = url + `&order=${JSON.stringify(order)}`;
-        }
-
-        if (order && order.length > 0) {
-            url = url + `&where=${JSON.stringify(where)}`;
-        }
-        const data = await service.get(url, true);
-        console.log("Process Flow Master Data", data);
-        if (data && !data.errorMessage) {
-            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-            dispatchAction(dispatch, adminTypes.PROCESSFLOWRESPONSIBILITYMASTER_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Process Flow Responsibility Master error'), null, null);
-        }
-    }
-    catch (error) {
-        console.error('error: ', error);
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-
-export const deleteProcessFlowResponsibilityMasterData = ids => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/processFlowResponsibilityMaster`;
-
-        const data = await service._delete(url + '?id=' + ids, true);
-
-        if (data && !data.errorMessage) {
-            dispatchAction(dispatch, adminTypes.PROCESSFLOWRESPONSIBILITYMASTER_DELETE_SUCCESS, null, null, null, data.message);
-
-            setTimeout(() =>
-                dispatch({
-                    type: commonTypes.NOTIFICATION_SHOW,
-                    message: 'Process Flow Responsibility Master(s) deleted successfully',
-                    error: undefined,
-                    notification: true
-                }), 500);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Process Flow Master Responsibility error'), null, null);
-        }
-    }
-    catch (error) {
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-//#endregion

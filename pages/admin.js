@@ -25,7 +25,12 @@ import MasterDetails from '../components/masters/masterDetails';
 import ModalHeader from '../components/shared/ModalHeader';
 import GroupMaster from '../components/masters/groupMaster';
 import AlarmTypeMaster from '../components/masters/alarmTypeMaster';
+<<<<<<< HEAD
 import NotificationMaster from '../components/masters/notificationMaster';
+=======
+import OrgRelationTypeMaster from '../components/masters/orgRelationTypeMaster';
+import OrganisationDetails from '../components/masters/organisationDetails';
+>>>>>>> fc8bdf6bce8de3c39dd7964be6955425f576011e
 import ModuleMaster from '../components/masters/moduleMaster';
 import OrgRelationTypeMaster from '../components/masters/orgRelationTypeMaster';
 import RoleMaster from '../components/masters/roleMaster';
@@ -242,6 +247,16 @@ export class Index extends Wrapper {
           parentMasterCategoryId: '',
           url: "/admin/org-relation-type-master",
           isVisible: false
+        },
+        {
+          pathname: "/admin",
+          tab: "organisation-details",
+          id: undefined,
+          MasterName: 'Organisation Details',
+          ParentMasterName: undefined,
+          parentMasterCategoryId: '',
+          url: "/admin/organisation-details",
+          isVisible: true
         },
         {
           pathname: "/admin",
@@ -599,6 +614,12 @@ export class Index extends Wrapper {
                   <NotificationMaster />
                 </div>
               )}
+               {router && router.query && router.query.tab === "organisation-details" && (
+                <div>
+                  {/* <GroupAddEdit /> */}
+                  <OrganisationDetails />
+                </div>
+              )}
               {router && router.query && router.query.tab === "module-master" && (
                 <div>
                   {/* <ModuleAddEdit /> */}
@@ -639,10 +660,17 @@ export class Index extends Wrapper {
                 </div>
               )}
               {router && router.query && router.query.MasterName && router.query.tab != "group-master" &&
+<<<<<<< HEAD
                 router.query.tab != "org-relation-type-master" && router.query.tab != "module-master" &&
                 router.query.tab != "role-master" && 
                 router.query.tab != "user-master" && router.query.tab != "criticality-master" &&
                 router.query.tab != "alarm-type-master" && router.query.tab != "notification-master" &&
+=======
+                router.query.tab != "alarmType-master" && router.query.tab != "module-master" &&
+                router.query.tab != "role-master" && router.query.tab != "year-master" &&
+                router.query.tab !="org-relation-type-master" && router.query.tab !="organisation-details" &&
+                router.query.tab != "user-master" && router.query.tab != "criticality-master" && router.query.tab != "org-relation-type-master" &&
+>>>>>>> fc8bdf6bce8de3c39dd7964be6955425f576011e
                 <div>
                   <MasterDetails
                     masterCateogyId={router && router.query && router.query.id}
