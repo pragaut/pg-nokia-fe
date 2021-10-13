@@ -17,6 +17,31 @@ const initialState = {
     orgRelationTypes: undefined,
     orgRelationTypeRecordsCount: 0,
 
+    countryActiontype: actions.COUNTRYMASTER_INIT,
+    country: undefined,
+    countrys: undefined,
+    countryRecordsCount: 0,
+
+    stateActiontype: actions.STATEMASTER_INIT,
+    state: undefined,
+    states: undefined,
+    stateRecordsCount: 0,
+
+    cityActiontype: actions.CITYMASTER_INIT,
+    city: undefined,
+    citys: undefined,
+    cityRecordsCount: 0,
+
+    genderActiontype: actions.GENDERMASTER_INIT,
+    gender: undefined,
+    genders: undefined,
+    genderRecordsCount: 0,
+
+    organisationActiontype: actions.ORGANISATIONDETAILS_INIT,
+    organisation: undefined,
+    organisations: undefined,
+    organisationRecordsCount: 0,
+
     moduleActiontype: actions.MODULEMASTER_INIT,
     module: undefined,
     modules: undefined,
@@ -46,7 +71,7 @@ const initialState = {
     user: undefined,
     users: undefined,
     userRecordsCount: 0,
-    
+
     notificationActiontype: actions.NOTIFICATIONMASTERDETAILS_INIT,
     notification: undefined,
     notifications: undefined,
@@ -191,8 +216,8 @@ const adminReducer = (state, action) => {
 
         //#endregion 
 
-         //#region  Org Relation Type Reducer
-         case actions.ORGRELATIONTYPEMASTER_LIST_SUCCESS:
+        //#region  Org Relation Type Reducer
+        case actions.ORGRELATIONTYPEMASTER_LIST_SUCCESS:
             return {
                 orgRelationType: state.orgRelationType,
                 orgRelationTypes: action.data,
@@ -243,6 +268,126 @@ const adminReducer = (state, action) => {
             };
 
         //#endregion 
+
+        //#region  Country Master Reducer
+        case actions.COUNTRYMASTER_LIST_SUCCESS:
+            return {
+                country: state.country,
+                countrys: action.data,
+                country: action.type,
+                countryRecordsCount: action.recordsCount,
+
+                type: action.type,
+            };
+
+        //#endregion 
+
+        //#region  State Master Reducer
+        case actions.STATEMASTER_LIST_SUCCESS:
+            return {
+                state: state.state,
+                states: action.data,
+                state: action.type,
+                stateRecordsCount: action.recordsCount,
+
+                type: action.type,
+            };
+
+        //#endregion 
+
+        //#region  City Master Reducer
+        case actions.CITYMASTER_LIST_SUCCESS:
+            return {
+                city: state.city,
+                citys: action.data,
+                city: action.type,
+                cityRecordsCount: action.recordsCount,
+
+                type: action.type,
+            };
+
+        //#endregion 
+
+        //#region  Gender Master Reducer
+        case actions.GENDERMASTER_LIST_SUCCESS:
+            return {
+                gender: state.gender,
+                genders: action.data,
+                gender: action.type,
+                genderRecordsCount: action.recordsCount,
+
+                type: action.type,
+            };
+
+        //#endregion 
+
+
+        //#region Module Master Reducer
+        case actions.ORGANISATIONDETAILS_LIST_SUCCESS:
+            return {
+                organisation: state.organisation,
+                organisations: action.data,
+                organisationActiontype: action.type,
+                organisationRecordsCount: action.recordsCount,
+
+                type: action.type,
+            };
+        case actions.ORGANISATIONDETAILS_GET_BY_ID_SUCCESS:
+            return {
+                organisations: state.organisations,
+                organisation: action.data,
+                organisationActiontype: action.type,
+                organisationRecordsCount: state.recordsCount,
+
+                type: action.type,
+            };
+        case actions.ORGANISATIONDETAILS_GET_BY_GROUPID_SUCCESS:
+            return {
+                organisations: state.organisations,
+                organisation: action.data,
+                organisationActiontype: action.type,
+                organisationRecordsCount: state.recordsCount,
+
+                type: action.type,
+            };
+        case actions.ORGANISATIONDETAILS_GET_BY_ORGRELATIONTYPEID_SUCCESS:
+            return {
+                organisations: state.organisations,
+                organisation: action.data,
+                organisationActiontype: action.type,
+                organisationRecordsCount: state.recordsCount,
+
+                type: action.type,
+            };
+        case actions.ORGANISATIONDETAILS_SAVE_SUCCESS:
+            return {
+                organisation: action.data,
+                organisations: state.organisations,
+                organisationActiontype: action.type,
+                organisationRecordsCount: state.recordsCount,
+
+                type: action.type,
+            };
+        case actions.ORGANISATIONDETAILS_DELETE_SUCCESS:
+            return {
+                organisation: state.data,
+                organisations: state.organisations,
+                organisationActiontype: action.type,
+                organisationRecordsCount: state.recordsCount,
+
+                type: action.type,
+            };
+        case actions.ORGANISATIONDETAILS_INIT:
+            return {
+                organisation: state.organisation,
+                organisations: state.organisations,
+                organisationActiontype: action.type,
+                organisationRecordsCount: state.recordsCount,
+
+                type: action.type,
+            };
+        //#endregion
+
 
         //#region Module Master Reducer
         case actions.MODULEMASTER_LIST_SUCCESS:
@@ -618,8 +763,8 @@ const adminReducer = (state, action) => {
 
         //#endregion 
 
-         //#region  Notificaation Master Reducer
-         case actions.NOTIFICATIONMASTERDETAILS_LIST_SUCCESS:
+        //#region  Notificaation Master Reducer
+        case actions.NOTIFICATIONMASTERDETAILS_LIST_SUCCESS:
             return {
                 notification: state.notification,
                 notifications: action.data,
@@ -671,8 +816,8 @@ const adminReducer = (state, action) => {
 
         //#endregion 
 
-         //#region  Escalation Matrix Master Reducer
-         case actions.ESCALATIONMATRIXDETAILS_LIST_SUCCESS:
+        //#region  Escalation Matrix Master Reducer
+        case actions.ESCALATIONMATRIXDETAILS_LIST_SUCCESS:
             return {
                 escalationmatrix: state.escalationmatrix,
                 escalationmatrixs: action.data,
@@ -724,8 +869,8 @@ const adminReducer = (state, action) => {
 
         //#endregion 
 
-         //#region  Escalation Duration Master Reducer
-         case actions.ESCALATIONDURATIONDETAILS_LIST_SUCCESS:
+        //#region  Escalation Duration Master Reducer
+        case actions.ESCALATIONDURATIONDETAILS_LIST_SUCCESS:
             return {
                 escalationDuration: state.escalationDuration,
                 escalationDurations: action.data,
@@ -777,8 +922,8 @@ const adminReducer = (state, action) => {
 
         //#endregion 
 
-         //#region  Supporting Document Master Reducer
-         case actions.SUPPORTINGDOCUMENTMASTER_LIST_SUCCESS:
+        //#region  Supporting Document Master Reducer
+        case actions.SUPPORTINGDOCUMENTMASTER_LIST_SUCCESS:
             return {
                 supportingDocumentMaster: state.supportingDocumentMaster,
                 supportingDocumentMasters: action.data,
@@ -882,7 +1027,7 @@ const adminReducer = (state, action) => {
             };
 
         //#endregion 
-        
+
         //#region  Status Master Reducer
         case actions.STATUSMASTER_LIST_SUCCESS:
             return {
@@ -1010,7 +1155,7 @@ const adminReducer = (state, action) => {
 
                 type: action.type,
             };
- 
+
 
         case actions.SECTIONMASTER_SAVE_SUCCESS:
             return {
@@ -1043,8 +1188,8 @@ const adminReducer = (state, action) => {
             };
         //#endregion
 
-         //#region Sub Section Master Reducer
-         case actions.SUBSECTIONMASTER_LIST_SUCCESS:
+        //#region Sub Section Master Reducer
+        case actions.SUBSECTIONMASTER_LIST_SUCCESS:
             return {
                 subSection: state.subSection,
                 subSections: action.data,
@@ -1063,7 +1208,7 @@ const adminReducer = (state, action) => {
 
                 type: action.type,
             };
- 
+
 
         case actions.SUBSECTIONMASTER_SAVE_SUCCESS:
             return {
@@ -1116,7 +1261,7 @@ const adminReducer = (state, action) => {
 
                 type: action.type,
             };
- 
+
 
         case actions.SCORINGRULEMASTER_SAVE_SUCCESS:
             return {
@@ -1150,7 +1295,7 @@ const adminReducer = (state, action) => {
         //#endregion
 
 
-      
+
         //#region Audit Type Master Reducer
         case actions.AUDITTYPEMASTER_LIST_SUCCESS:
             return {
@@ -1160,7 +1305,7 @@ const adminReducer = (state, action) => {
                 auditTypeRecordsCount: action.recordsCount,
 
                 type: action.type,
-            }; 
+            };
 
         case actions.AUDITTYPEMASTER_INIT:
             return {
@@ -1173,8 +1318,8 @@ const adminReducer = (state, action) => {
             };
         //#endregion
 
-         //#region Audit Flow Master Reducer
-         case actions.AUDITFLOWMASTER_LIST_SUCCESS:
+        //#region Audit Flow Master Reducer
+        case actions.AUDITFLOWMASTER_LIST_SUCCESS:
             return {
                 auditFlow: state.auditFlow,
                 auditFlows: action.data,
@@ -1182,7 +1327,7 @@ const adminReducer = (state, action) => {
                 auditFlowRecordsCount: action.recordsCount,
 
                 type: action.type,
-            }; 
+            };
 
         case actions.AUDITFLOWMASTER_INIT:
             return {
@@ -1195,8 +1340,8 @@ const adminReducer = (state, action) => {
             };
         //#endregion
 
-         //#region Process Flow Master Reducer
-         case actions.PROCESSFLOWMASTER_LIST_SUCCESS:
+        //#region Process Flow Master Reducer
+        case actions.PROCESSFLOWMASTER_LIST_SUCCESS:
             return {
                 processFlow: state.processFlow,
                 processFlows: action.data,
@@ -1215,7 +1360,7 @@ const adminReducer = (state, action) => {
 
                 type: action.type,
             };
- 
+
 
         case actions.PROCESSFLOWMASTER_SAVE_SUCCESS:
             return {
@@ -1249,8 +1394,8 @@ const adminReducer = (state, action) => {
         //#endregion
 
 
-         //#region  criticality Master Reducer
-         case actions.CRITICALITYMASTER_LIST_SUCCESS:
+        //#region  criticality Master Reducer
+        case actions.CRITICALITYMASTER_LIST_SUCCESS:
             return {
                 criticality: state.criticality,
                 criticalitys: action.data,
@@ -1258,7 +1403,7 @@ const adminReducer = (state, action) => {
                 criticalityRecordsCount: action.recordsCount,
 
                 type: action.type,
-            }; 
+            };
 
         case actions.CRITICALITYMASTER_INIT:
             return {
@@ -1270,36 +1415,36 @@ const adminReducer = (state, action) => {
                 type: action.type,
             };
 
-            case actions.CRITICALITYMASTER_GET_BY_ID_SUCCESS:
-                return {
-                    criticalitys: state.criticalitys,
-                    criticality: action.data,
-                    criticalityActiontype: action.type,
-                    criticalityRecordsCount: state.recordsCount,
-    
-                    type: action.type,
-                };
-    
-            case actions.CRITICALITYMASTER_SAVE_SUCCESS:
-                return {
-                    criticality: action.data,
-                    criticalitys: state.criticalitys,
-                    criticalityActiontype: action.type,
-                    criticalityRecordsCount: state.recordsCount,
-    
-                    type: action.type,
-                };
-    
-            case actions.CRITICALITYMASTER_DELETE_SUCCESS:
-                return {
-                    criticality: state.data,
-                    criticalitys: state.auditObservations,
-                    criticalityActiontype: action.type,
-                    criticalityRecordsCount: state.recordsCount,
-    
-                    type: action.type,
-                };
-    
+        case actions.CRITICALITYMASTER_GET_BY_ID_SUCCESS:
+            return {
+                criticalitys: state.criticalitys,
+                criticality: action.data,
+                criticalityActiontype: action.type,
+                criticalityRecordsCount: state.recordsCount,
+
+                type: action.type,
+            };
+
+        case actions.CRITICALITYMASTER_SAVE_SUCCESS:
+            return {
+                criticality: action.data,
+                criticalitys: state.criticalitys,
+                criticalityActiontype: action.type,
+                criticalityRecordsCount: state.recordsCount,
+
+                type: action.type,
+            };
+
+        case actions.CRITICALITYMASTER_DELETE_SUCCESS:
+            return {
+                criticality: state.data,
+                criticalitys: state.auditObservations,
+                criticalityActiontype: action.type,
+                criticalityRecordsCount: state.recordsCount,
+
+                type: action.type,
+            };
+
         //#endregion
 
         //#region  Audit Observation Master Reducer
@@ -1407,8 +1552,8 @@ const adminReducer = (state, action) => {
             };
 
         //#endregion 
-      
-      
+
+
         //#region  Scope Master Reducer
         case actions.SCOPEMASTER_LIST_SUCCESS:
             return {
@@ -1461,9 +1606,9 @@ const adminReducer = (state, action) => {
             };
 
         //#endregion 
-        
-         //#region Process Flow Master Reducer
-         case actions.PROCESSFLOWRESPONSIBILITYMASTER_LIST_SUCCESS :
+
+        //#region Process Flow Master Reducer
+        case actions.PROCESSFLOWRESPONSIBILITYMASTER_LIST_SUCCESS:
             return {
                 processFlowResponsibility: state.processFlow,
                 processFlowResponsibilitys: action.data,
@@ -1482,7 +1627,7 @@ const adminReducer = (state, action) => {
 
                 type: action.type,
             };
- 
+
 
         case actions.PROCESSFLOWRESPONSIBILITYMASTER_SAVE_SUCCESS:
             return {
@@ -1528,6 +1673,31 @@ const adminReducer = (state, action) => {
                 groupActiontype: state.groupActiontype,
                 groupRecordsCount: state.groupRecordsCount,
 
+                orgRelationType: state.orgRelationType,
+                orgRelationTypes: state.orgRelationTypes,
+                orgRelationType: state.orgRelationTypeActiontype,
+                orgRelationTypeRecordsCount: state.orgRelationTypeRecordsCount,
+
+                country: state.country,
+                countrys: state.countrys,
+                countryActiontype: state.countryActiontype,
+                countryRecordsCount: state.countryRecordsCount,
+
+                state: state.state,
+                states: state.states,
+                stateryActiontype: state.stateActiontype,
+                stateRecordsCount: state.stateRecordsCount,
+
+                city: state.city,
+                citys: state.citys,
+                cityActiontype: state.cityActiontype,
+                cityRecordsCount: state.cityRecordsCount,
+
+                gender: state.gender,
+                genders: state.genders,
+                genderActiontype: state.genderActiontype,
+                genderRecordsCount: state.genderRecordsCount,
+
                 module: state.module,
                 modules: state.modules,
                 moduleActiontype: state.moduleActiontype,
@@ -1557,7 +1727,7 @@ const adminReducer = (state, action) => {
                 users: state.users,
                 userActiontype: state.userActiontype,
                 userRecordsCount: state.userRecordsCount,
-                
+
                 notification: state.notification,
                 notifications: state.notifications,
                 notificationActiontype: state.notificationActiontype,
@@ -1586,7 +1756,7 @@ const adminReducer = (state, action) => {
                 status: state.status,
                 statuss: state.statuss,
                 statusActiontype: state.statusActiontype,
-                statussRecordsCount: state.statussRecordsCount,  
+                statussRecordsCount: state.statussRecordsCount,
 
                 section: state.section,
                 sections: state.sections,
@@ -1622,7 +1792,7 @@ const adminReducer = (state, action) => {
                 auditTypeAuditorRelations: state.auditTypeAuditorRelations,
                 auditTypeAuditorRelationActiontype: state.auditTypeAuditorRelationActiontype,
                 auditTypeAuditorRelationRecordsCount: state.auditTypeAuditorRelationRecordsCount,
-         
+
                 scope: state.scope,
                 scopes: state.scopes,
                 scopeActiontype: state.scopeActiontype,

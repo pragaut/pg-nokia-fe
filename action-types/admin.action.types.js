@@ -457,4 +457,49 @@ export const PROCESSFLOWRESPONSIBILITYMASTER_DELETE_ERROR = 'modules/processFlow
 export const PROCESSFLOWRESPONSIBILITYMASTER_SAVE_REQUESTED = 'modules/processFlowResponsibilityMaster/PROCESSFLOWRESPONSIBILITYMASTER_SAVE_REQUESTED';
 export const PROCESSFLOWRESPONSIBILITYMASTER_SAVE_SUCCESS = 'modules/processFlowResponsibilityMaster/PROCESSFLOWRESPONSIBILITYMASTER_SAVE_SUCCESS';
 export const PROCESSFLOWRESPONSIBILITYMASTER_SAVE_ERROR = 'modules/processFlowResponsibilityMaster/PROCESSFLOWRESPONSIBILITYMASTER_SAVE_ERROR';
+
+//#endregion
+
+//#region Country Master
+export const COUNTRYMASTER_INIT = 'modules/countrymaster/COUNTRYMASTER_INIT';
+export const COUNTRYMASTER_LIST_REQUESTED = 'modules/countrymaster/COUNTRYMASTER_LIST_REQUESTED';
+export const COUNTRYMASTER_LIST_SUCCESS = 'modules/countrymaster/COUNTRYMASTER_LIST_SUCCESS';
+//#endregion
+
+//#region State Master
+export const STATEMASTER_INIT = 'modules/statemaster/STATEMASTER_INIT';
+export const STATEMASTER_LIST_REQUESTED = 'modules/statemaster/STATEMASTER_LIST_REQUESTED';
+export const STATEMASTER_LIST_SUCCESS = 'modules/statemaster/STATEMASTER_LIST_SUCCESS';
+//#endregion
+
+//#region City Master
+export const CITYMASTER_INIT = 'modules/citymaster/CITYMASTER_INIT';
+export const CITYMASTER_LIST_REQUESTED = 'modules/citymaster/CITYMASTER_LIST_REQUESTED';
+export const CITYMASTER_LIST_SUCCESS = 'modules/citymaster/CITYMASTER_LIST_SUCCESS';
+//#endregion
+
+//#region Gender Master
+export const GENDERMASTER_INIT = 'modules/gendermaster/GENDERMASTER_INIT';
+export const GENDERMASTER_LIST_REQUESTED = 'modules/gendermaster/GENDERMASTER_LIST_REQUESTED';
+export const GENDERMASTER_LIST_SUCCESS = 'modules/gendermaster/GENDERMASTER_LIST_SUCCESS';
+//#endregion
+
+//#region Scope Master
+export const ORGANISATIONDETAILS_INIT = 'modules/organisationdetails/ORGANISATIONDETAILS_INIT';
+export const ORGANISATIONDETAILS_LIST_REQUESTED = 'modules/organisationdetails/ORGANISATIONDETAILS_LIST_REQUESTED';
+export const ORGANISATIONDETAILS_LIST_SUCCESS = 'modules/organisationdetails/ORGANISATIONDETAILS_LIST_SUCCESS';
+
+export const ORGANISATIONDETAILS_GET_BY_ID_REQUESTED = 'modules/organisationdetails/ORGANISATIONDETAILS_GET_BY_ID_REQUESTED';
+export const ORGANISATIONDETAILS_GET_BY_ID_SUCCESS = 'modules/organisationdetails/ORGANISATIONDETAILS_GET_BY_ID_SUCCESS';
+export const ORGANISATIONDETAILS_GET_BY_GROUPID_SUCCESS = 'modules/organisationdetails/ORGANISATIONDETAILS_GET_BY_GROUPID_SUCCESS';
+export const ORGANISATIONDETAILS_GET_BY_ORGRELATIONTYPEID_SUCCESS = 'modules/organisationdetails/ORGANISATIONDETAILS_GET_BY_ORGRELATIONTYPEID_SUCCESS';
+export const ORGANISATIONDETAILS_GET_BY_ID_ERROR = 'modules/organisationdetails/ORGANISATIONDETAILS_GET_BY_ID_ERROR';
+
+export const ORGANISATIONDETAILS_DELETE_REQUESTED = 'modules/organisationdetails/ORGANISATIONDETAILS_DELETE_REQUESTED';
+export const ORGANISATIONDETAILS_DELETE_SUCCESS = 'modules/organisationdetails/ORGANISATIONDETAILS_DELETE_SUCCESS';
+export const ORGANISATIONDETAILS_DELETE_ERROR = 'modules/organisationdetails/ORGANISATIONDETAILS_DELETE_ERROR';
+
+export const ORGANISATIONDETAILS_SAVE_REQUESTED = 'modules/organisationdetails/ORGANISATIONDETAILS_SAVE_REQUESTED';
+export const ORGANISATIONDETAILS_SAVE_SUCCESS = 'modules/organisationdetails/ORGANISATIONDETAILS_SAVE_SUCCESS';
+export const ORGANISATIONDETAILS_SAVE_ERROR = 'modules/organisationdetails/ORGANISATIONDETAILS_SAVE_ERROR';
 //#endregion
