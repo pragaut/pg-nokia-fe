@@ -5,22 +5,22 @@ import style from '../../../theme/app.scss';
 import Wrapper from '../../shared/Wrapper';
 import { constants } from '../../../utils/constants';
 import * as AdminTypes from '../../../action-types/admin.action.types';
-import { getModuleMasterData, saveModuleMasterData, getModuleMasterDataById, deleteModuleMasterData } from '../../../actions/admin.action';
+import { getTowerMasterData, saveTowerMasterData, getTowerMasterDataById, deleteTowerMasterData } from '../../../actions/admin.action';
 import ListTable from '../../shared/ListTable';
-import ModuleAddEdit from './module.add.edit';
+import TowerAddEdit from './tower.add.edit';
 import * as CommonStyle from '../../commonStyle';
-import ModuleMasterDetails from '../../ReactTableComponent';
+import TowerMasterDetails from '../../ReactTableComponent';
 
 
-class ModuleIndex extends Wrapper {
+class TowerIndex extends Wrapper {
 
     constructor(props) {
         super(props);
         this.state = {
-            modules: [],
-            module: {},
+            tower: [],
+            towers: {},
             showEditPopup: false,
-            type: AdminTypes.MODULEMASTER_INIT,
+            type: AdminTypes.TOWERMASTER_INIT,
             columns: []
         };
 
@@ -64,24 +64,45 @@ class ModuleIndex extends Wrapper {
             },
             {
                 Header: 'Org Details',
-                accessor: 'orgName.orgName',
-                id: 'orgName.orgName',
+                accessor: 'orgDetailsId',
+                id: 'orgDetailsId',
+                minWidth: 100,
+                show: true,
+            },
+            {
+                Header: 'Tower Name',
+                accessor: 'towerName',
+                id: 'towerName',
+                minWidth: 100,
+                show: true,
+            },
+            {
+                Header: 'Site Name',
+                accessor: 'siteName',
+                id: 'siteName',
+                minWidth: 100,
+                show: true,
+            },
+            {
+                Header: 'city Name',
+                accessor: 'cityId',
+                id: 'cityId',
+                minWidth: 100,
+                show: true,
+            },
+            {
+                Header: 'Longitute',
+                accessor: 'longitude',
+                id: 'longitude',
                 minWidth: 100,
                 show: true
             },
             {
-                Header: 'Module Name',
-                accessor: 'moduleName',
-                id: 'moduleName',
+                Header: 'Latitude',
+                accessor: 'latitude',
+                id: 'latitude',
                 minWidth: 100,
-                show: true,
-            },
-            {
-                Header: 'Module Code',
-                accessor: 'moduleCode',
-                id: 'moduleCode',
-                minWidth: 100,
-                show: true,
+                show: true
             },
         ]
         this.setState({ columns: columns });
@@ -89,8 +110,8 @@ class ModuleIndex extends Wrapper {
 
     UNSAFE_componentWillReceiveProps(nextProps) {
 
-        if (nextProps.modules && nextProps.modules !== null && nextProps.modules != this.state.modules) {
-            this.setState({ modules: nextProps.modules })
+        if (nextProps.towers && nextProps.towers !== null && nextProps.towers != this.state.towers) {
+            this.setState({ towers: nextProps.towers })
         }
 
         const storeInState = (data, key) => {
@@ -105,7 +126,7 @@ class ModuleIndex extends Wrapper {
 
 
     async componentDidMount() {
-        this.props.getModuleMasterData(0, constants.ALL_ROWS_LIST, undefined, undefined);
+        this.props.getTowerMasterData(0, constants.ALL_ROWS_LIST, undefined, undefined);
         setTimeout(() => {
             this.updateColumnWhenPropsUpdate();
         }, 100);
@@ -113,9 +134,9 @@ class ModuleIndex extends Wrapper {
 
     onDeleteRecord = (ids) => {
         if (confirm('Would you like to delete the record?')) {
-            this.props.deleteModuleMasterData(ids);
+            this.props.deleteTowerMasterData(ids);
             setTimeout(() => {
-                this.props.getModuleMasterData(0, constants.ALL_ROWS_LIST, undefined, undefined);
+                this.props.getTowerMasterData(0, constants.ALL_ROWS_LIST, undefined, undefined);
             }, 500);
         }
 
@@ -124,11 +145,11 @@ class ModuleIndex extends Wrapper {
         this.onClickReferesh();
         this.setState({ showEditPopup: false })
     }
-    onClickAdd = (module) => {
-        this.setState({ module: module, showEditPopup: true })
+    onClickAdd = (tower) => {
+        this.setState({ tower: tower, showEditPopup: true })
     }
     onClickReferesh = (async) => {
-        this.props.getModuleMasterData(0, constants.ALL_ROWS_LIST, undefined, undefined);
+        this.props.getTowerMasterData(0, constants.ALL_ROWS_LIST, undefined, undefined);
         this.updateColumnWhenPropsUpdate();
     }
     updateColumn = (column) => {
@@ -138,8 +159,8 @@ class ModuleIndex extends Wrapper {
     }
 
     render() {
-        const { showEditPopup, columns, modules, module } = this.state;
-        return (<div id='moduleTable' className={style.table_wapper} >
+        const { showEditPopup, columns, towers, tower } = this.state;
+        return (<div id='towerTable' className={style.table_wapper} >
             {showEditPopup === true &&
                 <>
                     <CommonStyle.Overlay
@@ -153,10 +174,10 @@ class ModuleIndex extends Wrapper {
                         <CommonStyle.CloseButtonForModel
                             onClick={() => this.onClickCancel()}
                         >X</CommonStyle.CloseButtonForModel>
-                        <ModuleAddEdit
-                            baseObject={module}
+                        <TowerAddEdit
+                            baseObject={tower}
                             onCancel={this.onClickCancel}
-                            onSave={this.props.saveModuleMasterData}
+                            onSave={this.props.saveTowerMasterData}
                         />
                     </CommonStyle.Wrapper_OnOverlay>
 
@@ -187,8 +208,8 @@ class ModuleIndex extends Wrapper {
                 <div
                     style={{ width: '98%' }}
                 >
-                    <ModuleMasterDetails
-                        Data={modules}
+                    <TowerMasterDetails
+                        Data={towers}
                         isColumnUpdate={true}
                         updateColumn={this.updateColumn}
                         columns={columns}
@@ -201,9 +222,9 @@ class ModuleIndex extends Wrapper {
 
 
 const mapStateToProps = state => {
-    const { module, modules, moduleRecordsCount, moduleActiontype } = state.adminReducer;
+    const { tower, towers, towerRecordsCount, towerActiontype } = state.adminReducer;
 
-    return { module, modules, moduleRecordsCount, moduleActiontype };
+    return { tower, towers, towerRecordsCount, towerActiontype };
 };
 
-export default connect(mapStateToProps, { getModuleMasterData, saveModuleMasterData, getModuleMasterDataById, deleteModuleMasterData })(ModuleIndex);
+export default connect(mapStateToProps, { getTowerMasterData, saveTowerMasterData, getTowerMasterDataById, deleteTowerMasterData })(TowerIndex);

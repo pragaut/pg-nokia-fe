@@ -4,7 +4,7 @@ import { validateInputs } from '../../../utils/editFormHelper';
 import { save, deleteItems, shouldStoreDataInStateByKey } from '../../../utils/editFormHelper';
 import { connect } from 'react-redux';
 import { constants } from '../../../utils/constants';
-import { getAlarmTypeMasterData } from '../../../actions/admin.action';
+import { getTowerMasterData } from '../../../actions/admin.action';
 import style from '../../../theme/app.scss';
 import ModalHeader from '../../shared/ModalHeader';
 import Input from '../../shared/InputBox';
@@ -13,10 +13,10 @@ import config from '../../../config';
 //import Select from 'react-select'
 import * as sessionHelper from '../../../utils/session.helper';
 import * as helper from '../../../helper';
-class AlarmTypeAddEdit extends Wrapper {
+class TowerAddEdit extends Wrapper {
 
     configs = [{
-        name: 'alarmTypeName',
+        name: 'towerName',
         type: 'string',
         required: true
     }];
@@ -26,25 +26,25 @@ class AlarmTypeAddEdit extends Wrapper {
 
         this.onFileChange = this.onFileChange.bind(this);
         this.state = {
-            alarm: props.baseObject ? props.baseObject : {},
+            tower: props.baseObject ? props.baseObject : {},
             loadershow: 'false',
         };
     };
 
     onValueChanged = key => event => {
-        const existingAlarm = Object.assign({}, this.state.alarm);
-        existingAlarm[key] = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
+        const existingTower = Object.assign({}, this.state.tower);
+        existingTower[key] = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
 
-        this.setState({ alarm: existingAlarm });
+        this.setState({ tower: existingTower });
     };
     onTextChange = key => event => {
-        const existingAlarm = Object.assign({}, this.state.alarm);
-        existingAlarm[key] = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
-        this.setState({ alarm: existingAlarm });
+        const existingTower = Object.assign({}, this.state.tower);
+        existingTower[key] = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
+        this.setState({ tower: existingTower });
     };
 
     componentDidMount() {
-        this.props.getAlarmTypeMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
+        this.props.getTowerMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
     };
 
     UNSAFE_componentWillReceiveProps(nextProps) {       
@@ -78,7 +78,7 @@ class AlarmTypeAddEdit extends Wrapper {
 
     
     render() {
-         console.log("this.state.alarm",this.state.alarm);
+         console.log("this.state.tower",this.state.tower);
         return (
             <div className={style.modal_dialog} style={{ width: '95%', maxHeight: '120vh', maxWidth: '80vw' }}>
                 {/* <ModalHeader
@@ -89,9 +89,10 @@ class AlarmTypeAddEdit extends Wrapper {
                     {/** idhar saare edit fields aayenge */}
                     <div className={style.field_flex_wrapper}>
                         <div className={style.field_flex_new} style={{ width: '45%', color: "rgba(0,0,0,0.54)", fontSize: "13px" }}>                           
-                            <Input label="Alarm Type:" type='text' defaultValue={this.state.alarm.alarmTypeName} onChange={this.onValueChanged('alarmTypeName')} />
-                            <Input label="Code:" type='text' defaultValue={this.state.alarm.alarmTypeCode} onChange={this.onValueChanged('alarmTypeCode')} />
-                            <Input label="Order:" type='number' defaultValue={this.state.alarm.alarmTypeOrder} onChange={this.onValueChanged('alarmTypeOrder')} />
+                            <Input label="Tower Name:" type='text' defaultValue={this.state.tower.towerName} onChange={this.onValueChanged('towerName')} />
+                            <Input label="Site Name:" type='text' defaultValue={this.state.tower.siteName} onChange={this.onValueChanged('siteName')} />
+                            <Input label="Longitude:" type='number' defaultValue={this.state.tower.longitude} onChange={this.onValueChanged('longitude')} />
+                            <Input label="Latitude:" type='number' defaultValue={this.state.tower.latitude} onChange={this.onValueChanged('latitude')} />
                             
                             {/* <Input
                                 focusbordercolor={'#f90707'}
@@ -100,25 +101,19 @@ class AlarmTypeAddEdit extends Wrapper {
                                 onChange={this.onMediaChange('media')}
                             />        */}
                         </div>
-                        <div className={style.field_flex_new} style={{ width: '45%', color: "rgba(0,0,0,0.54)", fontSize: "13px" }}>
-                            <Input label="Color Code:" type='color' defaultValue={this.state.alarm.colorCode} onChange={this.onValueChanged('colorCode')} />
-                            <Input label="BG Color Code:" type='color' defaultValue={this.state.alarm.bgColorCode} onChange={this.onValueChanged('bgColorCode')} />
-                            <Input label="Is Required:" type='number' defaultValue={this.state.alarm.isRemarksRequired} onChange={this.onValueChanged('isRemarksRequired')} />
-                                             
-                        </div>
                     </div>
                 </div>
                 <br></br>
                 {/* container for save and cancel */}
                 <div style={{ display: 'flex', width: '200px', alignItems: 'center', justifyContent: 'space-between', margin: '10px 0px' }}>
                     <button className={style.primary_btn} onClick={() => {
-                        console.log(this.state.alarm);
-                        const validationText = validateInputs(this.state.alarm, this.configs);
+                        console.log(this.state.tower);
+                        const validationText = validateInputs(this.state.tower, this.configs);
                         if (validationText) {
                             return alert(validationText);
                         }
                         setTimeout(() => {
-                            this.props.onSave(this.state.alarm, this.props.index);
+                            this.props.onSave(this.state.tower, this.props.index);
                         }, 200);
 
                     }}>save</button>
@@ -128,7 +123,7 @@ class AlarmTypeAddEdit extends Wrapper {
     }
 };
 
-AlarmTypeAddEdit.propTypes = {
+TowerAddEdit.propTypes = {
     onSave: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
 };
@@ -137,4 +132,4 @@ const mapStateToProps = state => {
     const {   } = state.adminReducer;
     return {   };
 }
-export default connect(mapStateToProps, { getAlarmTypeMasterData })(AlarmTypeAddEdit)
+export default connect(mapStateToProps, { getTowerMasterData })(TowerAddEdit)

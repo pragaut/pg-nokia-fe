@@ -32,7 +32,45 @@ export const ALARMTYPEMASTER_DELETE_ERROR = 'modules/alarmTyeMaster/ALARMTYPEMAS
 export const ALARMTYPEMASTER_SAVE_REQUESTED = 'modules/alarmTyeMaster/ALARMTYPEMASTER_SAVE_REQUESTED';
 export const ALARMTYPEMASTER_SAVE_SUCCESS = 'modules/alarmTyeMaster/ALARMTYPEMASTER_SAVE_SUCCESS';
 export const ALARMTYPEMASTER_SAVE_ERROR = 'modules/alarmTyeMaster/ALARMTYPEMASTER_SAVE_ERROR';
-//#region Group Master
+//#endregion
+
+//#region Notification Master
+export const NOTIFICATIONMASTER_INIT = 'modules/notificationMaster/NOTIFICATIONMASTER_INIT';
+export const NOTIFICATIONMASTER_LIST_REQUESTED = 'modules/notificationMaster/NOTIFICATIONMASTER_LIST_REQUESTED';
+export const NOTIFICATIONMASTER_LIST_SUCCESS = 'modules/notificationMaster/NOTIFICATIONMASTER_LIST_SUCCESS';
+
+export const NOTIFICATIONMASTER_GET_BY_ID_REQUESTED = 'modules/notificationMaster/NOTIFICATIONMASTER_GET_BY_ID_REQUESTED';
+export const NOTIFICATIONMASTER_GET_BY_ID_SUCCESS = 'modules/notificationMaster/NOTIFICATIONMASTER_GET_BY_ID_SUCCESS';
+export const NOTIFICATIONMASTER_GET_BY_ID_ERROR = 'modules/notificationMaster/NOTIFICATIONMASTER_GET_BY_ID_ERROR';
+
+export const NOTIFICATIONMASTER_DELETE_REQUESTED = 'modules/notificationMaster/NOTIFICATIONMASTER_DELETE_REQUESTED';
+export const NOTIFICATIONMASTER_DELETE_SUCCESS = 'modules/notificationMaster/NOTIFICATIONMASTER_DELETE_SUCCESS';
+export const NOTIFICATIONMASTER_DELETE_ERROR = 'modules/notificationMaster/NOTIFICATIONMASTER_DELETE_ERROR';
+
+export const NOTIFICATIONMASTER_SAVE_REQUESTED = 'modules/notificationMaster/NOTIFICATIONMASTER_SAVE_REQUESTED';
+export const NOTIFICATIONMASTER_SAVE_SUCCESS = 'modules/notificationMaster/NOTIFICATIONMASTER_SAVE_SUCCESS';
+export const NOTIFICATIONMASTER_SAVE_ERROR = 'modules/notificationMaster/NOTIFICATIONMASTER_SAVE_ERROR';
+//#endregion
+
+//#region Module Master
+export const MODULEMASTER_INIT = 'modules/moduleMaster/MODULEMASTER_INIT';
+export const MODULEMASTER_LIST_REQUESTED = 'modules/moduleMaster/MODULEMASTER_LIST_REQUESTED';
+export const MODULEMASTER_LIST_SUCCESS = 'modules/moduleMaster/MODULEMASTER_LIST_SUCCESS';
+
+export const MODULEMASTER_GET_BY_ID_REQUESTED = 'modules/moduleMaster/MODULEMASTER_GET_BY_ID_REQUESTED';
+export const MODULEMASTER_GET_BY_ID_SUCCESS = 'modules/moduleMaster/MODULEMASTER_GET_BY_ID_SUCCESS';
+export const MODULEMASTER_GET_BY_ID_ERROR = 'modules/moduleMaster/MODULEMASTER_GET_BY_ID_ERROR';
+
+export const MODULEMASTER_DELETE_REQUESTED = 'modules/moduleMaster/MODULEMASTER_DELETE_REQUESTED';
+export const MODULEMASTER_DELETE_SUCCESS = 'modules/moduleMaster/MODULEMASTER_DELETE_SUCCESS';
+export const MODULEMASTER_DELETE_ERROR = 'modules/moduleMaster/MODULEMASTER_DELETE_ERROR';
+
+export const MODULEMASTER_SAVE_REQUESTED = 'modules/moduleMaster/MODULEMASTER_SAVE_REQUESTED';
+export const MODULEMASTER_SAVE_SUCCESS = 'modules/moduleMaster/MODULEMASTER_SAVE_SUCCESS';
+export const MODULEMASTER_SAVE_ERROR = 'modules/moduleMaster/MODULEMASTER_SAVE_ERROR';
+//#endregion
+
+//#region Org Relation Master
 export const ORGRELATIONTYPEMASTER_INIT = 'modules/orgrelationtypemaster/ORGRELATIONTYPEMASTER_INIT';
 export const ORGRELATIONTYPEMASTER_LIST_REQUESTED = 'modules/orgrelationtypemaster/ORGRELATIONTYPEMASTER_LIST_REQUESTED';
 export const ORGRELATIONTYPEMASTER_LIST_SUCCESS = 'modules/orgrelationtypemaster/ORGRELATIONTYPEMASTER_LIST_SUCCESS';
@@ -48,25 +86,6 @@ export const ORGRELATIONTYPEMASTER_DELETE_ERROR = 'modules/orgrelationtypemaster
 export const ORGRELATIONTYPEMASTER_SAVE_REQUESTED = 'modules/orgrelationtypemaster/ORGRELATIONTYPEMASTER_SAVE_REQUESTED';
 export const ORGRELATIONTYPEMASTER_SAVE_SUCCESS = 'modules/orgrelationtypemaster/ORGRELATIONTYPEMASTER_SAVE_SUCCESS';
 export const ORGRELATIONTYPEMASTER_SAVE_ERROR = 'modules/orgrelationtypemaster/ORGRELATIONTYPEMASTER_SAVE_ERROR';
-//#endregion
-
-//#region Module Master
-export const MODULEMASTER_INIT = 'modules/modulemasetr/MODULEMASTER_INIT';
-export const MODULEMASTER_LIST_REQUESTED = 'modules/modulemasetr/MODULEMASTER_LIST_REQUESTED';
-export const MODULEMASTER_LIST_SUCCESS = 'modules/modulemasetr/MODULEMASTER_LIST_SUCCESS';
-
-export const MODULEMASTER_GET_BY_ID_REQUESTED = 'modules/modulemasetr/MODULEMASTER_GET_BY_ID_REQUESTED';
-export const MODULEMASTER_GET_BY_ID_SUCCESS = 'modules/modulemasetr/MODULEMASTER_GET_BY_ID_SUCCESS';
-export const MODULEMASTER_GET_BY_GROUPID_SUCCESS = 'modules/modulemasetr/MODULEMASTER_GET_BY_GROUPID_SUCCESS';
-export const MODULEMASTER_GET_BY_ID_ERROR = 'modules/modulemasetr/MODULEMASTER_GET_BY_ID_ERROR';
-
-export const MODULEMASTER_DELETE_REQUESTED = 'modules/modulemasetr/MODULEMASTER_DELETE_REQUESTED';
-export const MODULEMASTER_DELETE_SUCCESS = 'modules/modulemasetr/MODULEMASTER_DELETE_SUCCESS';
-export const MODULEMASTER_DELETE_ERROR = 'modules/modulemasetr/MODULEMASTER_DELETE_ERROR';
-
-export const MODULEMASTER_SAVE_REQUESTED = 'modules/modulemasetr/MODULEMASTER_SAVE_REQUESTED';
-export const MODULEMASTER_SAVE_SUCCESS = 'modules/modulemasetr/MODULEMASTER_SAVE_SUCCESS';
-export const MODULEMASTER_SAVE_ERROR = 'modules/modulemasetr/MODULEMASTER_SAVE_ERROR';
 //#endregion
 
 //#region Role Master
@@ -537,4 +556,22 @@ export const ORGANISATIONEMPLOYEEDETAILS_DELETE_ERROR = 'modules/organisationdet
 export const ORGANISATIONEMPLOYEEDETAILS_SAVE_REQUESTED = 'modules/organisationdetails/ORGANISATIONEMPLOYEEDETAILS_SAVE_REQUESTED';
 export const ORGANISATIONEMPLOYEEDETAILS_SAVE_SUCCESS = 'modules/organisationdetails/ORGANISATIONEMPLOYEEDETAILS_SAVE_SUCCESS';
 export const ORGANISATIONEMPLOYEEDETAILS_SAVE_ERROR = 'modules/organisationdetails/ORGANISATIONEMPLOYEEDETAILS_SAVE_ERROR';
+
+//#endregion
+//#region Tower Master
+export const TOWERMASTER_INIT = 'modules/towerMaster/TOWERMASTER_INIT';
+export const TOWERMASTER_LIST_REQUESTED = 'modules/towerMaster/TOWERMASTER_LIST_REQUESTED';
+export const TOWERMASTER_LIST_SUCCESS = 'modules/towerMaster/TOWERMASTER_LIST_SUCCESS';
+
+export const TOWERMASTER_GET_BY_ID_REQUESTED = 'modules/towerMaster/TOWERMASTER_GET_BY_ID_REQUESTED';
+export const TOWERMASTER_GET_BY_ID_SUCCESS = 'modules/towerMaster/TOWERMASTER_GET_BY_ID_SUCCESS';
+export const TOWERMASTER_GET_BY_ID_ERROR = 'modules/towerMaster/TOWERMASTER_GET_BY_ID_ERROR';
+
+export const TOWERMASTER_DELETE_REQUESTED = 'modules/towerMaster/TOWERMASTER_DELETE_REQUESTED';
+export const TOWERMASTER_DELETE_SUCCESS = 'modules/towerMaster/TOWERMASTER_DELETE_SUCCESS';
+export const TOWERMASTER_DELETE_ERROR = 'modules/towerMaster/TOWERMASTER_DELETE_ERROR';
+
+export const TOWERMASTER_SAVE_REQUESTED = 'modules/towerMaster/TOWERMASTER_SAVE_REQUESTED';
+export const TOWERMASTER_SAVE_SUCCESS = 'modules/towerMaster/TOWERMASTER_SAVE_SUCCESS';
+export const TOWERMASTER_SAVE_ERROR = 'modules/towerMaster/TOWERMASTER_SAVE_ERROR';
 //#endregion

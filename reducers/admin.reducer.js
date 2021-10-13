@@ -82,7 +82,7 @@ const initialState = {
     users: undefined,
     userRecordsCount: 0,
 
-    notificationActiontype: actions.NOTIFICATIONMASTERDETAILS_INIT,
+    notificationActiontype: actions.NOTIFICATIONMASTER_INIT,
     notification: undefined,
     notifications: undefined,
     notificationRecordsCount: 0,
@@ -157,6 +157,11 @@ const initialState = {
     processFlowResponsibilitys: undefined,
     processFlowResponsibilityActiontype: undefined,
     processFlowResponsibilityRecordsCount: 0,
+
+    towerActiontype: actions.TOWERMASTER_INIT,
+    tower: undefined,
+    towers: undefined,
+    towerRecordsCount: 0,
 };
 
 /**
@@ -238,7 +243,7 @@ const adminReducer = (state, action) => {
 
         case actions.ALARMTYPEMASTER_GET_BY_ID_SUCCESS:
             return {
-                alarms: state.alarmRecordsCount,
+                alarms: state.alarms,
                 alarm: action.data,
                 alarmActiontype: action.type,
                 alarmRecordsCount: state.recordsCount,
@@ -266,6 +271,50 @@ const adminReducer = (state, action) => {
                 alarms: state.alarms,
                 alarmActiontype: action.type,
                 alarmRecordsCount: state.recordsCount,
+            };
+
+        //#endregion
+
+        //#region  Module Master Reducer
+        case actions.MODULEMASTER_LIST_SUCCESS:
+            return {
+                module: state.module,
+                modules: action.data,
+                moduleActiontype: action.type,
+                moduleRecordsCount: action.recordsCount,
+
+            };
+
+        case actions.MODULEMASTER_GET_BY_ID_SUCCESS:
+            return {
+                modules: state.modules,
+                module: action.data,
+                moduleActiontype: action.type,
+                moduleRecordsCount: state.recordsCount,
+            };
+
+        case actions.MODULEMASTER_SAVE_SUCCESS:
+            return {
+                module: action.data,
+                modules: state.modules,
+                moduleActiontype: action.type,
+                moduleRecordsCount: state.recordsCount,
+            };
+
+        case actions.MODULEMASTER_DELETE_SUCCESS:
+            return {
+                module: state.data,
+                modules: state.modules,
+                moduleActiontype: action.type,
+                moduleRecordsCount: state.recordsCount,
+            };
+
+        case actions.MODULEMASTER_INIT:
+            return {
+                module: state.module,
+                modules: state.modules,
+                moduleActiontype: action.type,
+                moduleRecordsCount: state.recordsCount,
             };
 
         //#endregion
@@ -327,6 +376,7 @@ const adminReducer = (state, action) => {
 
         //#endregion 
 
+        
         //#region  Country Master Reducer
         case actions.COUNTRYMASTER_LIST_SUCCESS:
             return {
@@ -527,15 +577,15 @@ const adminReducer = (state, action) => {
                 type: action.type,
             };
 
-        case actions.MODULEMASTER_GET_BY_GROUPID_SUCCESS:
-            return {
-                module: state.module,
-                modules: action.data,
-                moduleActiontype: action.type,
-                moduleRecordsCount: action.recordsCount,
+        // case actions.MODULEMASTER_GET_BY_GROUPID_SUCCESS:
+        //     return {
+        //         module: state.module,
+        //         modules: action.data,
+        //         moduleActiontype: action.type,
+        //         moduleRecordsCount: action.recordsCount,
 
-                type: action.type,
-            };
+        //         type: action.type,
+        //     };
 
         case actions.MODULEMASTER_SAVE_SUCCESS:
             return {
@@ -589,15 +639,15 @@ const adminReducer = (state, action) => {
                 type: action.type,
             };
 
-        case actions.ROLEMASTER_GET_BY_MODULEID_SUCCESS:
-            return {
-                role: state.role,
-                roles: action.data,
-                roleActiontype: action.type,
-                roleRecordsCount: action.recordsCount,
+        // case actions.ROLEMASTER_GET_BY_MODULEID_SUCCESS:
+        //     return {
+        //         role: state.role,
+        //         roles: action.data,
+        //         roleActiontype: action.type,
+        //         roleRecordsCount: action.recordsCount,
 
-                type: action.type,
-            };
+        //         type: action.type,
+        //     };
 
         case actions.ROLEMASTER_SAVE_SUCCESS:
             return {
@@ -880,8 +930,8 @@ const adminReducer = (state, action) => {
 
         //#endregion 
 
-        //#region  Notificaation Master Reducer
-        case actions.NOTIFICATIONMASTERDETAILS_LIST_SUCCESS:
+        //#region  Notification Master Reducer
+        case actions.NOTIFICATIONMASTER_LIST_SUCCESS:
             return {
                 notification: state.notification,
                 notifications: action.data,
@@ -891,7 +941,7 @@ const adminReducer = (state, action) => {
                 type: action.type,
             };
 
-        case actions.NOTIFICATIONMASTERDETAILS_GET_BY_ID_SUCCESS:
+        case actions.NOTIFICATIONMASTER_GET_BY_ID_SUCCESS:
             return {
                 notifications: state.notifications,
                 notification: action.data,
@@ -901,7 +951,7 @@ const adminReducer = (state, action) => {
                 type: action.type,
             };
 
-        case actions.NOTIFICATIONMASTERDETAILS_SAVE_SUCCESS:
+        case actions.NOTIFICATIONMASTER_SAVE_SUCCESS:
             return {
                 notification: action.data,
                 notifications: state.notifications,
@@ -911,7 +961,7 @@ const adminReducer = (state, action) => {
                 type: action.type,
             };
 
-        case actions.NOTIFICATIONMASTERDETAILS_DELETE_SUCCESS:
+        case actions.NOTIFICATIONMASTER_DELETE_SUCCESS:
             return {
                 notification: state.data,
                 notifications: state.notifications,
@@ -921,7 +971,7 @@ const adminReducer = (state, action) => {
                 type: action.type,
             };
 
-        case actions.NOTIFICATIONMASTERDETAILS_INIT:
+        case actions.NOTIFICATIONMASTER_INIT:
             return {
                 notification: state.notification,
                 notifications: state.notifications,
@@ -1777,7 +1827,50 @@ const adminReducer = (state, action) => {
             };
         //#endregion
 
+            //#region  Tower Master Reducer
 
+        case actions.TOWERMASTER_LIST_SUCCESS:
+            return {
+                tower: state.tower,
+                towers: action.data,
+                towerActiontype: action.type,
+                towerRecordsCount: action.recordsCount,
+
+            };
+
+        case actions.TOWERMASTER_GET_BY_ID_SUCCESS:
+            return {
+                towers: state.towers,
+                tower: action.data,
+                towerActiontype: action.type,
+                towerRecordsCount: state.recordsCount,
+            };
+
+        case actions.TOWERMASTER_SAVE_SUCCESS:
+            return {
+                tower: action.data,
+                towers: state.towers,
+                towerActiontype: action.type,
+                towerRecordsCount: state.recordsCount,
+            };
+
+        case actions.TOWERMASTER_DELETE_SUCCESS:
+            return {
+                tower: state.data,
+                towers: state.towers,
+                towerActiontype: action.type,
+                towerRecordsCount: state.recordsCount,
+            };
+
+        case actions.TOWERMASTER_INIT:
+            return {
+                tower: state.tower,
+                towers: state.towers,
+                towerActiontype: action.type,
+                towerRecordsCount: state.recordsCount,
+            };
+
+        //#endregion
 
         // important: we should always give a default, otherwise React gives a cheap warning and it is very annoying
         default:
@@ -1924,6 +2017,11 @@ const adminReducer = (state, action) => {
                 processFlowResponsibilitys: state.processFlowResponsibilitys,
                 processFlowResponsibilityActiontype: state.processFlowResponsibilityActiontype,
                 processFlowResponsibilityRecordsCount: state.processFlowResponsibilityRecordsCount,
+
+                tower: state.tower,
+                towers: state.towers,
+                towerActiontype: state.towerActiontype,
+                towerRecordsCount: state.towerRecordsCount,
             };
     }
 };

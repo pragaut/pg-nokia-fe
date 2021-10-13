@@ -189,12 +189,29 @@ app.prepare()
 			});
 		});
 		
-		server.get('/admin/alarmType-master', (req, res) => {
+		server.get('/admin/alarm-type-master', (req, res) => {
 			const q = req.query;
-			q.tab = 'alarmType-master';
-			q.pathname = 'alarmType-master';
+			q.tab = 'alarm-type-master';
+			q.pathname = 'alarm-type-master';
 			q.pageName = 'Alarm Type Master';
 			q.MasterName = 'Alarm Type Master';
+			return app.render(req, res, '/admin', {
+				page: q.pageName,
+				MasterName: q.MasterName,
+				tab: q.tab,
+				section: 'master',
+				query: {
+					...q
+				}
+			});
+		});
+
+		server.get('/admin/notification-master', (req, res) => {
+			const q = req.query;
+			q.tab = 'notification-master';
+			q.pathname = 'notification-master';
+			q.pageName = 'Notification Master';
+			q.MasterName = 'Notification Master';
 			return app.render(req, res, '/admin', {
 				page: q.pageName,
 				MasterName: q.MasterName,
@@ -227,6 +244,23 @@ app.prepare()
 			q.pathname = 'role-master';
 			q.pageName = 'Role Master';
 			q.MasterName = 'Role Master';
+			return app.render(req, res, '/admin', {
+				page: q.pageName,
+				MasterName: q.MasterName,
+				tab: q.tab,
+				section: 'master',
+				query: {
+					...q
+				}
+			});
+		});
+
+		server.get('/admin/tower-master', (req, res) => {
+			const q = req.query;
+			q.tab = 'tower-master';
+			q.pathname = 'tower-master';
+			q.pageName = 'Tower Master';
+			q.MasterName = 'Tower Master';
 			return app.render(req, res, '/admin', {
 				page: q.pageName,
 				MasterName: q.MasterName,
@@ -486,22 +520,6 @@ app.prepare()
 			q.pathname = 'scope-master';
 			q.pageName = 'Scope Master';
 			q.MasterName = 'Scope Master';
-			return app.render(req, res, '/admin', {
-				page: q.pageName,
-				MasterName: q.MasterName,
-				tab: q.tab,
-				section: 'master',
-				query: {
-					...q
-				}
-			});
-		});
-		server.get('/admin/year-master', (req, res) => {
-			const q = req.query;
-			q.tab = 'year-master';
-			q.pathname = 'year-master';
-			q.pageName = 'Year Master';
-			q.MasterName = 'Year Master';
 			return app.render(req, res, '/admin', {
 				page: q.pageName,
 				MasterName: q.MasterName,
