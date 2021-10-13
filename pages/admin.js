@@ -27,6 +27,7 @@ import GroupMaster from '../components/masters/groupMaster';
 import AlarmTypeMaster from '../components/masters/alarmTypeMaster';
 import OrgRelationTypeMaster from '../components/masters/orgRelationTypeMaster';
 import OrganisationDetails from '../components/masters/organisationDetails';
+import OrganisationEmployeeMaster from '../components/masters/organisationEmployeeMaster';
 import ModuleMaster from '../components/masters/moduleMaster';
 import RoleMaster from '../components/masters/roleMaster';
 import UserMaster from '../components/masters/userMaster';
@@ -261,6 +262,16 @@ export class Index extends Wrapper {
           ParentMasterName: undefined,
           parentMasterCategoryId: '',
           url: "/admin/organisation-details",
+          isVisible: true
+        },
+        {
+          pathname: "/admin",
+          tab: "organisation-employee-details",
+          id: undefined,
+          MasterName: 'Organisation Employee Details',
+          ParentMasterName: undefined,
+          parentMasterCategoryId: '',
+          url: "/admin/organisation-employee-details",
           isVisible: true
         },
         {
@@ -615,6 +626,12 @@ export class Index extends Wrapper {
                   <OrganisationDetails />
                 </div>
               )}
+               {router && router.query && router.query.tab === "organisation-employee-details" && (
+                <div>
+                  {/* <GroupAddEdit /> */}
+                  <OrganisationEmployeeMaster />
+                </div>
+              )}
               {router && router.query && router.query.tab === "module-master" && (
                 <div>
                   {/* <ModuleAddEdit /> */}
@@ -659,7 +676,8 @@ export class Index extends Wrapper {
                 router.query.tab != "alarmType-master" && router.query.tab != "module-master" &&
                 router.query.tab != "role-master" && router.query.tab != "year-master" &&
                 router.query.tab !="org-relation-type-master" && router.query.tab !="organisation-details" &&
-                router.query.tab != "user-master" && router.query.tab != "criticality-master" && router.query.tab != "org-relation-type-master" &&
+                router.query.tab != "user-master" && router.query.tab != "criticality-master" && 
+                router.query.tab != "org-relation-type-master" && router.query.tab != "organisation-employee-details" &&
                 <div>
                   <MasterDetails
                     masterCateogyId={router && router.query && router.query.id}

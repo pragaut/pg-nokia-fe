@@ -1835,7 +1835,8 @@ export const getOrganisationDetailsDataById = (id) => async dispatch => {
 export const getOrganisationDetailsData = (pageIndex, rowsToReturn, order, where, filterparameter) => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.AUTH_URL + `tmc/admin/organisationDetails`;
+        let pageIndex = 0;
+        let url = config.AUTH_URL + `tmc/admin/organisationDetails?pageIndex=${pageIndex}`;
 
         if (filterparameter && filterparameter.groupId && filterparameter.groupId !== null && filterparameter.groupId !== 'undefined' && filterparameter.groupId !== '-1') {
             url = url + `&groupId=${filterparameter.groupId}`;
@@ -1888,3 +1889,106 @@ export const deleteOrganisationDetailsData = Ids => async dispatch => {
 };
 //#endregion
 
+
+//#region  Organisation Employee Details
+export const initOrganisationEmployeeDetails = () => dispatch => {
+    dispatchAction(dispatch, adminTypes.ORGANISATIONEMPLOYEEDETAILS_INIT, null, null, null, null);
+};
+export const saveOrganisationEmployeeDetails = OrganisationEmployee => async dispatch => {
+    //  dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
+    try {
+        let url = config.AUTH_URL + `tmc/admin/organisationEmployeeDetails/`;
+        const data = (typeof OrganisationEmployee.id === 'undefined' || OrganisationEmployee.id === -1) ? await service.post(url, OrganisationEmployee, true)
+            : await service.put(url, OrganisationEmployee, true);
+
+        if (data && !data.errorMessage) {
+            dispatchAction(dispatch, adminTypes.ORGANISATIONEMPLOYEEDETAILS_SAVE_SUCCESS, OrganisationEmployee, null, data.message, null);
+
+            dispatch({
+                type: commonTypes.NOTIFICATION_SHOW,
+                message: 'Organisation Employee Details updated successfully',
+                error: undefined,
+                notification: true
+            });
+        }
+        else {
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Organisation Employee Master have some error pls check !!'), null, null);
+        }
+    }
+    catch (error) {
+        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+    }
+};
+export const getOrganisationEmployeeDetailsDataById = (id) => async dispatch => {
+    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null); 
+    try {
+        let url = config.AUTH_URL + `tmc/admin/organisationEmployeeDetails?id=${id}`;
+        const data = await service.get(url, true);
+        if (data && !data.errorMessage) {
+            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+            dispatchAction(dispatch, adminTypes.ORGANISATIONEMPLOYEEDETAILS_GET_BY_ID_SUCCESS, data.data, null, data.message, null);
+        }
+        else {
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Organisation Employee Master have some error pls check !!'), null, null);
+        }
+    }
+    catch (error) {
+        console.error('error: ', error);
+        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+    }
+
+};
+export const getOrganisationEmployeeDetailsData = (pageIndex, rowsToReturn, order, where, filterparameter) => async dispatch => {
+    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
+    try {
+        let url = config.AUTH_URL + `tmc/admin/organisationEmployeeDetails`;
+
+        if (filterparameter && filterparameter.orgDetailsId && filterparameter.orgDetailsId !== null && filterparameter.orgDetailsId !== 'undefined' && filterparameter.orgDetailsId !== '-1') {
+            url = url + `&orgDetailsId=${filterparameter.orgDetailsId}`;
+        }
+        const data = await service.get(url, true);
+        console.log('Get Organisation Employee Details Data', data);
+        if (data && !data.errorMessage) {
+            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+            dispatchAction(dispatch, adminTypes.ORGANISATIONEMPLOYEEDETAILS_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
+        }
+        else {
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Organisation Employee Master have some error pls check !!'), null, null);
+        }
+    }
+    catch (error) {
+        console.error('error: ', error);
+        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+    }
+};
+export const deleteOrganisationEmployeeDetailsData = Ids => async dispatch => {
+    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
+    try {
+        let url = config.AUTH_URL + `tmc/admin/organisationEmployeeDetails`;
+
+        const data = await service._delete(url + '?id=' + Ids, true);
+
+        if (data && !data.errorMessage) {
+            dispatchAction(dispatch, adminTypes.ORGANISATIONEMPLOYEEDETAILS_DELETE_SUCCESS, null, null, null, data.message);
+
+            setTimeout(() =>
+                dispatch({
+                    type: commonTypes.NOTIFICATION_SHOW,
+                    message: 'Organisation Employee Detail(s) deleted successfully !!',
+                    error: undefined,
+                    notification: true
+                }), 500);
+        }
+        else {
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Organisation Employee Master have some error pls check !!'), null, null);
+        }
+    }
+    catch (error) {
+        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+    }
+};
+//#endregion
