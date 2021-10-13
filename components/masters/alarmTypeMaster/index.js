@@ -90,8 +90,8 @@ class AlarmTypeIndex extends Wrapper {
                 show: true,
                 Cell: row => (
                     <React.Fragment>
-                        <div style={{ background: row.original.themeColor, padding: "3px 5px" }}>
-                            {row.original.themeColor}
+                        <div style={{ background: row.original.colorCode, padding: "3px 5px" }}>
+                            {row.original.colorCode}
                         </div>
                     </React.Fragment>
                 ),
@@ -105,8 +105,8 @@ class AlarmTypeIndex extends Wrapper {
                 show: true,
                 Cell: row => (
                     <React.Fragment>
-                        <div style={{ background: row.original.themeColor, padding: "3px 5px" }}>
-                            {row.original.themeColor}
+                        <div style={{ background: row.original.bgColorCode, padding: "3px 5px" }}>
+                            {row.original.bgColorCode}
                         </div>
                     </React.Fragment>
                 ),

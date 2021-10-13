@@ -76,55 +76,7 @@ class AlarmTypeAddEdit extends Wrapper {
         }
     }
 
-    onMediaChange = KEY => event => {
-
-        const Mediafiles = event.target.files[0];
-        // const invoiceid = this.props.invoiceDetailsId[0];
-        let multipleMediadata = [];
-        const multisupportDoc = Object.assign({}, this.state.multisupportDoc);
-        let FileSize = Mediafiles && Mediafiles.size;
-        let MaxFileSize = 5 * 1024 * 1024;
-
-        console.log("Mediafiles : ", Mediafiles);
-        const datan = new FormData();
-        if (FileSize <= MaxFileSize) {
-            datan.append('userId', '7163b4d5-183a-11eb-aecb-24770383f624');
-            datan.append('image', Mediafiles);
-            let media = {};
-            this.handleLoad("1");
-            const existingAlarm = Object.assign({}, this.state.alarm);
-            fetch(config.TMC_URL + constants.END_POINTS.TMC.IMAGE_CHANGE + '?oprKey=' + process.env.OPR_KEY, {
-                method: 'POST',
-                headers: {
-                    'x-access-token': sessionHelper.getToken()
-                },
-                body: datan
-            }).then(async result => {
-                console.log("results",result)
-                if (result.status === 200) {
-                    this.handleLoad("0");
-                    const response = await helper.validateResponse(result);
-                    const newPicPath = response && response.data[0] && response.data[0].filename;
-                    //console.log("newPicPath : ",newPicPath)
-                    // existingGroup['logoName'] = Mediafiles.type;
-                    // existingGroup['logoUrl'] = newPicPath;
-                    // existingGroup['logoThumbUrl'] = newPicPath;
-                    this.setState({ alarm: existingAlarm });
-                    console.log('alarm : ', this.state.alarm)
-                }
-            });
-        }
-        else {
-            alert("file size can not be greater than 5MB");
-            Array.from(document.querySelectorAll("input")).forEach(
-                input => (input.value = "")
-            );
-            this.handleLoad("0");
-            this.setState({ multisupportDoc: [], supportingDoc: [] });
-            return false;
-        }
-    }
-
+    
     render() {
          console.log("this.state.alarm",this.state.alarm);
         return (
@@ -149,8 +101,8 @@ class AlarmTypeAddEdit extends Wrapper {
                             />        */}
                         </div>
                         <div className={style.field_flex_new} style={{ width: '45%', color: "rgba(0,0,0,0.54)", fontSize: "13px" }}>
-                            <Input label="Color Code:" type='text' defaultValue={this.state.alarm.colorCode} onChange={this.onValueChanged('colorCode')} />
-                            <Input label="BG Color Code:" type='text' defaultValue={this.state.alarm.bgColorCode} onChange={this.onValueChanged('bgColorCode')} />
+                            <Input label="Color Code:" type='color' defaultValue={this.state.alarm.colorCode} onChange={this.onValueChanged('colorCode')} />
+                            <Input label="BG Color Code:" type='color' defaultValue={this.state.alarm.bgColorCode} onChange={this.onValueChanged('bgColorCode')} />
                             <Input label="Is Required:" type='number' defaultValue={this.state.alarm.isRemarksRequired} onChange={this.onValueChanged('isRemarksRequired')} />
                                              
                         </div>

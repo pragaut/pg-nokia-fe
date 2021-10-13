@@ -25,11 +25,11 @@ import MasterDetails from '../components/masters/masterDetails';
 import ModalHeader from '../components/shared/ModalHeader';
 import GroupMaster from '../components/masters/groupMaster';
 import AlarmTypeMaster from '../components/masters/alarmTypeMaster';
-import OrgRelationTypeMaster from '../components/masters/orgRelationTypeMaster';
+import NotificationMaster from '../components/masters/notificationMaster';
 import ModuleMaster from '../components/masters/moduleMaster';
+import OrgRelationTypeMaster from '../components/masters/orgRelationTypeMaster';
 import RoleMaster from '../components/masters/roleMaster';
 import UserMaster from '../components/masters/userMaster';
-import YearMaster from '../components/masters/yearMaster';
 import { showNotification, hideNotification } from '../actions/common.actions';
 import * as commonType from '../action-types/common.action.types';
 import NotificationPopUp from '../components/shared/notificationPopUp';
@@ -222,16 +222,7 @@ export class Index extends Wrapper {
         },
       ],
       commonMasterLinks: [
-        {
-          pathname: "/admin",
-          tab: "year-master",
-          id: undefined,
-          MasterName: 'Year Master',
-          ParentMasterName: undefined,
-          parentMasterCategoryId: '',
-          url: "/admin/year-master",
-          isVisible: true
-        },
+        
         {
           pathname: "/admin",
           tab: "group-master",
@@ -250,7 +241,7 @@ export class Index extends Wrapper {
           ParentMasterName: undefined,
           parentMasterCategoryId: '',
           url: "/admin/org-relation-type-master",
-          isVisible: true
+          isVisible: false
         },
         {
           pathname: "/admin",
@@ -260,6 +251,16 @@ export class Index extends Wrapper {
           ParentMasterName: undefined,
           parentMasterCategoryId: '',
           url: "/admin/alarm-type-master",
+          isVisible: true
+        },
+        {
+          pathname: "/admin",
+          tab: "notification-master",
+          id: undefined,
+          MasterName: 'Notification Master',
+          ParentMasterName: undefined,
+          parentMasterCategoryId: '',
+          url: "/admin/notification-master",
           isVisible: true
         },
         {
@@ -592,10 +593,10 @@ export class Index extends Wrapper {
                   <AlarmTypeMaster />
                 </div>
               )}
-              {router && router.query && router.query.tab === "org-relation-type-master" && (
+              {router && router.query && router.query.tab === "notification-master" && (
                 <div>
-                  {/* <GroupAddEdit /> */}
-                  <OrgRelationTypeMaster />
+                  {/* <NotificationAddEdit /> */}
+                  <NotificationMaster />
                 </div>
               )}
               {router && router.query && router.query.tab === "module-master" && (
@@ -604,7 +605,12 @@ export class Index extends Wrapper {
                   <ModuleMaster />
                 </div>
               )}
-
+              {router && router.query && router.query.tab === "org-relation-type-master" && (
+                <div>
+                  {/* <GroupAddEdit /> */}
+                  <OrgRelationTypeMaster />
+                </div>
+              )}
               {(!router || !router.query || router.query.tab === undefined) &&
                 <div>
                   <MasterIndex />
@@ -618,14 +624,8 @@ export class Index extends Wrapper {
               )}
               {router && router.query && router.query.tab === "user-master" && (
                 <div>
-                  {/* <RoleAddEdit /> */}
+                  {/* <UserAddEdit /> */}
                   <UserMaster />
-                </div>
-              )}
-
-              {router && router.query && router.query.tab === "year-master" && (
-                <div>
-                  <YearMaster />
                 </div>
               )}
               {router && router.query && router.query.tab === "criticality-master" && (
@@ -639,9 +639,10 @@ export class Index extends Wrapper {
                 </div>
               )}
               {router && router.query && router.query.MasterName && router.query.tab != "group-master" &&
-                router.query.tab != "alarmType-master" && router.query.tab != "module-master" &&
-                router.query.tab != "role-master" && router.query.tab != "year-master" &&
-                router.query.tab != "user-master" && router.query.tab != "criticality-master" && router.query.tab != "org-relation-type-master" &&
+                router.query.tab != "org-relation-type-master" && router.query.tab != "module-master" &&
+                router.query.tab != "role-master" && 
+                router.query.tab != "user-master" && router.query.tab != "criticality-master" &&
+                router.query.tab != "alarm-type-master" && router.query.tab != "notification-master" &&
                 <div>
                   <MasterDetails
                     masterCateogyId={router && router.query && router.query.id}

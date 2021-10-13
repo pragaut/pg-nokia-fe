@@ -52,7 +52,7 @@ const initialState = {
     users: undefined,
     userRecordsCount: 0,
 
-    notificationActiontype: actions.NOTIFICATIONMASTERDETAILS_INIT,
+    notificationActiontype: actions.NOTIFICATIONMASTER_INIT,
     notification: undefined,
     notifications: undefined,
     notificationRecordsCount: 0,
@@ -239,6 +239,50 @@ const adminReducer = (state, action) => {
             };
 
         //#endregion
+
+        //#region  Module Master Reducer
+        case actions.MODULEMASTER_LIST_SUCCESS:
+            return {
+                module: state.module,
+                modules: action.data,
+                moduleActiontype: action.type,
+                moduleRecordsCount: action.recordsCount,
+
+            };
+
+        case actions.MODULEMASTER_GET_BY_ID_SUCCESS:
+            return {
+                modules: state.moduleRecordsCount,
+                module: action.data,
+                moduleActiontype: action.type,
+                moduleRecordsCount: state.recordsCount,
+            };
+
+        case actions.MODULEMASTER_SAVE_SUCCESS:
+            return {
+                module: action.data,
+                modules: state.modules,
+                moduleActiontype: action.type,
+                moduleRecordsCount: state.recordsCount,
+            };
+
+        case actions.MODULEMASTER_DELETE_SUCCESS:
+            return {
+                module: state.data,
+                modules: state.modules,
+                moduleActiontype: action.type,
+                moduleRecordsCount: state.recordsCount,
+            };
+
+        case actions.MODULEMASTER_INIT:
+            return {
+                module: state.module,
+                modules: state.modules,
+                moduleActiontype: action.type,
+                moduleRecordsCount: state.recordsCount,
+            };
+
+        //#endregion
         //#region  Org Relation Type Reducer
         case actions.ORGRELATIONTYPEMASTER_LIST_SUCCESS:
             return {
@@ -297,67 +341,7 @@ const adminReducer = (state, action) => {
 
         //#endregion 
 
-        //#region Module Master Reducer
-        case actions.MODULEMASTER_LIST_SUCCESS:
-            return {
-                module: state.module,
-                modules: action.data,
-                moduleActiontype: action.type,
-                moduleRecordsCount: action.recordsCount,
-
-                type: action.type,
-            };
-
-        case actions.MODULEMASTER_GET_BY_ID_SUCCESS:
-            return {
-                modules: state.modules,
-                module: action.data,
-                moduleActiontype: action.type,
-                moduleRecordsCount: state.recordsCount,
-
-                type: action.type,
-            };
-
-        case actions.MODULEMASTER_GET_BY_GROUPID_SUCCESS:
-            return {
-                module: state.module,
-                modules: action.data,
-                moduleActiontype: action.type,
-                moduleRecordsCount: action.recordsCount,
-
-                type: action.type,
-            };
-
-        case actions.MODULEMASTER_SAVE_SUCCESS:
-            return {
-                module: action.data,
-                modules: state.modules,
-                moduleActiontype: action.type,
-                moduleRecordsCount: state.recordsCount,
-
-                type: action.type,
-            };
-
-        case actions.MODULEMASTER_DELETE_SUCCESS:
-            return {
-                module: state.data,
-                modules: state.modules,
-                moduleActiontype: action.type,
-                moduleRecordsCount: state.recordsCount,
-
-                type: action.type,
-            };
-
-        case actions.MODULEMASTER_INIT:
-            return {
-                module: state.module,
-                modules: state.modules,
-                moduleActiontype: action.type,
-                moduleRecordsCount: state.recordsCount,
-
-                type: action.type,
-            };
-        //#endregion
+        
 
         //#region Role Master Reducer
         case actions.ROLEMASTER_LIST_SUCCESS:
@@ -380,15 +364,15 @@ const adminReducer = (state, action) => {
                 type: action.type,
             };
 
-        case actions.ROLEMASTER_GET_BY_MODULEID_SUCCESS:
-            return {
-                role: state.role,
-                roles: action.data,
-                roleActiontype: action.type,
-                roleRecordsCount: action.recordsCount,
+        // case actions.ROLEMASTER_GET_BY_MODULEID_SUCCESS:
+        //     return {
+        //         role: state.role,
+        //         roles: action.data,
+        //         roleActiontype: action.type,
+        //         roleRecordsCount: action.recordsCount,
 
-                type: action.type,
-            };
+        //         type: action.type,
+        //     };
 
         case actions.ROLEMASTER_SAVE_SUCCESS:
             return {
@@ -671,8 +655,8 @@ const adminReducer = (state, action) => {
 
         //#endregion 
 
-        //#region  Notificaation Master Reducer
-        case actions.NOTIFICATIONMASTERDETAILS_LIST_SUCCESS:
+        //#region  Notification Master Reducer
+        case actions.NOTIFICATIONMASTER_LIST_SUCCESS:
             return {
                 notification: state.notification,
                 notifications: action.data,
@@ -682,7 +666,7 @@ const adminReducer = (state, action) => {
                 type: action.type,
             };
 
-        case actions.NOTIFICATIONMASTERDETAILS_GET_BY_ID_SUCCESS:
+        case actions.NOTIFICATIONMASTER_GET_BY_ID_SUCCESS:
             return {
                 notifications: state.notifications,
                 notification: action.data,
@@ -692,7 +676,7 @@ const adminReducer = (state, action) => {
                 type: action.type,
             };
 
-        case actions.NOTIFICATIONMASTERDETAILS_SAVE_SUCCESS:
+        case actions.NOTIFICATIONMASTER_SAVE_SUCCESS:
             return {
                 notification: action.data,
                 notifications: state.notifications,
@@ -702,7 +686,7 @@ const adminReducer = (state, action) => {
                 type: action.type,
             };
 
-        case actions.NOTIFICATIONMASTERDETAILS_DELETE_SUCCESS:
+        case actions.NOTIFICATIONMASTER_DELETE_SUCCESS:
             return {
                 notification: state.data,
                 notifications: state.notifications,
@@ -712,7 +696,7 @@ const adminReducer = (state, action) => {
                 type: action.type,
             };
 
-        case actions.NOTIFICATIONMASTERDETAILS_INIT:
+        case actions.NOTIFICATIONMASTER_INIT:
             return {
                 notification: state.notification,
                 notifications: state.notifications,

@@ -267,13 +267,13 @@ export const saveAlarmTypeMasterData = alarmTypeMaster => async dispatch => {
 
             dispatch({
                 type: commonTypes.NOTIFICATION_SHOW,
-                message: 'Alamr Type Master updated successfully',
+                message: 'Alarm Type Master updated successfully',
                 error: undefined,
                 notification: true
             });
         }
         else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Group Master error'), null, null);
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Alarm Type Master error'), null, null);
         }
     }
     catch (error) {
@@ -361,15 +361,131 @@ export const deleteAlarmTypeMasterData = id => async dispatch => {
 
 //#endregion
 
+//#region Notification Master
+
+export const initNotificationMaster = () => dispatch => {
+    dispatchAction(dispatch, adminTypes.NOTIFICATIONMASTER_INIT, null, null, null, null);
+};
+
+export const saveNotificationMasterData = notificationMaster => async dispatch => {
+    //  dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
+    try {
+        let url = config.AUTH_URL + `tmc/admin/notificationMaster/`;
+        const data = (typeof notificationMaster.id === 'undefined' || notificationMaster.id === -1) ? await service.post(url, notificationMaster, true)
+            : await service.put(url, notificationMaster, true);
+
+        if (data && !data.errorMessage) {
+
+            //if (typeof notificationMaster.id === 'undefined') notificationMaster.id = data.data.id;
+
+            dispatchAction(dispatch, adminTypes.NOTIFICATIONMASTER_SAVE_SUCCESS, notificationMaster, null, data.message, null);
+
+            dispatch({
+                type: commonTypes.NOTIFICATION_SHOW,
+                message: 'Notification Master updated successfully',
+                error: undefined,
+                notification: true
+            });
+        }
+        else {
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Notification Master error'), null, null);
+        }
+    }
+    catch (error) {
+        //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+    }
+};
+
+
+export const getNotificationMasterDataById = (notification_id) => async dispatch => {
+    try {
+        let url = config.AUTH_URL + `tmc/admin/notificationMaster?notification_id=${notification_id}`;
+        const data = await service.get(url, true);
+        if (data && !data.errorMessage) {
+            //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+            dispatchAction(dispatch, adminTypes.NOTIFICATIONMASTER_GET_BY_ID_SUCCESS, data.data, null, data.message, null);
+        }
+        else {
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Notification Master error'), null, null);
+        }
+    }
+    catch (error) {
+        console.error('error: ', error);
+        //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+    }
+
+};
+
+export const getNotificationMasterData = (pageIndex, rowsToReturn, order, where) => async dispatch => {
+    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
+    try {
+        let url = config.AUTH_URL + `tmc/admin/notificationMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
+
+        if (order && order.length > 0) {
+            url = url + `&order=${JSON.stringify(order)}`;
+        }
+
+        if (order && order.length > 0) {
+            url = url + `&where=${JSON.stringify(where)}`;
+        }
+        const data = await service.get(url, true);
+        if (data && !data.errorMessage) {
+            //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+            dispatchAction(dispatch, adminTypes.NOTIFICATIONMASTER_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
+        }
+        else {
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Notification Master error'), null, null);
+        }
+    }
+    catch (error) {
+        console.error('error: ', error);
+        //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+    }
+};
+
+export const deleteNotificationMasterData = id => async dispatch => {
+    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
+    try {
+        let url = config.AUTH_URL + `tmc/admin/notificationMaster`;
+
+        const data = await service._delete(url + '?id=' + id, true);
+
+        if (data && !data.errorMessage) {
+            dispatchAction(dispatch, adminTypes.NOTIFICATIONMASTER_DELETE_SUCCESS, null, null, null, data.message);
+
+            setTimeout(() =>
+                dispatch({
+                    type: commonTypes.NOTIFICATION_SHOW,
+                    message: 'Notification Master(s) deleted successfully',
+                    error: undefined,
+                    notification: true
+                }), 500);
+        }
+        else {
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Notification Mastererror'), null, null);
+        }
+    }
+    catch (error) {
+        //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+    }
+};
+
+//#endregion
+
 //#region Module Master
 
 export const initModuleMaster = () => dispatch => {
     dispatchAction(dispatch, adminTypes.MODULEMASTER_INIT, null, null, null, null);
 };
+
 export const saveModuleMasterData = moduleMaster => async dispatch => {
     //  dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.AUTH_URL + `audit/admin/moduleMaster/`;
+        let url = config.AUTH_URL + `tmc/admin/moduleMaster/`;
         const data = (typeof moduleMaster.id === 'undefined' || moduleMaster.id === -1) ? await service.post(url, moduleMaster, true)
             : await service.put(url, moduleMaster, true);
 
@@ -387,7 +503,7 @@ export const saveModuleMasterData = moduleMaster => async dispatch => {
             });
         }
         else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Module Mastererror'), null, null);
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Module Master error'), null, null);
         }
     }
     catch (error) {
@@ -395,9 +511,11 @@ export const saveModuleMasterData = moduleMaster => async dispatch => {
         dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
     }
 };
-export const getModuleMasterDataById = (id) => async dispatch => {
+
+
+export const getModuleMasterDataById = (org_modules_id) => async dispatch => {
     try {
-        let url = config.AUTH_URL + `audit/admin/moduleMaster?id=${id}`;
+        let url = config.AUTH_URL + `tmc/admin/moduleMaster?org_modules_id=${org_modules_id}`;
         const data = await service.get(url, true);
         if (data && !data.errorMessage) {
             //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
@@ -414,10 +532,11 @@ export const getModuleMasterDataById = (id) => async dispatch => {
     }
 
 };
+
 export const getModuleMasterData = (pageIndex, rowsToReturn, order, where) => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.AUTH_URL + `audit/admin/moduleMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
+        let url = config.AUTH_URL + `tmc/admin/moduleMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
 
         if (order && order.length > 0) {
             url = url + `&order=${JSON.stringify(order)}`;
@@ -432,42 +551,22 @@ export const getModuleMasterData = (pageIndex, rowsToReturn, order, where) => as
             dispatchAction(dispatch, adminTypes.MODULEMASTER_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
         }
         else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Module Mastererror'), null, null);
-        }
-    }
-    catch (error) {
-        console.error('error: ', error);
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-export const getModuleMasterByGroupId = (id) => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null); 
-    try {
-        let groupId = "";
-        let moduleId = id ? id : moduleId;
-        let url = config.AUTH_URL + `audit/roleMaster/getByGroupId?moduleId=${id}`;
-        const data = await service.get(url, true);
-        if (data && !data.errorMessage) {
-            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-            dispatchAction(dispatch, adminTypes.MODULEMASTER_GET_BY_GROUPID_SUCCESS, data.data, null, data.message, null);
-        }
-        else {
             dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Module Master error'), null, null);
         }
     }
     catch (error) {
         console.error('error: ', error);
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
         dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
     }
 };
-export const deleteModuleMasterData = moduleMasterId => async dispatch => {
+
+export const deleteModuleMasterData = id => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.AUTH_URL + `audit/admin/moduleMaster`;
+        let url = config.AUTH_URL + `tmc/admin/moduleMaster`;
 
-        const data = await service._delete(url + '?id=' + moduleMasterId, true);
+        const data = await service._delete(url + '?id=' + id, true);
 
         if (data && !data.errorMessage) {
             dispatchAction(dispatch, adminTypes.MODULEMASTER_DELETE_SUCCESS, null, null, null, data.message);
@@ -475,24 +574,76 @@ export const deleteModuleMasterData = moduleMasterId => async dispatch => {
             setTimeout(() =>
                 dispatch({
                     type: commonTypes.NOTIFICATION_SHOW,
-                    message: 'Role Master(s) deleted successfully',
+                    message: 'Module Master(s) deleted successfully',
                     error: undefined,
                     notification: true
                 }), 500);
         }
         else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Module Mastererror'), null, null);
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Module Master error'), null, null);
         }
     }
     catch (error) {
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
         dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
     }
 };
 
 //#endregion
 
-//#region  Role Master
+//#region Year Master
+
+export const initYearMaster = () => dispatch => {
+    dispatchAction(dispatch, adminTypes.YEARMASTER_INIT, null, null, null, null);
+};
+
+export const getYearMasterDataById = (id) => async dispatch => {
+    try {
+        let url = config.AUTH_URL + `audit/admin/yearMaster?id=${id}`;
+        const data = await service.get(url, true);
+        if (data && !data.errorMessage) {
+            dispatchAction(dispatch, adminTypes.YEARMASTER_GET_BY_ID_SUCCESS, data.data, null, data.message, null);
+        }
+        else {
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Year Master error'), null, null);
+        }
+    }
+    catch (error) {
+        console.error('error: ', error);
+        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+    }
+
+};
+
+export const getYearMasterData = (pageIndex, rowsToReturn, order, where) => async dispatch => {
+    try {
+        let url = config.AUTH_URL + `audit/admin/yearMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
+
+        if (order && order.length > 0) {
+            url = url + `&order=${JSON.stringify(order)}`;
+        }
+
+        if (order && order.length > 0) {
+            url = url + `&where=${JSON.stringify(where)}`;
+        }
+        const data = await service.get(url, true);
+        console.log("yearData", data);
+        if (data && !data.errorMessage) {
+            dispatchAction(dispatch, adminTypes.YEARMASTER_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
+        }
+        else {
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Year Master error'), null, null);
+        }
+    }
+    catch (error) {
+        console.error('error: ', error);
+        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+    }
+};
+
+//#endregion
+
+//#region Role Master
 
 export const initRoleMaster = () => dispatch => {
     dispatchAction(dispatch, adminTypes.ROLEMASTER_INIT, null, null, null, null);
@@ -501,7 +652,7 @@ export const initRoleMaster = () => dispatch => {
 export const saveRoleMasterData = roleMaster => async dispatch => {
     //  dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.AUTH_URL + `audit/admin/roleMaster/`;
+        let url = config.AUTH_URL + `tmc/admin/roleMaster/`;
         const data = (typeof roleMaster.id === 'undefined' || roleMaster.id === -1) ? await service.post(url, roleMaster, true)
             : await service.put(url, roleMaster, true);
 
@@ -523,19 +674,18 @@ export const saveRoleMasterData = roleMaster => async dispatch => {
         }
     }
     catch (error) {
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
         dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
     }
 };
 
 
-export const getRoleMasterDataById = (id) => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null); 
+export const getRoleMasterDataById = (role_id) => async dispatch => {
     try {
-        let url = config.AUTH_URL + `audit/admin/roleMaster?id=${id}`;
+        let url = config.AUTH_URL + `tmc/admin/roleMaster?role_id=${role_id}`;
         const data = await service.get(url, true);
         if (data && !data.errorMessage) {
-            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+            //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
             dispatchAction(dispatch, adminTypes.ROLEMASTER_GET_BY_ID_SUCCESS, data.data, null, data.message, null);
         }
         else {
@@ -544,37 +694,16 @@ export const getRoleMasterDataById = (id) => async dispatch => {
     }
     catch (error) {
         console.error('error: ', error);
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
         dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
     }
 
 };
-
-export const getRolesByModuleId = (id) => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null); 
-    try {
-        let url = config.AUTH_URL + `audit/admin/roleMaster/getByModuleId?moduleId=${id}`;
-        const data = await service.get(url, true);
-        if (data && !data.errorMessage) {
-            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-            dispatchAction(dispatch, adminTypes.ROLEMASTER_GET_BY_ID_SUCCESS, data.data, null, data.message, null);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Role Master error'), null, null);
-        }
-    }
-    catch (error) {
-        console.error('error: ', error);
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-
 
 export const getRoleMasterData = (pageIndex, rowsToReturn, order, where) => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.AUTH_URL + `audit/admin/roleMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
+        let url = config.AUTH_URL + `tmc/admin/roleMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
 
         if (order && order.length > 0) {
             url = url + `&order=${JSON.stringify(order)}`;
@@ -584,9 +713,8 @@ export const getRoleMasterData = (pageIndex, rowsToReturn, order, where) => asyn
             url = url + `&where=${JSON.stringify(where)}`;
         }
         const data = await service.get(url, true);
-
         if (data && !data.errorMessage) {
-            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+            //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
             dispatchAction(dispatch, adminTypes.ROLEMASTER_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
         }
         else {
@@ -595,17 +723,17 @@ export const getRoleMasterData = (pageIndex, rowsToReturn, order, where) => asyn
     }
     catch (error) {
         console.error('error: ', error);
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
         dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
     }
 };
 
-export const deleteRoleMasterData = roleMasterIds => async dispatch => {
+export const deleteRoleMasterData = id => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.AUTH_URL + `audit/admin/roleMaster`;
+        let url = config.AUTH_URL + `tmc/admin/roleMaster`;
 
-        const data = await service._delete(url + '?id=' + roleMasterIds, true);
+        const data = await service._delete(url + '?id=' + id, true);
 
         if (data && !data.errorMessage) {
             dispatchAction(dispatch, adminTypes.ROLEMASTER_DELETE_SUCCESS, null, null, null, data.message);
@@ -623,10 +751,11 @@ export const deleteRoleMasterData = roleMasterIds => async dispatch => {
         }
     }
     catch (error) {
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
         dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
     }
 };
+
 //#endregion
 
 //#region  Group Company Master
@@ -1219,126 +1348,6 @@ export const getCurrentUserSessionDetails = () => async dispatch => {
 
 //#endregion
 
-//#region Year Master
-
-export const initYearMaster = () => dispatch => {
-    dispatchAction(dispatch, adminTypes.YEARMASTER_INIT, null, null, null, null);
-};
-
-export const saveYearMasterData = yearMaster => async dispatch => {
-    //  dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUTH_URL + `audit/admin/yearMaster/`;
-        const data = (typeof yearMaster.id === 'undefined' || yearMaster.id === -1) ? await service.post(url, yearMaster, true)
-            : await service.put(url, yearMaster, true);
-
-        if (data && !data.errorMessage) {
-
-            //if (typeof yearMaster.id === 'undefined') yearMaster.id = data.data.id;
-
-            dispatchAction(dispatch, adminTypes.YEARMASTER_SAVE_SUCCESS, yearMaster, null, data.message, null);
-
-            dispatch({
-                type: commonTypes.NOTIFICATION_SHOW,
-                message: 'Year Master updated successfully',
-                error: undefined,
-                notification: true
-            });
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Year Master error'), null, null);
-        }
-    }
-    catch (error) {
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-
-
-export const getYearMasterDataById = (id) => async dispatch => {
-    try {
-        let url = config.AUTH_URL + `audit/admin/yearMaster?id=${id}`;
-        const data = await service.get(url, true);
-        if (data && !data.errorMessage) {
-            //   // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-            dispatchAction(dispatch, adminTypes.YEARMASTER_GET_BY_ID_SUCCESS, data.data, null, data.message, null);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Year Master error'), null, null);
-        }
-    }
-    catch (error) {
-        console.error('error: ', error);
-        //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-
-};
-
-export const getYearMasterData = (pageIndex, rowsToReturn, order, where, yearTypeId) => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        console.log("get year where : ", where);
-        let url = config.AUTH_URL + `audit/admin/yearMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
-
-        if (order && order.length > 0) {
-            url = url + `&order=${JSON.stringify(order)}`;
-        }
-        if (yearTypeId) {
-            url = url + `&yearTypeId=${yearTypeId}`;
-        }
-
-        if (where && where.length > 0) {
-            url = url + `&where=${JSON.stringify(where)}`;
-        }
-        const data = await service.get(url, true);
-        if (data && !data.errorMessage) {
-            //  // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-            dispatchAction(dispatch, adminTypes.YEARMASTER_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Year Master error'), null, null);
-        }
-    }
-    catch (error) {
-        console.error('error: ', error);
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-
-export const deleteYearMasterData = id => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUTH_URL + `audit/admin/yearMaster`;
-
-        const data = await service._delete(url + '?id=' + id, true);
-
-        if (data && !data.errorMessage) {
-            dispatchAction(dispatch, adminTypes.YEARMASTER_DELETE_SUCCESS, null, null, null, data.message);
-
-            setTimeout(() =>
-                dispatch({
-                    type: commonTypes.NOTIFICATION_SHOW,
-                    message: 'Year Master(s) deleted successfully',
-                    error: undefined,
-                    notification: true
-                }), 500);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Year Master error'), null, null);
-        }
-    }
-    catch (error) {
-        //dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-
-
-
-//#endregion
 
 //#region  Notification Master
 export const initNotificationMasterDetails = () => dispatch => {

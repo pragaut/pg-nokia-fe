@@ -5,22 +5,22 @@ import style from '../../../theme/app.scss';
 import Wrapper from '../../shared/Wrapper';
 import { constants } from '../../../utils/constants';
 import * as AdminTypes from '../../../action-types/admin.action.types';
-import { getModuleMasterData, saveModuleMasterData, getModuleMasterDataById, deleteModuleMasterData } from '../../../actions/admin.action';
+import { getNotificationMasterData, saveNotificationMasterData, getNotificationMasterDataById, deleteNotificationMasterData } from '../../../actions/admin.action';
 import ListTable from '../../shared/ListTable';
-import ModuleAddEdit from './module.add.edit';
+import NotificationAddEdit from './notification.add.edit';
 import * as CommonStyle from '../../commonStyle';
-import ModuleMasterDetails from '../../ReactTableComponent';
+import NotificationMasterDetails from '../../ReactTableComponent';
 
 
-class ModuleIndex extends Wrapper {
+class NotificationIndex extends Wrapper {
 
     constructor(props) {
         super(props);
         this.state = {
-            modules: [],
-            module: {},
+            notifications: [],
+            notification: {},
             showEditPopup: false,
-            type: AdminTypes.MODULEMASTER_INIT,
+            type: AdminTypes.NOTIFICATIONMASTER_INIT,
             columns: []
         };
 
@@ -63,25 +63,32 @@ class ModuleIndex extends Wrapper {
                 filterable: false
             },
             {
-                Header: 'Org Details',
-                accessor: 'alarmType.alarmTypeName',
-                id: 'alarmType.alarmTypeName',
+                Header: 'Notification',
+                accessor: 'notificationName',
+                id: 'notificationName',
+                minWidth: 100,
+                show: true,
+            },
+            {
+                Header: 'Notification Code',
+                accessor: 'notificationCode',
+                id: 'notificationCode',
+                minWidth: 100,
+                show: true,
+            },
+            {
+                Header: 'Notification Order',
+                accessor: 'notificationOrder',
+                id: 'notificationOrder',
                 minWidth: 100,
                 show: true
             },
             {
-                Header: 'Module Name',
-                accessor: 'moduleName',
-                id: 'moduleName',
+                Header: 'Alarm Type',
+                accessor: 'alarmType.alarmTypeName',
+                id: 'alarmType.alarmTypeName',
                 minWidth: 100,
-                show: true,
-            },
-            {
-                Header: 'Module Code',
-                accessor: 'moduleCode',
-                id: 'moduleCode',
-                minWidth: 100,
-                show: true,
+                show: true
             },
         ]
         this.setState({ columns: columns });
@@ -89,8 +96,8 @@ class ModuleIndex extends Wrapper {
 
     UNSAFE_componentWillReceiveProps(nextProps) {
 
-        if (nextProps.modules && nextProps.modules !== null && nextProps.modules != this.state.modules) {
-            this.setState({ modules: nextProps.modules })
+        if (nextProps.notifications && nextProps.notifications !== null && nextProps.notifications != this.state.notifications) {
+            this.setState({ notifications: nextProps.notifications })
         }
 
         const storeInState = (data, key) => {
@@ -105,7 +112,7 @@ class ModuleIndex extends Wrapper {
 
 
     async componentDidMount() {
-        this.props.getModuleMasterData(0, constants.ALL_ROWS_LIST, undefined, undefined);
+        this.props.getNotificationMasterData(0, constants.ALL_ROWS_LIST, undefined, undefined);
         setTimeout(() => {
             this.updateColumnWhenPropsUpdate();
         }, 100);
@@ -113,9 +120,9 @@ class ModuleIndex extends Wrapper {
 
     onDeleteRecord = (ids) => {
         if (confirm('Would you like to delete the record?')) {
-            this.props.deleteModuleMasterData(ids);
+            this.props.deleteNotificationMasterData(ids);
             setTimeout(() => {
-                this.props.getModuleMasterData(0, constants.ALL_ROWS_LIST, undefined, undefined);
+                this.props.getNotificationMasterData(0, constants.ALL_ROWS_LIST, undefined, undefined);
             }, 500);
         }
 
@@ -124,11 +131,11 @@ class ModuleIndex extends Wrapper {
         this.onClickReferesh();
         this.setState({ showEditPopup: false })
     }
-    onClickAdd = (module) => {
-        this.setState({ module: module, showEditPopup: true })
+    onClickAdd = (notification) => {
+        this.setState({ notification: notification, showEditPopup: true })
     }
     onClickReferesh = (async) => {
-        this.props.getModuleMasterData(0, constants.ALL_ROWS_LIST, undefined, undefined);
+        this.props.getNotificationMasterData(0, constants.ALL_ROWS_LIST, undefined, undefined);
         this.updateColumnWhenPropsUpdate();
     }
     updateColumn = (column) => {
@@ -138,8 +145,8 @@ class ModuleIndex extends Wrapper {
     }
 
     render() {
-        const { showEditPopup, columns, modules, module } = this.state;
-        return (<div id='moduleTable' className={style.table_wapper} >
+        const { showEditPopup, columns, notifications, notification } = this.state;
+        return (<div id='notificationTable' className={style.table_wapper} >
             {showEditPopup === true &&
                 <>
                     <CommonStyle.Overlay
@@ -153,10 +160,10 @@ class ModuleIndex extends Wrapper {
                         <CommonStyle.CloseButtonForModel
                             onClick={() => this.onClickCancel()}
                         >X</CommonStyle.CloseButtonForModel>
-                        <ModuleAddEdit
-                            baseObject={module}
+                        <NotificationAddEdit
+                            baseObject={notification}
                             onCancel={this.onClickCancel}
-                            onSave={this.props.saveModuleMasterData}
+                            onSave={this.props.saveNotificationMasterData}
                         />
                     </CommonStyle.Wrapper_OnOverlay>
 
@@ -187,8 +194,8 @@ class ModuleIndex extends Wrapper {
                 <div
                     style={{ width: '98%' }}
                 >
-                    <ModuleMasterDetails
-                        Data={modules}
+                    <NotificationMasterDetails
+                        Data={notifications}
                         isColumnUpdate={true}
                         updateColumn={this.updateColumn}
                         columns={columns}
@@ -201,9 +208,9 @@ class ModuleIndex extends Wrapper {
 
 
 const mapStateToProps = state => {
-    const { module, modules, moduleRecordsCount, moduleActiontype } = state.adminReducer;
+    const { notification, notifications, notificationRecordsCount, notificationActiontype } = state.adminReducer;
 
-    return { module, modules, moduleRecordsCount, moduleActiontype };
+    return { notification, notifications, notificationRecordsCount, notificationActiontype };
 };
 
-export default connect(mapStateToProps, { getModuleMasterData, saveModuleMasterData, getModuleMasterDataById, deleteModuleMasterData })(ModuleIndex);
+export default connect(mapStateToProps, { getNotificationMasterData, saveNotificationMasterData, getNotificationMasterDataById, deleteNotificationMasterData })(NotificationIndex);
