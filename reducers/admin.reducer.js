@@ -12,6 +12,11 @@ const initialState = {
     groups: undefined,
     groupRecordsCount: 0,
 
+    alarmActiontype: actions.ALARMTYPEMASTER_INIT,
+    alarm: undefined,
+    alarms: undefined,
+    alarmRecordsCount: 0,
+
     orgRelationTypeActiontype: actions.GROUPMASTER_INIT,
     orgRelationType: undefined,
     orgRelationTypes: undefined,
@@ -216,6 +221,49 @@ const adminReducer = (state, action) => {
 
         //#endregion 
 
+        //#region  Alarm Type Master Reducer
+        case actions.ALARMTYPEMASTER_LIST_SUCCESS:
+            return {
+                alarm: state.alarm,
+                alarms: action.data,
+                alarmActiontype: action.type,
+                alarmRecordsCount: action.recordsCount,
+
+            };
+
+        case actions.ALARMTYPEMASTER_GET_BY_ID_SUCCESS:
+            return {
+                alarms: state.alarmRecordsCount,
+                alarm: action.data,
+                alarmActiontype: action.type,
+                alarmRecordsCount: state.recordsCount,
+            };
+
+        case actions.ALARMTYPEMASTER_SAVE_SUCCESS:
+            return {
+                alarm: action.data,
+                alarms: state.alarms,
+                alarmActiontype: action.type,
+                alarmRecordsCount: state.recordsCount,
+            };
+
+        case actions.ALARMTYPEMASTER_DELETE_SUCCESS:
+            return {
+                alarm: state.data,
+                alarms: state.alarms,
+                alarmActiontype: action.type,
+                alarmRecordsCount: state.recordsCount,
+            };
+
+        case actions.ALARMTYPEMASTER_INIT:
+            return {
+                alarm: state.alarm,
+                alarms: state.alarms,
+                alarmActiontype: action.type,
+                alarmRecordsCount: state.recordsCount,
+            };
+
+        //#endregion
         //#region  Org Relation Type Reducer
         case actions.ORGRELATIONTYPEMASTER_LIST_SUCCESS:
             return {
@@ -227,6 +275,7 @@ const adminReducer = (state, action) => {
                 type: action.type,
             };
 
+
         case actions.ORGRELATIONTYPEMASTER_GET_BY_ID_SUCCESS:
             return {
                 orgRelationTypes: state.orgRelationTypes,
@@ -236,6 +285,7 @@ const adminReducer = (state, action) => {
 
                 type: action.type,
             };
+
 
         case actions.ORGRELATIONTYPEMASTER_SAVE_SUCCESS:
             return {
@@ -247,6 +297,7 @@ const adminReducer = (state, action) => {
                 type: action.type,
             };
 
+
         case actions.ORGRELATIONTYPEMASTER_DELETE_SUCCESS:
             return {
                 orgRelationType: state.data,
@@ -257,6 +308,7 @@ const adminReducer = (state, action) => {
                 type: action.type,
             };
 
+
         case actions.ORGRELATIONTYPEMASTER_INIT:
             return {
                 orgRelationType: state.orgRelationType,
@@ -266,6 +318,7 @@ const adminReducer = (state, action) => {
 
                 type: action.type,
             };
+
 
         //#endregion 
 
@@ -1697,6 +1750,10 @@ const adminReducer = (state, action) => {
                 genders: state.genders,
                 genderActiontype: state.genderActiontype,
                 genderRecordsCount: state.genderRecordsCount,
+                alarm: state.alarm,
+                alarms: state.alarms,
+                alarmActiontype: state.alarmActiontype,
+                alarmRecordsCount: state.alarmRecordsCount,
 
                 module: state.module,
                 modules: state.modules,

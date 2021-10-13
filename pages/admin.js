@@ -24,6 +24,7 @@ import MasterIndex from '../components/masters';
 import MasterDetails from '../components/masters/masterDetails';
 import ModalHeader from '../components/shared/ModalHeader';
 import GroupMaster from '../components/masters/groupMaster';
+import AlarmTypeMaster from '../components/masters/alarmTypeMaster';
 import OrgRelationTypeMaster from '../components/masters/orgRelationTypeMaster';
 import OrganisationDetails from '../components/masters/organisationDetails';
 import ModuleMaster from '../components/masters/moduleMaster';
@@ -209,7 +210,7 @@ export class Index extends Wrapper {
       notification: false,
       message: '',
       isAuthorizedUser: false,
-      nokiaMasterLink: [ 
+      nokiaMasterLink: [
         {
           pathname: "/admin",
           tab: "criticality-master",
@@ -219,7 +220,7 @@ export class Index extends Wrapper {
           parentMasterCategoryId: '',
           url: "/admin/criticality-master",
           isVisible: true
-        },       
+        },
       ],
       commonMasterLinks: [
         {
@@ -260,6 +261,16 @@ export class Index extends Wrapper {
           ParentMasterName: undefined,
           parentMasterCategoryId: '',
           url: "/admin/organisation-details",
+          isVisible: true
+        },
+        {
+          pathname: "/admin",
+          tab: "alarm-type-master",
+          id: undefined,
+          MasterName: 'Alarm Type Master',
+          ParentMasterName: undefined,
+          parentMasterCategoryId: '',
+          url: "/admin/alarm-type-master",
           isVisible: true
         },
         {
@@ -317,7 +328,7 @@ export class Index extends Wrapper {
     const userRole = this.getLoggedUserRole();
     const LoggedUserRole = userRole && JSON.parse(userRole);
     const RoleName = LoggedUserRole && LoggedUserRole.roleName;
-   let AuthorizedUser = this.checkIsAuthorizedUser(RoleName, "admin-page:visit", null);
+    let AuthorizedUser = this.checkIsAuthorizedUser(RoleName, "admin-page:visit", null);
     console.log("Authorized User : ", AuthorizedUser);
     if (!AuthorizedUser) {
       this._logout();
@@ -399,7 +410,7 @@ export class Index extends Wrapper {
         message: nextProps.message
       })
     }
-   
+
     if (nextProps && nextProps.criticalitys && nextProps.criticalitys != this.state.criticalitys) {
       this.setState({
         criticalitys: nextProps.criticalitys
@@ -460,7 +471,7 @@ export class Index extends Wrapper {
                 </MenuItems>
 
                 {this.state.nokiaMaster === true &&
-                  <>                  
+                  <>
                     {this.state.nokiaMasterLink && this.state.nokiaMasterLink.map((item, index) => {
                       return <LinkWapper
                         key={index}
@@ -521,7 +532,7 @@ export class Index extends Wrapper {
                     })}
                   </>
                 }
-               
+
                 <Gap h="20px" />
                 <SwitchLinkWapper
                   isVisible={true}
@@ -586,6 +597,12 @@ export class Index extends Wrapper {
                   <GroupMaster />
                 </div>
               )}
+              {router && router.query && router.query.tab === "alarm-type-master" && (
+                <div>
+                  {/* <AlarmTypeAddEdit /> */}
+                  <AlarmTypeMaster />
+                </div>
+              )}
               {router && router.query && router.query.tab === "org-relation-type-master" && (
                 <div>
                   {/* <GroupAddEdit /> */}
@@ -605,7 +622,7 @@ export class Index extends Wrapper {
                 </div>
               )}
 
-{(!router || !router.query || router.query.tab === undefined) &&
+              {(!router || !router.query || router.query.tab === undefined) &&
                 <div>
                   <MasterIndex />
                 </div>
@@ -639,10 +656,10 @@ export class Index extends Wrapper {
                 </div>
               )}
               {router && router.query && router.query.MasterName && router.query.tab != "group-master" &&
-                router.query.tab != "group-company" && router.query.tab != "module-master" &&
+                router.query.tab != "alarmType-master" && router.query.tab != "module-master" &&
                 router.query.tab != "role-master" && router.query.tab != "year-master" &&
-                router.query.tab != "user-master" &&  router.query.tab != "criticality-master" && 
                 router.query.tab !="org-relation-type-master" && router.query.tab !="organisation-details" &&
+                router.query.tab != "user-master" && router.query.tab != "criticality-master" && router.query.tab != "org-relation-type-master" &&
                 <div>
                   <MasterDetails
                     masterCateogyId={router && router.query && router.query.id}
@@ -669,9 +686,9 @@ const mapStateToProps = state => {
   const width = state.windowReducer.width;
   const { type, notification, message } = state.commonReducer;
   const redirectToCourse = state.windowReducer.redirectToCourses;
- // const {   auditTypes,yearTypes, sections,companys ,criticalitys,  auditObservations} = state.adminReducer;
+  // const {   auditTypes,yearTypes, sections,companys ,criticalitys,  auditObservations} = state.adminReducer;
 
-  return {  type, notification, message, authOpen, windowClicked, width, redirectToCourse };
+  return { type, notification, message, authOpen, windowClicked, width, redirectToCourse };
 };
 
-export default withRouter(connect(mapStateToProps, {showNotification, hideNotification, dispatchUserInfo, changeWidth, hideRedirectionStatus })(Index));
+export default withRouter(connect(mapStateToProps, { showNotification, hideNotification, dispatchUserInfo, changeWidth, hideRedirectionStatus })(Index));

@@ -6,6 +6,7 @@ import config from '../config';
 import * as errorTypes from '../action-types/error.action.types';
 import { constants } from '../utils/constants';
 import { getLoggedUser, getLoggedUserRole, saveCurrent_YearType_Year_IsCentralPlantCompany } from '../utils/session.helper'
+//import AlarmTypeMaster from '../components/masters/alarmTypeMaster';
 
 /**
  * 
@@ -245,12 +246,67 @@ export const deleteOrgRelationTypeMasterData = id => async dispatch => {
 
 //#endregion
 
-//#region Country Master
+//#region Alarm Type Master
 
-export const getCountryMasterData = (pageIndex, rowsToReturn, order, where) => async dispatch => {
+export const initAlarmTypeMaster = () => dispatch => {
+    dispatchAction(dispatch, adminTypes.ALARMTYPEMASTER_INIT, null, null, null, null);
+};
+
+export const saveAlarmTypeMasterData = alarmTypeMaster => async dispatch => {
+    //  dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
+    try {
+        let url = config.AUTH_URL + `tmc/admin/alarmTypeMaster/`;
+        const data = (typeof alarmTypeMaster.id === 'undefined' || alarmTypeMaster.id === -1) ? await service.post(url, alarmTypeMaster, true)
+            : await service.put(url, alarmTypeMaster, true);
+
+        if (data && !data.errorMessage) {
+
+            //if (typeof alarmTypeMaster.id === 'undefined') alarmTypeMaster.id = data.data.id;
+
+            dispatchAction(dispatch, adminTypes.ALARMTYPEMASTER_SAVE_SUCCESS, alarmTypeMaster, null, data.message, null);
+
+            dispatch({
+                type: commonTypes.NOTIFICATION_SHOW,
+                message: 'Alamr Type Master updated successfully',
+                error: undefined,
+                notification: true
+            });
+        }
+        else {
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Group Master error'), null, null);
+        }
+    }
+    catch (error) {
+        //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+    }
+};
+
+
+export const getAlarmTypeMasterDataById = (alarm_type_id) => async dispatch => {
+    try {
+        let url = config.AUTH_URL + `tmc/admin/alarmTypeMaster?alarm_type_id=${alarm_type_id}`;
+        const data = await service.get(url, true);
+        if (data && !data.errorMessage) {
+            //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+            dispatchAction(dispatch, adminTypes.ALARMTYPEMASTER_GET_BY_ID_SUCCESS, data.data, null, data.message, null);
+        }
+        else {
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Alarm Type Master error'), null, null);
+        }
+    }
+    catch (error) {
+        console.error('error: ', error);
+        //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+    }
+
+};
+
+export const getAlarmTypeMasterData = (pageIndex, rowsToReturn, order, where) => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.AUTH_URL + `tmc/admin/countryMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
+        let url = config.AUTH_URL + `tmc/admin/alarmTypeMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
 
         if (order && order.length > 0) {
             url = url + `&order=${JSON.stringify(order)}`;
@@ -262,10 +318,10 @@ export const getCountryMasterData = (pageIndex, rowsToReturn, order, where) => a
         const data = await service.get(url, true);
         if (data && !data.errorMessage) {
             //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-            dispatchAction(dispatch, adminTypes.COUNTRYMASTER_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
+            dispatchAction(dispatch, adminTypes.ALARMTYPEMASTER_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
         }
         else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Country Master error'), null, null);
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Alarm Type Master error'), null, null);
         }
     }
     catch (error) {
@@ -274,109 +330,36 @@ export const getCountryMasterData = (pageIndex, rowsToReturn, order, where) => a
         dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
     }
 };
-//#endregion
 
-//#region State Master
-
-
-export const getStateMasterData = (pageIndex, rowsToReturn, order, where, countryId) => async dispatch => {
+export const deleteAlarmTypeMasterData = id => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.AUTH_URL + `tmc/admin/stateMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
+        let url = config.AUTH_URL + `tmc/admin/alarmTypeMaster`;
 
-        if (order && order.length > 0) {
-            url = url + `&order=${JSON.stringify(order)}`;
-        }
+        const data = await service._delete(url + '?id=' + id, true);
 
-        if (order && order.length > 0) {
-            url = url + `&where=${JSON.stringify(where)}`;
-        }
-        if (countryId) {
-            url = url + `&countryId=${countryId}`;
-        }
-        const data = await service.get(url, true);
         if (data && !data.errorMessage) {
-            //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-            dispatchAction(dispatch, adminTypes.STATEMASTER_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
+            dispatchAction(dispatch, adminTypes.ALARMTYPEMASTER_DELETE_SUCCESS, null, null, null, data.message);
+
+            setTimeout(() =>
+                dispatch({
+                    type: commonTypes.NOTIFICATION_SHOW,
+                    message: 'Alarm Type Master(s) deleted successfully',
+                    error: undefined,
+                    notification: true
+                }), 500);
         }
         else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'State Master error'), null, null);
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Alarm Type Mastererror'), null, null);
         }
     }
     catch (error) {
-        console.error('error: ', error);
         //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
         dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
     }
 };
+
 //#endregion
-
-//#region City Master
-
-export const getCityMasterData = (pageIndex, rowsToReturn, order, where,stateId) => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUTH_URL + `tmc/admin/cityMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
-
-        if (order && order.length > 0) {
-            url = url + `&order=${JSON.stringify(order)}`;
-        }
-
-        if (order && order.length > 0) {
-            url = url + `&where=${JSON.stringify(where)}`;
-        }
-        if (stateId) {
-            url = url + `&stateId=${stateId}`;
-        }
-        const data = await service.get(url, true);
-        if (data && !data.errorMessage) {
-            //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-            dispatchAction(dispatch, adminTypes.CITYMASTER_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'City Master error'), null, null);
-        }
-    }
-    catch (error) {
-        console.error('error: ', error);
-        //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-//#endregion
-
-
-//#region Gender Master
-
-export const getGenderMasterData = (pageIndex, rowsToReturn, order, where) => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUTH_URL + `tmc/admin/genderMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
-
-        if (order && order.length > 0) {
-            url = url + `&order=${JSON.stringify(order)}`;
-        }
-
-        if (order && order.length > 0) {
-            url = url + `&where=${JSON.stringify(where)}`;
-        }
-        const data = await service.get(url, true);
-        if (data && !data.errorMessage) {
-            //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-            dispatchAction(dispatch, adminTypes.GENDERMASTER_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Gender Master error'), null, null);
-        }
-    }
-    catch (error) {
-        console.error('error: ', error);
-        //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-//#endregion
-
 
 //#region Module Master
 
@@ -1667,6 +1650,137 @@ export const deleteAuditTypeAuditorRelationMasterData = Ids => async dispatch =>
 };
 //#endregion
 
+//#region Country Master
+
+export const getCountryMasterData = (pageIndex, rowsToReturn, order, where) => async dispatch => {
+    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
+    try {
+        let url = config.AUTH_URL + `tmc/admin/countryMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
+
+        if (order && order.length > 0) {
+            url = url + `&order=${JSON.stringify(order)}`;
+        }
+
+        if (order && order.length > 0) {
+            url = url + `&where=${JSON.stringify(where)}`;
+        }
+        const data = await service.get(url, true);
+        if (data && !data.errorMessage) {
+            //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+            dispatchAction(dispatch, adminTypes.COUNTRYMASTER_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
+        }
+        else {
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Country Master error'), null, null);
+        }
+    }
+    catch (error) {
+        console.error('error: ', error);
+         //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+    }
+};
+
+//#endregion
+
+//#region State Master
+
+
+export const getStateMasterData = (pageIndex, rowsToReturn, order, where, countryId) => async dispatch => {
+    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
+    try {
+        let url = config.AUTH_URL + `tmc/admin/stateMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
+
+        if (order && order.length > 0) {
+            url = url + `&order=${JSON.stringify(order)}`;
+        }
+
+        if (order && order.length > 0) {
+            url = url + `&where=${JSON.stringify(where)}`;
+        }
+        if (countryId) {
+            url = url + `&countryId=${countryId}`;
+        }
+        const data = await service.get(url, true);
+        if (data && !data.errorMessage) {
+            //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+            dispatchAction(dispatch, adminTypes.STATEMASTER_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
+        }
+        else {
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'State Master error'), null, null);
+                }
+    }
+    catch (error) {
+        console.error('error: ', error);
+        //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+    }
+    
+    };
+//#endregion
+
+//#region City Master
+
+export const getCityMasterData = (pageIndex, rowsToReturn, order, where,stateId) => async dispatch => {
+    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
+    try {
+        let url = config.AUTH_URL + `tmc/admin/cityMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
+              if (order && order.length > 0) {
+            url = url + `&order=${JSON.stringify(order)}`;
+        }
+
+        if (order && order.length > 0) {
+            url = url + `&where=${JSON.stringify(where)}`;
+        }
+           if (stateId) {
+            url = url + `&stateId=${stateId}`;
+        }
+        const data = await service.get(url, true);
+        if (data && !data.errorMessage) {
+            //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+            dispatchAction(dispatch, adminTypes.CITYMASTER_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
+        }
+        else {
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'City Master error'), null, null);
+              }
+    }
+    catch (error) {
+        console.error('error: ', error);
+        //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+    }
+};
+//#endregion
+
+//#region Gender Master
+
+export const getGenderMasterData = (pageIndex, rowsToReturn, order, where) => async dispatch => {
+    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
+    try {
+        let url = config.AUTH_URL + `tmc/admin/genderMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
+
+        if (order && order.length > 0) {
+            url = url + `&order=${JSON.stringify(order)}`;
+        }
+
+        if (order && order.length > 0) {
+            url = url + `&where=${JSON.stringify(where)}`;
+        }
+        const data = await service.get(url, true);
+        if (data && !data.errorMessage) {
+            //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+            dispatchAction(dispatch, adminTypes.GENDERMASTER_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
+        }
+        else {
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Gender Master error'), null, null);
+        }
+    }
+    catch (error) {
+        console.error('error: ', error);
+          //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+    }
+};
+//#endregion
 
 //#region  Organisation Details
 export const initOrganisationDetails = () => dispatch => {
