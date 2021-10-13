@@ -238,6 +238,23 @@ app.prepare()
 				}
 			});
 		});
+
+		server.get('/admin/tower-master', (req, res) => {
+			const q = req.query;
+			q.tab = 'tower-master';
+			q.pathname = 'tower-master';
+			q.pageName = 'Tower Master';
+			q.MasterName = 'Tower Master';
+			return app.render(req, res, '/admin', {
+				page: q.pageName,
+				MasterName: q.MasterName,
+				tab: q.tab,
+				section: 'master',
+				query: {
+					...q
+				}
+			});
+		});
 		server.get('/admin/group-company', (req, res) => {
 			const q = req.query;
 			q.tab = 'group-company';

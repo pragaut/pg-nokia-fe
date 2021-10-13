@@ -152,6 +152,11 @@ const initialState = {
     processFlowResponsibilitys: undefined,
     processFlowResponsibilityActiontype: undefined,
     processFlowResponsibilityRecordsCount: 0,
+
+    towerActiontype: actions.TOWERMASTER_INIT,
+    tower: undefined,
+    towers: undefined,
+    towerRecordsCount: 0,
 };
 
 /**
@@ -233,7 +238,7 @@ const adminReducer = (state, action) => {
 
         case actions.ALARMTYPEMASTER_GET_BY_ID_SUCCESS:
             return {
-                alarms: state.alarmRecordsCount,
+                alarms: state.alarms,
                 alarm: action.data,
                 alarmActiontype: action.type,
                 alarmRecordsCount: state.recordsCount,
@@ -277,7 +282,7 @@ const adminReducer = (state, action) => {
 
         case actions.MODULEMASTER_GET_BY_ID_SUCCESS:
             return {
-                modules: state.moduleRecordsCount,
+                modules: state.modules,
                 module: action.data,
                 moduleActiontype: action.type,
                 moduleRecordsCount: state.recordsCount,
@@ -1758,7 +1763,50 @@ const adminReducer = (state, action) => {
             };
         //#endregion
 
+            //#region  Tower Master Reducer
 
+        case actions.TOWERMASTER_LIST_SUCCESS:
+            return {
+                tower: state.tower,
+                towers: action.data,
+                towerActiontype: action.type,
+                towerRecordsCount: action.recordsCount,
+
+            };
+
+        case actions.TOWERMASTER_GET_BY_ID_SUCCESS:
+            return {
+                towers: state.towers,
+                tower: action.data,
+                towerActiontype: action.type,
+                towerRecordsCount: state.recordsCount,
+            };
+
+        case actions.TOWERMASTER_SAVE_SUCCESS:
+            return {
+                tower: action.data,
+                towers: state.towers,
+                towerActiontype: action.type,
+                towerRecordsCount: state.recordsCount,
+            };
+
+        case actions.TOWERMASTER_DELETE_SUCCESS:
+            return {
+                tower: state.data,
+                towers: state.towers,
+                towerActiontype: action.type,
+                towerRecordsCount: state.recordsCount,
+            };
+
+        case actions.TOWERMASTER_INIT:
+            return {
+                tower: state.tower,
+                towers: state.towers,
+                towerActiontype: action.type,
+                towerRecordsCount: state.recordsCount,
+            };
+
+        //#endregion
 
         // important: we should always give a default, otherwise React gives a cheap warning and it is very annoying
         default:
@@ -1905,6 +1953,11 @@ const adminReducer = (state, action) => {
                 processFlowResponsibilitys: state.processFlowResponsibilitys,
                 processFlowResponsibilityActiontype: state.processFlowResponsibilityActiontype,
                 processFlowResponsibilityRecordsCount: state.processFlowResponsibilityRecordsCount,
+
+                tower: state.tower,
+                towers: state.towers,
+                towerActiontype: state.towerActiontype,
+                towerRecordsCount: state.towerRecordsCount,
             };
     }
 };

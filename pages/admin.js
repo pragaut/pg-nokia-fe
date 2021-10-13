@@ -26,11 +26,11 @@ import ModalHeader from '../components/shared/ModalHeader';
 import GroupMaster from '../components/masters/groupMaster';
 import AlarmTypeMaster from '../components/masters/alarmTypeMaster';
 import NotificationMaster from '../components/masters/notificationMaster';
-import OrgRelationTypeMaster from '../components/masters/orgRelationTypeMaster';
 import OrganisationDetails from '../components/masters/organisationDetails';
 import ModuleMaster from '../components/masters/moduleMaster';
 import OrgRelationTypeMaster from '../components/masters/orgRelationTypeMaster';
 import RoleMaster from '../components/masters/roleMaster';
+import TowerMaster from '../components/masters/towerMaster';
 import UserMaster from '../components/masters/userMaster';
 import { showNotification, hideNotification } from '../actions/common.actions';
 import * as commonType from '../action-types/common.action.types';
@@ -222,6 +222,16 @@ export class Index extends Wrapper {
           url: "/admin/criticality-master",
           isVisible: true
         },
+        {
+          pathname: "/admin",
+          tab: "tower-master",
+          id: undefined,
+          MasterName: 'Tower Master',
+          ParentMasterName: undefined,
+          parentMasterCategoryId: '',
+          url: "/admin/tower-master",
+          isVisible: true
+        },
       ],
       commonMasterLinks: [
         
@@ -243,7 +253,7 @@ export class Index extends Wrapper {
           ParentMasterName: undefined,
           parentMasterCategoryId: '',
           url: "/admin/org-relation-type-master",
-          isVisible: false
+          isVisible: true
         },
         {
           pathname: "/admin",
@@ -640,6 +650,12 @@ export class Index extends Wrapper {
                   <RoleMaster />
                 </div>
               )}
+              {router && router.query && router.query.tab === "tower-master" && (
+                <div>
+                  {/* <TowerAddEdit /> */}
+                  <TowerMaster />
+                </div>
+              )}
               {router && router.query && router.query.tab === "user-master" && (
                 <div>
                   {/* <UserAddEdit /> */}
@@ -661,7 +677,7 @@ export class Index extends Wrapper {
                 router.query.tab != "role-master" && router.query.tab != "year-master" &&
                 router.query.tab !="org-relation-type-master" && router.query.tab !="organisation-details" &&
                 router.query.tab != "user-master" && router.query.tab != "criticality-master" && 
-                router.query.tab != "notification-master" &&
+                router.query.tab != "notification-master" && router.query.tab != "tower-master" &&
                 <div>
                   <MasterDetails
                     masterCateogyId={router && router.query && router.query.id}

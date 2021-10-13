@@ -120,7 +120,7 @@ class NotificationAddEdit extends Wrapper {
                                 style={{ backgroundColor: "transparent", border: "1px solid #ccc" }}
                                 onChange={this.onValueChanged('alarmTypeId')}
                             >
-                                 <option>Select Alarm Type</option>
+                                 <option key="a0" value="">Select Alarm Type</option>
                                 {this.state.alarms &&
                                     this.state.alarms.map((item, index) => {
                                         return <option key={index} value={item.id}>{item.alarmTypeName}</option>

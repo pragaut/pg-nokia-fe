@@ -538,3 +538,21 @@ export const ORGANISATIONDETAILS_SAVE_REQUESTED = 'modules/organisationdetails/O
 export const ORGANISATIONDETAILS_SAVE_SUCCESS = 'modules/organisationdetails/ORGANISATIONDETAILS_SAVE_SUCCESS';
 export const ORGANISATIONDETAILS_SAVE_ERROR = 'modules/organisationdetails/ORGANISATIONDETAILS_SAVE_ERROR';
 //#endregion
+
+//#region Tower Master
+export const TOWERMASTER_INIT = 'modules/towerMaster/TOWERMASTER_INIT';
+export const TOWERMASTER_LIST_REQUESTED = 'modules/towerMaster/TOWERMASTER_LIST_REQUESTED';
+export const TOWERMASTER_LIST_SUCCESS = 'modules/towerMaster/TOWERMASTER_LIST_SUCCESS';
+
+export const TOWERMASTER_GET_BY_ID_REQUESTED = 'modules/towerMaster/TOWERMASTER_GET_BY_ID_REQUESTED';
+export const TOWERMASTER_GET_BY_ID_SUCCESS = 'modules/towerMaster/TOWERMASTER_GET_BY_ID_SUCCESS';
+export const TOWERMASTER_GET_BY_ID_ERROR = 'modules/towerMaster/TOWERMASTER_GET_BY_ID_ERROR';
+
+export const TOWERMASTER_DELETE_REQUESTED = 'modules/towerMaster/TOWERMASTER_DELETE_REQUESTED';
+export const TOWERMASTER_DELETE_SUCCESS = 'modules/towerMaster/TOWERMASTER_DELETE_SUCCESS';
+export const TOWERMASTER_DELETE_ERROR = 'modules/towerMaster/TOWERMASTER_DELETE_ERROR';
+
+export const TOWERMASTER_SAVE_REQUESTED = 'modules/towerMaster/TOWERMASTER_SAVE_REQUESTED';
+export const TOWERMASTER_SAVE_SUCCESS = 'modules/towerMaster/TOWERMASTER_SAVE_SUCCESS';
+export const TOWERMASTER_SAVE_ERROR = 'modules/towerMaster/TOWERMASTER_SAVE_ERROR';
+//#endregion

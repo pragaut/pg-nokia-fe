@@ -4,7 +4,7 @@ import { validateInputs } from '../../../utils/editFormHelper';
 import { save, deleteItems, shouldStoreDataInStateByKey } from '../../../utils/editFormHelper';
 import { connect } from 'react-redux';
 import { constants } from '../../../utils/constants';
-import { getModuleMasterData } from '../../../actions/admin.action';
+import { getModuleMasterData, getOrganisationDetailsData } from '../../../actions/admin.action';
 import style from '../../../theme/app.scss';
 import ModalHeader from '../../shared/ModalHeader';
 import Input from '../../shared/InputBox';
@@ -24,12 +24,12 @@ class ModuleAddEdit extends Wrapper {
     constructor(props) {
         super(props);
 
-        this.alarmTypeMasterIdRefs = React.createRef();
+        this.organisationDetailsIdRefs = React.createRef();
 
         this.onFileChange = this.onFileChange.bind(this);
         this.state = {
             module: props.baseObject ? props.baseObject : {},
-            alarms: [],
+            organisations: [],
             loadershow: 'false',
             
         };
@@ -50,6 +50,7 @@ class ModuleAddEdit extends Wrapper {
     componentDidMount() {
         const state = {};
         this.props.getModuleMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
+        this.props.getOrganisationDetailsData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined,undefined);
         this.setState({
             ...state
         }, () => {
@@ -69,9 +70,9 @@ class ModuleAddEdit extends Wrapper {
     };
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.alarms !== null && nextProps.alarms !== undefined && nextProps.alarms !== this.state.alarms) {
+        if (nextProps.organisations !== null && nextProps.organisations !== undefined && nextProps.organisations !== this.state.organisations) {
             this.setState({
-                alarms: nextProps.alarms
+                organisations: nextProps.organisations
             })
         }
     }
@@ -112,16 +113,16 @@ class ModuleAddEdit extends Wrapper {
                         </div>
                         <div className={style.field_flex_new} style={{ width: '45%', color: "rgba(0,0,0,0.54)", fontSize: "13px" }}>
                         <lable style={{ marginLeft: "8px" }}>Org Details</lable>
-                            <SELECT margin="8px" ref={this.alarmTypeMasterIdRefs}
-                                value={this.state.module.alarmTypeId} paddingLeft="10px" borderRadius="14px" height="51px"
+                            <SELECT margin="8px" ref={this.organisationDetailsIdRefs}
+                                value={this.state.module.orgDetailsId} paddingLeft="10px" borderRadius="14px" height="51px"
                                 type="text" color="rgba(0,0,0,0.87)" borderColor="rgba(0,0,0,0.54)"
                                 style={{ backgroundColor: "transparent", border: "1px solid #ccc" }}
-                                onChange={this.onValueChanged('alarmTypeId')}
+                                onChange={this.onValueChanged('orgDetailsId')}
                             >
                                  <option>Select Org Details</option>
-                                {this.state.alarms &&
-                                    this.state.alarms.map((item, index) => {
-                                        return <option key={index} value={item.id}>{item.alarmTypeName}</option>
+                                {this.state.organisations &&
+                                    this.state.organisations.map((item, index) => {
+                                        return <option key={index} value={item.id}>{item.orgName}</option>
                                     })
                                 }
                             </SELECT>
@@ -154,7 +155,7 @@ ModuleAddEdit.propTypes = {
 };
 
 const mapStateToProps = state => {
-    const { alarm,alarms  } = state.adminReducer;
-    return { alarm,alarms   };
+    const { organisation,organisations  } = state.adminReducer;
+    return { organisations,organisation   };
 }
-export default connect(mapStateToProps, { getModuleMasterData })(ModuleAddEdit)
+export default connect(mapStateToProps, { getModuleMasterData, getOrganisationDetailsData })(ModuleAddEdit)

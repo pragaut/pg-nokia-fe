@@ -109,10 +109,10 @@ class RoleAddEdit extends Wrapper {
                         <div className={style.field_flex_new} style={{ width: '45%', color: "rgba(0,0,0,0.54)", fontSize: "13px" }}> 
                         <lable style={{ marginLeft: "8px" }}>Module Name</lable>
                             <SELECT margin="8px" ref={this.moduleMasterIdRefs}
-                                value={this.state.role.moduleId} paddingLeft="10px" borderRadius="14px" height="51px"
+                                value={this.state.role.orgModulesId} paddingLeft="10px" borderRadius="14px" height="51px"
                                 type="text" color="rgba(0,0,0,0.87)" borderColor="rgba(0,0,0,0.54)"
                                 style={{ backgroundColor: "transparent", border: "1px solid #ccc" }}
-                                onChange={this.onValueChanged('moduleId')}
+                                onChange={this.onValueChanged('orgModulesId')}
                             >
                                  <option>Select Module</option>
                                 {this.state.modules &&
