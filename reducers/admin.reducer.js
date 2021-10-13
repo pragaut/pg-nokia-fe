@@ -508,15 +508,15 @@ const adminReducer = (state, action) => {
                 type: action.type,
             };
 
-        case actions.MODULEMASTER_GET_BY_GROUPID_SUCCESS:
-            return {
-                module: state.module,
-                modules: action.data,
-                moduleActiontype: action.type,
-                moduleRecordsCount: action.recordsCount,
+        // case actions.MODULEMASTER_GET_BY_GROUPID_SUCCESS:
+        //     return {
+        //         module: state.module,
+        //         modules: action.data,
+        //         moduleActiontype: action.type,
+        //         moduleRecordsCount: action.recordsCount,
 
-                type: action.type,
-            };
+        //         type: action.type,
+        //     };
 
         case actions.MODULEMASTER_SAVE_SUCCESS:
             return {
@@ -1795,6 +1795,7 @@ const adminReducer = (state, action) => {
                 genders: state.genders,
                 genderActiontype: state.genderActiontype,
                 genderRecordsCount: state.genderRecordsCount,
+
                 alarm: state.alarm,
                 alarms: state.alarms,
                 alarmActiontype: state.alarmActiontype,
