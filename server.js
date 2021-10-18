@@ -172,6 +172,22 @@ app.prepare()
 				}
 			});
 		});
+		server.get('/admin/organisation-employee-details', (req, res) => {
+			const q = req.query;
+			q.tab = 'organisation-employee-details';
+			q.pathname = 'organisation-employee-details';
+			q.pageName = 'Organisation Employee Details';
+			q.MasterName = 'Organisation Employee Details';
+			return app.render(req, res, '/admin', {
+				page: q.pageName,
+				MasterName: q.MasterName,
+				tab: q.tab,
+				section: 'master',
+				query: {
+					...q
+				}
+			});
+		});
 		
 		server.get('/admin/alarm-type-master', (req, res) => {
 			const q = req.query;

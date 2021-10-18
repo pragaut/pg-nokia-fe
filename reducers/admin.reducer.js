@@ -47,6 +47,11 @@ const initialState = {
     organisations: undefined,
     organisationRecordsCount: 0,
 
+    orgEmployeeActiontype: actions.ORGANISATIONDETAILS_INIT,
+    orgEmployee: undefined,
+    orgEmployees: undefined,
+    orgEmployeeRecordsCount: 0,
+
     moduleActiontype: actions.MODULEMASTER_INIT,
     module: undefined,
     modules: undefined,
@@ -440,7 +445,7 @@ const adminReducer = (state, action) => {
         //#endregion 
 
 
-        //#region Module Master Reducer
+        //#region Organisation Master Reducer
         case actions.ORGANISATIONDETAILS_LIST_SUCCESS:
             return {
                 organisation: state.organisation,
@@ -507,6 +512,65 @@ const adminReducer = (state, action) => {
         //#endregion
 
 
+        //#region Organisation Employee Master Reducer
+        case actions.ORGANISATIONEMPLOYEEDETAILS_LIST_SUCCESS:
+            return {
+                orgEmployee: state.orgEmployee,
+                orgEmployees: action.data,
+                orgEmployeeActiontype: action.type,
+                orgEmployeeRecordsCount: action.recordsCount,
+
+                type: action.type,
+            };
+        case actions.ORGANISATIONEMPLOYEEDETAILS_GET_BY_ID_SUCCESS:
+            return {
+                orgEmployees: state.orgEmployees,
+                orgEmployee: action.data,
+                orgEmployeeActiontype: action.type,
+                orgEmployeeRecordsCount: state.recordsCount,
+
+                type: action.type,
+            };
+        case actions.ORGANISATIONEMPLOYEEDETAILS_GET_BY_ORGDETAILSID_SUCCESS:
+            return {
+                orgEmployees: state.orgEmployees,
+                orgEmployee: action.data,
+                orgEmployeeActiontype: action.type,
+                orgEmployeeRecordsCount: state.recordsCount,
+
+                type: action.type,
+            };
+        case actions.ORGANISATIONEMPLOYEEDETAILS_SAVE_SUCCESS:
+            return {
+                orgEmployee: action.data,
+                orgEmployees: state.orgEmployees,
+                orgEmployeeActiontype: action.type,
+                orgEmployeeRecordsCount: state.recordsCount,
+
+                type: action.type,
+            };
+        case actions.ORGANISATIONEMPLOYEEDETAILS_DELETE_SUCCESS:
+            return {
+                orgEmployee: state.data,
+                orgEmployees: state.orgEmployees,
+                orgEmployeeActiontype: action.type,
+                orgEmployeeRecordsCount: state.recordsCount,
+
+                type: action.type,
+            };
+        case actions.ORGANISATIONEMPLOYEEDETAILS_INIT:
+            return {
+                orgEmployee: state.orgEmployee,
+                orgEmployees: state.orgEmployees,
+                orgEmployeeActiontype: action.type,
+                orgEmployeeRecordsCount: state.recordsCount,
+
+                type: action.type,
+            };
+        //#endregion
+
+
+        
         //#region Module Master Reducer
         case actions.MODULEMASTER_LIST_SUCCESS:
             return {
