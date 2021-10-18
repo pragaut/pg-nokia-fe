@@ -4,11 +4,11 @@ import { validateInputs } from '../../../utils/editFormHelper';
 import { save, deleteItems, shouldStoreDataInStateByKey } from '../../../utils/editFormHelper';
 import { connect } from 'react-redux';
 import { constants } from '../../../utils/constants';
-import { getGroupMasterData} from '../../../actions/admin.action';
+import { getGroupMasterData } from '../../../actions/admin.action';
 import style from '../../../theme/app.scss';
 import ModalHeader from '../../shared/ModalHeader';
 import Input from '../../shared/InputBox';
-import { SELECT,SpanLabelForDDl } from '../../formStyle';
+import { SELECT, SpanLabelForDDl } from '../../formStyle';
 //import Select from 'react-select'
 
 class OrgRelationTypeAddEdit extends Wrapper {
@@ -33,7 +33,7 @@ class OrgRelationTypeAddEdit extends Wrapper {
     };
 
     onValueChanged = key => event => {
-        const existingOrgRelationType= Object.assign({}, this.state.orgRelationType);
+        const existingOrgRelationType = Object.assign({}, this.state.orgRelationType);
         existingOrgRelationType[key] = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
 
         this.setState({ orgRelationType: existingOrgRelationType });
@@ -60,12 +60,30 @@ class OrgRelationTypeAddEdit extends Wrapper {
         }
     };
 
+    onFileChange = event => {
+        if (event.target.files && event.target.files[0]) {
+            let img = event.target.files[0];
+            this.setState({
+                selectedFile: event.target.files[0]
+            });
+        }
+    };
+
+    handleLoad = (valuede) => {
+        if (valuede === "1" || valuede === 1) {
+            this.setState({ loadershow: 'true' })
+        }
+        else {
+            this.setState({ loadershow: 'false' })
+        }
+    }
+
     render() {
         console.log(" this.props.groups", this.props.groups)
         // console.log("roleCategory");
         return (
             <div className={style.modal_dialog} style={{ width: '95%', maxHeight: '120vh', maxWidth: '80vw' }}>
-              
+
                 {/* container for the edit form here */}
                 <div>
                     {/** idhar saare edit fields aayenge */}
@@ -79,16 +97,14 @@ class OrgRelationTypeAddEdit extends Wrapper {
                                 onChange={this.onValueChanged('groupId')}
                             >
                                 <option key="a0" value="" >--- Select Group ---</option>
-                                
+
                                 {this.props.groups &&
-                                    this.props.groups.map((item, index) => {                                     
+                                    this.props.groups.map((item, index) => {
                                         return <option key={index} value={item.id}>{item.groupName}</option>
                                     })
                                 }
-                            </SELECT>                          
-                        </div>
-                        <div className={style.field_flex_new} style={{ width: '45%', color: "rgba(0,0,0,0.54)", fontSize: "13px" }}>
-                        <Input label="Org Relation Type" type='text' defaultValue={this.state.orgRelationType.orgRelationType} onChange={this.onValueChanged('orgRelationType')} /> 
+                            </SELECT>
+                            <Input label="Org Relation Type" type='text' defaultValue={this.state.orgRelationType.orgRelationType} onChange={this.onValueChanged('orgRelationType')} />
                         </div>
                     </div>
                 </div>
@@ -122,5 +138,5 @@ OrgRelationTypeAddEdit.propTypes = {
 const mapStateToProps = state => {
     const { groups } = state.adminReducer;
     return { groups };
-} 
+}
 export default connect(mapStateToProps, { getGroupMasterData })(OrgRelationTypeAddEdit)

@@ -593,27 +593,6 @@ export const deleteModuleMasterData = id => async dispatch => {
 
 //#region Year Master
 
-export const initYearMaster = () => dispatch => {
-    dispatchAction(dispatch, adminTypes.YEARMASTER_INIT, null, null, null, null);
-};
-
-export const getYearMasterDataById = (id) => async dispatch => {
-    try {
-        let url = config.AUTH_URL + `audit/admin/yearMaster?id=${id}`;
-        const data = await service.get(url, true);
-        if (data && !data.errorMessage) {
-            dispatchAction(dispatch, adminTypes.YEARMASTER_GET_BY_ID_SUCCESS, data.data, null, data.message, null);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Year Master error'), null, null);
-        }
-    }
-    catch (error) {
-        console.error('error: ', error);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-
-};
 
 export const getYearMasterData = (pageIndex, rowsToReturn, order, where) => async dispatch => {
     try {
@@ -678,7 +657,6 @@ export const saveRoleMasterData = roleMaster => async dispatch => {
     }
 };
 
-
 export const getRoleMasterDataById = (role_id) => async dispatch => {
     try {
         let url = config.AUTH_URL + `tmc/admin/roleMaster?role_id=${role_id}`;
@@ -697,6 +675,26 @@ export const getRoleMasterDataById = (role_id) => async dispatch => {
         dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
     }
 
+};
+
+export const getRoleMasterByModuleId = (org_modules_id) => async dispatch => {
+    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null); 
+    try {
+        let url = config.AUTH_URL + `tmc/admin/roleMaster/getByModuleId?org_modules_id=${org_modules_id}`;
+        const data = await service.get(url, true);
+        if (data && !data.errorMessage) {
+            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+            dispatchAction(dispatch, adminTypes.ROLEMASTER_GET_BY_MODULEID_SUCCESS, data.data, null, data.message, null);
+        }
+        else {
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Role Master error'), null, null);
+        }
+    }
+    catch (error) {
+        console.error('error: ', error);
+        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+    }
 };
 
 export const getRoleMasterData = (pageIndex, rowsToReturn, order, where) => async dispatch => {
@@ -1906,10 +1904,11 @@ export const initTowerMaster = () => dispatch => {
 export const saveTowerMasterData = towerMaster => async dispatch => {
     //  dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.AUTH_URL + `tmc/admin/towerMaster/`;
+       
+        let url = config.TMC_URL + `tmc/tmcadmin/towerMaster/`;
         const data = (typeof towerMaster.id === 'undefined' || towerMaster.id === -1) ? await service.post(url, towerMaster, true)
             : await service.put(url, towerMaster, true);
-
+       
         if (data && !data.errorMessage) {
 
             //if (typeof towerMaster.id === 'undefined') towerMaster.id = data.data.id;
@@ -1936,7 +1935,7 @@ export const saveTowerMasterData = towerMaster => async dispatch => {
 
 export const getTowerMasterDataById = (tower_id) => async dispatch => {
     try {
-        let url = config.AUTH_URL + `tmc/admin/towerMaster?tower_id=${tower_id}`;
+        let url = config.TMC_URL + `tmc/tmcadmin/towerMaster?tower_id=${tower_id}`;
         const data = await service.get(url, true);
         if (data && !data.errorMessage) {
             //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
@@ -1957,7 +1956,7 @@ export const getTowerMasterDataById = (tower_id) => async dispatch => {
 export const getTowerMasterData = (pageIndex, rowsToReturn, order, where) => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.TMC_URL + `tmc/tmcAdmin/towerMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
+        let url = config.TMC_URL + `tmc/tmcadmin/towerMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
 
         if (order && order.length > 0) {
             url = url + `&order=${JSON.stringify(order)}`;
@@ -1967,6 +1966,7 @@ export const getTowerMasterData = (pageIndex, rowsToReturn, order, where) => asy
             url = url + `&where=${JSON.stringify(where)}`;
         }
         const data = await service.get(url, true);
+        console.log("getTowerMasterData data ",data);
         if (data && !data.errorMessage) {
             //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
             dispatchAction(dispatch, adminTypes.TOWERMASTER_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
@@ -1985,7 +1985,7 @@ export const getTowerMasterData = (pageIndex, rowsToReturn, order, where) => asy
 export const deleteTowerMasterData = id => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.AUTH_URL + `tmc/admin/towerMaster`;
+        let url = config.TMC_URL + `tmc/tmcadmin/towerMaster`;
 
         const data = await service._delete(url + '?id=' + id, true);
 
@@ -2002,6 +2002,354 @@ export const deleteTowerMasterData = id => async dispatch => {
         }
         else {
             dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Tower Mastererror'), null, null);
+        }
+    }
+    catch (error) {
+        //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+    }
+};
+
+//#endregion
+
+//#region Tower Allotment Master
+
+export const initTowerAllotmentMaster = () => dispatch => {
+    dispatchAction(dispatch, adminTypes.TOWERALLOTMENTMASTER_INIT, null, null, null, null);
+};
+
+export const saveTowerAllotmentMasterData = towerAllotmentMaster => async dispatch => {
+    //  dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
+    try {
+        let url = config.TMC_URL + `tmc/tmcadmin/towerAllotmentMaster/`;
+        const data = (typeof towerAllotmentMaster.id === 'undefined' || towerAllotmentMaster.id === -1) ? await service.post(url, towerAllotmentMaster, true)
+            : await service.put(url, towerAllotmentMaster, true);
+
+        if (data && !data.errorMessage) {
+
+            //if (typeof towerAllotmentMaster.id === 'undefined') towerAllotmentMaster.id = data.data.id;
+
+            dispatchAction(dispatch, adminTypes.TOWERALLOTMENTMASTER_SAVE_SUCCESS, towerAllotmentMaster, null, data.message, null);
+
+            dispatch({
+                type: commonTypes.NOTIFICATION_SHOW,
+                message: 'Tower Allotment Master updated successfully',
+                error: undefined,
+                notification: true
+            });
+        }
+        else {
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Tower Allotment Master error'), null, null);
+        }
+    }
+    catch (error) {
+        //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+    }
+};
+
+
+export const getTowerAllotmentMasterDataById = (tower_id) => async dispatch => {
+    try {
+        let url = config.TMC_URL + `tmc/tmcadmin/towerAllotmentMaster?tower_id=${tower_id}`;
+        const data = await service.get(url, true);
+        if (data && !data.errorMessage) {
+            //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+            dispatchAction(dispatch, adminTypes.TOWERALLOTMENTMASTER_GET_BY_ID_SUCCESS, data.data, null, data.message, null);
+        }
+        else {
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Tower Allotment Master error'), null, null);
+        }
+    }
+    catch (error) {
+        console.error('error: ', error);
+        //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+    }
+
+};
+
+export const getTowerAllotmentMasterData = (pageIndex, rowsToReturn, order, where) => async dispatch => {
+    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
+    try {
+        let url = config.TMC_URL + `tmc/tmcadmin/towerAllotmentMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
+
+        if (order && order.length > 0) {
+            url = url + `&order=${JSON.stringify(order)}`;
+        }
+
+        if (order && order.length > 0) {
+            url = url + `&where=${JSON.stringify(where)}`;
+        }
+        const data = await service.get(url, true);
+        console.log("getTowerAllotemntMasterData data ",data);
+        if (data && !data.errorMessage) {
+            //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+            dispatchAction(dispatch, adminTypes.TOWERALLOTMENTMASTER_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
+        }
+        else {
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Tower Allotment Master error'), null, null);
+        }
+    }
+    catch (error) {
+        console.error('error: ', error);
+        //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+    }
+};
+
+export const deleteTowerAllotmentMasterData = id => async dispatch => {
+    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
+    try {
+        let url = config.TMC_URL + `tmc/tmcadmin/towerAllotmentMaster`;
+
+        const data = await service._delete(url + '?id=' + id, true);
+
+        if (data && !data.errorMessage) {
+            dispatchAction(dispatch, adminTypes.TOWERALLOTMENTMASTER_DELETE_SUCCESS, null, null, null, data.message);
+
+            setTimeout(() =>
+                dispatch({
+                    type: commonTypes.NOTIFICATION_SHOW,
+                    message: 'Tower Allotment Master(s) deleted successfully',
+                    error: undefined,
+                    notification: true
+                }), 500);
+        }
+        else {
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Tower Allotment Master error'), null, null);
+        }
+    }
+    catch (error) {
+        //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+    }
+};
+
+//#endregion
+
+//#region Tower Antennas Master
+
+export const initTowerAntennasMaster = () => dispatch => {
+    dispatchAction(dispatch, adminTypes.TOWERANTENNASMASTER_INIT, null, null, null, null);
+};
+
+export const saveTowerAntennasMasterData = towerAntennasMaster => async dispatch => {
+    //  dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
+    try {
+        let url = config.TMC_URL + `tmc/tmcadmin/towerAntennasMaster/`;
+        const data = (typeof towerAntennasMaster.id === 'undefined' || towerAntennasMaster.id === -1) ? await service.post(url, towerAntennasMaster, true)
+            : await service.put(url, towerAntennasMaster, true);
+
+        if (data && !data.errorMessage) {
+
+            //if (typeof towerAntennasMaster.id === 'undefined') towerAntennasMaster.id = data.data.id;
+
+            dispatchAction(dispatch, adminTypes.TOWERANTENNASMASTER_SAVE_SUCCESS, towerAntennasMaster, null, data.message, null);
+
+            dispatch({
+                type: commonTypes.NOTIFICATION_SHOW,
+                message: 'Tower Antennas Master updated successfully',
+                error: undefined,
+                notification: true
+            });
+        }
+        else {
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Tower Antennas Master error'), null, null);
+        }
+    }
+    catch (error) {
+        //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+    }
+};
+
+
+export const getTowerAntennasMasterDataById = (tower_id) => async dispatch => {
+    try {
+        let url = config.TMC_URL + `tmc/tmcadmin/towerAntennasMaster?tower_id=${tower_id}`;
+        const data = await service.get(url, true);
+        if (data && !data.errorMessage) {
+            //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+            dispatchAction(dispatch, adminTypes.TOWERANTENNASMASTER_GET_BY_ID_SUCCESS, data.data, null, data.message, null);
+        }
+        else {
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Tower Antennas Master error'), null, null);
+        }
+    }
+    catch (error) {
+        console.error('error: ', error);
+        //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+    }
+
+};
+
+export const getTowerAntennasMasterData = (pageIndex, rowsToReturn, order, where) => async dispatch => {
+    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
+    try {
+        let url = config.TMC_URL + `tmc/tmcadmin/towerAntennasMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
+
+        if (order && order.length > 0) {
+            url = url + `&order=${JSON.stringify(order)}`;
+        }
+
+        if (order && order.length > 0) {
+            url = url + `&where=${JSON.stringify(where)}`;
+        }
+        const data = await service.get(url, true);
+        console.log("getTowerAntennasMasterData data ",data);
+        if (data && !data.errorMessage) {
+            //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+            dispatchAction(dispatch, adminTypes.TOWERANTENNASMASTER_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
+        }
+        else {
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Tower Antennas Master error'), null, null);
+        }
+    }
+    catch (error) {
+        console.error('error: ', error);
+        //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+    }
+};
+
+export const deleteTowerAntennasMasterData = id => async dispatch => {
+    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
+    try {
+        let url = config.TMC_URL + `tmc/tmcadmin/towerAntennasMaster`;
+
+        const data = await service._delete(url + '?id=' + id, true);
+
+        if (data && !data.errorMessage) {
+            dispatchAction(dispatch, adminTypes.TOWERANTENNASMASTER_DELETE_SUCCESS, null, null, null, data.message);
+
+            setTimeout(() =>
+                dispatch({
+                    type: commonTypes.NOTIFICATION_SHOW,
+                    message: 'Tower Antennas Master(s) deleted successfully',
+                    error: undefined,
+                    notification: true
+                }), 500);
+        }
+        else {
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Tower Antennas Master error'), null, null);
+        }
+    }
+    catch (error) {
+        //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+    }
+};
+
+//#endregion
+
+//#region Device Registration Master
+
+export const initDeviceRegistrationMaster = () => dispatch => {
+    dispatchAction(dispatch, adminTypes.DEVICEREGISTRATIONMASTER_INIT, null, null, null, null);
+};
+
+export const saveDeviceRegistrationMasterData = deviceRegistrationMaster => async dispatch => {
+    //  dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
+    try {
+        let url = config.TMC_URL + `tmc/tmcadmin/deviceRegistrationMaster/`;
+        const data = (typeof deviceRegistrationMaster.id === 'undefined' || deviceRegistrationMaster.id === -1) ? await service.post(url, deviceRegistrationMaster, true)
+            : await service.put(url, deviceRegistrationMaster, true);
+
+        if (data && !data.errorMessage) {
+
+            //if (typeof deviceRegistrationMaster.id === 'undefined') deviceRegistrationMaster.id = data.data.id;
+
+            dispatchAction(dispatch, adminTypes.DEVICEREGISTRATIONMASTER_SAVE_SUCCESS, deviceRegistrationMaster, null, data.message, null);
+
+            dispatch({
+                type: commonTypes.NOTIFICATION_SHOW,
+                message: 'Device Registration Master updated successfully',
+                error: undefined,
+                notification: true
+            });
+        }
+        else {
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Device Registration Master error'), null, null);
+        }
+    }
+    catch (error) {
+        //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+    }
+};
+
+
+export const getDeviceRegistrationMasterDataById = (tower_id) => async dispatch => {
+    try {
+        let url = config.TMC_URL + `tmc/tmcadmin/deviceRegistrationMaster?tower_id=${tower_id}`;
+        const data = await service.get(url, true);
+        if (data && !data.errorMessage) {
+            //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+            dispatchAction(dispatch, adminTypes.DEVICEREGISTRATIONMASTER_GET_BY_ID_SUCCESS, data.data, null, data.message, null);
+        }
+        else {
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Device Registration Master error'), null, null);
+        }
+    }
+    catch (error) {
+        console.error('error: ', error);
+        //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+    }
+
+};
+
+export const getDeviceRegistrationMasterData = (pageIndex, rowsToReturn, order, where) => async dispatch => {
+    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
+    try {
+        let url = config.TMC_URL + `tmc/tmcadmin/deviceRegistrationMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
+
+        if (order && order.length > 0) {
+            url = url + `&order=${JSON.stringify(order)}`;
+        }
+
+        if (order && order.length > 0) {
+            url = url + `&where=${JSON.stringify(where)}`;
+        }
+        const data = await service.get(url, true);
+        console.log("getDeviceRegistrationMasterData data ",data);
+        if (data && !data.errorMessage) {
+            //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+            dispatchAction(dispatch, adminTypes.DEVICEREGISTRATIONMASTER_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
+        }
+        else {
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Device Registration Master error'), null, null);
+        }
+    }
+    catch (error) {
+        console.error('error: ', error);
+        //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+    }
+};
+
+export const deleteDeviceRegistrationMasterData = id => async dispatch => {
+    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
+    try {
+        let url = config.TMC_URL + `tmc/tmcadmin/deviceRegistrationMaster`;
+
+        const data = await service._delete(url + '?id=' + id, true);
+
+        if (data && !data.errorMessage) {
+            dispatchAction(dispatch, adminTypes.DEVICEREGISTRATIONMASTER_DELETE_SUCCESS, null, null, null, data.message);
+
+            setTimeout(() =>
+                dispatch({
+                    type: commonTypes.NOTIFICATION_SHOW,
+                    message: 'Device Registration Master(s) deleted successfully',
+                    error: undefined,
+                    notification: true
+                }), 500);
+        }
+        else {
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Device Registration Master error'), null, null);
         }
     }
     catch (error) {

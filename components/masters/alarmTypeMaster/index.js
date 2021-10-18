@@ -84,7 +84,7 @@ class AlarmTypeIndex extends Wrapper {
                 show: true
             },
             {
-                Header: 'Color Code',
+                Header: 'Color',
                 minWidth: 50,
                 id: 'colorCode',
                 show: true,
@@ -99,7 +99,7 @@ class AlarmTypeIndex extends Wrapper {
                 filterable: false
             },
             {
-                Header: 'BG Color Code',
+                Header: 'Background',
                 minWidth: 50,
                 id: 'bgColorCode',
                 show: true,

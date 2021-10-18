@@ -31,6 +31,9 @@ import ModuleMaster from '../components/masters/moduleMaster';
 import OrgRelationTypeMaster from '../components/masters/orgRelationTypeMaster';
 import RoleMaster from '../components/masters/roleMaster';
 import TowerMaster from '../components/masters/towerMaster';
+import TowerAllotmentMaster from '../components/masters/towerAllotmentMaster';
+import TowerAntennasMaster from '../components/masters/towerAntennasMaster';
+import DeviceRegistrationMaster from '../components/masters/deviceRegistrationMaster';
 import UserMaster from '../components/masters/userMaster';
 import { showNotification, hideNotification } from '../actions/common.actions';
 import * as commonType from '../action-types/common.action.types';
@@ -230,6 +233,36 @@ export class Index extends Wrapper {
           ParentMasterName: undefined,
           parentMasterCategoryId: '',
           url: "/admin/tower-master",
+          isVisible: true
+        },
+        {
+          pathname: "/admin",
+          tab: "tower-allotment-master",
+          id: undefined,
+          MasterName: 'Tower Allotment Master',
+          ParentMasterName: undefined,
+          parentMasterCategoryId: '',
+          url: "/admin/tower-allotment-master",
+          isVisible: true
+        },
+        {
+          pathname: "/admin",
+          tab: "tower-antennas-master",
+          id: undefined,
+          MasterName: 'Tower Antennas Master',
+          ParentMasterName: undefined,
+          parentMasterCategoryId: '',
+          url: "/admin/tower-antennas-master",
+          isVisible: true
+        },
+        {
+          pathname: "/admin",
+          tab: "device-registration-master",
+          id: undefined,
+          MasterName: 'Device Registration Master',
+          ParentMasterName: undefined,
+          parentMasterCategoryId: '',
+          url: "/admin/device-registration-master",
           isVisible: true
         },
       ],
@@ -656,6 +689,24 @@ export class Index extends Wrapper {
                   <TowerMaster />
                 </div>
               )}
+              {router && router.query && router.query.tab === "tower-allotment-master" && (
+                <div>
+                  {/* <TowerAllotmentAddEdit /> */}
+                  <TowerAllotmentMaster />
+                </div>
+              )}
+              {router && router.query && router.query.tab === "tower-antennas-master" && (
+                <div>
+                  {/* <TowerAntennasAddEdit /> */}
+                  <TowerAntennasMaster />
+                </div>
+              )}
+              {router && router.query && router.query.tab === "device-registration-master" && (
+                <div>
+                  {/* <DeviceRegistrationAddEdit /> */}
+                  <DeviceRegistrationMaster />
+                </div>
+              )}
               {router && router.query && router.query.tab === "user-master" && (
                 <div>
                   {/* <UserAddEdit /> */}
@@ -677,7 +728,8 @@ export class Index extends Wrapper {
                 router.query.tab != "role-master" && router.query.tab != "year-master" &&
                 router.query.tab !="org-relation-type-master" && router.query.tab !="organisation-details" &&
                 router.query.tab != "user-master" && router.query.tab != "criticality-master" && 
-                router.query.tab != "notification-master" && router.query.tab != "tower-master" &&
+                router.query.tab != "notification-master" && router.query.tab != "tower-master" && 
+                router.query.tab != "tower-allotment-master" && router.query.tab != "tower-antennas-master" && router.query.tab != "device-registration-master" &&
                 <div>
                   <MasterDetails
                     masterCateogyId={router && router.query && router.query.id}

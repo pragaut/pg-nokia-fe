@@ -40,14 +40,19 @@ class Index extends Wrapper {
         let columns = [
             {
                 Header: 'Action',
-                // accessor: 'id',
+                accessor: 'id',
                 id: 'id',
                 show: true,
-                minWidth: 80,
                 Cell: propss => (
                     <React.Fragment>
                         <button className="warning" style={{ marginRight: '10px' }} value={propss.original.id} onClick={() => this.onClickAdd(propss.original)}>
                             Edit
+                        </button><br />
+
+                        <button className="primary" style={{ marginRight: '10px' }} value={propss.original.id} onClick={() =>
+                            this.onDeleteRecord(propss.original.id)
+                        }>
+                            Delete
                         </button>
                     </React.Fragment>
                 ),
@@ -68,14 +73,14 @@ class Index extends Wrapper {
                 filterable: false
             },
             {
-                Header: 'Org Name',
+                Header: 'Organisation Name',
                 accessor: d => `${d.orgName}`,
                 id: 'orgName',
                 show: true,
                 minWidth: 250,
             },
             {
-                Header: 'Org Code',
+                Header: 'Organisation Code',
                 accessor: d => `${d.orgCode}`,
                 id: 'orgCode',
                 show: true              
@@ -93,9 +98,9 @@ class Index extends Wrapper {
                 show: true,
                 minWidth: 150,
             },  {
-                Header: 'Org GST',
-                accessor: 'org_gst',
-                id: 'org_gst',
+                Header: 'Organisation GST',
+                accessor: 'orgGST',
+                id: 'orgGST',
                 show: true,
                 minWidth: 150,
             },
@@ -154,6 +159,16 @@ class Index extends Wrapper {
             this.updateStateAfterStateUpdate();
         }, 100);
     };
+
+    onDeleteRecord = (ids) => {
+        if (confirm('Would you like to delete the record?')) {
+            this.props.deleteOrganisationDetailsData(ids);
+            setTimeout(() => {
+                this.props.getOrganisationDetailsData(0, constants.ALL_ROWS_LIST, undefined, undefined);
+            }, 500);
+        }
+
+    }
 
     onClickAdd = (organisation) => {
         this.setState({ organisation: organisation, showEditPopup: true })

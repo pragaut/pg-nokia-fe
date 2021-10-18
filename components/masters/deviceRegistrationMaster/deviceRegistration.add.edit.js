@@ -4,16 +4,16 @@ import { validateInputs } from '../../../utils/editFormHelper';
 import { save, deleteItems, shouldStoreDataInStateByKey } from '../../../utils/editFormHelper';
 import { connect } from 'react-redux';
 import { constants } from '../../../utils/constants';
-import { getTowerMasterData, getOrganisationDetailsData, getCityMasterData } from '../../../actions/admin.action';
+import { getDeviceRegistrationMasterData, getOrganisationDetailsData } from '../../../actions/admin.action';
 import style from '../../../theme/app.scss';
 import ModalHeader from '../../shared/ModalHeader';
 import Input from '../../shared/InputBox';
 import { SELECT, SpanLabelForDDl } from '../../formStyle';
 import config from '../../../config';
 //import Select from 'react-select'
+import styledComponentsCjs from 'styled-components';
 import * as sessionHelper from '../../../utils/session.helper';
 import * as helper from '../../../helper';
-import styledComponentsCjs from 'styled-components';
 import Gap from '../../Gap'
 
 const SPAN = styledComponentsCjs.div` 
@@ -26,10 +26,11 @@ const SPAN = styledComponentsCjs.div`
     letter-spacing: 0.00938em; 
 `;
 
-class TowerAddEdit extends Wrapper {
+
+class DeviceRegistrationAddEdit extends Wrapper {
 
     configs = [{
-        name: 'towerName',
+        name: 'deviceSequence',
         type: 'string',
         required: true
     }];
@@ -37,31 +38,29 @@ class TowerAddEdit extends Wrapper {
     constructor(props) {
         super(props);
         this.organisationDetailsIdRefs = React.createRef();
-        this.cityMatserIdRefs = React.createRef();
 
         this.onFileChange = this.onFileChange.bind(this);
         this.state = {
-            tower: props.baseObject ? props.baseObject : {},
+            deviceRegistration: props.baseObject ? props.baseObject : {},
             loadershow: 'false',
         };
     };
 
     onValueChanged = key => event => {
-        const existingTower = Object.assign({}, this.state.tower);
-        existingTower[key] = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
+        const existingDeviceRegistration = Object.assign({}, this.state.deviceRegistration);
+        existingDeviceRegistration[key] = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
 
-        this.setState({ tower: existingTower });
+        this.setState({ deviceRegistration: existingDeviceRegistration });
     };
     onTextChange = key => event => {
-        const existingTower = Object.assign({}, this.state.tower);
-        existingTower[key] = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
-        this.setState({ tower: existingTower });
+        const existingDeviceRegistration = Object.assign({}, this.state.deviceRegistration);
+        existingDeviceRegistration[key] = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
+        this.setState({ deviceRegistration: existingDeviceRegistration });
     };
 
     componentDidMount() {
-        this.props.getTowerMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
+        this.props.getDeviceRegistrationMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
         this.props.getOrganisationDetailsData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
-        this.props.getCityMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
     };
 
     UNSAFE_componentWillReceiveProps(nextProps) {
@@ -79,11 +78,6 @@ class TowerAddEdit extends Wrapper {
         if (nextProps.organisations !== null && nextProps.organisations !== undefined && nextProps.organisations !== this.state.organisations) {
             this.setState({
                 organisations: nextProps.organisations
-            })
-        }
-        if (nextProps.citys !== null && nextProps.citys !== undefined && nextProps.citys !== this.state.citys) {
-            this.setState({
-                citys: nextProps.citys
             })
         }
     }
@@ -108,7 +102,7 @@ class TowerAddEdit extends Wrapper {
 
 
     render() {
-        console.log("this.state.tower", this.state.tower);
+        console.log("this.state.deviceRegistration", this.state.deviceRegistration);
         return (
             <div className={style.modal_dialog} style={{ width: '95%', maxHeight: '120vh', maxWidth: '80vw' }}>
                 {/* <ModalHeader
@@ -123,12 +117,12 @@ class TowerAddEdit extends Wrapper {
                                 <SpanLabelForDDl>Org Details</SpanLabelForDDl>
                                 <Gap h="5px" />
                                 <SELECT
-                                    value={this.state.tower.orgDetailsId} paddingLeft="10px" borderRadius="14px" height="51px"
+                                    value={this.state.deviceRegistration.orgDetailsId} paddingLeft="10px" borderRadius="14px" height="51px"
                                     type="text" color="rgba(0,0,0,0.87)" borderColor="rgba(0,0,0,0.54)"
                                     style={{ backgroundColor: "transparent", border: "1px solid #ccc" }}
                                     onChange={this.onValueChanged('orgDetailsId')}
                                 >
-                                    <option key="a0" value="" >--- Select Org Details ---</option>
+                                    <option key="a0" value="" >--- Select Group ---</option>
                                     {this.state.organisations &&
                                         this.state.organisations.map((item, index) => {
                                             return <option key={index} value={item.id}>{item.orgName}</option>
@@ -136,51 +130,37 @@ class TowerAddEdit extends Wrapper {
                                     }
                                 </SELECT>
                             </div>
-                            <Input label="Tower Name:" type='text' defaultValue={this.state.tower.towerName} onChange={this.onValueChanged('towerName')} />
-                            <Input label="Site Name:" type='text' defaultValue={this.state.tower.siteName} onChange={this.onValueChanged('siteName')} />
+                            <Input label="MAC Address:" focusbordercolor="#f90707" type='text' defaultValue={this.state.deviceRegistration.macAddress} onChange={this.onValueChanged('macAddress')} />
+                            <Input label="Unique Id:" focusbordercolor="#f90707" type='text' defaultValue={this.state.deviceRegistration.uniqueId} onChange={this.onValueChanged('uniqueId')} />
                         </div>
+
                         <div className={style.field_flex_new} style={{ width: '45%' }}>
-                            <div style={{ padding: '10px', width: '100%' }}>
-                                <SpanLabelForDDl>City Name</SpanLabelForDDl>
-                                <Gap h="5px" />
-                                <SELECT
-                                    value={this.state.tower.cityId} paddingLeft="10px" borderRadius="14px" height="51px"
-                                    type="text" color="rgba(0,0,0,0.87)" borderColor="rgba(0,0,0,0.54)"
-                                    style={{ backgroundColor: "transparent", border: "1px solid #ccc" }}
-                                    onChange={this.onValueChanged('cityId')}
-                                >
-                                    <option key="a0" value="" >--- Select City ---</option>
-                                    {this.state.citys &&
-                                        this.state.citys.map((item, index) => {
-                                            return <option key={index} value={item.id}>{item.cityName}</option>
-                                        })
-                                    }
-                                </SELECT>
-                            </div>
-                            <Input label="Longitude:" type='number' defaultValue={this.state.tower.longitude} onChange={this.onValueChanged('longitude')} />
-                            <Input label="Latitude:" type='number' defaultValue={this.state.tower.latitude} onChange={this.onValueChanged('latitude')} />
+                            <Input label="Registration Date:" focusbordercolor="#f90707" type='date' defaultValue={this.state.deviceRegistration.registrationDate} onChange={this.onValueChanged('registrationDate')} />
+                            <Input label="Device Sequence:" focusbordercolor="#f90707" type='text' defaultValue={this.state.deviceRegistration.deviceSequence} onChange={this.onValueChanged('deviceSequence')} />
+                            <Input label="Unique Code:" focusbordercolor="#f90707" type='text' defaultValue={this.state.deviceRegistration.uniqueCode} onChange={this.onValueChanged('uniqueCode')} />
 
-
-                            {/* <Input
+                        </div>
+                        {/* <Input
                                 focusbordercolor={'#f90707'}
                                 label={'Media'}
                                 type='file'
                                 onChange={this.onMediaChange('media')}
                             />        */}
-                        </div>
+
+
                     </div>
                 </div>
                 <br></br>
                 {/* container for save and cancel */}
                 <div style={{ display: 'flex', width: '200px', alignItems: 'center', justifyContent: 'space-between', margin: '10px 0px' }}>
                     <button className={style.primary_btn} onClick={() => {
-                        console.log(this.state.tower);
-                        const validationText = validateInputs(this.state.tower, this.configs);
+                        console.log(this.state.deviceRegistration);
+                        const validationText = validateInputs(this.state.deviceRegistration, this.configs);
                         if (validationText) {
                             return alert(validationText);
                         }
                         setTimeout(() => {
-                            this.props.onSave(this.state.tower, this.props.index);
+                            this.props.onSave(this.state.deviceRegistration, this.props.index);
                         }, 200);
 
                     }}>save</button>
@@ -190,13 +170,13 @@ class TowerAddEdit extends Wrapper {
     }
 };
 
-TowerAddEdit.propTypes = {
+DeviceRegistrationAddEdit.propTypes = {
     onSave: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => {
-    const { organisations, organisation, citys, city } = state.adminReducer;
-    return { organisations, organisation, citys, city };
+    const { organisations, organisation } = state.adminReducer;
+    return { organisations, organisation };
 }
-export default connect(mapStateToProps, { getTowerMasterData, getOrganisationDetailsData, getCityMasterData })(TowerAddEdit)
+export default connect(mapStateToProps, { getOrganisationDetailsData, getDeviceRegistrationMasterData })(DeviceRegistrationAddEdit)

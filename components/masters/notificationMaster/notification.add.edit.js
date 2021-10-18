@@ -8,11 +8,24 @@ import { getNotificationMasterData, getAlarmTypeMasterData } from '../../../acti
 import style from '../../../theme/app.scss';
 import ModalHeader from '../../shared/ModalHeader';
 import Input from '../../shared/InputBox';
-import { SELECT , SpanLabelForDDl} from '../../formStyle';
+import { SELECT, SpanLabelForDDl } from '../../formStyle';
 import config from '../../../config';
 //import Select from 'react-select'
 import * as sessionHelper from '../../../utils/session.helper';
 import * as helper from '../../../helper';
+import Gap from '../../Gap';
+import styledComponentsCjs from 'styled-components';
+
+const SPAN = styledComponentsCjs.div` 
+    color: rgba(0, 0, 0, 0.54);
+    padding: 0;
+    font-size: 13px;
+    font-family: Asap;
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: 0.00938em; 
+`;
+
 class NotificationAddEdit extends Wrapper {
 
     configs = [{
@@ -31,7 +44,7 @@ class NotificationAddEdit extends Wrapper {
             notification: props.baseObject ? props.baseObject : {},
             alarms: [],
             loadershow: 'false',
-            
+
         };
     };
 
@@ -58,7 +71,7 @@ class NotificationAddEdit extends Wrapper {
         });
     };
 
-    UNSAFE_componentWillReceiveProps(nextProps) {       
+    UNSAFE_componentWillReceiveProps(nextProps) {
         const storeInState = (data, key) => {
             // time to store
             if (!data) return;
@@ -96,7 +109,7 @@ class NotificationAddEdit extends Wrapper {
     }
 
     render() {
-         console.log("this.state.notification",this.state.notification);
+        console.log("this.state.notification", this.state.notification);
         return (
             <div className={style.modal_dialog} style={{ width: '95%', maxHeight: '120vh', maxWidth: '80vw' }}>
                 {/* <ModalHeader
@@ -106,27 +119,28 @@ class NotificationAddEdit extends Wrapper {
                 <div>
                     {/** idhar saare edit fields aayenge */}
                     <div className={style.field_flex_wrapper}>
-                        <div className={style.field_flex_new} style={{ width: '45%', color: "rgba(0,0,0,0.54)", fontSize: "13px" }}>                           
+                        <div className={style.field_flex_new} style={{ width: '45%' }}>
+                        <div style={{ padding: '10px', width: '100%' }}>
+                                <SpanLabelForDDl>Alarm Type</SpanLabelForDDl>
+                                <Gap h="5px" />
+                                <SELECT
+                                    value={this.state.notification.alarmTypeId} paddingLeft="10px" borderRadius="14px" height="51px"
+                                    type="text" color="rgba(0,0,0,0.87)" borderColor="rgba(0,0,0,0.54)"
+                                    style={{ backgroundColor: "transparent", border: "1px solid #ccc" }}
+                                    onChange={this.onValueChanged('alarmTypeId')}
+                                >
+                                    <option key="a0" value="" >--- Select Alarm Type ---</option>
+                                    {this.state.alarms &&
+                                        this.state.alarms.map((item, index) => {
+                                            return <option key={index} value={item.id}>{item.alarmTypeName}</option>
+                                        })
+                                    }
+                                </SELECT>
+                            </div>
                             <Input label="Notification Name:" type='text' defaultValue={this.state.notification.notificationName} onChange={this.onValueChanged('notificationName')} />
                             <Input label="Code:" type='text' defaultValue={this.state.notification.notificationCode} onChange={this.onValueChanged('notificationCode')} />
-                            <Input label="Order:" type='number' defaultValue={this.state.notification.notificationOrder} onChange={this.onValueChanged('notificationOrder')} />
-                                
-                        </div>
-                        <div className={style.field_flex_new} style={{ width: '45%', color: "rgba(0,0,0,0.54)", fontSize: "13px" }}>
-                        <lable style={{ marginLeft: "8px" }}>Alarm Type</lable>
-                            <SELECT margin="8px" ref={this.alarmTypeMasterIdRefs}
-                                value={this.state.notification.alarmTypeId} paddingLeft="10px" borderRadius="14px" height="51px"
-                                type="text" color="rgba(0,0,0,0.87)" borderColor="rgba(0,0,0,0.54)"
-                                style={{ backgroundColor: "transparent", border: "1px solid #ccc" }}
-                                onChange={this.onValueChanged('alarmTypeId')}
-                            >
-                                 <option key="a0" value="">Select Alarm Type</option>
-                                {this.state.alarms &&
-                                    this.state.alarms.map((item, index) => {
-                                        return <option key={index} value={item.id}>{item.alarmTypeName}</option>
-                                    })
-                                }
-                            </SELECT>
+                            <Input label="Order:" type='text' defaultValue={this.state.notification.notificationOrder} onChange={this.onValueChanged('notificationOrder')} />
+                            
                         </div>
                     </div>
                 </div>
@@ -156,7 +170,7 @@ NotificationAddEdit.propTypes = {
 };
 
 const mapStateToProps = state => {
-    const { alarm,alarms  } = state.adminReducer;
-    return { alarm,alarms   };
+    const { alarm, alarms } = state.adminReducer;
+    return { alarm, alarms };
 }
 export default connect(mapStateToProps, { getNotificationMasterData, getAlarmTypeMasterData })(NotificationAddEdit)
