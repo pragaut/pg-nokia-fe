@@ -156,6 +156,11 @@ console.log("this.state.organisation",this.state.organisation);
                     {/** idhar saare edit fields aayenge */}
                     <div className={style.field_flex_wrapper}>
                         <div className={style.field_flex_new} style={{ width: '45%' }}>
+                        <Gap h="15px" />
+                            <div style={{ padding: '10px 10px 20px 10px', width: '100%', display: 'flex' }}>
+                                <input type="checkbox" checked={this.state.organisation.isParent} onChange={this.onValueChanged('isParent')} />
+                                <SpanLabelForDDl>Is Parent: (optional)</SpanLabelForDDl>
+                            </div>
                             <div style={{ padding: '10px', width: '100%' }}>
                                 <SpanLabelForDDl>Group</SpanLabelForDDl>
                                 <Gap h="5px" />
@@ -211,9 +216,9 @@ console.log("this.state.organisation",this.state.organisation);
                                 </SELECT>
                             </div>
                             <Input label="Org Name:" focusbordercolor="#f90707" type='text' defaultValue={this.state.organisation.orgName} onChange={this.onValueChanged('orgName')} />
-                            <Input label="Org Code: (optional)" focusbordercolor="#f90707" type='text' defaultValue={this.state.organisation.orgCode} onChange={this.onValueChanged('orgCode')} />
-                            <Input label="Email: (optional)" focusbordercolor="#f90707" type='email' defaultValue={this.state.organisation.email} onChange={this.onValueChanged('email')} />
-                            <Input label="Phone: (optional)" focusbordercolor="#f90707" type='number' defaultValue={this.state.organisation.phone} onChange={this.onValueChanged('phone')} />
+                            <Input label="Org Code: " focusbordercolor="#f90707" type='text' defaultValue={this.state.organisation.orgCode} onChange={this.onValueChanged('orgCode')} />
+                            <Input label="Email: " focusbordercolor="#f90707" type='email' defaultValue={this.state.organisation.email} onChange={this.onValueChanged('email')} />
+                            <Input label="Phone: " focusbordercolor="#f90707" type='number' defaultValue={this.state.organisation.phone} onChange={this.onValueChanged('phone')} />
 
 
                         </div>
@@ -275,17 +280,13 @@ console.log("this.state.organisation",this.state.organisation);
                                     }
                                 </SELECT>
                             </div>
-                            <Gap h="15px" />
-                            <div style={{ padding: '10px 10px 20px 10px', width: '100%', display: 'flex' }}>
-                                <input type="checkbox" checked={this.state.organisation.isParent} onChange={this.onValueChanged('isParent')} />
-                                <SpanLabelForDDl>Is Parent: (optional)</SpanLabelForDDl>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
                 <br></br>
                 {/* container for save and cancel */}
-                <div style={{ display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'center', margin: '10px 0px' }}>
+                <div style={{ display: 'flex', width: '100%', alignItems: 'left', justifyContent: 'left', margin: '10px 0px' }}>
                     <button
                         style={{ width: '100px', marginRight: '10px' }}
                         className={style.primary_btn} onClick={() => {

@@ -4,16 +4,16 @@ import { validateInputs } from '../../../utils/editFormHelper';
 import { save, deleteItems, shouldStoreDataInStateByKey } from '../../../utils/editFormHelper';
 import { connect } from 'react-redux';
 import { constants } from '../../../utils/constants';
-import { getTowerMasterData, getOrganisationDetailsData, getCityMasterData } from '../../../actions/admin.action';
+import { getTowerAllotmentMasterData, getOrganisationDetailsData, getTowerMasterData } from '../../../actions/admin.action';
 import style from '../../../theme/app.scss';
 import ModalHeader from '../../shared/ModalHeader';
 import Input from '../../shared/InputBox';
 import { SELECT, SpanLabelForDDl } from '../../formStyle';
 import config from '../../../config';
 //import Select from 'react-select'
+import styledComponentsCjs from 'styled-components';
 import * as sessionHelper from '../../../utils/session.helper';
 import * as helper from '../../../helper';
-import styledComponentsCjs from 'styled-components';
 import Gap from '../../Gap'
 
 const SPAN = styledComponentsCjs.div` 
@@ -26,10 +26,11 @@ const SPAN = styledComponentsCjs.div`
     letter-spacing: 0.00938em; 
 `;
 
-class TowerAddEdit extends Wrapper {
+
+class TowerAllotmentAddEdit extends Wrapper {
 
     configs = [{
-        name: 'towerName',
+        name: 'relationOrder',
         type: 'string',
         required: true
     }];
@@ -37,31 +38,31 @@ class TowerAddEdit extends Wrapper {
     constructor(props) {
         super(props);
         this.organisationDetailsIdRefs = React.createRef();
-        this.cityMatserIdRefs = React.createRef();
+        this.towerMatserIdRefs = React.createRef();
 
         this.onFileChange = this.onFileChange.bind(this);
         this.state = {
-            tower: props.baseObject ? props.baseObject : {},
+            towerAllotment: props.baseObject ? props.baseObject : {},
             loadershow: 'false',
         };
     };
 
     onValueChanged = key => event => {
-        const existingTower = Object.assign({}, this.state.tower);
-        existingTower[key] = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
+        const existingTowerAllotment = Object.assign({}, this.state.towerAllotment);
+        existingTowerAllotment[key] = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
 
-        this.setState({ tower: existingTower });
+        this.setState({ towerAllotment: existingTowerAllotment });
     };
     onTextChange = key => event => {
-        const existingTower = Object.assign({}, this.state.tower);
-        existingTower[key] = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
-        this.setState({ tower: existingTower });
+        const existingTowerAllotment = Object.assign({}, this.state.towerAllotment);
+        existingTowerAllotment[key] = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
+        this.setState({ towerAllotment: existingTowerAllotment });
     };
 
     componentDidMount() {
-        this.props.getTowerMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
+        this.props.getTowerAllotmentMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
         this.props.getOrganisationDetailsData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
-        this.props.getCityMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
+        this.props.getTowerMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
     };
 
     UNSAFE_componentWillReceiveProps(nextProps) {
@@ -81,9 +82,9 @@ class TowerAddEdit extends Wrapper {
                 organisations: nextProps.organisations
             })
         }
-        if (nextProps.citys !== null && nextProps.citys !== undefined && nextProps.citys !== this.state.citys) {
+        if (nextProps.towers !== null && nextProps.towers !== undefined && nextProps.towers !== this.state.towers) {
             this.setState({
-                citys: nextProps.citys
+                towers: nextProps.towers
             })
         }
     }
@@ -108,7 +109,7 @@ class TowerAddEdit extends Wrapper {
 
 
     render() {
-        console.log("this.state.tower", this.state.tower);
+        console.log("this.state.towerAllotment", this.state.towerAllotment);
         return (
             <div className={style.modal_dialog} style={{ width: '95%', maxHeight: '120vh', maxWidth: '80vw' }}>
                 {/* <ModalHeader
@@ -123,12 +124,12 @@ class TowerAddEdit extends Wrapper {
                                 <SpanLabelForDDl>Org Details</SpanLabelForDDl>
                                 <Gap h="5px" />
                                 <SELECT
-                                    value={this.state.tower.orgDetailsId} paddingLeft="10px" borderRadius="14px" height="51px"
+                                    value={this.state.towerAllotment.orgDetailsId} paddingLeft="10px" borderRadius="14px" height="51px"
                                     type="text" color="rgba(0,0,0,0.87)" borderColor="rgba(0,0,0,0.54)"
                                     style={{ backgroundColor: "transparent", border: "1px solid #ccc" }}
                                     onChange={this.onValueChanged('orgDetailsId')}
                                 >
-                                    <option key="a0" value="" >--- Select Org Details ---</option>
+                                    <option key="a0" value="" >--- Select Group ---</option>
                                     {this.state.organisations &&
                                         this.state.organisations.map((item, index) => {
                                             return <option key={index} value={item.id}>{item.orgName}</option>
@@ -136,51 +137,46 @@ class TowerAddEdit extends Wrapper {
                                     }
                                 </SELECT>
                             </div>
-                            <Input label="Tower Name:" type='text' defaultValue={this.state.tower.towerName} onChange={this.onValueChanged('towerName')} />
-                            <Input label="Site Name:" type='text' defaultValue={this.state.tower.siteName} onChange={this.onValueChanged('siteName')} />
-                        </div>
-                        <div className={style.field_flex_new} style={{ width: '45%' }}>
                             <div style={{ padding: '10px', width: '100%' }}>
-                                <SpanLabelForDDl>City Name</SpanLabelForDDl>
+                                <SpanLabelForDDl>Tower Name</SpanLabelForDDl>
                                 <Gap h="5px" />
                                 <SELECT
-                                    value={this.state.tower.cityId} paddingLeft="10px" borderRadius="14px" height="51px"
+                                    value={this.state.towerAllotment.towerId} paddingLeft="10px" borderRadius="14px" height="51px"
                                     type="text" color="rgba(0,0,0,0.87)" borderColor="rgba(0,0,0,0.54)"
                                     style={{ backgroundColor: "transparent", border: "1px solid #ccc" }}
-                                    onChange={this.onValueChanged('cityId')}
+                                    onChange={this.onValueChanged('towerId')}
                                 >
-                                    <option key="a0" value="" >--- Select City ---</option>
-                                    {this.state.citys &&
-                                        this.state.citys.map((item, index) => {
-                                            return <option key={index} value={item.id}>{item.cityName}</option>
+                                    <option key="a0" value="" >--- Select Tower ---</option>
+                                    {this.state.towers &&
+                                        this.state.towers.map((item, index) => {
+                                            return <option key={index} value={item.id}>{item.towerName}</option>
                                         })
                                     }
                                 </SELECT>
                             </div>
-                            <Input label="Longitude:" type='number' defaultValue={this.state.tower.longitude} onChange={this.onValueChanged('longitude')} />
-                            <Input label="Latitude:" type='number' defaultValue={this.state.tower.latitude} onChange={this.onValueChanged('latitude')} />
+                            <Input label="Relation Order:" focusbordercolor="#f90707" type='text' defaultValue={this.state.towerAllotment.relationOrder} onChange={this.onValueChanged('relationOrder')} />
 
-
-                            {/* <Input
+                        </div>
+                        {/* <Input
                                 focusbordercolor={'#f90707'}
                                 label={'Media'}
                                 type='file'
                                 onChange={this.onMediaChange('media')}
                             />        */}
-                        </div>
+
                     </div>
                 </div>
                 <br></br>
                 {/* container for save and cancel */}
                 <div style={{ display: 'flex', width: '200px', alignItems: 'center', justifyContent: 'space-between', margin: '10px 0px' }}>
                     <button className={style.primary_btn} onClick={() => {
-                        console.log(this.state.tower);
-                        const validationText = validateInputs(this.state.tower, this.configs);
+                        console.log(this.state.towerAllotment);
+                        const validationText = validateInputs(this.state.towerAllotment, this.configs);
                         if (validationText) {
                             return alert(validationText);
                         }
                         setTimeout(() => {
-                            this.props.onSave(this.state.tower, this.props.index);
+                            this.props.onSave(this.state.towerAllotment, this.props.index);
                         }, 200);
 
                     }}>save</button>
@@ -190,13 +186,13 @@ class TowerAddEdit extends Wrapper {
     }
 };
 
-TowerAddEdit.propTypes = {
+TowerAllotmentAddEdit.propTypes = {
     onSave: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => {
-    const { organisations, organisation, citys, city } = state.adminReducer;
-    return { organisations, organisation, citys, city };
+    const { organisations, organisation, towers, tower } = state.adminReducer;
+    return { organisations, organisation, towers, tower };
 }
-export default connect(mapStateToProps, { getTowerMasterData, getOrganisationDetailsData, getCityMasterData })(TowerAddEdit)
+export default connect(mapStateToProps, { getTowerMasterData, getOrganisationDetailsData, getTowerAllotmentMasterData })(TowerAllotmentAddEdit)

@@ -8,11 +8,24 @@ import { getModuleMasterData, getOrganisationDetailsData } from '../../../action
 import style from '../../../theme/app.scss';
 import ModalHeader from '../../shared/ModalHeader';
 import Input from '../../shared/InputBox';
-import { SELECT , SpanLabelForDDl} from '../../formStyle';
+import { SELECT, SpanLabelForDDl } from '../../formStyle';
 import config from '../../../config';
 //import Select from 'react-select'
 import * as sessionHelper from '../../../utils/session.helper';
 import * as helper from '../../../helper';
+import Gap from '../../Gap';
+import styledComponentsCjs from 'styled-components';
+
+const SPAN = styledComponentsCjs.div` 
+    color: rgba(0, 0, 0, 0.54);
+    padding: 0;
+    font-size: 13px;
+    font-family: Asap;
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: 0.00938em; 
+`;
+
 class ModuleAddEdit extends Wrapper {
 
     configs = [{
@@ -31,7 +44,7 @@ class ModuleAddEdit extends Wrapper {
             module: props.baseObject ? props.baseObject : {},
             organisations: [],
             loadershow: 'false',
-            
+
         };
     };
 
@@ -50,7 +63,7 @@ class ModuleAddEdit extends Wrapper {
     componentDidMount() {
         const state = {};
         this.props.getModuleMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
-        this.props.getOrganisationDetailsData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined,undefined);
+        this.props.getOrganisationDetailsData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined, undefined);
         this.setState({
             ...state
         }, () => {
@@ -58,7 +71,7 @@ class ModuleAddEdit extends Wrapper {
         });
     };
 
-    UNSAFE_componentWillReceiveProps(nextProps) {       
+    UNSAFE_componentWillReceiveProps(nextProps) {
         const storeInState = (data, key) => {
             // time to store
             if (!data) return;
@@ -94,9 +107,9 @@ class ModuleAddEdit extends Wrapper {
             this.setState({ loadershow: 'false' })
         }
     }
-    
+
     render() {
-         console.log("this.state.module",this.state.module);
+        console.log("this.state.module", this.state.module);
         return (
             <div className={style.modal_dialog} style={{ width: '95%', maxHeight: '120vh', maxWidth: '80vw' }}>
                 {/* <ModalHeader
@@ -106,27 +119,29 @@ class ModuleAddEdit extends Wrapper {
                 <div>
                     {/** idhar saare edit fields aayenge */}
                     <div className={style.field_flex_wrapper}>
-                        <div className={style.field_flex_new} style={{ width: '45%', color: "rgba(0,0,0,0.54)", fontSize: "13px" }}>                           
+                        <div className={style.field_flex_new} style={{ width: '45%' }}>
+                            <div style={{ padding: '10px', width: '100%' }}>
+                                <SpanLabelForDDl>Organisation Details</SpanLabelForDDl>
+                                <Gap h="5px" />
+                                <SELECT
+                                    value={this.state.module.orgDetailsId} paddingLeft="10px" borderRadius="14px" height="51px"
+                                    type="text" color="rgba(0,0,0,0.87)" borderColor="rgba(0,0,0,0.54)"
+                                    style={{ backgroundColor: "transparent", border: "1px solid #ccc" }}
+                                    onChange={this.onValueChanged('orgDetailsId')}
+                                >
+                                    <option key="a0" value="" >--- Select Organisation Details ---</option>
+                                    {this.state.organisations &&
+                                        this.state.organisations.map((item, index) => {
+                                            return <option key={index} value={item.id}>{item.orgName}</option>
+                                        })
+                                    }
+                                </SELECT>
+                            </div>
                             <Input label="Module Name:" type='text' defaultValue={this.state.module.moduleName} onChange={this.onValueChanged('moduleName')} />
                             <Input label="Code:" type='text' defaultValue={this.state.module.moduleCode} onChange={this.onValueChanged('moduleCode')} />
-                                
+
                         </div>
-                        <div className={style.field_flex_new} style={{ width: '45%', color: "rgba(0,0,0,0.54)", fontSize: "13px" }}>
-                        <lable style={{ marginLeft: "8px" }}>Org Details</lable>
-                            <SELECT margin="8px" ref={this.organisationDetailsIdRefs}
-                                value={this.state.module.orgDetailsId} paddingLeft="10px" borderRadius="14px" height="51px"
-                                type="text" color="rgba(0,0,0,0.87)" borderColor="rgba(0,0,0,0.54)"
-                                style={{ backgroundColor: "transparent", border: "1px solid #ccc" }}
-                                onChange={this.onValueChanged('orgDetailsId')}
-                            >
-                                 <option>Select Org Details</option>
-                                {this.state.organisations &&
-                                    this.state.organisations.map((item, index) => {
-                                        return <option key={index} value={item.id}>{item.orgName}</option>
-                                    })
-                                }
-                            </SELECT>
-                        </div>
+
                     </div>
                 </div>
                 <br></br>
@@ -155,7 +170,7 @@ ModuleAddEdit.propTypes = {
 };
 
 const mapStateToProps = state => {
-    const { organisation,organisations  } = state.adminReducer;
-    return { organisations,organisation   };
+    const { organisation, organisations } = state.adminReducer;
+    return { organisations, organisation };
 }
 export default connect(mapStateToProps, { getModuleMasterData, getOrganisationDetailsData })(ModuleAddEdit)

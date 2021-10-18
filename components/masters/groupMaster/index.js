@@ -77,28 +77,28 @@ class GroupIndex extends Wrapper {
                 show: true,
             },
             {
-                Header: 'logo Name',
+                Header: 'Logo Name',
                 accessor: 'logoName',
                 id: 'auditType',
                 minWidth: 100,
                 show: true
             },
             {
-                Header: 'logo Height',
+                Header: 'Logo Height',
                 accessor: 'logoHeight',
                 id: 'logoHeight',
                 minWidth: 100,
                 show: true
             },
             {
-                Header: 'logo Width',
+                Header: 'Logo Width',
                 accessor: 'logoWidth',
                 id: 'logoWidth',
                 minWidth: 100,
                 show: true
             },
             {
-                Header: 'theme Color',
+                Header: 'Theme Color',
                 minWidth: 50,
                 id: 'themeColor',
                 show: true,

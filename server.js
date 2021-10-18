@@ -271,6 +271,57 @@ app.prepare()
 				}
 			});
 		});
+		
+		server.get('/admin/tower-allotment-master', (req, res) => {
+			const q = req.query;
+			q.tab = 'tower-allotment-master';
+			q.pathname = 'tower-allotment-master';
+			q.pageName = 'Tower Allotment Master';
+			q.MasterName = 'Tower Allotment Master';
+			return app.render(req, res, '/admin', {
+				page: q.pageName,
+				MasterName: q.MasterName,
+				tab: q.tab,
+				section: 'master',
+				query: {
+					...q
+				}
+			});
+		});
+
+		server.get('/admin/tower-antennas-master', (req, res) => {
+			const q = req.query;
+			q.tab = 'tower-antennas-master';
+			q.pathname = 'tower-antennas-master';
+			q.pageName = 'Tower Antennas Master';
+			q.MasterName = 'Tower Antennas Master';
+			return app.render(req, res, '/admin', {
+				page: q.pageName,
+				MasterName: q.MasterName,
+				tab: q.tab,
+				section: 'master',
+				query: {
+					...q
+				}
+			});
+		});
+
+		server.get('/admin/device-registration-master', (req, res) => {
+			const q = req.query;
+			q.tab = 'device-registration-master';
+			q.pathname = 'device-registration-master';
+			q.pageName = 'Device Registration Master';
+			q.MasterName = 'Device Registration Master';
+			return app.render(req, res, '/admin', {
+				page: q.pageName,
+				MasterName: q.MasterName,
+				tab: q.tab,
+				section: 'master',
+				query: {
+					...q
+				}
+			});
+		});
 		server.get('/admin/group-company', (req, res) => {
 			const q = req.query;
 			q.tab = 'group-company';

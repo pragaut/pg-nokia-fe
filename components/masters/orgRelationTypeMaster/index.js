@@ -38,21 +38,20 @@ class Index extends Wrapper {
         let columns = [
             {
                 Header: 'Action',
-                // accessor: 'id',
+                accessor: 'id',
                 id: 'id',
                 show: true,
-                minWidth: 150,
                 Cell: propss => (
                     <React.Fragment>
                         <button className="warning" style={{ marginRight: '10px' }} value={propss.original.id} onClick={() => this.onClickAdd(propss.original)}>
                             Edit
-                        </button>
+                        </button><br />
+
                         <button className="primary" style={{ marginRight: '10px' }} value={propss.original.id} onClick={() =>
                             this.onDeleteRecord(propss.original.id)
                         }>
                             Delete
                         </button>
-
                     </React.Fragment>
                 ),
                 sortable: false,

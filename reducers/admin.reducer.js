@@ -162,6 +162,21 @@ const initialState = {
     tower: undefined,
     towers: undefined,
     towerRecordsCount: 0,
+
+    towerAllotmentActiontype: actions.TOWERALLOTMENTMASTER_INIT,
+    towerAllotment: undefined,
+    towerAllotments: undefined,
+    towerAllotmentRecordsCount: 0,
+
+    towerAntennasActiontype: actions.TOWERANTENNASMASTER_INIT,
+    towerAntennas: undefined,
+    towerAntennass: undefined,
+    towerAntennasRecordsCount: 0,
+
+    deviceRegistrationActiontype: actions.DEVICEREGISTRATIONMASTER_INIT,
+    deviceRegistration: undefined,
+    deviceRegistrations: undefined,
+    deviceRegistrationRecordsCount: 0,
 };
 
 /**
@@ -639,15 +654,15 @@ const adminReducer = (state, action) => {
                 type: action.type,
             };
 
-        // case actions.ROLEMASTER_GET_BY_MODULEID_SUCCESS:
-        //     return {
-        //         role: state.role,
-        //         roles: action.data,
-        //         roleActiontype: action.type,
-        //         roleRecordsCount: action.recordsCount,
+        case actions.ROLEMASTER_GET_BY_MODULEID_SUCCESS:
+            return {
+                role: state.role,
+                roles: action.data,
+                roleActiontype: action.type,
+                roleRecordsCount: action.recordsCount,
 
-        //         type: action.type,
-        //     };
+                type: action.type,
+            };
 
         case actions.ROLEMASTER_SAVE_SUCCESS:
             return {
@@ -811,46 +826,6 @@ const adminReducer = (state, action) => {
                 years: action.data,
                 yearActiontype: action.type,
                 yearRecordsCount: action.recordsCount,
-
-                type: action.type,
-            };
-
-        case actions.YEARMASTER_GET_BY_ID_SUCCESS:
-            return {
-                years: state.years,
-                year: action.data,
-                yearActiontype: action.type,
-                yearRecordsCount: state.recordsCount,
-
-                type: action.type,
-            };
-
-        case actions.YEARMASTER_SAVE_SUCCESS:
-            return {
-                year: action.data,
-                years: state.years,
-                yearActiontype: action.type,
-                yearRecordsCount: state.recordsCount,
-
-                type: action.type,
-            };
-
-        case actions.YEARMASTER_DELETE_SUCCESS:
-            return {
-                year: state.data,
-                years: state.years,
-                yearActiontype: action.type,
-                yearRecordsCount: state.recordsCount,
-
-                type: action.type,
-            };
-
-        case actions.YEARMASTER_INIT:
-            return {
-                year: state.year,
-                years: state.years,
-                yearActiontype: action.type,
-                yearRecordsCount: state.recordsCount,
 
                 type: action.type,
             };
@@ -1872,6 +1847,142 @@ const adminReducer = (state, action) => {
 
         //#endregion
 
+        //#region  Tower Allotment Master Reducer
+
+        case actions.TOWERALLOTMENTMASTER_LIST_SUCCESS:
+            return {
+                towerAllotment: state.towerAllotment,
+                towerAllotments: action.data,
+                towerAllotmentActiontype: action.type,
+                towerAllotmentRecordsCount: action.recordsCount,
+
+            };
+
+        case actions.TOWERALLOTMENTMASTER_GET_BY_ID_SUCCESS:
+            return {
+                towerAllotments: state.towerAllotments,
+                towerAllotment: action.data,
+                towerAllotmentActiontype: action.type,
+                towerAllotmentRecordsCount: state.recordsCount,
+            };
+
+        case actions.TOWERALLOTMENTMASTER_SAVE_SUCCESS:
+            return {
+                towerAllotment: action.data,
+                towerAllotments: state.towerAllotments,
+                towerAllotmentActiontype: action.type,
+                towerAllotmentRecordsCount: state.recordsCount,
+            };
+
+        case actions.TOWERALLOTMENTMASTER_DELETE_SUCCESS:
+            return {
+                towerAllotment: state.data,
+                towerAllotments: state.towerAllotments,
+                towerAllotmentActiontype: action.type,
+                towerAllotmentRecordsCount: state.recordsCount,
+            };
+
+        case actions.TOWERALLOTMENTMASTER_INIT:
+            return {
+                towerAllotment: state.towerAllotment,
+                towerAllotments: state.towerAllotments,
+                towerAllotmentActiontype: action.type,
+                towerAllotmentRecordsCount: state.recordsCount,
+            };
+
+        //#endregion
+
+        //#region  Tower Antennas Master Reducer
+
+        case actions.TOWERANTENNASMASTER_LIST_SUCCESS:
+            return {
+                towerAntennas: state.towerAntennas,
+                towerAntennass: action.data,
+                towerAntennasActiontype: action.type,
+                towerAntennasRecordsCount: action.recordsCount,
+
+            };
+
+        case actions.TOWERANTENNASMASTER_GET_BY_ID_SUCCESS:
+            return {
+                towerAntennass: state.towerAntennass,
+                towerAntennas: action.data,
+                towerAntennasActiontype: action.type,
+                towerAntennasRecordsCount: state.recordsCount,
+            };
+
+        case actions.TOWERANTENNASMASTER_SAVE_SUCCESS:
+            return {
+                towerAntennas: action.data,
+                towerAntennass: state.towerAntennass,
+                towerAntennasActiontype: action.type,
+                towerAntennasRecordsCount: state.recordsCount,
+            };
+
+        case actions.TOWERANTENNASMASTER_DELETE_SUCCESS:
+            return {
+                towerAntennas: state.data,
+                towerAntennass: state.towerAntennass,
+                towerAntennasActiontype: action.type,
+                towerAntennasRecordsCount: state.recordsCount,
+            };
+
+        case actions.TOWERANTENNASMASTER_INIT:
+            return {
+                towerAntennas: state.towerAntennas,
+                towerAntennass: state.towerAntennass,
+                towerAntennasActiontype: action.type,
+                towerAntennasRecordsCount: state.recordsCount,
+            };
+
+        //#endregion
+
+        //#region  Device Registration Master Reducer
+
+        case actions.DEVICEREGISTRATIONMASTER_LIST_SUCCESS:
+            return {
+                deviceRegistration: state.deviceRegistration,
+                deviceRegistrations: action.data,
+                deviceRegistrationActiontype: action.type,
+                deviceRegistrationRecordsCount: action.recordsCount,
+
+            };
+
+        case actions.DEVICEREGISTRATIONMASTER_GET_BY_ID_SUCCESS:
+            return {
+                deviceRegistrations: state.deviceRegistrations,
+                deviceRegistration: action.data,
+                deviceRegistrationActiontype: action.type,
+                deviceRegistrationRecordsCount: state.recordsCount,
+            };
+
+        case actions.DEVICEREGISTRATIONMASTER_SAVE_SUCCESS:
+            return {
+                deviceRegistration: action.data,
+                deviceRegistrations: state.deviceRegistrations,
+                deviceRegistrationActiontype: action.type,
+                deviceRegistrationRecordsCount: state.recordsCount,
+            };
+
+        case actions.DEVICEREGISTRATIONMASTER_DELETE_SUCCESS:
+            return {
+                deviceRegistration: state.data,
+                deviceRegistrations: state.deviceRegistrations,
+                deviceRegistrationActiontype: action.type,
+                deviceRegistrationRecordsCount: state.recordsCount,
+            };
+
+        case actions.DEVICEREGISTRATIONMASTER_INIT:
+            return {
+                deviceRegistration: state.deviceRegistration,
+                deviceRegistrations: state.deviceRegistrations,
+                deviceRegistrationActiontype: action.type,
+                deviceRegistrationRecordsCount: state.recordsCount,
+            };
+
+        //#endregion
+
+
         // important: we should always give a default, otherwise React gives a cheap warning and it is very annoying
         default:
             return {
@@ -2022,6 +2133,21 @@ const adminReducer = (state, action) => {
                 towers: state.towers,
                 towerActiontype: state.towerActiontype,
                 towerRecordsCount: state.towerRecordsCount,
+
+                towerAllotment: state.towerAllotment,
+                towerAllotments: state.towerAllotments,
+                towerAllotmentActiontype: state.towerAllotmentActiontype,
+                towerAllotmentRecordsCount: state.towerAllotmentRecordsCount,
+
+                towerAntennas: state.towerAntennas,
+                towerAntennass: state.towerAntennass,
+                towerAntennasActiontype: state.towerAntennasActiontype,
+                towerAntennasRecordsCount: state.towerAntennasRecordsCount,
+
+                deviceRegistration: state.deviceRegistration,
+                deviceRegistrations: state.deviceRegistrations,
+                deviceRegistrationActiontype: state.deviceRegistrationActiontype,
+                deviceRegistrationRecordsCount: state.deviceRegistrationRecordsCount,
             };
     }
 };

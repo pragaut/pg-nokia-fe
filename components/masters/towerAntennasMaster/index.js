@@ -5,22 +5,22 @@ import style from '../../../theme/app.scss';
 import Wrapper from '../../shared/Wrapper';
 import { constants } from '../../../utils/constants';
 import * as AdminTypes from '../../../action-types/admin.action.types';
-import { getTowerMasterData, saveTowerMasterData, getTowerMasterDataById, deleteTowerMasterData } from '../../../actions/admin.action';
+import { getTowerAntennasMasterData, saveTowerAntennasMasterData, getTowerAntennasMasterDataById, deleteTowerAntennasMasterData } from '../../../actions/admin.action';
 import ListTable from '../../shared/ListTable';
-import TowerAddEdit from './tower.add.edit';
+import TowerAntennasAddEdit from './towerAntennas.add.edit';
 import * as CommonStyle from '../../commonStyle';
-import TowerMasterDetails from '../../ReactTableComponent';
+import TowerAntennasMasterDetails from '../../ReactTableComponent';
 
 
-class TowerIndex extends Wrapper {
+class TowerAntennasIndex extends Wrapper {
 
     constructor(props) {
         super(props);
         this.state = {
-            tower: {},
-            towers: [],
+            towerAntennas: {},
+            towerAntennass: [],
             showEditPopup: false,
-            type: AdminTypes.TOWERMASTER_INIT,
+            type: AdminTypes.TOWERANTENNASMASTER_INIT,
             columns: []
         };
 
@@ -63,46 +63,46 @@ class TowerIndex extends Wrapper {
                 filterable: false
             },
             {
-                Header: 'Org Details',
-                accessor: 'orgName.orgName',
-                id: 'orgName.orgName',
-                minWidth: 100,
-                show: true,
-            },
-            {
                 Header: 'Tower Name',
-                accessor: 'towerName',
-                id: 'towerName',
+                accessor: 'towerName.towerName',
+                id: 'towerName.towerName',
                 minWidth: 100,
                 show: true,
             },
             {
-                Header: 'Site Name',
-                accessor: 'siteName',
-                id: 'siteName',
+                Header: 'Antenna Name',
+                accessor: 'antennaName',
+                id: 'antennaName',
                 minWidth: 100,
                 show: true,
             },
             {
-                Header: 'city Name',
-                accessor: 'cityName.cityName',
-                id: 'cityName.cityName',
+                Header: 'Antenna Code',
+                accessor: 'antennaCode',
+                id: 'antennaCode',
                 minWidth: 100,
                 show: true,
             },
             {
-                Header: 'Longitude',
-                accessor: 'longitude',
-                id: 'longitude',
+                Header: 'MAC Address',
+                accessor: 'macAddress',
+                id: 'macAddress',
                 minWidth: 100,
-                show: true
+                show: true,
             },
             {
-                Header: 'Latitude',
-                accessor: 'latitude',
-                id: 'latitude',
+                Header: 'AISU Device ID',
+                accessor: 'aisuDeviceId',
+                id: 'aisuDeviceId',
                 minWidth: 100,
-                show: true
+                show: true,
+            },
+            {
+                Header: 'Unique ID',
+                accessor: 'uniqueId',
+                id: 'uniqueId',
+                minWidth: 100,
+                show: true,
             },
         ]
         this.setState({ columns: columns });
@@ -110,8 +110,8 @@ class TowerIndex extends Wrapper {
 
     UNSAFE_componentWillReceiveProps(nextProps) {
 
-        if (nextProps.towers && nextProps.towers !== null && nextProps.towers != this.state.towers) {
-            this.setState({ towers: nextProps.towers })
+        if (nextProps.towerAntennass && nextProps.towerAntennass !== null && nextProps.towerAntennass != this.state.towerAntennass) {
+            this.setState({ towerAntennass: nextProps.towerAntennass })
         }
 
         const storeInState = (data, key) => {
@@ -126,7 +126,7 @@ class TowerIndex extends Wrapper {
 
 
     async componentDidMount() {
-        this.props.getTowerMasterData(0, constants.ALL_ROWS_LIST, undefined, undefined);
+        this.props.getTowerAntennasMasterData(0, constants.ALL_ROWS_LIST, undefined, undefined);
         setTimeout(() => {
             this.updateColumnWhenPropsUpdate();
         }, 100);
@@ -134,9 +134,9 @@ class TowerIndex extends Wrapper {
 
     onDeleteRecord = (ids) => {
         if (confirm('Would you like to delete the record?')) {
-            this.props.deleteTowerMasterData(ids);
+            this.props.deleteTowerAntennasMasterData(ids);
             setTimeout(() => {
-                this.props.getTowerMasterData(0, constants.ALL_ROWS_LIST, undefined, undefined);
+                this.props.getTowerAntennasMasterData(0, constants.ALL_ROWS_LIST, undefined, undefined);
             }, 500);
         }
 
@@ -145,11 +145,11 @@ class TowerIndex extends Wrapper {
         this.onClickReferesh();
         this.setState({ showEditPopup: false })
     }
-    onClickAdd = (tower) => {
-        this.setState({ tower: tower, showEditPopup: true })
+    onClickAdd = (towerAntennas) => {
+        this.setState({ towerAntennas: towerAntennas, showEditPopup: true })
     }
     onClickReferesh = (async) => {
-        this.props.getTowerMasterData(0, constants.ALL_ROWS_LIST, undefined, undefined);
+        this.props.getTowerAntennasMasterData(0, constants.ALL_ROWS_LIST, undefined, undefined);
         this.updateColumnWhenPropsUpdate();
     }
     updateColumn = (column) => {
@@ -159,8 +159,8 @@ class TowerIndex extends Wrapper {
     }
 
     render() {
-        const { showEditPopup, columns, towers, tower } = this.state;
-        return (<div id='towerTable' className={style.table_wapper} >
+        const { showEditPopup, columns, towerAntennass, towerAntennas } = this.state;
+        return (<div id='towerAntennasTable' className={style.table_wapper} >
             {showEditPopup === true &&
                 <>
                     <CommonStyle.Overlay
@@ -174,10 +174,10 @@ class TowerIndex extends Wrapper {
                         <CommonStyle.CloseButtonForModel
                             onClick={() => this.onClickCancel()}
                         >X</CommonStyle.CloseButtonForModel>
-                        <TowerAddEdit
-                            baseObject={tower}
+                        <TowerAntennasAddEdit
+                            baseObject={towerAntennas}
                             onCancel={this.onClickCancel}
-                            onSave={this.props.saveTowerMasterData}
+                            onSave={this.props.saveTowerAntennasMasterData}
                         />
                     </CommonStyle.Wrapper_OnOverlay>
 
@@ -208,8 +208,8 @@ class TowerIndex extends Wrapper {
                 <div
                     style={{ width: '98%' }}
                 >
-                    <TowerMasterDetails
-                        Data={towers ? towers : []}
+                    <TowerAntennasMasterDetails
+                        Data={towerAntennass ? towerAntennass : []}
                         isColumnUpdate={true}
                         updateColumn={this.updateColumn}
                         columns={columns}
@@ -222,9 +222,9 @@ class TowerIndex extends Wrapper {
 
 
 const mapStateToProps = state => {
-    const { tower, towers, towerRecordsCount, towerActiontype } = state.adminReducer;
+    const { towerAntennas, towerAntennass, towerAntennasRecordsCount, towerAntennasActiontype } = state.adminReducer;
 
-    return { tower, towers, towerRecordsCount, towerActiontype };
+    return { towerAntennas, towerAntennass, towerAntennasRecordsCount, towerAntennasActiontype };
 };
 
-export default connect(mapStateToProps, { getTowerMasterData, saveTowerMasterData, getTowerMasterDataById, deleteTowerMasterData })(TowerIndex);
+export default connect(mapStateToProps, { getTowerAntennasMasterData, saveTowerAntennasMasterData, getTowerAntennasMasterDataById, deleteTowerAntennasMasterData })(TowerAntennasIndex);

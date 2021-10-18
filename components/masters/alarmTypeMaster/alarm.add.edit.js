@@ -101,9 +101,9 @@ class AlarmTypeAddEdit extends Wrapper {
                             />        */}
                         </div>
                         <div className={style.field_flex_new} style={{ width: '45%', color: "rgba(0,0,0,0.54)", fontSize: "13px" }}>
-                            <Input label="Color Code:" type='color' defaultValue={this.state.alarm.colorCode} onChange={this.onValueChanged('colorCode')} />
-                            <Input label="BG Color Code:" type='color' defaultValue={this.state.alarm.bgColorCode} onChange={this.onValueChanged('bgColorCode')} />
-                            <Input label="Is Required:" type='number' defaultValue={this.state.alarm.isRemarksRequired} onChange={this.onValueChanged('isRemarksRequired')} />
+                            <Input label="Font Color:" type='color' defaultValue={this.state.alarm.colorCode} onChange={this.onValueChanged('colorCode')} />
+                            <Input label="Background:" type='color' defaultValue={this.state.alarm.bgColorCode} onChange={this.onValueChanged('bgColorCode')} />
+                            <Input label="Is Remarks Required:" type='number' defaultValue={this.state.alarm.isRemarksRequired} onChange={this.onValueChanged('isRemarksRequired')} />
                                              
                         </div>
                     </div>

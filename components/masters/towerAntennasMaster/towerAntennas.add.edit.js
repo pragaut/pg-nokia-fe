@@ -4,17 +4,17 @@ import { validateInputs } from '../../../utils/editFormHelper';
 import { save, deleteItems, shouldStoreDataInStateByKey } from '../../../utils/editFormHelper';
 import { connect } from 'react-redux';
 import { constants } from '../../../utils/constants';
-import { getRoleMasterData, getModuleMasterData } from '../../../actions/admin.action';
+import { getTowerAntennasMasterData, getTowerMasterData } from '../../../actions/admin.action';
 import style from '../../../theme/app.scss';
 import ModalHeader from '../../shared/ModalHeader';
 import Input from '../../shared/InputBox';
 import { SELECT, SpanLabelForDDl } from '../../formStyle';
 import config from '../../../config';
 //import Select from 'react-select'
+import styledComponentsCjs from 'styled-components';
 import * as sessionHelper from '../../../utils/session.helper';
 import * as helper from '../../../helper';
-import Gap from '../../Gap';
-import styledComponentsCjs from 'styled-components';
+import Gap from '../../Gap'
 
 const SPAN = styledComponentsCjs.div` 
     color: rgba(0, 0, 0, 0.54);
@@ -26,49 +26,41 @@ const SPAN = styledComponentsCjs.div`
     letter-spacing: 0.00938em; 
 `;
 
-class RoleAddEdit extends Wrapper {
+
+class TowerAntennasAddEdit extends Wrapper {
 
     configs = [{
-        name: 'roleName',
+        name: 'antennaName',
         type: 'string',
         required: true
     }];
 
     constructor(props) {
         super(props);
-
-        this.moduleMasterIdRefs = React.createRef();
+        this.towerMatserIdRefs = React.createRef();
 
         this.onFileChange = this.onFileChange.bind(this);
         this.state = {
-            role: props.baseObject ? props.baseObject : {},
-            modules: [],
+            towerAntennas: props.baseObject ? props.baseObject : {},
             loadershow: 'false',
-
         };
     };
 
     onValueChanged = key => event => {
-        const existingRole = Object.assign({}, this.state.role);
-        existingRole[key] = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
+        const existingTowerAntennas = Object.assign({}, this.state.towerAntennas);
+        existingTowerAntennas[key] = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
 
-        this.setState({ role: existingRole });
+        this.setState({ towerAntennas: existingTowerAntennas });
     };
     onTextChange = key => event => {
-        const existingRole = Object.assign({}, this.state.role);
-        existingRole[key] = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
-        this.setState({ role: existingRole });
+        const existingTowerAntennas = Object.assign({}, this.state.towerAntennas);
+        existingTowerAntennas[key] = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
+        this.setState({ towerAntennas: existingTowerAntennas });
     };
 
     componentDidMount() {
-        const state = {};
-        this.props.getRoleMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
-        this.props.getModuleMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
-        this.setState({
-            ...state
-        }, () => {
-            // console.log("state", this.state)
-        });
+        this.props.getTowerAntennasMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
+        this.props.getTowerMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
     };
 
     UNSAFE_componentWillReceiveProps(nextProps) {
@@ -83,9 +75,10 @@ class RoleAddEdit extends Wrapper {
     };
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.modules !== null && nextProps.modules !== undefined && nextProps.modules !== this.state.modules) {
+        
+        if (nextProps.towers !== null && nextProps.towers !== undefined && nextProps.towers !== this.state.towers) {
             this.setState({
-                modules: nextProps.modules
+                towers: nextProps.towers
             })
         }
     }
@@ -108,8 +101,9 @@ class RoleAddEdit extends Wrapper {
         }
     }
 
+
     render() {
-        console.log("this.state.role", this.state.role);
+        console.log("this.state.towerAntennas", this.state.towerAntennas);
         return (
             <div className={style.modal_dialog} style={{ width: '95%', maxHeight: '120vh', maxWidth: '80vw' }}>
                 {/* <ModalHeader
@@ -121,27 +115,38 @@ class RoleAddEdit extends Wrapper {
                     <div className={style.field_flex_wrapper}>
                         <div className={style.field_flex_new} style={{ width: '45%' }}>
                             <div style={{ padding: '10px', width: '100%' }}>
-                                <SpanLabelForDDl>Module Name</SpanLabelForDDl>
+                                <SpanLabelForDDl>Tower Name</SpanLabelForDDl>
                                 <Gap h="5px" />
                                 <SELECT
-                                    value={this.state.role.orgModulesId} paddingLeft="10px" borderRadius="14px" height="51px"
+                                    value={this.state.towerAntennas.towerId} paddingLeft="10px" borderRadius="14px" height="51px"
                                     type="text" color="rgba(0,0,0,0.87)" borderColor="rgba(0,0,0,0.54)"
                                     style={{ backgroundColor: "transparent", border: "1px solid #ccc" }}
-                                    onChange={this.onValueChanged('orgModulesId')}
+                                    onChange={this.onValueChanged('towerId')}
                                 >
-                                    <option key="a0" value="" >--- Select Module Name ---</option>
-                                    {this.state.modules &&
-                                        this.state.modules.map((item, index) => {
-                                            return <option key={index} value={item.id}>{item.moduleName}</option>
+                                    <option key="a0" value="" >--- Select Tower ---</option>
+                                    {this.state.towers &&
+                                        this.state.towers.map((item, index) => {
+                                            return <option key={index} value={item.id}>{item.towerName}</option>
                                         })
                                     }
                                 </SELECT>
                             </div>
-                            <Input label="Role Name:" type='text' defaultValue={this.state.role.roleName} onChange={this.onValueChanged('roleName')} />
-                            <Input label="Order:" type='number' defaultValue={this.state.role.roleOrder} onChange={this.onValueChanged('roleOrder')} />
-                            <Input label="DashBoard URL:" type='text' defaultValue={this.state.role.dashboardUrl} onChange={this.onValueChanged('dashboardUrl')} />
+                            <Input label="Antenna Name:" focusbordercolor="#f90707" type='text' defaultValue={this.state.towerAntennas.antennaName} onChange={this.onValueChanged('antennaName')} />
+                            <Input label="Antenna Code:" focusbordercolor="#f90707" type='text' defaultValue={this.state.towerAntennas.antennaCode} onChange={this.onValueChanged('antennaCode')} />
                         </div>
 
+                        <div className={style.field_flex_new} style={{ width: '45%' }}>
+                            
+                            <Input label="MAC Address:" focusbordercolor="#f90707" type='text' defaultValue={this.state.towerAntennas.macAddress} onChange={this.onValueChanged('macAddress')} />
+                            <Input label="AISU Device Id:" focusbordercolor="#f90707" type='text' defaultValue={this.state.towerAntennas.aisuDeviceId} onChange={this.onValueChanged('aisuDeviceId')} />
+                            <Input label="Unique Id:" focusbordercolor="#f90707" type='text' defaultValue={this.state.towerAntennas.uniqueId} onChange={this.onValueChanged('uniqueId')} />
+                        </div>
+                        {/* <Input
+                                focusbordercolor={'#f90707'}
+                                label={'Media'}
+                                type='file'
+                                onChange={this.onMediaChange('media')}
+                            />        */}
 
                     </div>
                 </div>
@@ -149,13 +154,13 @@ class RoleAddEdit extends Wrapper {
                 {/* container for save and cancel */}
                 <div style={{ display: 'flex', width: '200px', alignItems: 'center', justifyContent: 'space-between', margin: '10px 0px' }}>
                     <button className={style.primary_btn} onClick={() => {
-                        console.log(this.state.role);
-                        const validationText = validateInputs(this.state.role, this.configs);
+                        console.log(this.state.towerAntennas);
+                        const validationText = validateInputs(this.state.towerAntennas, this.configs);
                         if (validationText) {
                             return alert(validationText);
                         }
                         setTimeout(() => {
-                            this.props.onSave(this.state.role, this.props.index);
+                            this.props.onSave(this.state.towerAntennas, this.props.index);
                         }, 200);
 
                     }}>save</button>
@@ -165,13 +170,13 @@ class RoleAddEdit extends Wrapper {
     }
 };
 
-RoleAddEdit.propTypes = {
+TowerAntennasAddEdit.propTypes = {
     onSave: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => {
-    const { module, modules } = state.adminReducer;
-    return { module, modules };
+    const { towers, tower } = state.adminReducer;
+    return { towers, tower };
 }
-export default connect(mapStateToProps, { getRoleMasterData, getModuleMasterData })(RoleAddEdit)
+export default connect(mapStateToProps, { getTowerMasterData, getTowerAntennasMasterData })(TowerAntennasAddEdit)

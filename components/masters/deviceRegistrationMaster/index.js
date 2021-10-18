@@ -5,22 +5,22 @@ import style from '../../../theme/app.scss';
 import Wrapper from '../../shared/Wrapper';
 import { constants } from '../../../utils/constants';
 import * as AdminTypes from '../../../action-types/admin.action.types';
-import { getTowerMasterData, saveTowerMasterData, getTowerMasterDataById, deleteTowerMasterData } from '../../../actions/admin.action';
+import { getDeviceRegistrationMasterData, saveDeviceRegistrationMasterData, getDeviceRegistrationMasterDataById, deleteDeviceRegistrationMasterData } from '../../../actions/admin.action';
 import ListTable from '../../shared/ListTable';
-import TowerAddEdit from './tower.add.edit';
+import DeviceRegistrationAddEdit from './deviceRegistration.add.edit';
 import * as CommonStyle from '../../commonStyle';
-import TowerMasterDetails from '../../ReactTableComponent';
+import DeviceRegistrationMasterDetails from '../../ReactTableComponent';
 
 
-class TowerIndex extends Wrapper {
+class DeviceRegistrationIndex extends Wrapper {
 
     constructor(props) {
         super(props);
         this.state = {
-            tower: {},
-            towers: [],
+            deviceRegistration: {},
+            deviceRegistrations: [],
             showEditPopup: false,
-            type: AdminTypes.TOWERMASTER_INIT,
+            type: AdminTypes.DEVICEREGISTRATIONMASTER_INIT,
             columns: []
         };
 
@@ -70,39 +70,39 @@ class TowerIndex extends Wrapper {
                 show: true,
             },
             {
-                Header: 'Tower Name',
-                accessor: 'towerName',
-                id: 'towerName',
+                Header: 'MAC Address',
+                accessor: 'macAddress',
+                id: 'macAddress',
                 minWidth: 100,
                 show: true,
             },
             {
-                Header: 'Site Name',
-                accessor: 'siteName',
-                id: 'siteName',
+                Header: 'Unique ID',
+                accessor: 'uniqueId',
+                id: 'uniqueId',
                 minWidth: 100,
                 show: true,
             },
             {
-                Header: 'city Name',
-                accessor: 'cityName.cityName',
-                id: 'cityName.cityName',
+                Header: 'Registration Date',
+                accessor: 'registrationDate',
+                id: 'registrationDate',
                 minWidth: 100,
                 show: true,
             },
             {
-                Header: 'Longitude',
-                accessor: 'longitude',
-                id: 'longitude',
+                Header: 'Device Sequence',
+                accessor: 'deviceSequence',
+                id: 'deviceSequence',
                 minWidth: 100,
-                show: true
+                show: true,
             },
             {
-                Header: 'Latitude',
-                accessor: 'latitude',
-                id: 'latitude',
+                Header: 'Unique Code',
+                accessor: 'uniqueCode',
+                id: 'uniqueCode',
                 minWidth: 100,
-                show: true
+                show: true,
             },
         ]
         this.setState({ columns: columns });
@@ -110,8 +110,8 @@ class TowerIndex extends Wrapper {
 
     UNSAFE_componentWillReceiveProps(nextProps) {
 
-        if (nextProps.towers && nextProps.towers !== null && nextProps.towers != this.state.towers) {
-            this.setState({ towers: nextProps.towers })
+        if (nextProps.deviceRegistrations && nextProps.deviceRegistrations !== null && nextProps.deviceRegistrations != this.state.deviceRegistrations) {
+            this.setState({ deviceRegistrations: nextProps.deviceRegistrations })
         }
 
         const storeInState = (data, key) => {
@@ -126,7 +126,7 @@ class TowerIndex extends Wrapper {
 
 
     async componentDidMount() {
-        this.props.getTowerMasterData(0, constants.ALL_ROWS_LIST, undefined, undefined);
+        this.props.getDeviceRegistrationMasterData(0, constants.ALL_ROWS_LIST, undefined, undefined);
         setTimeout(() => {
             this.updateColumnWhenPropsUpdate();
         }, 100);
@@ -134,9 +134,9 @@ class TowerIndex extends Wrapper {
 
     onDeleteRecord = (ids) => {
         if (confirm('Would you like to delete the record?')) {
-            this.props.deleteTowerMasterData(ids);
+            this.props.deleteDeviceRegistrationMasterData(ids);
             setTimeout(() => {
-                this.props.getTowerMasterData(0, constants.ALL_ROWS_LIST, undefined, undefined);
+                this.props.getDeviceRegistrationMasterData(0, constants.ALL_ROWS_LIST, undefined, undefined);
             }, 500);
         }
 
@@ -145,11 +145,11 @@ class TowerIndex extends Wrapper {
         this.onClickReferesh();
         this.setState({ showEditPopup: false })
     }
-    onClickAdd = (tower) => {
-        this.setState({ tower: tower, showEditPopup: true })
+    onClickAdd = (deviceRegistration) => {
+        this.setState({ deviceRegistration: deviceRegistration, showEditPopup: true })
     }
     onClickReferesh = (async) => {
-        this.props.getTowerMasterData(0, constants.ALL_ROWS_LIST, undefined, undefined);
+        this.props.getDeviceRegistrationMasterData(0, constants.ALL_ROWS_LIST, undefined, undefined);
         this.updateColumnWhenPropsUpdate();
     }
     updateColumn = (column) => {
@@ -159,8 +159,8 @@ class TowerIndex extends Wrapper {
     }
 
     render() {
-        const { showEditPopup, columns, towers, tower } = this.state;
-        return (<div id='towerTable' className={style.table_wapper} >
+        const { showEditPopup, columns, deviceRegistrations, deviceRegistration } = this.state;
+        return (<div id='deviceRegistrationTable' className={style.table_wapper} >
             {showEditPopup === true &&
                 <>
                     <CommonStyle.Overlay
@@ -174,10 +174,10 @@ class TowerIndex extends Wrapper {
                         <CommonStyle.CloseButtonForModel
                             onClick={() => this.onClickCancel()}
                         >X</CommonStyle.CloseButtonForModel>
-                        <TowerAddEdit
-                            baseObject={tower}
+                        <DeviceRegistrationAddEdit
+                            baseObject={deviceRegistration}
                             onCancel={this.onClickCancel}
-                            onSave={this.props.saveTowerMasterData}
+                            onSave={this.props.saveDeviceRegistrationMasterData}
                         />
                     </CommonStyle.Wrapper_OnOverlay>
 
@@ -208,8 +208,8 @@ class TowerIndex extends Wrapper {
                 <div
                     style={{ width: '98%' }}
                 >
-                    <TowerMasterDetails
-                        Data={towers ? towers : []}
+                    <DeviceRegistrationMasterDetails
+                        Data={deviceRegistrations ? deviceRegistrations : []}
                         isColumnUpdate={true}
                         updateColumn={this.updateColumn}
                         columns={columns}
@@ -222,9 +222,9 @@ class TowerIndex extends Wrapper {
 
 
 const mapStateToProps = state => {
-    const { tower, towers, towerRecordsCount, towerActiontype } = state.adminReducer;
+    const { deviceRegistration, deviceRegistrations, deviceRegistrationRecordsCount, deviceRegistrationActiontype } = state.adminReducer;
 
-    return { tower, towers, towerRecordsCount, towerActiontype };
+    return { deviceRegistration, deviceRegistrations, deviceRegistrationRecordsCount, deviceRegistrationActiontype };
 };
 
-export default connect(mapStateToProps, { getTowerMasterData, saveTowerMasterData, getTowerMasterDataById, deleteTowerMasterData })(TowerIndex);
+export default connect(mapStateToProps, { getDeviceRegistrationMasterData, saveDeviceRegistrationMasterData, getDeviceRegistrationMasterDataById, deleteDeviceRegistrationMasterData })(DeviceRegistrationIndex);

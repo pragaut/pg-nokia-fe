@@ -5,22 +5,22 @@ import style from '../../../theme/app.scss';
 import Wrapper from '../../shared/Wrapper';
 import { constants } from '../../../utils/constants';
 import * as AdminTypes from '../../../action-types/admin.action.types';
-import { getTowerMasterData, saveTowerMasterData, getTowerMasterDataById, deleteTowerMasterData } from '../../../actions/admin.action';
+import { getTowerAllotmentMasterData, saveTowerAllotmentMasterData, getTowerAllotmentMasterDataById, deleteTowerAllotmentMasterData } from '../../../actions/admin.action';
 import ListTable from '../../shared/ListTable';
-import TowerAddEdit from './tower.add.edit';
+import TowerAllotmentAddEdit from './towerAllotment.add.edit';
 import * as CommonStyle from '../../commonStyle';
-import TowerMasterDetails from '../../ReactTableComponent';
+import TowerAllotmentMasterDetails from '../../ReactTableComponent';
 
 
-class TowerIndex extends Wrapper {
+class TowerAllotmentIndex extends Wrapper {
 
     constructor(props) {
         super(props);
         this.state = {
-            tower: {},
-            towers: [],
+            towerAllotment: {},
+            towerAllotments: [],
             showEditPopup: false,
-            type: AdminTypes.TOWERMASTER_INIT,
+            type: AdminTypes.TOWERALLOTMENTMASTER_INIT,
             columns: []
         };
 
@@ -71,38 +71,17 @@ class TowerIndex extends Wrapper {
             },
             {
                 Header: 'Tower Name',
-                accessor: 'towerName',
-                id: 'towerName',
+                accessor: 'towerName.towerName',
+                id: 'towerName.towerName',
                 minWidth: 100,
                 show: true,
             },
             {
-                Header: 'Site Name',
-                accessor: 'siteName',
-                id: 'siteName',
+                Header: 'Relation Order',
+                accessor: 'relationOrder',
+                id: 'relationOrder',
                 minWidth: 100,
                 show: true,
-            },
-            {
-                Header: 'city Name',
-                accessor: 'cityName.cityName',
-                id: 'cityName.cityName',
-                minWidth: 100,
-                show: true,
-            },
-            {
-                Header: 'Longitude',
-                accessor: 'longitude',
-                id: 'longitude',
-                minWidth: 100,
-                show: true
-            },
-            {
-                Header: 'Latitude',
-                accessor: 'latitude',
-                id: 'latitude',
-                minWidth: 100,
-                show: true
             },
         ]
         this.setState({ columns: columns });
@@ -110,8 +89,8 @@ class TowerIndex extends Wrapper {
 
     UNSAFE_componentWillReceiveProps(nextProps) {
 
-        if (nextProps.towers && nextProps.towers !== null && nextProps.towers != this.state.towers) {
-            this.setState({ towers: nextProps.towers })
+        if (nextProps.towerAllotments && nextProps.towerAllotments !== null && nextProps.towerAllotments != this.state.towerAllotments) {
+            this.setState({ towerAllotments: nextProps.towerAllotments })
         }
 
         const storeInState = (data, key) => {
@@ -126,7 +105,7 @@ class TowerIndex extends Wrapper {
 
 
     async componentDidMount() {
-        this.props.getTowerMasterData(0, constants.ALL_ROWS_LIST, undefined, undefined);
+        this.props.getTowerAllotmentMasterData(0, constants.ALL_ROWS_LIST, undefined, undefined);
         setTimeout(() => {
             this.updateColumnWhenPropsUpdate();
         }, 100);
@@ -134,9 +113,9 @@ class TowerIndex extends Wrapper {
 
     onDeleteRecord = (ids) => {
         if (confirm('Would you like to delete the record?')) {
-            this.props.deleteTowerMasterData(ids);
+            this.props.deleteTowerAllotmentMasterData(ids);
             setTimeout(() => {
-                this.props.getTowerMasterData(0, constants.ALL_ROWS_LIST, undefined, undefined);
+                this.props.getTowerAllotmentMasterData(0, constants.ALL_ROWS_LIST, undefined, undefined);
             }, 500);
         }
 
@@ -145,11 +124,11 @@ class TowerIndex extends Wrapper {
         this.onClickReferesh();
         this.setState({ showEditPopup: false })
     }
-    onClickAdd = (tower) => {
-        this.setState({ tower: tower, showEditPopup: true })
+    onClickAdd = (towerAllotment) => {
+        this.setState({ towerAllotment: towerAllotment, showEditPopup: true })
     }
     onClickReferesh = (async) => {
-        this.props.getTowerMasterData(0, constants.ALL_ROWS_LIST, undefined, undefined);
+        this.props.getTowerAllotmentMasterData(0, constants.ALL_ROWS_LIST, undefined, undefined);
         this.updateColumnWhenPropsUpdate();
     }
     updateColumn = (column) => {
@@ -159,8 +138,8 @@ class TowerIndex extends Wrapper {
     }
 
     render() {
-        const { showEditPopup, columns, towers, tower } = this.state;
-        return (<div id='towerTable' className={style.table_wapper} >
+        const { showEditPopup, columns, towerAllotments, towerAllotment } = this.state;
+        return (<div id='towerAllotmentTable' className={style.table_wapper} >
             {showEditPopup === true &&
                 <>
                     <CommonStyle.Overlay
@@ -174,10 +153,10 @@ class TowerIndex extends Wrapper {
                         <CommonStyle.CloseButtonForModel
                             onClick={() => this.onClickCancel()}
                         >X</CommonStyle.CloseButtonForModel>
-                        <TowerAddEdit
-                            baseObject={tower}
+                        <TowerAllotmentAddEdit
+                            baseObject={towerAllotment}
                             onCancel={this.onClickCancel}
-                            onSave={this.props.saveTowerMasterData}
+                            onSave={this.props.saveTowerAllotmentMasterData}
                         />
                     </CommonStyle.Wrapper_OnOverlay>
 
@@ -208,8 +187,8 @@ class TowerIndex extends Wrapper {
                 <div
                     style={{ width: '98%' }}
                 >
-                    <TowerMasterDetails
-                        Data={towers ? towers : []}
+                    <TowerAllotmentMasterDetails
+                        Data={towerAllotments ? towerAllotments : []}
                         isColumnUpdate={true}
                         updateColumn={this.updateColumn}
                         columns={columns}
@@ -222,9 +201,9 @@ class TowerIndex extends Wrapper {
 
 
 const mapStateToProps = state => {
-    const { tower, towers, towerRecordsCount, towerActiontype } = state.adminReducer;
+    const { towerAllotment, towerAllotments, towerAllotmentRecordsCount, towerAllotmentActiontype } = state.adminReducer;
 
-    return { tower, towers, towerRecordsCount, towerActiontype };
+    return { towerAllotment, towerAllotments, towerAllotmentRecordsCount, towerAllotmentActiontype };
 };
 
-export default connect(mapStateToProps, { getTowerMasterData, saveTowerMasterData, getTowerMasterDataById, deleteTowerMasterData })(TowerIndex);
+export default connect(mapStateToProps, { getTowerAllotmentMasterData, saveTowerAllotmentMasterData, getTowerAllotmentMasterDataById, deleteTowerAllotmentMasterData })(TowerAllotmentIndex);
