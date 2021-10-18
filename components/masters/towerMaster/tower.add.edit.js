@@ -4,7 +4,7 @@ import { validateInputs } from '../../../utils/editFormHelper';
 import { save, deleteItems, shouldStoreDataInStateByKey } from '../../../utils/editFormHelper';
 import { connect } from 'react-redux';
 import { constants } from '../../../utils/constants';
-import { getTowerMasterData, getOrganisationDetailsData, getCityMasterData } from '../../../actions/admin.action';
+import { getTowerMasterData, getOrganisationDetailsData, getCityMasterData, getCountryMasterData, getStateMasterData } from '../../../actions/admin.action';
 import style from '../../../theme/app.scss';
 import ModalHeader from '../../shared/ModalHeader';
 import Input from '../../shared/InputBox';
@@ -42,6 +42,9 @@ class TowerAddEdit extends Wrapper {
         this.onFileChange = this.onFileChange.bind(this);
         this.state = {
             tower: props.baseObject ? props.baseObject : {},
+            citys: [],
+            states: [],
+            countrys: [],
             loadershow: 'false',
         };
     };
@@ -52,16 +55,34 @@ class TowerAddEdit extends Wrapper {
 
         this.setState({ tower: existingTower });
     };
-    onTextChange = key => event => {
-        const existingTower = Object.assign({}, this.state.tower);
-        existingTower[key] = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
-        this.setState({ tower: existingTower });
+    onValueChangedCountry = key => event => {
+        const existingState = Object.assign({}, this.state.tower);
+        let SelectedValue = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
+        existingState[key] = SelectedValue;
+        this.props.getStateMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined, SelectedValue);
+
+        this.setState({ tower: existingState });
+    };
+    onValueChangedState = key => event => {
+        const existingCity = Object.assign({}, this.state.tower);
+        let SelectedValue = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
+        existingCity[key] = SelectedValue;
+        this.props.getCityMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined, SelectedValue);
+
+        this.setState({ tower: existingCity });
     };
 
     componentDidMount() {
         this.props.getTowerMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
         this.props.getOrganisationDetailsData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
-        this.props.getCityMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
+        this.props.getCountryMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
+        //this.props.getCityMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
+        if (this.state.tower.countryId) {
+            this.props.getStateMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined, this.state.organisation.countryId);
+        }
+        if (this.state.tower.stateId) {
+            this.props.getCityMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined, this.state.organisation.stateId);
+        }
     };
 
     UNSAFE_componentWillReceiveProps(nextProps) {
@@ -81,9 +102,19 @@ class TowerAddEdit extends Wrapper {
                 organisations: nextProps.organisations
             })
         }
-        if (nextProps.citys !== null && nextProps.citys !== undefined && nextProps.citys !== this.state.citys) {
+        if (nextProps && nextProps.citys && nextProps.citys !== null && nextProps.citys !== undefined && nextProps.citys !== 'undefined' && nextProps.citys !== this.state.citys) {
             this.setState({
                 citys: nextProps.citys
+            })
+        }
+        if (nextProps && nextProps.states && nextProps.states !== null && nextProps.states !== undefined && nextProps.states !== 'undefined' && nextProps.states !== this.state.states) {
+            this.setState({
+                states: nextProps.states
+            })
+        }
+        if (nextProps && nextProps.countrys && nextProps.countrys !== null && nextProps.countrys !== undefined && nextProps.countrys !== 'undefined' && nextProps.countrys !== this.state.countrys) {
+            this.setState({
+                countrys: nextProps.countrys
             })
         }
     }
@@ -138,8 +169,45 @@ class TowerAddEdit extends Wrapper {
                             </div>
                             <Input label="Tower Name:" type='text' defaultValue={this.state.tower.towerName} onChange={this.onValueChanged('towerName')} />
                             <Input label="Site Name:" type='text' defaultValue={this.state.tower.siteName} onChange={this.onValueChanged('siteName')} />
+                            <div style={{ padding: '10px', width: '100%' }}>
+                                <SpanLabelForDDl>Country</SpanLabelForDDl>
+                                <Gap h="5px" />
+                                <SELECT
+                                    value={this.state.tower.countryId} paddingLeft="10px" borderRadius="14px" height="51px"
+                                    type="text" color="rgba(0,0,0,0.87)" borderColor="rgba(0,0,0,0.54)"
+                                    style={{ backgroundColor: "transparent", border: "1px solid #ccc" }}
+                                    onChange={this.onValueChangedCountry('countryId')}
+                                >
+                                    <option key="a0" value="" >--- Select Country ---</option>
+
+                                    {this.state.countrys &&
+                                        this.state.countrys.map((item, index) => {
+                                            return <option key={index} value={item.id}>{item.countryName}</option>
+                                        })
+                                    }
+                                </SELECT>
+                            </div>
                         </div>
+
                         <div className={style.field_flex_new} style={{ width: '45%' }}>
+                            <div style={{ padding: '10px', width: '100%' }}>
+                                <SpanLabelForDDl>State</SpanLabelForDDl>
+                                <Gap h="5px" />
+                                <SELECT
+                                    value={this.state.tower.stateId} paddingLeft="10px" borderRadius="14px" height="51px"
+                                    type="text" color="rgba(0,0,0,0.87)" borderColor="rgba(0,0,0,0.54)"
+                                    style={{ backgroundColor: "transparent", border: "1px solid #ccc" }}
+                                    onChange={this.onValueChangedState('stateId')}
+                                >
+                                    <option key="a0" value="" >--- Select State ---</option>
+
+                                    {this.state.states &&
+                                        this.state.states.map((item, index) => {
+                                            return <option key={index} value={item.id}>{item.stateName}</option>
+                                        })
+                                    }
+                                </SELECT>
+                            </div>
                             <div style={{ padding: '10px', width: '100%' }}>
                                 <SpanLabelForDDl>City Name</SpanLabelForDDl>
                                 <Gap h="5px" />
@@ -196,7 +264,7 @@ TowerAddEdit.propTypes = {
 };
 
 const mapStateToProps = state => {
-    const { organisations, organisation, citys, city } = state.adminReducer;
-    return { organisations, organisation, citys, city };
+    const { organisations, organisation, citys, city,states, countrys, } = state.adminReducer;
+    return { organisations, organisation, citys, city, states, countrys, };
 }
-export default connect(mapStateToProps, { getTowerMasterData, getOrganisationDetailsData, getCityMasterData })(TowerAddEdit)
+export default connect(mapStateToProps, { getTowerMasterData, getOrganisationDetailsData, getCountryMasterData, getStateMasterData, getCityMasterData })(TowerAddEdit)
