@@ -78,13 +78,8 @@ export const registerAccount = (userName, password, firstName, lastName, mobile,
     const referredByCode = sessionHelper.getReferralCode();
 
     const post = {
-        email: userName,
-        firstName: firstName,
-        lastName: lastName,
-        mobile: mobile,
-        password: password,
-        source,
-        referredByCode
+        userName: userName,
+        password: password
     };
 
     try {

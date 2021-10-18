@@ -7,9 +7,7 @@ import { connect } from 'react-redux';
 import { constants } from '../../../utils/constants';
 
 //import { getRolesByRoleId } from '../../../actions/admin.action';
-import { getGroupMasterData, saveUserData, getRoleMasterData, getModuleMasterData, getCompanyMaster, getPlantMaster } from '../../../actions/admin.action';
-import { getMasterDetailsBymasterCategoryCode } from '../../../actions/masterDetails.actions';
-
+import {  getUserData, getUserDetailsP, saveUserData,   getOrgRelationTypeMasterData, getOrganisationDetailsData,getOrganisationEmployeeDetailsData, getUserDataById, deleteUserData, getRoleMasterData  } from '../../../actions/admin.action';
 import style from '../../../theme/app.scss';
 
 import ModalHeader from '../../shared/ModalHeader';
@@ -23,7 +21,7 @@ const Multiselect = dynamic(() => import('multiselect-react-dropdown').then(modu
 import MultiSelectDDL from "react-multi-select-component";
 //import ReactSelect from 'react-select';
 import styled from 'styled-components';
-
+import Gap from '../../Gap'
 const MultiSelectDiv = styled.div` 
 width:100%;
 padding:0px 10px;
@@ -48,31 +46,15 @@ class UserAddEdit extends Wrapper {
         type: 'string',
         required: true
     }, {
-        name: 'departmentMasterId',
+        name: 'orgDetailsId',
         type: 'string',
-        displayname: 'Department',
-        required: true
-    }, {
-        name: 'firstName',
-        type: 'string',
-        displayname: 'First Name',
-        required: true
-    }, {
-        name: 'code',
-        type: 'string',
-        displayname: 'Employee Code',
+        displayname: 'Organisation',
         required: true
     },
     {
-        name: 'email',
+        name: 'employeeId',
         type: 'string',
-        displayname: 'Email',
-        required: true
-    },
-    {
-        name: 'plantMasterId',
-        type: 'string',
-        displayname: 'Plant',
+        displayname: 'Employee',
         required: true
     },
         // {
@@ -87,147 +69,52 @@ class UserAddEdit extends Wrapper {
         super(props);
 
         this.roleMasterIdRefs = React.createRef();
-        this.plantMasterIdRefs = React.createRef();
-        this.departmentMasterIdRefs = React.createRef();
         this.multiselectRef = React.createRef();
 
         this.state = {
             user: props.baseObject ? props.baseObject : {},
             userSelectedRoles: null, //props.baseObject ? props.baseObject.userRoles : {},
             selectedRoleForSelectedUser: props.selectedRoleForSelectedUser ? props.selectedRoleForSelectedUser : undefined,
-            plants: null,
+           
             roles: null,
-            companys: [],
-            departments: null,
+            organisations: [],
+            orgEmployees :[],
+            orgRelationTypes :[],
             options: [{}],
             selectedRoles: [{}],
-            passwordStrength: "poor",
             isValidPassword: false,
             passwordFocusBorderColor: "#f90707",
-            isValidMobileNumber: true,
             mobileValidateMSG: "",
             mobileFocusBorderColor: "#f90707",
-            isValidEmail: false,
             emailValidateMSG: "Please enter valid email.",
             emailFocusBorderColor: "#f90707",
-            PlantMasterDropDown: [],
             roleDDLVal: [],
             roleCategory: '',
             selectedRoleItems: []
         };
     };
 
-    analyzePassword(value) {
-        const strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
-        const mediumRegex = new RegExp("^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})");
-        if (strongRegex.test(value)) {
-            //alert("Strong password !!");
-            this.setState({
-                passwordStrength: "Strong",
-                isValidPassword: true
-            });
-        } else if (mediumRegex.test(value)) {
-            //alert("Medium password !!")
-            this.setState({
-                passwordStrength: "Medium",
-                isValidPassword: false
-            });
-        } else {
-            //alert("Poor password !!")
-            this.setState({
-                passwordStrength: "Poor",
-                isValidPassword: false
-            });
-        }
-    }
-    validateMobileNumber(value) {
-        //var pattern = new RegExp(/^[0-9\b]+$/);
-        var pattern = /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
-        let firstLetter = this.state.userName && this.state.userName.substring(0, 1);
-        if (value && !pattern.test(value)) {
-            this.setState({
-                isValidMobileNumber: false,
-                mobileValidateMSG: "Please enter only number.",
-                mobileFocusBorderColor: "#f90707"
-            });
-        } else if (value && (value.length != 10) || firstLetter === "1") {
-            this.setState({
-                isValidMobileNumber: false,
-                mobileValidateMSG: "Please enter valid phone number.",
-                mobileFocusBorderColor: "#f90707"
-            });
-        }
-        else {
-            this.setState({
-                isValidMobileNumber: true,
-                mobileValidateMSG: "",
-                mobileFocusBorderColor: "#228703"
-            });
-        }
-    }
-    validateEmail(value) {
-        //var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
-        //alert(value);
-        var regEmail = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-        if (value && !regEmail.test(value)) {
-            this.setState({
-                isValidEmail: false,
-                emailValidateMSG: "Please enter valid email.",
-                emailFocusBorderColor: "#f90707"
-            });
-        }
-        else {
-            this.setState({
-                isValidEmail: true,
-                emailValidateMSG: "",
-                emailFocusBorderColor: "#228703"
-            });
-        }
-    }
-
+   
+  
     onValueChanged = key => event => {
-        if (key === "mobile")
-            this.validateMobileNumber(event.target.value);
-        else if (key === "email")
-            this.validateEmail(event.target.value);
-
         const existingUser = Object.assign({}, this.state.user);
         existingUser[key] = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
-        if (key === "password") {
-            this.analyzePassword(event.target.value);
-        }
-        this.setState({ user: existingUser });
-    };
-    onValueChangedCompany = key => event => {
-        let selectedValue = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
-
-        let PlantMasterDropDown = this.state.plants && this.state.plants.length > 0 && this.state.plants.filter(item => item.companyMasterID === selectedValue);
-        const existingUser = Object.assign({}, this.state.user);
-        existingUser[key] = selectedValue;
-        existingUser['plantMasterId'] = undefined;
-        this.setState({ PlantMasterDropDown, PlantMasterDropDown, user: existingUser });
-    };
-    onValueChangedPlant = key => event => {
-        let selectedValue = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
-
-        const existingUser = Object.assign({}, this.state.user);
-        existingUser[key] = selectedValue && selectedValue !== '-1' && selectedValue !== null && selectedValue !== 'undefined' && selectedValue !== 'Select plant' ? selectedValue : undefined;
-
+      
         this.setState({ user: existingUser });
     };
     onTextChange = key => event => {
         const existingUser = Object.assign({}, this.state.user);
         existingUser[key] = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
-        this.analyzePassword(event.target.value);
+     
         this.setState({ user: existingUser });
     };
 
     componentDidMount() {
         //  console.log("user state c : ", this.state.user);
-        this.props.getPlantMaster(0, constants.ALL_ROWS_LIST, undefined, undefined);
         this.props.getRoleMasterData(0, constants.ALL_ROWS_LIST, undefined, undefined);
-        this.props.getMasterDetailsBymasterCategoryCode(0, constants.ALL_ROWS_LIST, undefined, undefined, "department");
-        this.props.getCompanyMaster(0, constants.ALL_ROWS_LIST, undefined, undefined);
+        this.props.getOrgRelationTypeMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
+        // this.props.getOrganisationDetailsData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
+        // this.props.getOrganisationEmployeeDetailsData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
         //this.props.getMasterDetailsBymasterCategoryCode(0, constants.DEFAULT_ROWS_LIST, undefined, undefined, 'city');
 
         setTimeout(() => {
@@ -247,37 +134,10 @@ class UserAddEdit extends Wrapper {
             let loggedUser = this.loggedUser();
             let RoleCategory = LoggedUserCategory ? LoggedUserCategory.roleCategory : undefined;
             let loggedplantMasterId = loggedUser ? loggedUser.plantMasterId : undefined;
-            let CompanyMasterID = loggedUser && loggedUser.plantMaster ? loggedUser.plantMaster.companyMasterID : undefined
-            let PlantDDL = this.state.plants && this.state.plants;
-            // let CompanyDDl = this.state.companys && this.state.companys;
-            let selectedCompanyId = this.state.user && this.state.user.companyMasterId && this.state.user.companyMasterId !== "-1" && this.state.user.companyMasterId;
-            let PlantMasterDropDown = undefined;
+         
             const RoleMaster = this.state.roles && this.state.roles;
-            let roleDDLVal = null;
-            if (RoleCategory === "Company Admin") {
-                PlantMasterDropDown = PlantDDL && PlantDDL.filter(item => item.companyMasterID === CompanyMasterID);
-                if (RoleMaster) {
-                    roleDDLVal = RoleMaster && RoleMaster.length > 0 && RoleMaster.filter(item => item.roleCategory === 'User')
-                }
-            }
-            else if (selectedCompanyId) {
-                PlantMasterDropDown = PlantDDL && PlantDDL.filter(item => item.companyMasterID === selectedCompanyId);
-                roleDDLVal = RoleMaster && RoleMaster;
-            }
-            else {
-                roleDDLVal = RoleMaster && RoleMaster;
-                PlantMasterDropDown = PlantDDL && PlantDDL;
-            }
-            if ((!this.state.user.plantMasterId || this.state.user.plantMasterId === null) && (loggedplantMasterId && loggedplantMasterId !== undefined)) {
-                setTimeout(() => {
-                    const existinguser = Object.assign({}, this.state.user);
-                    existinguser["plantMasterId"] = loggedplantMasterId //this.roleMasterIdRefs.current.value;
-                    this.setState({
-                        user: existinguser
-                    });
-                }, 100);
-            }
-            this.setState({ roleCategory: RoleCategory, roleDDLVal: roleDDLVal, PlantMasterDropDown: PlantMasterDropDown })
+            let roleDDLVal= RoleMaster && RoleMaster;        
+            this.setState({ roleCategory: RoleCategory, roleDDLVal: roleDDLVal})
         }, 400);
     };
 
@@ -308,11 +168,7 @@ class UserAddEdit extends Wrapper {
 
     UNSAFE_componentWillReceiveProps(nextProps) {
         //console.log("nextProps.masterDetails : ",nextProps.masterDetailsCategory);
-        if (nextProps.plants !== null && nextProps.plants !== undefined && nextProps.plants !== this.state.plants) {
-            this.setState({
-                plants: nextProps.plants
-            });
-        }
+     
         if (nextProps.roles && nextProps.roles !== null && nextProps.roles !== undefined && nextProps.roles !== this.state.roles) {
 
             let LoggedUserCategory = this.getLoggedUserRole_JSONConverted();
@@ -321,10 +177,7 @@ class UserAddEdit extends Wrapper {
             const RoleMaster = nextProps.roles;
             let roleDDLVal = null;
 
-            if (RoleCategory === "Company Admin" && RoleMaster) {
-                roleDDLVal = RoleMaster && RoleMaster.length > 0 && RoleMaster.filter(item => item.roleCategory === 'User')
-            }
-            else if (RoleMaster) {
+            if (RoleMaster) {
                 roleDDLVal = RoleMaster && RoleMaster;
             }
             this.setState({
@@ -335,11 +188,6 @@ class UserAddEdit extends Wrapper {
             setTimeout(() => {
                 this.onValueChangedRoleOnPropsChange(this.state.selectedRoleForSelectedUser)
             }, 200);
-        }
-        if (nextProps.companys !== null && nextProps.companys !== undefined && nextProps.companys !== this.state.companys) {
-            this.setState({
-                companys: nextProps.companys
-            });
         }
         if (nextProps.selectedRoleForSelectedUser !== null && nextProps.selectedRoleForSelectedUser !== undefined && nextProps.selectedRoleForSelectedUser !== this.state.selectedRoleForSelectedUser) {
             let userSelectedRoles = [];
@@ -356,9 +204,20 @@ class UserAddEdit extends Wrapper {
                 this.onValueChangedRoleOnPropsChange(nextProps.selectedRoleForSelectedUser)
             }, 200);
         }
-        if (nextProps.masterDetailsCategory !== null && nextProps.masterDetailsCategory !== undefined && nextProps.masterDetailsCategory !== this.state.departments) {
+        if (nextProps && nextProps.orgRelationTypes && nextProps.orgRelationTypes !== this.state.orgRelationTypes) {
+            this.setState({ orgRelationTypes: nextProps.orgRelationTypes })
+        }
+        if (nextProps && nextProps.genders && nextProps.genders !== this.state.genders) {
+            this.setState({ genders: nextProps.genders })
+        }
+        if (nextProps && nextProps.organisations && nextProps.organisations !== null && nextProps.organisations !== undefined && nextProps.organisations !== 'undefined' && nextProps.organisations !== this.state.organisations) {
             this.setState({
-                departments: nextProps.masterDetailsCategory
+                organisations: nextProps.organisations
+            })
+        }
+        if (nextProps && nextProps.orgEmployees && nextProps.orgEmployees !== null && nextProps.orgEmployees !== undefined && nextProps.orgEmployees !== 'undefined' && nextProps.orgEmployees !== this.state.orgEmployees) {
+            this.setState({
+                orgEmployees: nextProps.orgEmployees
             })
         }
 
@@ -371,7 +230,32 @@ class UserAddEdit extends Wrapper {
             this.setState({ ...state });
         }
     };
+    
 
+    onValueChangedOrgRelationType = key => event => {
+        const existingState = Object.assign({}, this.state.user);
+        let SelectedValue = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
+        existingState[key] = SelectedValue;   
+        if(!SelectedValue || SelectedValue =='') 
+        {
+            existingState[key] = 'No-Id';
+        }
+       let NullId = {
+            orgDetailsId:'No-Id'
+        }
+        this.props.getOrganisationDetailsData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined, existingState);
+        this.props.getOrganisationEmployeeDetailsData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined,NullId);
+        this.setState({ user: existingState });
+    };
+
+    onValueChangedOrganisation = key => event => {
+        const existingState = Object.assign({}, this.state.user);
+        let SelectedValue = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
+        existingState[key] = SelectedValue;
+        this.props.getOrganisationEmployeeDetailsData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined, existingState);
+
+        this.setState({ user: existingState });
+    };
     onSelect = (selectedList, selectedItem) => {
         const listItems = selectedList.map((item) => item.id);
         const existinguser = Object.assign({}, this.state.user);
@@ -407,85 +291,81 @@ class UserAddEdit extends Wrapper {
 
     };
     render() {
-        const { companys, selectedRoleItems, roleCategory, roleDDLVal, PlantMasterDropDown } = this.state;
+        const {  selectedRoleItems, roleCategory, roleDDLVal, organisations,orgRelationTypes, orgEmployees} = this.state;
 
         let FocusBorderColor = "#f90707";
-        if (this.state.passwordStrength === "Strong") {
-            FocusBorderColor = "#228703";
-        }
-        else if (this.state.passwordStrength === "Medium") {
-            FocusBorderColor = "#f0c615";
-        }
         const roleOptions = roleDDLVal && roleDDLVal.length > 0 ? roleDDLVal.map((item, index) => {
             return { value: item.id, label: item.roleName }
         }) : [{ value: "-1", label: 'Select Role' }];
 
         console.log('this.state.user', this.state.user);
         return (
-            <div className={style.modal_dialog} style={{ overflow: 'visible', width: '95%', maxHeight: '120vh', maxWidth: '80vw' }}>
-                {/* <ModalHeader
-                    heading="User Master"   
-                /> */}
-                {/* container for the edit form here */}
+            <div className={style.modal_dialog} style={{ overflow: 'visible', width: '95%', maxHeight: '120vh', maxWidth: '80vw' }}>           
                 <div>
                     {/** idhar saare edit fields aayenge */}
                     <div className={style.field_flex_wrapper} style={{ overflow: 'visible' }}>
                         <div className={style.field_flex_new} style={{ width: '45%', color: "rgba(0,0,0,0.54)", fontSize: "13px", overflow: 'visible', textAlign: 'left' }}>
-                            {roleCategory !== "Company Admin" &&
-                                <>
-                                    <SpanLabelForDDl>Company</SpanLabelForDDl>
-                                    <SELECT margin="8px"
-                                        value={this.state.user.companyMasterId} paddingLeft="10px" borderRadius="14px" height="51px"
-                                        type="text" color="rgba(0,0,0,0.87)" borderColor="rgba(0,0,0,0.54)"
-                                        style={{ backgroundColor: "transparent", border: "1px solid #ccc" }}
-                                        onChange={this.onValueChangedCompany('companyMasterId')}
+                        <div style={{ padding: '10px', width: '100%' }}>
+                                <SpanLabelForDDl>Organisation Relation Type</SpanLabelForDDl>
+                                <Gap h="5px" />
+                                <SELECT
+                                    value={this.state.user.orgRelationTypeId} paddingLeft="10px" borderRadius="14px" height="51px"
+                                    type="text" color="rgba(0,0,0,0.87)" borderColor="rgba(0,0,0,0.54)"
+                                    style={{ backgroundColor: "transparent", border: "1px solid #ccc" }}
+                                    onChange={this.onValueChangedOrgRelationType('orgRelationTypeId')}
+                                >
+                                    <option key="a0" value="" >--- Select Relation Type ---</option>
 
-                                    >
-                                        <option key={-1} value={undefined}> Select company</option>
-                                        {companys && companys.length > 0 &&
-                                            companys.map((item, index) => {
-                                                return <option key={index} value={item.id}>{item.companyCode + " - " + item.companyName}</option>
-                                            })
-                                        }
-                                    </SELECT>
-                                </>
-                            }
-                            <SpanLabelForDDl>Plant</SpanLabelForDDl>
-                            <SELECT margin="8px" ref={this.plantMasterIdRefs}
-                                value={this.state.user.plantMasterId} paddingLeft="10px" borderRadius="14px" height="51px"
-                                type="text" color="rgba(0,0,0,0.87)" borderColor="rgba(0,0,0,0.54)"
-                                style={{ backgroundColor: "transparent", border: "1px solid #ccc" }}
-                                onChange={this.onValueChangedPlant('plantMasterId')}
-                            >
-                                <option key={-1} value={undefined}> Select plant</option>
-                                {PlantMasterDropDown &&
-                                    PlantMasterDropDown.map((item, index) => {
-                                        return <option key={index} value={item.id}>{item.plantCode + " - " + item.plantName}</option>
-                                    })
-                                }
-                            </SELECT>
+                                    {this.state.orgRelationTypes &&
+                                        this.state.orgRelationTypes.map((item, index) => {
+                                            return <option key={index} value={item.id}>{item.orgRelationType}</option>
+                                        })
+                                    }
+                                </SELECT>
+                            </div>
+                            <div style={{ padding: '10px', width: '100%' }}>
+                                <SpanLabelForDDl>Organisation Name</SpanLabelForDDl>
+                                <Gap h="5px" />
+                                <SELECT
+                                    value={this.state.user.orgDetailsId} paddingLeft="10px" borderRadius="14px" height="51px"
+                                    type="text" color="rgba(0,0,0,0.87)" borderColor="rgba(0,0,0,0.54)"
+                                    style={{ backgroundColor: "transparent", border: "1px solid #ccc" }}
+                                    onChange={this.onValueChangedOrganisation('orgDetailsId')}
+                                >
+                                    <option key="a0" value="" >--- Select Organisation ---</option>
 
-                            <Input label="First Name:" focusbordercolor="#4954f4" required={true} type='text' defaultValue={this.state.user.firstName} onChange={this.onValueChanged('firstName')} />
-                            <Input label="Last Name:" focusbordercolor="#4954f4" required={true} type='text' defaultValue={this.state.user.lastName} onChange={this.onValueChanged('lastName')} />
-                            <Input label="Emp. Code:" focusbordercolor="#4954f4" required={true} type='text' defaultValue={this.state.user.code} onChange={this.onValueChanged('code')} />
-                            <Input label="Mobile: (Optional)" focusbordercolor={this.state.mobileFocusBorderColor} type='number' maxLength="10" defaultValue={this.state.user.mobile} onChange={this.onValueChanged('mobile')} />
+                                    {this.state.organisations &&
+                                        this.state.organisations.map((item, index) => {
+                                            return <option key={index} value={item.id}>{item.orgName}</option>
+                                        })
+                                    }
+                                </SELECT>                                
+                            </div>
+                            <div style={{ padding: '10px', width: '100%' }}>
+                                <SpanLabelForDDl>Employee</SpanLabelForDDl>
+                                <Gap h="5px" />
+                                <SELECT
+                                    value={this.state.user.employeeId} paddingLeft="10px" borderRadius="14px" height="51px"
+                                    type="text" color="rgba(0,0,0,0.87)" borderColor="rgba(0,0,0,0.54)"
+                                    style={{ backgroundColor: "transparent", border: "1px solid #ccc" }}
+                                    onChange={this.onValueChanged('employeeId')}
+                                >
+                                    <option key="a0" value="" >--- Select Employee ---</option>
+
+                                    {this.state.orgEmployees &&
+                                        this.state.orgEmployees.map((item, index) => {
+                                            return <option key={index} value={item.id}>{item.employeeName}</option>
+                                        })
+                                    }
+                                </SELECT>
+                                
+                            </div>
+                          
                         </div>
                         <div className={style.field_flex_new} style={{ width: '45%', color: "rgba(0,0,0,0.54)", fontSize: "13px", overflow: 'visible', textAlign: 'left' }}>
-                            <SpanLabelForDDl style={{ marginLeft: "8px" }}>Department</SpanLabelForDDl>
-                            <SELECT margin="8px" ref={this.departmentMasterIdRefs}
-                                value={this.state.user.departmentMasterId} paddingLeft="10px" borderRadius="14px" height="51px"
-                                type="text" color="rgba(0,0,0,0.87)" borderColor="rgba(0,0,0,0.54)"
-                                style={{ backgroundColor: "transparent", border: "1px solid #ccc" }}
-                                onChange={this.onValueChanged('departmentMasterId')}
-                            >
-                                <option key={"selectlist"} value={"-1"}>{"Select List"}</option>
-                                {this.state.departments &&
-                                    this.state.departments.map((item, index) => {
-                                        return <option key={index} value={item.id}>{item.value}</option>
-                                    })
-                                }
-                            </SELECT>
-                            <SpanLabelForDDl style={{ marginLeft: "8px" }}>Roles</SpanLabelForDDl>
+                          
+                        <div style={{ padding: '0px', width: '100%' }}>
+                            <SpanLabelForDDl>Roles</SpanLabelForDDl>
                             <MultiSelectDiv >
                                 <MultiSelectDDL
                                     className="width100p"
@@ -505,34 +385,12 @@ class UserAddEdit extends Wrapper {
                                     isMulti={true}
                                 /> */}
                             </MultiSelectDiv>
-                            <Input label="Email:" focusbordercolor={this.state.emailFocusBorderColor} required="required" type='email' defaultValue={this.state.user.email} onChange={this.onValueChanged('email')} />
+                            </div>
                             <Input label="User Name:" focusbordercolor="#4954f4" type='text' defaultValue={this.state.user.userName} onChange={this.onValueChanged('userName')} />
                             {this.state.user && this.state.user.id ?
                                 '' :
                                 <Input label="Password:" focusbordercolor={FocusBorderColor} required="required" type='password' autoComplete="new-password" defaultValue={this.state.user.password} onChange={this.onValueChanged('password')} />
                             }
-
-
-                            {/* <Multiselect
-                                options={roleDDLVal ? roleDDLVal : this.state.options} // Options to display in the dropdown
-                                selectedValues={this.state.userSelectedRoles} // Preselected value to persist in dropdown
-                                onSelect={this.onSelect} // Function will trigger on select event
-                                onRemove={this.onRemove} // Function will trigger on remove event
-                                displayValue="roleName" // Property name to display in the dropdown options                               
-                                ref={this.multiselectRef}
-                                closeIcon={"cancel"}
-                                showCheckbox={true}
-                                placeholder={"Select Roles"}
-                                closeOnSelect={false}
-                                style={{
-                                    multiselectContainer: { // To change input field position or margin
-                                        margin: '8px'
-                                    },
-                                    inputField: { // To change input field position or margin
-                                        paddingLeft: '8px'
-                                    }
-                                }}
-                            /> */}
                         </div>
                     </div>
                 </div>
@@ -541,41 +399,13 @@ class UserAddEdit extends Wrapper {
                 <div style={{ display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'center', margin: '10px 0px' }}>
                     <button className={style.primary_btn} style={{ width: '100px', marginRight: '10px' }} onClick={() => {
                         const validationText = validateInputsWithDisplayName(this.state.user, this.configs);
-                        this.analyzePassword(this.state.user.password);
-                        this.validateEmail(this.state.user.email);
+                
                         setTimeout(() => {
                             if (validationText) {
                                 return alert(validationText);
                             }
-                            else if (this.state.user && !this.state.user.id && !this.state.isValidPassword) {
-                                return alert("Password strength is " + this.state.passwordStrength);
-                            }
-                            else if (!this.state.isValidMobileNumber) {
-                                return alert(this.state.mobileValidateMSG);
-                            }
-                            else if (!this.state.isValidEmail) {
-                                return alert(this.state.emailValidateMSG);
-                            }
                         }, 200);
-
-                        if (this.state.user.plantMasterId == null || this.state.user.plantMasterId === undefined) {
-                            // return alert('select plant first!');
-                            const existinguser = Object.assign({}, this.state.user);
-                            if (this.plantMasterIdRefs.current.value && this.plantMasterIdRefs.current.value !== null) {
-                                existinguser["plantMasterId"] = this.plantMasterIdRefs.current.value;
-                            }
-                            else {
-                                existinguser["plantMasterId"] = loggedplantMasterId;
-                            }
-                            this.setState({ user: existinguser });
-                        }
-                        if (this.state.user.departmentMasterId == null) {
-                            //console.log("this.departmentMasterIdRefs.current", this.departmentMasterIdRefs.current.value);
-
-                            const existinguser = Object.assign({}, this.state.user);
-                            existinguser["departmentMasterId"] = this.departmentMasterIdRefs.current.value;
-                            this.setState({ user: existinguser });
-                        }
+                       
                         if (!this.state.userRoles || this.state.userRoles === null) {
                             const existinguser = Object.assign({}, this.state.user);
                             existinguser["userRoles"] = this.state.selectedRoles;
@@ -583,11 +413,10 @@ class UserAddEdit extends Wrapper {
                         }
                         // console.log("this.state.user 4 : ", this.state.user);
                         if (this.state.selectedRoles && (this.state.selectedRoles).length > 0) {
-                            if ((this.state.isValidPassword && this.state.isValidPassword === true) || (this.state.user.id)) {
+                           
                                 setTimeout(() => {
                                     this.props.onSave(this.state.user, this.props.index);
                                 }, 200);
-                            }
                         }
                         else {
                             alert("Please select atleast one role !!");
@@ -608,12 +437,10 @@ UserAddEdit.propTypes = {
 };
 
 const mapStateToProps = state => {
-    const { roles, plants, companys } = state.adminReducer;
-    const { masterDetail, masterDetails } = state.masterDetailReducer;
-    const { masterDetailCategory, masterDetailsCategory } = state.masterDetailByCategoryReducer;
+    const { roles, organisations, orgEmployees,orgRelationTypes } = state.adminReducer;
     const errorType = state.errorReducer.type;
     const errorMessage = state.errorReducer.error;
-    return { roles, plants, companys, masterDetail, masterDetails, masterDetailCategory, masterDetailsCategory, errorType, errorMessage };
+    return { roles, organisations, orgEmployees,orgRelationTypes, errorType, errorMessage };
 }
 
-export default connect(mapStateToProps, { saveUserData, getCompanyMaster, getPlantMaster, getRoleMasterData, getModuleMasterData, getMasterDetailsBymasterCategoryCode })(UserAddEdit)
+export default connect(mapStateToProps, { getUserData, getUserDetailsP,   getOrgRelationTypeMasterData, getOrganisationDetailsData,getOrganisationEmployeeDetailsData, saveUserData, getUserDataById,  deleteUserData, getRoleMasterData })(UserAddEdit)

@@ -757,7 +757,7 @@ export const deleteRoleMasterData = id => async dispatch => {
 
 //#endregion
 
-//#region  Group Company Master
+//#region Group Company Master
 
 export const initCompanyMaster = () => dispatch => {
     dispatchAction(dispatch, adminTypes.COMPANYMASTER_INIT, null, null, null, null);
@@ -892,7 +892,7 @@ export const deleteCompanyMaster = MasterIds => async dispatch => {
 };
 //#endregion
 
-//#region    Company Plant Master
+//#region Company Plant Master
 
 export const initPlantMaster = () => dispatch => {
     dispatchAction(dispatch, adminTypes.PLANTMASTER_INIT, null, null, null, null);
@@ -1072,7 +1072,7 @@ export const deletePlantMaster = MasterIds => async dispatch => {
 export const saveUserData = user => async dispatch => {
     dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.AUTH_URL + `audit/user/`;
+        let url = config.AUTH_URL + `tmc/user/`;
         const data = (typeof user.id === 'undefined' || user.id === -1) ? await service.post(url, user, true)
             : await service.put(url, user, true);
         console.log("data", data);
@@ -1119,7 +1119,7 @@ export const unLockAccount = user => async dispatch => {
             lastName: user.lastName,
             email: user.email
         }
-        let url = config.AUTH_URL + `audit/user/unLockAccount`;
+        let url = config.AUTH_URL + `tmc/user/unLockAccount`;
         const data = await service.put(url, dataToBeSend, true);
 
         if (data && !data.errorMessage) {
@@ -1148,7 +1148,7 @@ export const unLockAccount = user => async dispatch => {
 
 export const getUserDataById = (id) => async dispatch => {
     try {
-        let url = config.AUTH_URL + `audit/user?id=${id}`;
+        let url = config.AUTH_URL + `tmc/user?id=${id}`;
         const data = await service.get(url, true);
         if (data && !data.errorMessage) {
             // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
@@ -1169,15 +1169,11 @@ export const getUserDataById = (id) => async dispatch => {
 export const getUserDetailsP = (pageIndex, rowsToReturn, order, where, userFilters) => async dispatch => {
     dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-
-        let url = config.AUTH_URL + `audit/user/getUsersP?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
-
-        url = url + `&userId=${userFilters && userFilters.userId ? userFilters.userId : ''}`;
-        url = url + `&companyMasterId=${userFilters && userFilters.companyMasterId && userFilters.companyMasterId !== null && userFilters.companyMasterId !== '-1' ? userFilters.companyMasterId : ''}`;
-        url = url + `&plantMasterId=${userFilters && userFilters.plantMasterId && userFilters.plantMasterId !== null && userFilters.plantMasterId !== '-1' ? userFilters.plantMasterId : ''}`;
-        url = url + `&departmentMasterId=${userFilters && userFilters.departmentMasterId && userFilters.departmentMasterId !== null && userFilters.departmentMasterId !== '-1' ? userFilters.departmentMasterId : ''}`;
+        console.log("getUserDetailsP","Get User Details Here");
+        let url = config.AUTH_URL + `tmc/user/getUsersP?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
+        url = url + `&userId=${userFilters && userFilters.userId ? userFilters.userId : ''}`; 
         url = url + `&roleMasterId=${userFilters && userFilters.roleMasterId && userFilters.roleMasterId !== null && userFilters.roleMasterId !== '-1' ? userFilters.roleMasterId : ''}`;
-
+       // console.log("url : 1",url);
         if (order && order.length > 0) {
             url = url + `&order=${JSON.stringify(order)}`;
         }
@@ -1186,6 +1182,8 @@ export const getUserDetailsP = (pageIndex, rowsToReturn, order, where, userFilte
         }
 
         const data = await service.get(url, true);
+
+        
         if (data && !data.errorMessage) {
             dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
             dispatchAction(dispatch, adminTypes.USER_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
@@ -1210,7 +1208,7 @@ export const getUserData = (pageIndex, rowsToReturn, order, where) => async disp
         let LoggedUserPlantId = Loggeduser && Loggeduser.plantMasterId;
         let RoleCategory = LoggedUserCategory ? LoggedUserCategory.roleCategory : undefined;
 
-        let url = config.AUTH_URL + `audit/user?pageIndex=${pageIndex}&rows=${rowsToReturn}`
+        let url = config.AUTH_URL + `tmc/user?pageIndex=${pageIndex}&rows=${rowsToReturn}`
         if (RoleCategory && RoleCategory === "Company Admin") {
             url = url + `&plantMasterId=${LoggedUserPlantId}`;
         }
@@ -1243,7 +1241,7 @@ export const getUserByPlantId = (pageIndex, rowsToReturn, order, where, id) => a
     try {
         let groupId = "";
         let plantId = id ? id : plantId;
-        let url = config.AUTH_URL + `audit/user/getUsersP?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
+        let url = config.AUTH_URL + `tmc/user/getUsersP?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
         url = url + `&plantMasterId=${id}`;
 
         //let url = config.AUTH_URL + `audit/user/getByPlantId?plantId=${id}`;
@@ -1266,7 +1264,7 @@ export const getUserByPlantId = (pageIndex, rowsToReturn, order, where, id) => a
 export const getUserByPlantDepartmentId = (plantId, departmentId) => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null); 
     try {
-        let url = config.AUTH_URL + `audit/user/getByPlantId?plantId=${plantId},departmentId=${departmentId}`;
+        let url = config.AUTH_URL + `tmc/user/getByPlantId?plantId=${plantId},departmentId=${departmentId}`;
         const data = await service.get(url, true);
         if (data && !data.errorMessage) {
             // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
@@ -1286,7 +1284,7 @@ export const getUserByPlantDepartmentId = (plantId, departmentId) => async dispa
 export const deleteUserData = userId => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.AUTH_URL + `audit/user`;
+        let url = config.AUTH_URL + `tmc/user`;
 
         const data = await service._delete(url + '?id=' + userId, true);
 
@@ -1321,7 +1319,7 @@ export const getCurrentUserSessionDetails = () => async dispatch => {
         let userMasterId = Loggeduser && Loggeduser.id;
         let plantMasterId = Loggeduser && Loggeduser.plantMasterId;
         let companyMasterId = Loggeduser && Loggeduser.plantMaster && Loggeduser.plantMaster.companyMasterID;
-        let url = config.AUTH_URL + `audit/user/getCurrentUserSessionDetails?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
+        let url = config.AUTH_URL + `tmc/user/getCurrentUserSessionDetails?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
 
         url = url + `&userMasterId=${userMasterId && userMasterId ? userMasterId : ''}`;
         url = url + `&plantMasterId=${plantMasterId && plantMasterId ? plantMasterId : ''}`;
@@ -1346,7 +1344,6 @@ export const getCurrentUserSessionDetails = () => async dispatch => {
 };
 
 //#endregion
-
 
 //#region  Notification Master
 export const initNotificationMasterDetails = () => dispatch => {
@@ -1951,7 +1948,11 @@ export const getOrganisationEmployeeDetailsDataById = (id) => async dispatch => 
 export const getOrganisationEmployeeDetailsData = (pageIndex, rowsToReturn, order, where, filterparameter) => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.AUTH_URL + `tmc/admin/organisationEmployeeDetails`;
+        let pageIndex = 0;
+        
+        let url = config.AUTH_URL + `tmc/admin/organisationEmployeeDetails?pageIndex=${pageIndex}`;
+
+        console.log("filterparameter: Org Empl : ---------",filterparameter)
 
         if (filterparameter && filterparameter.orgDetailsId && filterparameter.orgDetailsId !== null && filterparameter.orgDetailsId !== 'undefined' && filterparameter.orgDetailsId !== '-1') {
             url = url + `&orgDetailsId=${filterparameter.orgDetailsId}`;

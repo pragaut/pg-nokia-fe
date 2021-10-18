@@ -5,15 +5,13 @@ import style from '../../../theme/app.scss';
 import Wrapper from '../../shared/Wrapper';
 import { constants } from '../../../utils/constants';
 import * as AdminTypes from '../../../action-types/admin.action.types';
-import { getUserData, getUserDetailsP, saveUserData, getGroupMasterData, getCompanyMaster, getPlantMaster, getUserDataById, getUserByPlantId, getUserByPlantDepartmentId, deleteUserData, getRoleMasterData } from '../../../actions/admin.action';
+import { getUserData, getUserDetailsP, saveUserData,   getOrgRelationTypeMasterData, getOrganisationDetailsData,getOrganisationEmployeeDetailsData, getUserDataById, deleteUserData, getRoleMasterData } from '../../../actions/admin.action';
 import ListTable from '../../shared/ListTable';
 import { Button, SELECT, SelectDiv, SpanLabelForDDl } from '../../formStyle';
 import * as CommonStyle from '../../commonStyle';
 import UserAddEdit from './user.add.edit';
 import UserList from './userlist';
-import UnlockAcount from './unLockAccount';
 import ReactTable from '../../ReactTableComponent';
-import { getMasterDetailsBymasterCategoryCode } from '../../../actions/masterDetails.actions';
 
 
 
@@ -26,23 +24,22 @@ class Users extends Wrapper {
             user: null,
             isOverlayAddedd: false,
             isUserAddEditModelvisible: false,
-            isUserUnlockModelVisible: false,
             userdata: {},
             showEditPopup: false,
             type: AdminTypes.USER_INIT,
             recordsCount: 0,
-            userFilter: {
-                companyMasterId: undefined,
-                plantMasterId: undefined,
-                departmentMasterId: undefined,
-                roleMasterId: undefined
-            },
-            plants: null,
             roles: null,
-            companys: [],
-            departments: null,
+            organisations: [],
+            orgRelationTypes: [],
+            orgEmployees :[],
             selectedRoleForSelectedUser: [],
-            columns: [
+            columns: []
+        };
+        // let's load the data from the props
+    }
+
+    updateStateAfterStateUpdate = () => {
+        let columns = [
                 {
                     Header: 'Action',
                     accessor: 'id',
@@ -56,17 +53,8 @@ class Users extends Wrapper {
                             </div>
                             <div className="danger width60px" onClick={() => this.onclickDeleteUser(propss.original.id)}>
                                 Delete
-                            </div> <br />
-                            {(propss.original.isUserLocked === 1 || propss.original.isUserLocked === true) &&
-                                <div className="primary width120px" onClick={() =>
-                                    this.onClickunlockuser(propss.original)
-                                }
-                                >
-                                    Unlock Account
-                                </div>
-                            }
-
-                        </React.Fragment>
+                            </div>     
+                </React.Fragment>
                     ),
                     sortable: false,
                     filterable: false
@@ -85,73 +73,29 @@ class Users extends Wrapper {
                     filterable: false
                 },
                 {
-                    Header: 'Employee',
-                    accessor: d => `${d.firstName} ${d.lastName}`,
-                    id: 'userName',
+                    Header: 'Organisation',
+                    accessor: d => `${d.orgName}`,
+                    id: 'org Name',
                     minWidth: 200,
                     show: true
                 },
                 {
-                    Header: 'Emp Code',
-                    accessor: 'code',
-                    id: 'code',
-                    minWidth: 150,
-                    show: true,
-                },
-                {
-                    Header: 'Plant',
-                    accessor: 'plantName',
-                    id: 'plantName',
-                    minWidth: 150,
-                    show: true,
-                },
-                {
-                    Header: 'Department',
-                    accessor: 'departmentName',
-                    id: 'department',
-                    minWidth: 150,
-                    show: true,
-                },
-                {
-                    Header: 'Email',
-                    accessor: 'email',
-                    id: 'email',
-                    minWidth: 150,
-                    show: true,
-                },
-                {
-                    Header: 'Mobile',
-                    accessor: 'mobile',
-                    id: 'mobile',
-                    minWidth: 150,
-                    show: true,
-                }, {
-                    Header: 'User Locked',
-                    accessor: d => `${(d.isUserLocked === 1 || d.isUserLocked === true) ? 'Yes' : 'No'} `,// 'LeadEmail',
-                    id: 'isUserLocked',
-                    minWidth: 100,
-                    show: true
-                },
-                {
                     Header: 'User Name',
-                    accessor: 'userName',
-                    id: 'loginUserName',
-                    minWidth: 150,
-                    show: false,
+                    accessor: d => `${d.userName}`,
+                    id: 'userName',
+                    minWidth: 200,
+                    show: true
                 },
                 {
                     Header: 'Assigned Roles',
                     accessor: 'MultiRoleNames',
                     id: 'MultiRoleNames',
                     minWidth: 200,
-                    show: false,
+                    show: true,
                 }
-            ]
-        };
-        // let's load the data from the props
+        ]
+        this.setState({ columns: columns });
     }
-
-
     UNSAFE_componentWillReceiveProps(nextProps) {
 
         if (nextProps && nextProps.userRecordsCount && nextProps.userRecordsCount != this.state.recordsCount) {
@@ -162,25 +106,22 @@ class Users extends Wrapper {
         if (nextProps.users && nextProps.users !== this.state.users) {
             this.setState({ users: nextProps.users })
         }
-        if (nextProps.plants !== null && nextProps.plants !== undefined && nextProps.plants !== this.state.plants) {
+        if (nextProps && nextProps.orgRelationTypes && nextProps.orgRelationTypes !== this.state.orgRelationTypes) {
+            this.setState({ orgRelationTypes: nextProps.orgRelationTypes })
+        }
+        if (nextProps && nextProps.organisations && nextProps.organisations !== null && nextProps.organisations !== undefined && nextProps.organisations !== 'undefined' && nextProps.organisations !== this.state.organisations) {
             this.setState({
-                plants: nextProps.plants
-            });
-
+                organisations: nextProps.organisations
+            })
+        }
+        if (nextProps && nextProps.orgEmployees && nextProps.orgEmployees !== null && nextProps.orgEmployees !== undefined && nextProps.orgEmployees !== 'undefined' && nextProps.orgEmployees !== this.state.orgEmployees) {
+            this.setState({
+                orgEmployees: nextProps.orgEmployees
+            })
         }
         if (nextProps.roles && nextProps.roles !== null && nextProps.roles !== undefined && nextProps.roles !== this.state.roles) {
             this.setState({
                 roles: nextProps.roles
-            })
-        }
-        if (nextProps.companys !== null && nextProps.companys !== undefined && nextProps.companys !== this.state.companys) {
-            this.setState({
-                companys: nextProps.companys
-            })
-        }
-        if (nextProps.masterDetailsCategory !== null && nextProps.masterDetailsCategory !== undefined && nextProps.masterDetailsCategory !== this.state.departments) {
-            this.setState({
-                departments: nextProps.masterDetailsCategory
             })
         }
         const storeInState = (data, key) => {
@@ -195,22 +136,18 @@ class Users extends Wrapper {
 
 
     componentDidMount() {
-        // let's load the roles, for first time
-        let userFilter = {
-            companyMasterId: undefined,
-            plantMasterId: undefined,
-            departmentMasterId: undefined
-        }
-        this.props.getPlantMaster(0, constants.ALL_ROWS_LIST, undefined, undefined);
+        // let's load the roles, for first time  
         this.props.getRoleMasterData(0, constants.ALL_ROWS_LIST, undefined, undefined);
-        this.props.getMasterDetailsBymasterCategoryCode(0, constants.ALL_ROWS_LIST, undefined, undefined, "department");
-        this.props.getCompanyMaster(0, constants.ALL_ROWS_LIST, undefined, undefined);
-        this.props.getUserDetailsP(0, constants.ALL_ROWS_LIST, undefined, undefined, userFilter)
-        // this.props.getUserData(0, constants.ALL_ROWS_LIST, undefined, undefined);
-        // const user = this.loggedUser();
-        this.setState({ userFilter: userFilter })
+        this.props.getOrgRelationTypeMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
+        this.props.getOrganisationDetailsData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
+        this.props.getOrganisationEmployeeDetailsData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
+        this.props.getUserDetailsP(0, constants.ALL_ROWS_LIST, undefined, undefined, this.state.userFilter)
+        setTimeout(() => {
+            this.updateStateAfterStateUpdate();
+        }, 100);
     };
     onclickDeleteUser = (id) => {
+        alert(id);
         if (confirm('are you sure want to delete this user')) {
             this.props.deleteUserData(id);
             setTimeout(() => {
@@ -226,32 +163,24 @@ class Users extends Wrapper {
         existingUser[key] = SelectedValue;
         this.props.getUserDetailsP(0, constants.ALL_ROWS_LIST, undefined, undefined, existingUser)
 
-        this.setState({ userFilter: existingUser });
+        this.setState({ users: existingUser });
     };
     onClickEdit = (user) => {
         const multiUserRoleIds = user && user.MultiRoleIds;
         const convertedList = this.ConvertStringToArrayRoleReturn(multiUserRoleIds);
-
         this.setState({ user: user, selectedRoleForSelectedUser: convertedList, isOverlayAddedd: true, isUserAddEditModelvisible: true });
     }
-    onClickunlockuser = (user) => {
-        this.setState({ user: user, isOverlayAddedd: true, isUserAddEditModelvisible: false, isUserUnlockModelVisible: true });
-    }
     onClickCancel = () => {
-        this.setState({ user: undefined, selectedRoleForSelectedUser: [], isOverlayAddedd: false, isUserAddEditModelvisible: false, isUserUnlockModelVisible: false });
+        this.setState({ user: undefined, selectedRoleForSelectedUser: [], isOverlayAddedd: false, isUserAddEditModelvisible: false });
         this.onClickRefresh();
     }
     onClickRefresh = () => {
-        // this.props.getUserDetailsP(0, constants.ALL_ROWS_LIST, undefined, undefined, this.state.userFilter)
-        //this.props.getUserData(0, constants.ALL_ROWS_LIST, undefined, undefined);
-        let userFilter = {
-            companyMasterId: '',
-            plantMasterId: '',
-            departmentMasterId: '',
-            roleMasterId: ''
-        }
-        this.props.getUserDetailsP(0, constants.ALL_ROWS_LIST, undefined, undefined, undefined)
-        this.setState({ userFilter: userFilter })
+         this.props.getUserDetailsP(0, constants.ALL_ROWS_LIST, undefined, undefined, this.state.userFilter)
+         console.log("On Click Refresh : " ,"Refresh Page")
+        // this.props.getUserDetailsP(0, constants.ALL_ROWS_LIST, undefined, undefined, undefined)
+        setTimeout(() => {
+            this.updateStateAfterStateUpdate();
+        }, 100);
     }
 
     ConvertStringToArrayRoleReturn = (data) => {
@@ -263,34 +192,14 @@ class Users extends Wrapper {
         this.setState({ columns: column });
     }
     render() {
-        const { columns, users, selectedRoleForSelectedUser, userFilter, user, isOverlayAddedd, isUserAddEditModelvisible, isUserUnlockModelVisible } = this.state;
+        const { columns, users, selectedRoleForSelectedUser, userFilter, user, isOverlayAddedd, isUserAddEditModelvisible } = this.state;
         //console.log("userRecordsCount", this.props.userRecordsCount);
         let userRoleCategory = this.getLoggedUserRole();
         let LoggedUserCategory = userRoleCategory && userRoleCategory != null && userRoleCategory != '' && JSON.parse(userRoleCategory);
         let loggedUser = this.loggedUser();
         let RoleCategory = LoggedUserCategory ? LoggedUserCategory.roleCategory : undefined;
         let loggedplantMasterId = loggedUser ? loggedUser.plantMasterId : undefined;
-        let CompanyMasterID = loggedUser && loggedUser.plantMaster ? loggedUser.plantMaster.companyMasterID : undefined
-        let PlantDDL = this.state.plants && this.state.plants;
-        let CompanyDDl = this.state.companys && this.state.companys;
-        let selectedCompanyId = this.state.userFilter && this.state.userFilter.companyMasterId && this.state.userFilter.companyMasterId !== "-1" && this.state.userFilter.companyMasterId;
-        let PlantMasterDropDown = undefined;
-        const RoleMaster = this.state.roles && this.state.roles;
-        let roleDDLVal = null;
-        if (RoleCategory === "Company Admin") {
-            PlantMasterDropDown = PlantDDL && PlantDDL.filter(item => item.companyMasterID === CompanyMasterID);
-            if (RoleMaster) {
-                roleDDLVal = RoleMaster && RoleMaster.length > 0 && RoleMaster.filter(item => item.roleCategory === 'User')
-            }
-        }
-        else if (selectedCompanyId) {
-            PlantMasterDropDown = PlantDDL && PlantDDL.filter(item => item.companyMasterID === selectedCompanyId);
-            roleDDLVal = RoleMaster && RoleMaster;
-        }
-        else {
-            roleDDLVal = RoleMaster && RoleMaster;
-            PlantMasterDropDown = PlantDDL && PlantDDL;
-        }
+     
         return (<div id='userTable' className={style.table_wapper} style={{ width: '100%' }} >
             <CommonStyle.MainDiv
                 flexdirection={"column"}
@@ -316,13 +225,6 @@ class Users extends Wrapper {
                                     selectedRoleForSelectedUser={selectedRoleForSelectedUser}
                                     baseObject={user}
                                     onCancel={this.onClickCancel}
-                                />
-                            }
-                            {isUserUnlockModelVisible && isUserUnlockModelVisible === true &&
-                                <UnlockAcount
-                                    id={user && user.id}
-                                    baseObject={user}
-                                    onClose={this.onClickCancel}
                                 />
                             }
                         </CommonStyle.Wrapper_OnOverlay>
@@ -353,72 +255,7 @@ class Users extends Wrapper {
                         onClick={() => this.onClickRefresh()}
                     >
                         <i class="fas fa-refresh"></i>
-                    </Button>
-                    <CommonStyle.InputControlsDiv>
-                        <SpanLabelForDDl>Company</SpanLabelForDDl>
-                        <SELECT margin="8px"
-                            value={this.state.userFilter.companyMasterId} paddingLeft="10px" borderRadius="14px" height="44px"
-                            type="text" color="rgba(0,0,0,0.87)" borderColor="rgba(0,0,0,0.54)"
-                            style={{ backgroundColor: "transparent", border: "1px solid #ccc" }}
-                            onChange={this.onValueChanged('companyMasterId')}
-
-                        >
-                            <option key={-1} value={"-1"}> Select company</option>
-                            {CompanyDDl &&
-                                CompanyDDl.map((item, index) => {
-                                    return <option key={index} value={item.id}>{item.companyCode + " - " + item.companyName}</option>
-                                })
-                            }
-                        </SELECT>
-                    </CommonStyle.InputControlsDiv>
-                    <CommonStyle.InputControlsDiv>
-                        <SpanLabelForDDl>Plant</SpanLabelForDDl>
-                        <SELECT margin="8px" ref={this.plantMasterIdRefs}
-                            value={this.state.userFilter.plantMasterId} paddingLeft="10px" borderRadius="14px" height="44px"
-                            type="text" color="rgba(0,0,0,0.87)" borderColor="rgba(0,0,0,0.54)"
-                            style={{ backgroundColor: "transparent", border: "1px solid #ccc" }}
-                            onChange={this.onValueChanged('plantMasterId')}
-                        >
-                            <option key={-1} value={"-1"}> Select plant</option>
-                            {PlantMasterDropDown &&
-                                PlantMasterDropDown.map((item, index) => {
-                                    return <option key={index} value={item.id}>{item.plantCode + " - " + item.plantName}</option>
-                                })
-                            }
-                        </SELECT>
-                    </CommonStyle.InputControlsDiv>
-                    <CommonStyle.InputControlsDiv>
-                        <SpanLabelForDDl>Department</SpanLabelForDDl>
-                        <SELECT margin="8px"
-                            value={this.state.userFilter.departmentMasterId} paddingLeft="10px" borderRadius="14px" height="44px"
-                            type="text" color="rgba(0,0,0,0.87)" borderColor="rgba(0,0,0,0.54)"
-                            style={{ backgroundColor: "transparent", border: "1px solid #ccc" }}
-                            onChange={this.onValueChanged('departmentMasterId')}
-                        >
-                            <option key={"selectlist"} value={"-1"}>{"Select List"}</option>
-                            {this.state.departments &&
-                                this.state.departments.map((item, index) => {
-                                    return <option key={index} value={item.id}>{item.value}</option>
-                                })
-                            }
-                        </SELECT>
-                    </CommonStyle.InputControlsDiv>
-                    <CommonStyle.InputControlsDiv>
-                        <SpanLabelForDDl>Role</SpanLabelForDDl>
-                        <SELECT margin="0px"
-                            value={this.state.userFilter.roleMasterId} paddingLeft="10px" borderRadius="14px" height="44px"
-                            type="text" color="rgba(0,0,0,0.87)" borderColor="rgba(0,0,0,0.54)"
-                            style={{ backgroundColor: "transparent", border: "1px solid #ccc" }}
-                            onChange={this.onValueChanged('roleMasterId')}
-                        >
-                            <option key={"selectlist"} value={"-1"}>{"Select List"}</option>
-                            {roleDDLVal &&
-                                roleDDLVal.map((item, index) => {
-                                    return <option key={index} value={item.id}>{item.roleName}</option>
-                                })
-                            }
-                        </SELECT>
-                    </CommonStyle.InputControlsDiv>
+                    </Button>                 
                 </CommonStyle.MainDiv>
                 <div
                     style={{ width: '98%' }}
@@ -453,4 +290,4 @@ const mapStateToProps = state => {
     return { user, users, plants, companys, userActiontype, userRecordsCount, roles, masterDetail, masterDetails, masterDetailCategory, masterDetailsCategory };
 };
 
-export default connect(mapStateToProps, { getUserData, getMasterDetailsBymasterCategoryCode, getUserDetailsP, getGroupMasterData, getCompanyMaster, getPlantMaster, saveUserData, getUserDataById, getUserByPlantId, getUserByPlantDepartmentId, deleteUserData, getRoleMasterData })(Users);
+export default connect(mapStateToProps, { getUserData, getUserDetailsP,   getOrgRelationTypeMasterData, getOrganisationDetailsData,getOrganisationEmployeeDetailsData, saveUserData, getUserDataById,  deleteUserData, getRoleMasterData })(Users);

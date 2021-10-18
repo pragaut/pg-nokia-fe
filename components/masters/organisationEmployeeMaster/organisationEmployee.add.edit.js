@@ -79,8 +79,8 @@ class OrganisationEmployeeDetailsAddEdit extends Wrapper {
         const existingState = Object.assign({}, this.state.orgEmployee);
         let SelectedValue = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
         existingState[key] = SelectedValue;
-        this.props.getOrganisationDetailsData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined, existingState);
 
+        this.props.getOrganisationDetailsData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined, existingState);    
         this.setState({ orgEmployee: existingState });
     };
 
@@ -123,8 +123,7 @@ class OrganisationEmployeeDetailsAddEdit extends Wrapper {
             this.setState({ ...state });
         }
     };
-    render() {
-console.log("this.state.orgEmployee",this.state.orgEmployee);
+    render() { 
         return (
             <div className={style.modal_dialog} style={{ width: '95%', maxHeight: '120vh', maxWidth: '80vw' }}>
                 {/* <ModalHeader
