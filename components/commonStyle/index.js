@@ -47,7 +47,8 @@ export const Wrapper_OnOverlay = styled.div`
     transition: all .2s linear;
     left: 50%;
     bottom: 0px;
-    top: 50%;
+    // top: 50%;
+    top:${props => props.top || '50%'} ;
     transform: translate(-50%, -42%);
     /* overflow: auto; */
     /* display: flex;

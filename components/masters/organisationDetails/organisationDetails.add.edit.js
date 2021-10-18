@@ -29,15 +29,35 @@ class OrganisationDetailsAddEdit extends Wrapper {
 
     configs = [{
         name: 'groupId',
+        displayname: 'Group',
         type: 'string',
         required: true
     }, {
-        name: 'orgRelationTypeId',
+        name : 'orgRelationTypeId',
+        displayname: 'Org Relation Type',
         type: 'string',
         required: true
     }, {
         name: 'orgName',
         displayname: 'Organisation Name',
+        type: 'string',
+        required: true
+    },
+    {
+        name: 'orgCode',
+        displayname: 'Organisation Code',
+        type: 'string',
+        required: true
+    },
+    {
+        name: 'email',
+        displayname: 'Email',
+        type: 'string',
+        required: true
+    },
+    {
+        name: 'phone',
+        displayname: 'phone',
         type: 'string',
         required: true
     }
@@ -69,8 +89,10 @@ class OrganisationDetailsAddEdit extends Wrapper {
         const existingState = Object.assign({}, this.state.organisation);
         let SelectedValue = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
         existingState[key] = SelectedValue;
+        existingState["stateId"] = null;
+        existingState["cityId"] = null;
         this.props.getStateMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined, SelectedValue);
-
+        this.props.getCityMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined, 'No-Id');
         this.setState({ organisation: existingState });
     };
     onValueChangedState = key => event => {
@@ -80,6 +102,14 @@ class OrganisationDetailsAddEdit extends Wrapper {
         this.props.getCityMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined, SelectedValue);
 
         this.setState({ organisation: existingCity });
+    };
+    onValueChangedGroup = key => event => {
+        const existingState = Object.assign({}, this.state.organisation);
+        let SelectedValue = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
+        existingState[key] = SelectedValue;
+        this.props.getOrgRelationTypeMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined,SelectedValue);
+
+        this.setState({ organisation: existingState });
     };
 
     componentDidMount() {
@@ -155,20 +185,16 @@ console.log("this.state.organisation",this.state.organisation);
                 <div>
                     {/** idhar saare edit fields aayenge */}
                     <div className={style.field_flex_wrapper}>
-                        <div className={style.field_flex_new} style={{ width: '45%' }}>
-                        <Gap h="15px" />
-                            <div style={{ padding: '10px 10px 20px 10px', width: '100%', display: 'flex' }}>
-                                <input type="checkbox" checked={this.state.organisation.isParent} onChange={this.onValueChanged('isParent')} />
-                                <SpanLabelForDDl>Is Parent: (optional)</SpanLabelForDDl>
-                            </div>
-                            <div style={{ padding: '10px', width: '100%' }}>
+                        <div className={style.field_flex_new} style={{ width: '45%' }}>                  
+                           
+                            <div style={{ padding: '7px', width: '100%' }}>
                                 <SpanLabelForDDl>Group</SpanLabelForDDl>
                                 <Gap h="5px" />
                                 <SELECT
                                     value={this.state.organisation.groupId} paddingLeft="10px" borderRadius="14px" height="51px"
                                     type="text" color="rgba(0,0,0,0.87)" borderColor="rgba(0,0,0,0.54)"
                                     style={{ backgroundColor: "transparent", border: "1px solid #ccc" }}
-                                    onChange={this.onValueChanged('groupId')}
+                                    onChange={this.onValueChangedGroup('groupId')}
                                 >
                                     <option key="a0" value="" >--- Select Group ---</option>
 
@@ -215,8 +241,8 @@ console.log("this.state.organisation",this.state.organisation);
                                     }
                                 </SELECT>
                             </div>
-                            <Input label="Org Name:" focusbordercolor="#f90707" type='text' defaultValue={this.state.organisation.orgName} onChange={this.onValueChanged('orgName')} />
-                            <Input label="Org Code: " focusbordercolor="#f90707" type='text' defaultValue={this.state.organisation.orgCode} onChange={this.onValueChanged('orgCode')} />
+                            <Input label="Organisation :" focusbordercolor="#f90707" type='text' defaultValue={this.state.organisation.orgName} onChange={this.onValueChanged('orgName')} />
+                            <Input label="Code: " focusbordercolor="#f90707" type='text' defaultValue={this.state.organisation.orgCode} onChange={this.onValueChanged('orgCode')} />
                             <Input label="Email: " focusbordercolor="#f90707" type='email' defaultValue={this.state.organisation.email} onChange={this.onValueChanged('email')} />
                             <Input label="Phone: " focusbordercolor="#f90707" type='number' defaultValue={this.state.organisation.phone} onChange={this.onValueChanged('phone')} />
 
@@ -226,6 +252,10 @@ console.log("this.state.organisation",this.state.organisation);
                             <Input label="Registered Address: (optional)" focusbordercolor="#f90707" type='text' defaultValue={this.state.organisation.regOffAddress} onChange={this.onValueChanged('regOffAddress')} />
                             <Input label="Corporate Address: (optional)" focusbordercolor="#f90707" type='text' defaultValue={this.state.organisation.corpOffAddress} onChange={this.onValueChanged('corpOffAddress')} />
                             <Input label="GST Number: (optional)" type='text' defaultValue={this.state.organisation.orgGST} onChange={this.onValueChanged('orgGST')} />
+                            <div style={{ padding: '10px 10px 20px 10px', width: '100%', display: 'flex' }}>
+                                <input type="checkbox" checked={this.state.organisation.isParent} onChange={this.onValueChanged('isParent')} />
+                                <SpanLabelForDDl>Is Parent: (optional)</SpanLabelForDDl>
+                            </div>
                             <div style={{ padding: '10px', width: '100%' }}>
                                 <SpanLabelForDDl>Country</SpanLabelForDDl>
                                 <Gap h="5px" />
@@ -244,6 +274,7 @@ console.log("this.state.organisation",this.state.organisation);
                                     }
                                 </SELECT>
                             </div>
+                           
                             <div style={{ padding: '10px', width: '100%' }}>
                                 <SpanLabelForDDl>State</SpanLabelForDDl>
                                 <Gap h="5px" />
@@ -292,9 +323,10 @@ console.log("this.state.organisation",this.state.organisation);
                         className={style.primary_btn} onClick={() => {
                             const validationText = validateInputs(this.state.organisation, this.configs);
                             if (validationText) {
-                                return alert(validationText);
-                            }
+                                return alert(validationText);                            }
                             const existinorganisation = Object.assign({}, this.state.organisation);
+                            if(this.state.organisation && (!this.state.organisation.isParent || this.state.organisation.isParent ==''))
+                            existinorganisation["isParent"] = false;
                             this.props.saveOrganisationDetails(existinorganisation, this.props.index);
                         }}>save</button>
                     <button

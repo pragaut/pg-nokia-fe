@@ -111,7 +111,7 @@ class RoleAddEdit extends Wrapper {
     render() {
         console.log("this.state.role", this.state.role);
         return (
-            <div className={style.modal_dialog} style={{ width: '95%', maxHeight: '120vh', maxWidth: '80vw' }}>
+            <div className={style.modal_dialog} style={{ width: '90%', maxHeight: '120vh', maxWidth: '80vw' }}>
                 {/* <ModalHeader
                     heading="Role Master"
                 /> */}
@@ -119,7 +119,7 @@ class RoleAddEdit extends Wrapper {
                 <div>
                     {/** idhar saare edit fields aayenge */}
                     <div className={style.field_flex_wrapper}>
-                        <div className={style.field_flex_new} style={{ width: '45%' }}>
+                        <div className={style.field_flex_new} style={{ width: '100%' }}>
                             <div style={{ padding: '10px', width: '100%' }}>
                                 <SpanLabelForDDl>Module Name</SpanLabelForDDl>
                                 <Gap h="5px" />

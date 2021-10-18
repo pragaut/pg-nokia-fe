@@ -233,7 +233,7 @@ class NotifiicationAddEdit extends Wrapper {
     }
     render() {
          return (
-            <div className={style.modal_dialog} style={{ width: '95%', maxHeight: '120vh', maxWidth: '80vw' }}>
+            <div className={style.modal_dialog} style={{ width: '90%', maxHeight: '120vh', maxWidth: '80vw' }}>
                 {/* <ModalHeader
                     heading="Group Master"
                 /> */}
@@ -241,7 +241,7 @@ class NotifiicationAddEdit extends Wrapper {
                 <div>
                     {/** idhar saare edit fields aayenge */}
                     <div className={style.field_flex_wrapper}>
-                        <div className={style.field_flex_new} style={{ width: '45%' }}>
+                        <div className={style.field_flex_new} style={{ width: '100%' }}>
                             <div style={{ padding: '10px 0px', width: '100%' }}>
                                 <SPAN>Group</SPAN>  {/* <Input label="City:" type='text' defaultValue={this.state.groupCompany.cityMasterId} onChange={this.onValueChanged('cityMasterId')} /> */}
                                 <Gap h="5px" />

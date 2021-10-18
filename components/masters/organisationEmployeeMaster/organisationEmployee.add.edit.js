@@ -63,7 +63,8 @@ class OrganisationEmployeeDetailsAddEdit extends Wrapper {
             orgEmployee: props.baseObject ? props.baseObject : {},
             orgRelationTypes: [],
             organisations: [],
-            genders: []
+            genders: [],
+            isOtherNationalityTBVisible:null
         };
     };
 
@@ -71,7 +72,24 @@ class OrganisationEmployeeDetailsAddEdit extends Wrapper {
     onValueChanged = key => event => {
         const existingState = Object.assign({}, this.state.orgEmployee);
         existingState[key] = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
-
+       this.setState({ orgEmployee: existingState });
+    };
+    onValueChangedNationality = key => event => {
+        const existingState = Object.assign({}, this.state.orgEmployee);
+        let SelectedValue = event.target.value && event.target.value;
+        
+        existingState[key] = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;       
+        if(SelectedValue && SelectedValue==="false")
+        {
+            this.setState({ isOtherNationalityTBVisible: true });
+            existingState["isIndian"] = false; 
+        }
+        else
+        {
+            this.setState({ isOtherNationalityTBVisible: false });
+            existingState["isIndian"] = true; 
+            existingState["otherNationality"] = null;
+        }
         this.setState({ orgEmployee: existingState });
     };
 
@@ -89,6 +107,8 @@ class OrganisationEmployeeDetailsAddEdit extends Wrapper {
         this.props.getOrganisationDetailsData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
         this.props.getGenderMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
         this.props.getOrganisationEmployeeDetailsData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);      
+      
+       
         // let's pull the relational (child) tables
     };
 
@@ -123,7 +143,16 @@ class OrganisationEmployeeDetailsAddEdit extends Wrapper {
             this.setState({ ...state });
         }
     };
-    render() { 
+    render() {
+        let isIndian = "";
+        let isOther = "";
+        if(this.state.orgEmployee && (this.state.orgEmployee.isIndian===false || this.state.orgEmployee.isIndian===0))
+        {
+             isOther = true;
+        }
+        else{
+            isIndian = true;
+        }
         return (
             <div className={style.modal_dialog} style={{ width: '95%', maxHeight: '120vh', maxWidth: '80vw' }}>
                 {/* <ModalHeader
@@ -177,8 +206,8 @@ class OrganisationEmployeeDetailsAddEdit extends Wrapper {
                         </div>
                         <div className={style.field_flex_new} style={{ width: '45%' }}>
                             <Input label="Date of Birth:" focusbordercolor="#f90707" type='date' defaultValue={this.state.orgEmployee.dateOfBirth} onChange={this.onValueChanged('dateOfBirth')} />
-                            <Input label="Father Name" focusbordercolor="#f90707" type='text' defaultValue={this.state.orgEmployee.fatherName} onChange={this.onValueChanged('fatherName')} />
-                            <Input label="Mother Name" type='text' defaultValue={this.state.orgEmployee.motherName} onChange={this.onValueChanged('motherName')} />
+                            <Input label="Father Name: (optional)" focusbordercolor="#f90707" type='text' defaultValue={this.state.orgEmployee.fatherName} onChange={this.onValueChanged('fatherName')} />
+                            <Input label="Mother Name: (optional)" type='text' defaultValue={this.state.orgEmployee.motherName} onChange={this.onValueChanged('motherName')} />
                             <div style={{ padding: '10px', width: '100%' }}>
                                 <SpanLabelForDDl>Gender</SpanLabelForDDl>
                                 <Gap h="5px" />
@@ -199,9 +228,17 @@ class OrganisationEmployeeDetailsAddEdit extends Wrapper {
                             </div>                           
                             <Gap h="15px" />
                             <div style={{ padding: '10px 10px 20px 10px', width: '100%', display: 'flex' }}>
-                                <input type="checkbox" checked={this.state.orgEmployee.isIndian} onChange={this.onValueChanged('isIndian')} />
-                                <SpanLabelForDDl>Is Indian:</SpanLabelForDDl>
+                                {/* <input type="checkbox" checked={this.state.orgEmployee.isIndian} onChange={this.onValueChanged('isIndian')} />
+                                <SpanLabelForDDl>Is Indian:</SpanLabelForDDl> */}
+                                <input type="radio" value="true" onChange={this.onValueChangedNationality('isIndian')} name="gender" checked={isIndian}/> Is Indian
+                                <input type="radio" value="false" onChange={this.onValueChangedNationality('isIndian')} name="gender" checked={isOther}/> Other
                             </div>
+                            {this.state.orgEmployee && (this.state.orgEmployee.isIndian===false || this.state.orgEmployee.isIndian===0) && 
+                            <>
+                             <Input label="Other Nationality" focusbordercolor="#f90707" type='text' defaultValue={this.state.orgEmployee.otherNationality} onChange={this.onValueChanged('otherNationality')} />
+                            </>                            
+                            }
+                           
                         </div>
                     </div>
                 </div>

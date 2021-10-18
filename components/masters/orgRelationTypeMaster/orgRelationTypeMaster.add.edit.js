@@ -82,13 +82,13 @@ class OrgRelationTypeAddEdit extends Wrapper {
         console.log(" this.props.groups", this.props.groups)
         // console.log("roleCategory");
         return (
-            <div className={style.modal_dialog} style={{ width: '95%', maxHeight: '120vh', maxWidth: '80vw' }}>
+            <div className={style.modal_dialog} style={{ width: '90%', maxHeight: '120vh', maxWidth: '80vw' }}>
 
                 {/* container for the edit form here */}
                 <div>
                     {/** idhar saare edit fields aayenge */}
                     <div className={style.field_flex_wrapper}>
-                        <div className={style.field_flex_new} style={{ width: '45%', color: "rgba(0,0,0,0.54)", fontSize: "13px" }}>
+                        <div className={style.field_flex_new} style={{ width: '100%', color: "rgba(0,0,0,0.54)", fontSize: "13px" }}>
                             <SpanLabelForDDl style={{ marginLeft: "8px" }}>Group</SpanLabelForDDl>
                             <SELECT margin="8px"
                                 value={this.state.orgRelationType.groupId} paddingLeft="10px" borderRadius="14px" height="51px"
@@ -104,7 +104,7 @@ class OrgRelationTypeAddEdit extends Wrapper {
                                     })
                                 }
                             </SELECT>
-                            <Input label="Org Relation Type" type='text' defaultValue={this.state.orgRelationType.orgRelationType} onChange={this.onValueChanged('orgRelationType')} />
+                            <Input label="Organisation Relation Type" type='text' defaultValue={this.state.orgRelationType.orgRelationType} onChange={this.onValueChanged('orgRelationType')} />
                         </div>
                     </div>
                 </div>

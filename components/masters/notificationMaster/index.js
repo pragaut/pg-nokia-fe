@@ -147,20 +147,20 @@ class NotificationIndex extends Wrapper {
     render() {
         const { showEditPopup, columns, notifications, notification } = this.state;
         return (<div id='notificationTable' className={style.table_wapper} >
-            {showEditPopup === true &&
+             {showEditPopup === true &&
                 <>
                     <CommonStyle.Overlay
-                    // onClick={() => this.onClickCancel()}
+                    //  onClick={() => this.onClickCancel()}
                     />
                     <CommonStyle.Wrapper_OnOverlay
-                        width={"80%"}
+                        width={"50%"}
                         height={"fit-content"}
                         visible={showEditPopup}
                     >
                         <CommonStyle.CloseButtonForModel
                             onClick={() => this.onClickCancel()}
                         >X</CommonStyle.CloseButtonForModel>
-                        <NotificationAddEdit
+                         <NotificationAddEdit
                             baseObject={notification}
                             onCancel={this.onClickCancel}
                             onSave={this.props.saveNotificationMasterData}

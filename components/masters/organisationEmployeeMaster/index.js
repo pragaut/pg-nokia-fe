@@ -46,6 +46,11 @@ class Index extends Wrapper {
                     <React.Fragment>
                         <button className="warning" style={{ marginRight: '10px' }} value={propss.original.id} onClick={() => this.onClickAdd(propss.original)}>
                             Edit
+                        </button><br />
+                        <button className="primary" style={{ marginRight: '10px' }} value={propss.original.id} onClick={() =>
+                            this.onDeleteRecord(propss.original.id)
+                        }>
+                            Delete
                         </button>
                     </React.Fragment>
                 ),
@@ -70,7 +75,7 @@ class Index extends Wrapper {
                 accessor: d => `${d.orgName}`,
                 id: 'orgName',
                 show: true,
-                minWidth: 250,
+                minWidth: 150,
             },
             {
                 Header: 'Employee Name',
@@ -149,6 +154,16 @@ class Index extends Wrapper {
             this.updateStateAfterStateUpdate();
         }, 100);
     };
+
+    onDeleteRecord = (ids) => {
+        if (confirm('Would you like to delete the record?')) {
+            this.props.deleteOrganisationEmployeeDetailsData(ids);
+            setTimeout(() => {
+                this.props.getOrganisationEmployeeDetailsData(0, constants.ALL_ROWS_LIST, undefined, undefined);
+            }, 500);
+        }
+
+    }
 
     onClickAdd = (orgEmployee) => {
         this.setState({ orgEmployee: orgEmployee, showEditPopup: true })

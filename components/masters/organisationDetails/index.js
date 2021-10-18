@@ -73,11 +73,18 @@ class Index extends Wrapper {
                 filterable: false
             },
             {
+                Header: 'Group Name',
+                accessor: d => `${d.groupName}`,
+                id: 'groupName',
+                show: true,
+                minWidth: 150,
+            },
+            {
                 Header: 'Organisation Name',
                 accessor: d => `${d.orgName}`,
                 id: 'orgName',
                 show: true,
-                minWidth: 250,
+                minWidth: 150,
             },
             {
                 Header: 'Organisation Code',
@@ -205,6 +212,7 @@ class Index extends Wrapper {
                       
                         <CommonStyle.Wrapper_OnOverlay
                             width={"80%"}
+                            top={"42%"}
                             height={"fit-content"}
                             visible={showEditPopup}
                         >

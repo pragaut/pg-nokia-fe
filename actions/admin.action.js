@@ -188,7 +188,7 @@ export const getOrgRelationTypeMasterDataById = (id) => async dispatch => {
     }
 
 };
-export const getOrgRelationTypeMasterData = (pageIndex, rowsToReturn, order, where) => async dispatch => {
+export const getOrgRelationTypeMasterData = (pageIndex, rowsToReturn, order, where, groupId) => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
         let url = config.AUTH_URL + `tmc/admin/orgRelationTypeMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
@@ -199,6 +199,10 @@ export const getOrgRelationTypeMasterData = (pageIndex, rowsToReturn, order, whe
 
         if (order && order.length > 0) {
             url = url + `&where=${JSON.stringify(where)}`;
+        }
+        if(groupId && groupId)
+        {
+            url = url + `&groupId=${groupId}`;
         }
         const data = await service.get(url, true);
         console.log("Org Relation Type Master : ", data)

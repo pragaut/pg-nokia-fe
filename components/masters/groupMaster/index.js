@@ -78,7 +78,7 @@ class GroupIndex extends Wrapper {
             },
             {
                 Header: 'Logo Name',
-                accessor: 'logoName',
+                accessor: 'logoUrl',
                 id: 'auditType',
                 minWidth: 100,
                 show: true

@@ -218,16 +218,6 @@ export class Index extends Wrapper {
       nokiaMasterLink: [
         {
           pathname: "/admin",
-          tab: "criticality-master",
-          id: undefined,
-          MasterName: 'Criticality Master',
-          ParentMasterName: undefined,
-          parentMasterCategoryId: '',
-          url: "/admin/criticality-master",
-          isVisible: true
-        },
-        {
-          pathname: "/admin",
           tab: "tower-master",
           id: undefined,
           MasterName: 'Tower Master',

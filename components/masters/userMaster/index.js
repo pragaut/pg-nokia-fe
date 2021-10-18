@@ -231,31 +231,21 @@ class Users extends Wrapper {
                     </>
                 }
 
-                <CommonStyle.MainDiv
+<CommonStyle.MainDiv
+                    width={"100%"}
                     flexdirection={"row"}
                     justifycontent={"flex-start"}
-
                 >
-                    <Button
-                        width={"150px"}
-                        height={"40px"}
-                        margin={"0px 10px 0px 0px"}
-                        bgColor={"teal"}
-                        borderRadius={"5px"}
-                        onClick={() => this.onClickEdit(undefined)}
+                    <CommonStyle.Button_Header
+                        onClick={() => this.onClickEdit()}
                     >
-                        Add New User
-                    </Button>
-                    <Button
-                        width={"50px"}
-                        height={"40px"}
-                        margin={"0px 10px 0px 0px"}
-                        bgColor={"teal"}
-                        borderRadius={"5px"}
-                        onClick={() => this.onClickRefresh()}
+                        <i className="fas fa-plus"></i>
+                    </CommonStyle.Button_Header>
+                    <CommonStyle.Button_Header
+                       onClick={() => this.onClickRefresh()}
                     >
-                        <i class="fas fa-refresh"></i>
-                    </Button>                 
+                        <i className="fas fa-sync-alt"></i>
+                    </CommonStyle.Button_Header>
                 </CommonStyle.MainDiv>
                 <div
                     style={{ width: '98%' }}
