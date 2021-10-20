@@ -91,6 +91,8 @@ class OrganisationDetailsAddEdit extends Wrapper {
         existingState[key] = SelectedValue;
         existingState["stateId"] = null;
         existingState["cityId"] = null;
+        if(!SelectedValue || SelectedValue !=='')
+        SelectedValue = 'No-Id';
         this.props.getStateMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined, SelectedValue);
         this.props.getCityMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined, 'No-Id');
         this.setState({ organisation: existingState });
