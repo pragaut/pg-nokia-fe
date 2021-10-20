@@ -50,8 +50,8 @@ class Users extends Wrapper {
                         <React.Fragment>
                             <div className="warning width60px" style={{ marginRight: '10px' }} onClick={() => this.onClickEdit(propss.original)}>
                                 Edit
-                            </div>
-                            <div className="danger width60px" onClick={() => this.onclickDeleteUser(propss.original.id)}>
+                            </div><br></br>
+                            <div className="primary width60px" style={{ marginRight: '10px' }} onClick={() => this.onclickDeleteUser(propss.original.id)}>
                                 Delete
                             </div>     
                 </React.Fragment>

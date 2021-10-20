@@ -5,7 +5,7 @@ import style from '../../../theme/app.scss';
 import Wrapper from '../../shared/Wrapper';
 import { constants } from '../../../utils/constants';
 import * as AdminTypes from '../../../action-types/admin.action.types';
-import { getTowerMasterData, saveTowerMasterData, getTowerMasterDataById, deleteTowerMasterData } from '../../../actions/admin.action';
+import { getTowerMasterData, saveTowerMasterData, getTowerMasterDataById, deleteTowerMasterData, getCountryMasterData, getStateMasterData, getCityMasterData } from '../../../actions/admin.action';
 import ListTable from '../../shared/ListTable';
 import TowerAddEdit from './tower.add.edit';
 import * as CommonStyle from '../../commonStyle';
@@ -19,6 +19,9 @@ class TowerIndex extends Wrapper {
         this.state = {
             tower: {},
             towers: [],
+            citys: [],
+            states: [],
+            countrys: [],
             showEditPopup: false,
             type: AdminTypes.TOWERMASTER_INIT,
             columns: []
@@ -63,7 +66,7 @@ class TowerIndex extends Wrapper {
                 filterable: false
             },
             {
-                Header: 'Org Details',
+                Header: 'Organisation',
                 accessor: 'orgName.orgName',
                 id: 'orgName.orgName',
                 minWidth: 100,
@@ -113,6 +116,22 @@ class TowerIndex extends Wrapper {
         if (nextProps.towers && nextProps.towers !== null && nextProps.towers != this.state.towers) {
             this.setState({ towers: nextProps.towers })
         }
+        if (nextProps && nextProps.citys && nextProps.citys !== null && nextProps.citys !== undefined && nextProps.citys !== 'undefined' && nextProps.citys !== this.state.citys) {
+            this.setState({
+                citys: nextProps.citys
+            })
+        }
+        if (nextProps && nextProps.states && nextProps.states !== null && nextProps.states !== undefined && nextProps.states !== 'undefined' && nextProps.states !== this.state.states) {
+            this.setState({
+                states: nextProps.states
+            })
+        }
+        if (nextProps && nextProps.countrys && nextProps.countrys !== null && nextProps.countrys !== undefined && nextProps.countrys !== 'undefined' && nextProps.countrys !== this.state.countrys) {
+            this.setState({
+                countrys: nextProps.countrys
+            })
+        }
+
 
         const storeInState = (data, key) => {
             // time to store
@@ -222,9 +241,9 @@ class TowerIndex extends Wrapper {
 
 
 const mapStateToProps = state => {
-    const { tower, towers, towerRecordsCount, towerActiontype } = state.adminReducer;
+    const { tower, towers, towerRecordsCount, towerActiontype, citys, states, countrys } = state.adminReducer;
 
-    return { tower, towers, towerRecordsCount, towerActiontype };
+    return { tower, towers, towerRecordsCount, towerActiontype, citys, states, countrys };
 };
 
-export default connect(mapStateToProps, { getTowerMasterData, saveTowerMasterData, getTowerMasterDataById, deleteTowerMasterData })(TowerIndex);
+export default connect(mapStateToProps, { getTowerMasterData, saveTowerMasterData, getTowerMasterDataById, deleteTowerMasterData, getCountryMasterData, getStateMasterData, getCityMasterData })(TowerIndex);

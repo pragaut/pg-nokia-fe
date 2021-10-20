@@ -63,7 +63,7 @@ class ModuleIndex extends Wrapper {
                 filterable: false
             },
             {
-                Header: 'Org Details',
+                Header: 'Organisation',
                 accessor: 'orgName.orgName',
                 id: 'orgName.orgName',
                 minWidth: 100,

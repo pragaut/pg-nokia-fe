@@ -13,6 +13,7 @@ import config from '../../../config';
 //import Select from 'react-select'
 import * as sessionHelper from '../../../utils/session.helper';
 import * as helper from '../../../helper';
+import Gap from '../../Gap'
 class AlarmTypeAddEdit extends Wrapper {
 
     configs = [{
@@ -27,6 +28,7 @@ class AlarmTypeAddEdit extends Wrapper {
         this.onFileChange = this.onFileChange.bind(this);
         this.state = {
             alarm: props.baseObject ? props.baseObject : {},
+            isRemarksRequiredTBVisible:null,
             loadershow: 'false',
         };
     };
@@ -37,6 +39,16 @@ class AlarmTypeAddEdit extends Wrapper {
 
         this.setState({ alarm: existingAlarm });
     };
+
+    onValueRemarksRequired = key => event => {
+        const existingState = Object.assign({}, this.state.alarm);
+        //let SelectedValue = event.target.value && event.target.value;
+        
+        existingState[key] = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;       
+       
+        this.setState({ alarm: existingState });
+    };
+
     onTextChange = key => event => {
         const existingAlarm = Object.assign({}, this.state.alarm);
         existingAlarm[key] = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
@@ -78,7 +90,16 @@ class AlarmTypeAddEdit extends Wrapper {
 
     
     render() {
-         console.log("this.state.alarm",this.state.alarm);
+        let isNo = "";
+        let isYes = "";
+        if(this.state.alarm && (this.state.alarm.isNo==='false '|| this.state.alarm.isNo===0))
+        {
+            isYes = true;
+        }
+        else{
+            isNo = true;
+        }
+         //console.log("this.state.alarm",this.state.alarm);
         return (
             <div className={style.modal_dialog} style={{ width: '95%', maxHeight: '120vh', maxWidth: '80vw' }}>
                 {/* <ModalHeader
@@ -103,7 +124,18 @@ class AlarmTypeAddEdit extends Wrapper {
                         <div className={style.field_flex_new} style={{ width: '45%', color: "rgba(0,0,0,0.54)", fontSize: "13px" }}>
                             <Input label="Font Color:" type='color' defaultValue={this.state.alarm.colorCode} onChange={this.onValueChanged('colorCode')} />
                             <Input label="Background Color:" type='color' defaultValue={this.state.alarm.bgColorCode} onChange={this.onValueChanged('bgColorCode')} />
-                            <Input label="Is Remarks Required:" type='number' defaultValue={this.state.alarm.isRemarksRequired} onChange={this.onValueChanged('isRemarksRequired')} />
+                            <Gap h="15px" />
+                            <div style={{ padding: '10px 10px 20px 10px', width: '100%', display: 'flex' }}>
+                            <SpanLabelForDDl>Is Remarks Required</SpanLabelForDDl>
+                            
+                                <input type="checkbox" value="true" checked={this.state.alarm.isRemarksRequired} onChange={this.onValueRemarksRequired('isRemarksRequired')}  /> 
+                                {/* <input type="radio" value="false" onChange={this.onValueRemarksRequired('isRemarksRequired')} name="gender" checked={isYes}/> Yes */}
+                            </div>
+                            {/* {this.state.alarm && (this.state.alarm.isNo===false || this.state.alarm.isNo===0) && 
+                            <>
+                             <Input label="Remarks" focusbordercolor="#f90707" type='text' defaultValue={this.state.alarm.isRemarksRequired} onChange={this.onValueChanged('isRemarksRequired')} />
+                            </>                            
+                            } */}
                                              
                         </div>
                     </div>
