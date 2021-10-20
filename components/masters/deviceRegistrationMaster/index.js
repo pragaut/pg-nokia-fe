@@ -10,6 +10,7 @@ import ListTable from '../../shared/ListTable';
 import DeviceRegistrationAddEdit from './deviceRegistration.add.edit';
 import * as CommonStyle from '../../commonStyle';
 import DeviceRegistrationMasterDetails from '../../ReactTableComponent';
+import moment from 'moment';
 
 
 class DeviceRegistrationIndex extends Wrapper {
@@ -85,7 +86,7 @@ class DeviceRegistrationIndex extends Wrapper {
             },
             {
                 Header: 'Registration Date',
-                accessor: 'registrationDate',
+                accessor: d => `${d.registrationDate && d.registrationDate !== null ?  moment(d.registrationDate).format("DD-MM-YYYY") : ''} `,//  'registrationDate',
                 id: 'registrationDate',
                 minWidth: 100,
                 show: true,

@@ -5,7 +5,7 @@ import style from '../../../theme/app.scss';
 import Wrapper from '../../shared/Wrapper';
 import { constants } from '../../../utils/constants';
 import * as AdminTypes from '../../../action-types/admin.action.types';
-import { getTowerMasterData, saveTowerMasterData, getTowerMasterDataById, deleteTowerMasterData, getCountryMasterData, getStateMasterData,getCityMasterData} from '../../../actions/admin.action';
+import { getTowerMasterData, saveTowerMasterData, getTowerMasterDataById, deleteTowerMasterData, getCountryMasterData, getStateMasterData, getCityMasterData } from '../../../actions/admin.action';
 import ListTable from '../../shared/ListTable';
 import TowerAddEdit from './tower.add.edit';
 import * as CommonStyle from '../../commonStyle';
@@ -66,7 +66,7 @@ class TowerIndex extends Wrapper {
                 filterable: false
             },
             {
-                Header: 'Org Details',
+                Header: 'Organisation',
                 accessor: 'orgName.orgName',
                 id: 'orgName.orgName',
                 minWidth: 100,
@@ -241,9 +241,9 @@ class TowerIndex extends Wrapper {
 
 
 const mapStateToProps = state => {
-    const { tower, towers, towerRecordsCount, towerActiontype,citys, states, countrys } = state.adminReducer;
+    const { tower, towers, towerRecordsCount, towerActiontype, citys, states, countrys } = state.adminReducer;
 
     return { tower, towers, towerRecordsCount, towerActiontype, citys, states, countrys };
 };
 
-export default connect(mapStateToProps, { getTowerMasterData, saveTowerMasterData, getTowerMasterDataById, deleteTowerMasterData,getCountryMasterData, getStateMasterData,getCityMasterData })(TowerIndex);
+export default connect(mapStateToProps, { getTowerMasterData, saveTowerMasterData, getTowerMasterDataById, deleteTowerMasterData, getCountryMasterData, getStateMasterData, getCityMasterData })(TowerIndex);

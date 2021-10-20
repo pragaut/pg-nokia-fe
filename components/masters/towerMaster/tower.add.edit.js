@@ -4,7 +4,7 @@ import { validateInputs } from '../../../utils/editFormHelper';
 import { save, deleteItems, shouldStoreDataInStateByKey } from '../../../utils/editFormHelper';
 import { connect } from 'react-redux';
 import { constants } from '../../../utils/constants';
-import { getTowerMasterData, getOrganisationDetailsData, getCityMasterData, getCountryMasterData, getStateMasterData } from '../../../actions/admin.action';
+import { getTowerMasterData, saveTowerMasterData, deleteTowerMasterData, getTowerMasterDataById, getOrganisationDetailsData, getCityMasterData, getCountryMasterData, getStateMasterData } from '../../../actions/admin.action';
 import style from '../../../theme/app.scss';
 import ModalHeader from '../../shared/ModalHeader';
 import Input from '../../shared/InputBox';
@@ -45,6 +45,7 @@ class TowerAddEdit extends Wrapper {
             citys: [],
             states: [],
             countrys: [],
+            organisations: [],
             loadershow: 'false',
         };
     };
@@ -59,8 +60,10 @@ class TowerAddEdit extends Wrapper {
         const existingState = Object.assign({}, this.state.tower);
         let SelectedValue = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
         existingState[key] = SelectedValue;
+        existingState["stateId"] = null;
+        existingState["cityId"] = null;
         this.props.getStateMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined, SelectedValue);
-
+        this.props.getCityMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined, 'No-Id');
         this.setState({ tower: existingState });
     };
     onValueChangedState = key => event => {
@@ -86,17 +89,6 @@ class TowerAddEdit extends Wrapper {
     };
 
     UNSAFE_componentWillReceiveProps(nextProps) {
-        const storeInState = (data, key) => {
-            // time to store
-            if (!data) return;
-            const state = Object.assign({}, this.state);
-            state[key] = data;
-
-            this.setState({ ...state });
-        }
-    };
-
-    componentWillReceiveProps(nextProps) {
         if (nextProps.organisations !== null && nextProps.organisations !== undefined && nextProps.organisations !== this.state.organisations) {
             this.setState({
                 organisations: nextProps.organisations
@@ -117,7 +109,15 @@ class TowerAddEdit extends Wrapper {
                 countrys: nextProps.countrys
             })
         }
-    }
+        const storeInState = (data, key) => {
+            // time to store
+            if (!data) return;
+            const state = Object.assign({}, this.state);
+            state[key] = data;
+
+            this.setState({ ...state });
+        }
+    };
 
     onFileChange = event => {
         if (event.target.files && event.target.files[0]) {
@@ -151,7 +151,7 @@ class TowerAddEdit extends Wrapper {
                     <div className={style.field_flex_wrapper}>
                         <div className={style.field_flex_new} style={{ width: '45%' }}>
                             <div style={{ padding: '10px', width: '100%' }}>
-                                <SpanLabelForDDl>Org Details</SpanLabelForDDl>
+                                <SpanLabelForDDl>Organisation Details</SpanLabelForDDl>
                                 <Gap h="5px" />
                                 <SELECT
                                     value={this.state.tower.orgDetailsId} paddingLeft="10px" borderRadius="14px" height="51px"
@@ -159,7 +159,7 @@ class TowerAddEdit extends Wrapper {
                                     style={{ backgroundColor: "transparent", border: "1px solid #ccc" }}
                                     onChange={this.onValueChanged('orgDetailsId')}
                                 >
-                                    <option key="a0" value="" >--- Select Org Details ---</option>
+                                    <option key="a0" value="" >--- Select Organisation Details ---</option>
                                     {this.state.organisations &&
                                         this.state.organisations.map((item, index) => {
                                             return <option key={index} value={item.id}>{item.orgName}</option>
@@ -267,4 +267,4 @@ const mapStateToProps = state => {
     const { organisations, organisation, citys, city,states, countrys, } = state.adminReducer;
     return { organisations, organisation, citys, city, states, countrys, };
 }
-export default connect(mapStateToProps, { getTowerMasterData, getOrganisationDetailsData, getCountryMasterData, getStateMasterData, getCityMasterData })(TowerAddEdit)
+export default connect(mapStateToProps, { getTowerMasterData,saveTowerMasterData, deleteTowerMasterData, getTowerMasterDataById, getOrganisationDetailsData, getCountryMasterData, getStateMasterData, getCityMasterData })(TowerAddEdit)

@@ -15,6 +15,7 @@ import styledComponentsCjs from 'styled-components';
 import * as sessionHelper from '../../../utils/session.helper';
 import * as helper from '../../../helper';
 import Gap from '../../Gap'
+//import moment from 'moment';
 
 const SPAN = styledComponentsCjs.div` 
     color: rgba(0, 0, 0, 0.54);
@@ -102,6 +103,7 @@ class DeviceRegistrationAddEdit extends Wrapper {
 
 
     render() {
+        
         console.log("this.state.deviceRegistration", this.state.deviceRegistration);
         return (
             <div className={style.modal_dialog} style={{ width: '95%', maxHeight: '120vh', maxWidth: '80vw' }}>

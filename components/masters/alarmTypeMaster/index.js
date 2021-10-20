@@ -90,7 +90,7 @@ class AlarmTypeIndex extends Wrapper {
                 show: true,
                 Cell: row => (
                     <React.Fragment>
-                        <div style={{ background: row.original.colorCode, padding: "3px 5px" }}>
+                        <div style={{ color: row.original.colorCode, padding: "3px 5px" }}>
                             {row.original.colorCode}
                         </div>
                     </React.Fragment>
@@ -115,7 +115,7 @@ class AlarmTypeIndex extends Wrapper {
             },
             {
                 Header: 'Is Remarks Required',
-                accessor: 'isRemarksRequired',
+                accessor: d => `${d.isRemarksRequired && d.isRemarksRequired !== true ? d.isRemarksRequired : ''} `,
                 id: 'isRemarksRequired',
                 minWidth: 100,
                 show: true
