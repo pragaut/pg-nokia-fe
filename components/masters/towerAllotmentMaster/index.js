@@ -146,7 +146,7 @@ class TowerAllotmentIndex extends Wrapper {
                     // onClick={() => this.onClickCancel()}
                     />
                     <CommonStyle.Wrapper_OnOverlay
-                        width={"80%"}
+                        width={"50%"}
                         height={"fit-content"}
                         visible={showEditPopup}
                     >

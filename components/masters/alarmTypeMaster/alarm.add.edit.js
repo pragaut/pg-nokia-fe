@@ -126,9 +126,9 @@ class AlarmTypeAddEdit extends Wrapper {
                             <Input label="Background Color:" type='color' defaultValue={this.state.alarm.bgColorCode} onChange={this.onValueChanged('bgColorCode')} />
                             <Gap h="15px" />
                             <div style={{ padding: '10px 10px 20px 10px', width: '100%', display: 'flex' }}>
+                            <input type="checkbox" value="true" checked={this.state.alarm.isRemarksRequired} onChange={this.onValueRemarksRequired('isRemarksRequired')}  /> 
                             <SpanLabelForDDl>Is Remarks Required</SpanLabelForDDl>
                             
-                                <input type="checkbox" value="true" checked={this.state.alarm.isRemarksRequired} onChange={this.onValueRemarksRequired('isRemarksRequired')}  /> 
                                 {/* <input type="radio" value="false" onChange={this.onValueRemarksRequired('isRemarksRequired')} name="gender" checked={isYes}/> Yes */}
                             </div>
                             {/* {this.state.alarm && (this.state.alarm.isNo===false || this.state.alarm.isNo===0) && 

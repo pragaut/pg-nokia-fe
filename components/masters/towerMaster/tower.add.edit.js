@@ -62,6 +62,10 @@ class TowerAddEdit extends Wrapper {
         existingState[key] = SelectedValue;
         existingState["stateId"] = null;
         existingState["cityId"] = null;
+        if(!SelectedValue && SelectedValue ==='')
+        {
+            SelectedValue = 'No-Id';
+        }   
         this.props.getStateMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined, SelectedValue);
         this.props.getCityMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined, 'No-Id');
         this.setState({ tower: existingState });
@@ -74,17 +78,16 @@ class TowerAddEdit extends Wrapper {
 
         this.setState({ tower: existingCity });
     };
-
     componentDidMount() {
         this.props.getTowerMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
         this.props.getOrganisationDetailsData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
         this.props.getCountryMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
         //this.props.getCityMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
         if (this.state.tower.countryId) {
-            this.props.getStateMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined, this.state.organisation.countryId);
+            this.props.getStateMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined, this.state.tower.countryId);
         }
         if (this.state.tower.stateId) {
-            this.props.getCityMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined, this.state.organisation.stateId);
+            this.props.getCityMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined, this.state.tower.stateId);
         }
     };
 

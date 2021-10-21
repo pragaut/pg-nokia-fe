@@ -67,8 +67,8 @@ class TowerIndex extends Wrapper {
             },
             {
                 Header: 'Organisation',
-                accessor: 'orgName.orgName',
-                id: 'orgName.orgName',
+                accessor: 'orgName',
+                id: 'orgName',
                 minWidth: 100,
                 show: true,
             },
@@ -87,8 +87,8 @@ class TowerIndex extends Wrapper {
                 show: true,
             },
             {
-                Header: 'city Name',
-                accessor: 'cityName.cityName',
+                Header: 'City Name',
+                accessor: 'cityName',
                 id: 'cityName.cityName',
                 minWidth: 100,
                 show: true,
