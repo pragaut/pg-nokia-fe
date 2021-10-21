@@ -15,7 +15,6 @@ import styledComponentsCjs from 'styled-components';
 import * as sessionHelper from '../../../utils/session.helper';
 import * as helper from '../../../helper';
 import Gap from '../../Gap'
-//import moment from 'moment';
 
 const SPAN = styledComponentsCjs.div` 
     color: rgba(0, 0, 0, 0.54);
