@@ -120,7 +120,7 @@ class NotificationAddEdit extends Wrapper {
                     {/** idhar saare edit fields aayenge */}
                     <div className={style.field_flex_wrapper}>
                         <div className={style.field_flex_new} style={{ width: '100%' }}>
-                        <div style={{ padding: '10px', width: '100%' }}>
+                            <div style={{ padding: '10px', width: '100%' }}>
                                 <SpanLabelForDDl>Alarm Type</SpanLabelForDDl>
                                 <Gap h="5px" />
                                 <SELECT
@@ -140,7 +140,7 @@ class NotificationAddEdit extends Wrapper {
                             <Input label="Notification Name:" type='text' defaultValue={this.state.notification.notificationName} onChange={this.onValueChanged('notificationName')} />
                             <Input label="Code:" type='text' defaultValue={this.state.notification.notificationCode} onChange={this.onValueChanged('notificationCode')} />
                             <Input label="Order:" type='text' defaultValue={this.state.notification.notificationOrder} onChange={this.onValueChanged('notificationOrder')} />
-                            
+
                         </div>
                     </div>
                 </div>
