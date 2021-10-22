@@ -90,9 +90,11 @@ class OrganisationDetailsAddEdit extends Wrapper {
         let SelectedValue = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
         existingState[key] = SelectedValue;
         existingState["stateId"] = null;
-        existingState["cityId"] = null;
-        if(!SelectedValue || SelectedValue !=='')
-        SelectedValue = 'No-Id';
+        existingState["cityId"] = null;       
+        if(!SelectedValue && SelectedValue ==='')
+        {
+            SelectedValue = 'No-Id';
+        }      
         this.props.getStateMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined, SelectedValue);
         this.props.getCityMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined, 'No-Id');
         this.setState({ organisation: existingState });

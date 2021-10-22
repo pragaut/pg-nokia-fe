@@ -127,7 +127,7 @@ class TowerAllotmentAddEdit extends Wrapper {
     render() {
         console.log("this.state.towerAllotment", this.state.towerAllotment);
         return (
-            <div className={style.modal_dialog} style={{ width: '95%', maxHeight: '120vh', maxWidth: '80vw' }}>
+            <div className={style.modal_dialog} style={{ width: '90%', maxHeight: '120vh', maxWidth: '80vw' }}>
                 {/* <ModalHeader
                     heading="Role Master"
                 /> */}
@@ -135,7 +135,7 @@ class TowerAllotmentAddEdit extends Wrapper {
                 <div>
                     {/** idhar saare edit fields aayenge */}
                     <div className={style.field_flex_wrapper}>
-                        <div className={style.field_flex_new} style={{ width: '45%' }}>
+                        <div className={style.field_flex_new} style={{ width: '100%' }}>
                             <div style={{ padding: '10px', width: '100%' }}>
                                 <SpanLabelForDDl>Organisation Relation Type</SpanLabelForDDl>
                                 <Gap h="5px" />

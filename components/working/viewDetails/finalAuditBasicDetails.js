@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'next/router';
 import Wrapper from '../../shared/Wrapper';
-import { getFinalAuditPlanDetails } from '../../../actions/working.action';
+import { getAntennaRotataionDetails } from '../../../actions/working.action';
 import moment from 'moment';
 import * as CommonStyle from '../../commonStyle';
 import next from 'next';

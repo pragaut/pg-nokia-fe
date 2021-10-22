@@ -49,7 +49,6 @@ class TowerAntennasAddEdit extends Wrapper {
     onValueChanged = key => event => {
         const existingTowerAntennas = Object.assign({}, this.state.towerAntennas);
         existingTowerAntennas[key] = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
-
         this.setState({ towerAntennas: existingTowerAntennas });
     };
     onTextChange = key => event => {
@@ -104,6 +103,7 @@ class TowerAntennasAddEdit extends Wrapper {
 
     render() {
         console.log("this.state.towerAntennas", this.state.towerAntennas);
+        console.log("this.state.towers", this.state.towers);
         return (
             <div className={style.modal_dialog} style={{ width: '95%', maxHeight: '120vh', maxWidth: '80vw' }}>
                 {/* <ModalHeader
@@ -126,7 +126,7 @@ class TowerAntennasAddEdit extends Wrapper {
                                     <option key="a0" value="" >--- Select Tower ---</option>
                                     {this.state.towers &&
                                         this.state.towers.map((item, index) => {
-                                            return <option key={index} value={item.id}>{item.towerName}</option>
+                                            return <option key={index} value={item.towerId}>{item.towerName}</option>
                                         })
                                     }
                                 </SELECT>
