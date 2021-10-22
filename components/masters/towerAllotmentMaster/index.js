@@ -63,7 +63,7 @@ class TowerAllotmentIndex extends Wrapper {
                 filterable: false
             },
             {
-                Header: 'Org Details',
+                Header: 'Organisation Details',
                 accessor: 'orgName.orgName',
                 id: 'orgName.orgName',
                 minWidth: 100,

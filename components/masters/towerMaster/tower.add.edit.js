@@ -4,7 +4,7 @@ import { validateInputs } from '../../../utils/editFormHelper';
 import { save, deleteItems, shouldStoreDataInStateByKey } from '../../../utils/editFormHelper';
 import { connect } from 'react-redux';
 import { constants } from '../../../utils/constants';
-import { getTowerMasterData, saveTowerMasterData, deleteTowerMasterData, getTowerMasterDataById, getOrganisationDetailsData, getCityMasterData, getCountryMasterData, getStateMasterData } from '../../../actions/admin.action';
+import { getTowerMasterData, saveTowerMasterData, deleteTowerMasterData, getTowerMasterDataById, getOrganisationDetailsData, getOrgRelationTypeMasterData, getCityMasterData, getCountryMasterData, getStateMasterData } from '../../../actions/admin.action';
 import style from '../../../theme/app.scss';
 import ModalHeader from '../../shared/ModalHeader';
 import Input from '../../shared/InputBox';
@@ -46,6 +46,7 @@ class TowerAddEdit extends Wrapper {
             states: [],
             countrys: [],
             organisations: [],
+            orgRelationTypes: [],
             loadershow: 'false',
         };
     };
@@ -74,10 +75,19 @@ class TowerAddEdit extends Wrapper {
 
         this.setState({ tower: existingCity });
     };
+    onValueChangedOrgRelationType = key => event => {
+        const existingState = Object.assign({}, this.state.tower);
+        let SelectedValue = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
+        existingState[key] = SelectedValue;
+        existingState["orgDetailsId"] = '';
+        this.props.getOrganisationDetailsData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined, existingState);    
+        this.setState({ tower: existingState });
+    };
 
     componentDidMount() {
         this.props.getTowerMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
         this.props.getOrganisationDetailsData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
+        this.props.getOrgRelationTypeMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
         this.props.getCountryMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
         //this.props.getCityMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
         if (this.state.tower.countryId) {
@@ -104,10 +114,19 @@ class TowerAddEdit extends Wrapper {
                 states: nextProps.states
             })
         }
+        if (nextProps && nextProps.orgRelationTypes && nextProps.orgRelationTypes !== null && nextProps.orgRelationTypes !== undefined && nextProps.orgRelationTypes !== 'undefined' && nextProps.orgRelationTypes !== this.state.orgRelationTypes) {
+            this.setState({
+                orgRelationTypes: nextProps.orgRelationTypes
+            })
+        }
         if (nextProps && nextProps.countrys && nextProps.countrys !== null && nextProps.countrys !== undefined && nextProps.countrys !== 'undefined' && nextProps.countrys !== this.state.countrys) {
             this.setState({
                 countrys: nextProps.countrys
             })
+        }
+
+        if (nextProps.companyActiontype && nextProps.organisationActiontype === adminActionType.ORGANISATIONDETAILS_SAVE_SUCCESS) {
+            this.props.onCancel();
         }
         const storeInState = (data, key) => {
             // time to store
@@ -150,6 +169,23 @@ class TowerAddEdit extends Wrapper {
                     {/** idhar saare edit fields aayenge */}
                     <div className={style.field_flex_wrapper}>
                         <div className={style.field_flex_new} style={{ width: '45%' }}>
+                            <div style={{ padding: '10px', width: '100%' }}>
+                                <SpanLabelForDDl>Organisation Relation Type</SpanLabelForDDl>
+                                <Gap h="5px" />
+                                <SELECT
+                                    value={this.state.tower.orgRelationTypeId} paddingLeft="10px" borderRadius="14px" height="51px"
+                                    type="text" color="rgba(0,0,0,0.87)" borderColor="rgba(0,0,0,0.54)"
+                                    style={{ backgroundColor: "transparent", border: "1px solid #ccc" }}
+                                    onChange={this.onValueChangedOrgRelationType('orgRelationTypeId')}
+                                >
+                                    <option key="a0" value="" >--- Select Org Relation Type ---</option>
+                                    {this.state.orgRelationTypes &&
+                                        this.state.orgRelationTypes.map((item, index) => {
+                                            return <option key={index} value={item.id}>{item.orgRelationType}</option>
+                                        })
+                                    }
+                                </SELECT>
+                            </div>
                             <div style={{ padding: '10px', width: '100%' }}>
                                 <SpanLabelForDDl>Organisation Details</SpanLabelForDDl>
                                 <Gap h="5px" />
@@ -264,7 +300,7 @@ TowerAddEdit.propTypes = {
 };
 
 const mapStateToProps = state => {
-    const { organisations, organisation, citys, city,states, countrys, } = state.adminReducer;
-    return { organisations, organisation, citys, city, states, countrys, };
+    const { organisations, organisation, citys, city, states, countrys, orgRelationTypes } = state.adminReducer;
+    return { organisations, organisation, citys, city, states, countrys, orgRelationTypes };
 }
-export default connect(mapStateToProps, { getTowerMasterData,saveTowerMasterData, deleteTowerMasterData, getTowerMasterDataById, getOrganisationDetailsData, getCountryMasterData, getStateMasterData, getCityMasterData })(TowerAddEdit)
+export default connect(mapStateToProps, { getTowerMasterData, saveTowerMasterData, deleteTowerMasterData, getTowerMasterDataById, getOrganisationDetailsData, getOrgRelationTypeMasterData, getCountryMasterData, getStateMasterData, getCityMasterData })(TowerAddEdit)
