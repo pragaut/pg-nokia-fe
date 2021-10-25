@@ -4,7 +4,7 @@ import { validateInputs } from '../../../utils/editFormHelper';
 import { save, deleteItems, shouldStoreDataInStateByKey } from '../../../utils/editFormHelper';
 import { connect } from 'react-redux';
 import { constants } from '../../../utils/constants';
-import { getDeviceRegistrationMasterData, getOrganisationDetailsData } from '../../../actions/admin.action';
+import { getDeviceRegistrationMasterData, getOrganisationDetailsData, getOrgRelationTypeMasterData } from '../../../actions/admin.action';
 import style from '../../../theme/app.scss';
 import ModalHeader from '../../shared/ModalHeader';
 import Input from '../../shared/InputBox';
@@ -43,6 +43,8 @@ class DeviceRegistrationAddEdit extends Wrapper {
         this.onFileChange = this.onFileChange.bind(this);
         this.state = {
             deviceRegistration: props.baseObject ? props.baseObject : {},
+            orgRelationTypes: [],
+            organisations: [],
             loadershow: 'false',
         };
     };
@@ -58,10 +60,19 @@ class DeviceRegistrationAddEdit extends Wrapper {
         existingDeviceRegistration[key] = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
         this.setState({ deviceRegistration: existingDeviceRegistration });
     };
+    onValueChangedOrgRelationType = key => event => {
+        const existingState = Object.assign({}, this.state.deviceRegistration);
+        let SelectedValue = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
+        existingState[key] = SelectedValue;
+        existingState["orgDetailsId"] = '';
+        this.props.getOrganisationDetailsData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined, existingState);
+        this.setState({ deviceRegistration: existingState });
+    };
 
     componentDidMount() {
         this.props.getDeviceRegistrationMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
         this.props.getOrganisationDetailsData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
+        this.props.getOrgRelationTypeMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
     };
 
     UNSAFE_componentWillReceiveProps(nextProps) {
@@ -79,6 +90,11 @@ class DeviceRegistrationAddEdit extends Wrapper {
         if (nextProps.organisations !== null && nextProps.organisations !== undefined && nextProps.organisations !== this.state.organisations) {
             this.setState({
                 organisations: nextProps.organisations
+            })
+        }
+        if (nextProps && nextProps.orgRelationTypes && nextProps.orgRelationTypes !== null && nextProps.orgRelationTypes !== undefined && nextProps.orgRelationTypes !== 'undefined' && nextProps.orgRelationTypes !== this.state.orgRelationTypes) {
+            this.setState({
+                orgRelationTypes: nextProps.orgRelationTypes
             })
         }
     }
@@ -100,7 +116,10 @@ class DeviceRegistrationAddEdit extends Wrapper {
             this.setState({ loadershow: 'false' })
         }
     }
-    render() {        
+
+
+    render() {
+
         console.log("this.state.deviceRegistration", this.state.deviceRegistration);
         let deviceRegistrationDate = this.state.deviceRegistration && this.state.deviceRegistration.registrationDate && this.state.deviceRegistration.registrationDate;
         deviceRegistrationDate = moment(deviceRegistrationDate).format("YYYY-MM-DD");
@@ -116,7 +135,24 @@ class DeviceRegistrationAddEdit extends Wrapper {
                     <div className={style.field_flex_wrapper}>
                         <div className={style.field_flex_new} style={{ width: '45%' }}>
                             <div style={{ padding: '10px', width: '100%' }}>
-                                <SpanLabelForDDl>Org Details</SpanLabelForDDl>
+                                <SpanLabelForDDl>Organisation Relation Type</SpanLabelForDDl>
+                                <Gap h="5px" />
+                                <SELECT
+                                    value={this.state.deviceRegistration.orgRelationTypeId} paddingLeft="10px" borderRadius="14px" height="51px"
+                                    type="text" color="rgba(0,0,0,0.87)" borderColor="rgba(0,0,0,0.54)"
+                                    style={{ backgroundColor: "transparent", border: "1px solid #ccc" }}
+                                    onChange={this.onValueChangedOrgRelationType('orgRelationTypeId')}
+                                >
+                                    <option key="a0" value="" >--- Select Org Relation Type ---</option>
+                                    {this.state.orgRelationTypes &&
+                                        this.state.orgRelationTypes.map((item, index) => {
+                                            return <option key={index} value={item.id}>{item.orgRelationType}</option>
+                                        })
+                                    }
+                                </SELECT>
+                            </div>
+                            <div style={{ padding: '10px', width: '100%' }}>
+                                <SpanLabelForDDl>Organisation Details</SpanLabelForDDl>
                                 <Gap h="5px" />
                                 <SELECT
                                     value={this.state.deviceRegistration.orgDetailsId} paddingLeft="10px" borderRadius="14px" height="51px"
@@ -124,7 +160,7 @@ class DeviceRegistrationAddEdit extends Wrapper {
                                     style={{ backgroundColor: "transparent", border: "1px solid #ccc" }}
                                     onChange={this.onValueChanged('orgDetailsId')}
                                 >
-                                    <option key="a0" value="" >--- Select Group ---</option>
+                                    <option key="a0" value="" >--- Select Organisation Details ---</option>
                                     {this.state.organisations &&
                                         this.state.organisations.map((item, index) => {
                                             return <option key={index} value={item.id}>{item.orgName}</option>
@@ -133,12 +169,13 @@ class DeviceRegistrationAddEdit extends Wrapper {
                                 </SELECT>
                             </div>
                             <Input label="MAC Address:" focusbordercolor="#f90707" type='text' defaultValue={this.state.deviceRegistration.macAddress} onChange={this.onValueChanged('macAddress')} />
-                            <Input label="Unique Id:" focusbordercolor="#f90707" type='text' defaultValue={this.state.deviceRegistration.uniqueId} onChange={this.onValueChanged('uniqueId')} />
+
                         </div>
 
                         <div className={style.field_flex_new} style={{ width: '45%' }}>
-                            <Input label="Registration Date:" focusbordercolor="#f90707" type='date' defaultValue={deviceRegistrationDate} onChange={this.onValueChanged('registrationDate')} />
-                            <Input label="Device Sequence:" focusbordercolor="#f90707" type='text' defaultValue={this.state.deviceRegistration.deviceSequence} onChange={this.onValueChanged('deviceSequence')} />
+                            <Input label="Unique Id:" focusbordercolor="#f90707" type='text' defaultValue={this.state.deviceRegistration.uniqueId} onChange={this.onValueChanged('uniqueId')} />
+                            <Input label="Registration Date:" focusbordercolor="#f90707" type='date' defaultValue={this.state.deviceRegistration.registrationDate} onChange={this.onValueChanged('registrationDate')} />
+                            {/* <Input label="Device Sequence:" focusbordercolor="#f90707" type='text' defaultValue={this.state.deviceRegistration.deviceSequence} onChange={this.onValueChanged('deviceSequence')} /> */}
                             <Input label="Unique Code:" focusbordercolor="#f90707" type='text' defaultValue={this.state.deviceRegistration.uniqueCode} onChange={this.onValueChanged('uniqueCode')} />
 
                         </div>
@@ -182,7 +219,7 @@ DeviceRegistrationAddEdit.propTypes = {
 };
 
 const mapStateToProps = state => {
-    const { organisations, organisation } = state.adminReducer;
-    return { organisations, organisation };
+    const { organisations, organisation, orgRelationTypes } = state.adminReducer;
+    return { organisations, organisation, orgRelationTypes };
 }
-export default connect(mapStateToProps, { getOrganisationDetailsData, getDeviceRegistrationMasterData })(DeviceRegistrationAddEdit)
+export default connect(mapStateToProps, { getOrganisationDetailsData, getDeviceRegistrationMasterData, getOrgRelationTypeMasterData })(DeviceRegistrationAddEdit)

@@ -4,7 +4,7 @@ import { validateInputs } from '../../../utils/editFormHelper';
 import { save, deleteItems, shouldStoreDataInStateByKey } from '../../../utils/editFormHelper';
 import { connect } from 'react-redux';
 import { constants } from '../../../utils/constants';
-import { getTowerAllotmentMasterData, getOrganisationDetailsData, getTowerMasterData } from '../../../actions/admin.action';
+import { getTowerAllotmentMasterData, getOrganisationDetailsData, getTowerMasterData,getOrgRelationTypeMasterData } from '../../../actions/admin.action';
 import style from '../../../theme/app.scss';
 import ModalHeader from '../../shared/ModalHeader';
 import Input from '../../shared/InputBox';
@@ -43,6 +43,8 @@ class TowerAllotmentAddEdit extends Wrapper {
         this.onFileChange = this.onFileChange.bind(this);
         this.state = {
             towerAllotment: props.baseObject ? props.baseObject : {},
+            organisations: [],
+            orgRelationTypes: [],
             loadershow: 'false',
         };
     };
@@ -58,11 +60,20 @@ class TowerAllotmentAddEdit extends Wrapper {
         existingTowerAllotment[key] = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
         this.setState({ towerAllotment: existingTowerAllotment });
     };
+    onValueChangedOrgRelationType = key => event => {
+        const existingState = Object.assign({}, this.state.towerAllotment);
+        let SelectedValue = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
+        existingState[key] = SelectedValue;
+        existingState["orgDetailsId"] = '';
+        this.props.getOrganisationDetailsData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined, existingState);    
+        this.setState({ towerAllotment: existingState });
+    };
 
     componentDidMount() {
         this.props.getTowerAllotmentMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
         this.props.getOrganisationDetailsData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
         this.props.getTowerMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
+        this.props.getOrgRelationTypeMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
     };
 
     UNSAFE_componentWillReceiveProps(nextProps) {
@@ -85,6 +96,11 @@ class TowerAllotmentAddEdit extends Wrapper {
         if (nextProps.towers !== null && nextProps.towers !== undefined && nextProps.towers !== this.state.towers) {
             this.setState({
                 towers: nextProps.towers
+            })
+        }
+        if (nextProps && nextProps.orgRelationTypes && nextProps.orgRelationTypes !== null && nextProps.orgRelationTypes !== undefined && nextProps.orgRelationTypes !== 'undefined' && nextProps.orgRelationTypes !== this.state.orgRelationTypes) {
+            this.setState({
+                orgRelationTypes: nextProps.orgRelationTypes
             })
         }
     }
@@ -121,7 +137,24 @@ class TowerAllotmentAddEdit extends Wrapper {
                     <div className={style.field_flex_wrapper}>
                         <div className={style.field_flex_new} style={{ width: '100%' }}>
                             <div style={{ padding: '10px', width: '100%' }}>
-                                <SpanLabelForDDl>Org Details</SpanLabelForDDl>
+                                <SpanLabelForDDl>Organisation Relation Type</SpanLabelForDDl>
+                                <Gap h="5px" />
+                                <SELECT
+                                    value={this.state.towerAllotment.orgRelationTypeId} paddingLeft="10px" borderRadius="14px" height="51px"
+                                    type="text" color="rgba(0,0,0,0.87)" borderColor="rgba(0,0,0,0.54)"
+                                    style={{ backgroundColor: "transparent", border: "1px solid #ccc" }}
+                                    onChange={this.onValueChangedOrgRelationType('orgRelationTypeId')}
+                                >
+                                    <option key="a0" value="" >--- Select Org Relation Type ---</option>
+                                    {this.state.orgRelationTypes &&
+                                        this.state.orgRelationTypes.map((item, index) => {
+                                            return <option key={index} value={item.id}>{item.orgRelationType}</option>
+                                        })
+                                    }
+                                </SELECT>
+                            </div>
+                            <div style={{ padding: '10px', width: '100%' }}>
+                                <SpanLabelForDDl>Organisation Details</SpanLabelForDDl>
                                 <Gap h="5px" />
                                 <SELECT
                                     value={this.state.towerAllotment.orgDetailsId} paddingLeft="10px" borderRadius="14px" height="51px"
@@ -129,7 +162,7 @@ class TowerAllotmentAddEdit extends Wrapper {
                                     style={{ backgroundColor: "transparent", border: "1px solid #ccc" }}
                                     onChange={this.onValueChanged('orgDetailsId')}
                                 >
-                                    <option key="a0" value="" >--- Select Group ---</option>
+                                    <option key="a0" value="" >--- Select Organisation Details ---</option>
                                     {this.state.organisations &&
                                         this.state.organisations.map((item, index) => {
                                             return <option key={index} value={item.id}>{item.orgName}</option>
@@ -196,7 +229,7 @@ TowerAllotmentAddEdit.propTypes = {
 };
 
 const mapStateToProps = state => {
-    const { organisations, organisation, towers, tower } = state.adminReducer;
-    return { organisations, organisation, towers, tower };
+    const { organisations, organisation, towers, tower,orgRelationTypes } = state.adminReducer;
+    return { organisations, organisation, towers, tower,orgRelationTypes };
 }
-export default connect(mapStateToProps, { getTowerMasterData, getOrganisationDetailsData, getTowerAllotmentMasterData })(TowerAllotmentAddEdit)
+export default connect(mapStateToProps, { getTowerMasterData, getOrganisationDetailsData, getTowerAllotmentMasterData, getOrgRelationTypeMasterData })(TowerAllotmentAddEdit)
