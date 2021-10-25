@@ -10,6 +10,7 @@ import ModalHeader from '../../shared/ModalHeader';
 import Input from '../../shared/InputBox';
 import { SELECT, SpanLabelForDDl } from '../../formStyle';
 import config from '../../../config';
+import moment from 'moment';
 //import Select from 'react-select'
 import styledComponentsCjs from 'styled-components';
 import * as sessionHelper from '../../../utils/session.helper';
@@ -99,11 +100,11 @@ class DeviceRegistrationAddEdit extends Wrapper {
             this.setState({ loadershow: 'false' })
         }
     }
-
-
-    render() {
-        
+    render() {        
         console.log("this.state.deviceRegistration", this.state.deviceRegistration);
+        let deviceRegistrationDate = this.state.deviceRegistration && this.state.deviceRegistration.registrationDate && this.state.deviceRegistration.registrationDate;
+        deviceRegistrationDate = moment(deviceRegistrationDate).format("YYYY-MM-DD");
+        deviceRegistrationDate = this.state.deviceRegistration && this.state.deviceRegistration.registrationDate ? deviceRegistrationDate : '';
         return (
             <div className={style.modal_dialog} style={{ width: '95%', maxHeight: '120vh', maxWidth: '80vw' }}>
                 {/* <ModalHeader
@@ -136,7 +137,7 @@ class DeviceRegistrationAddEdit extends Wrapper {
                         </div>
 
                         <div className={style.field_flex_new} style={{ width: '45%' }}>
-                            <Input label="Registration Date:" focusbordercolor="#f90707" type='date' defaultValue={this.state.deviceRegistration.registrationDate} onChange={this.onValueChanged('registrationDate')} />
+                            <Input label="Registration Date:" focusbordercolor="#f90707" type='date' defaultValue={deviceRegistrationDate} onChange={this.onValueChanged('registrationDate')} />
                             <Input label="Device Sequence:" focusbordercolor="#f90707" type='text' defaultValue={this.state.deviceRegistration.deviceSequence} onChange={this.onValueChanged('deviceSequence')} />
                             <Input label="Unique Code:" focusbordercolor="#f90707" type='text' defaultValue={this.state.deviceRegistration.uniqueCode} onChange={this.onValueChanged('uniqueCode')} />
 
@@ -154,7 +155,9 @@ class DeviceRegistrationAddEdit extends Wrapper {
                 <br></br>
                 {/* container for save and cancel */}
                 <div style={{ display: 'flex', width: '200px', alignItems: 'center', justifyContent: 'space-between', margin: '10px 0px' }}>
-                    <button className={style.primary_btn} onClick={() => {
+                    <button 
+                    style={{ width: '100px', marginRight: '10px' }}
+                    className={style.primary_btn} onClick={() => {
                         console.log(this.state.deviceRegistration);
                         const validationText = validateInputs(this.state.deviceRegistration, this.configs);
                         if (validationText) {
@@ -165,7 +168,9 @@ class DeviceRegistrationAddEdit extends Wrapper {
                         }, 200);
 
                     }}>save</button>
-                    <button className={style.btn_danger} onClick={this.props.onCancel}>cancel</button>
+                    <button 
+                    style={{ width: '100px', marginRight: '10px' }}
+                    className={style.btn_danger} onClick={this.props.onCancel}>cancel</button>
                 </div>
             </div>);
     }

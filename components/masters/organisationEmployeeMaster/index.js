@@ -103,7 +103,7 @@ class Index extends Wrapper {
                 minWidth: 150,
             },  {
                 Header: 'Father Name',
-                accessor: d => `${d.fatherName}`,
+                accessor: d => `${d.fatherName && d.fatherName !=null && d.fatherName ? d.fatherName :''}`,
                 id: 'fatherName',
                 show: true              
             },{

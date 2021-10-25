@@ -80,6 +80,12 @@ class Index extends Wrapper {
                 minWidth: 150,
             },
             {
+                Header: 'Organisation Type',
+                accessor: d => `${d.orgRelationType}`,
+                id: 'orgRelationType',
+                show: true
+            },
+            {
                 Header: 'Organisation Name',
                 accessor: d => `${d.orgName}`,
                 id: 'orgName',

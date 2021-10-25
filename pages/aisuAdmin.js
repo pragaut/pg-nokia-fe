@@ -23,6 +23,7 @@ import ModalHeader from '../components/shared/ModalHeader';
 import MasterIndex from '../components/masters';
 import MasterDetails from '../components/masters/masterDetails';
 import AntennaRotatioDetails from '../components/working/viewDetails/antennaRotationDetails';
+import DeviceLocationDetails from '../components/working/viewDetails/deviceLocationDetails';
 import { showNotification, hideNotification } from '../actions/common.actions';
 import * as commonType from '../action-types/common.action.types';
 import NotificationPopUp from '../components/shared/notificationPopUp';
@@ -212,9 +213,19 @@ export class Index extends Wrapper {
           parentMasterCategoryId: '',
           url: "/aisuAdmin/antenna-rotation-details",
           isVisible: true
+        },
+        {
+          pathname: "/aisuAdmin",
+          tab: "device-location-details",
+          id: undefined,
+          MasterName: 'Device Location Details',
+          ParentMasterName: undefined,
+          parentMasterCategoryId: '',
+          url: "/aisuAdmin/device-location-details",
+          isVisible: true
         }
       ],
-      commonMasterLinks: [  ]
+      commonMasterLinks: []
     }
   }
 
@@ -240,9 +251,9 @@ export class Index extends Wrapper {
     const RoleName = LoggedUserRole && LoggedUserRole.roleName;
     let Role = RoleName && RoleName;
     Role = RoleName && RoleName.replace(' ', '');
-    console.log("Role Name User : ", Role);
+    //console.log("Role Name User : ", Role);
     let AuthorizedUser = this.checkIsAuthorizedUser(Role, "admin-page:visit", null);
-    console.log("Authorized User : ", AuthorizedUser);
+    //console.log("Authorized User : ", AuthorizedUser);
     if (!AuthorizedUser) {
       this._logout();
       //this.unAuthorizedAccess();
@@ -504,6 +515,12 @@ export class Index extends Wrapper {
                   <AntennaRotatioDetails />
                 </div>
               )}
+              {router && router.query && router.query.tab === "device-location-details" && (
+                <div>
+                  {/* <TowerAddEdit /> */}
+                  <DeviceLocationDetails />
+                </div>
+              )}
               {(!router || !router.query || router.query.tab === undefined) &&
                 <div>
                   <MasterIndex />
@@ -514,7 +531,8 @@ export class Index extends Wrapper {
                   <ChangePassword />
                 </div>
               )}
-              {router && router.query && router.query.MasterName && router.query.tab != "antenna-rotation-details" && 
+              {router && router.query && router.query.MasterName && router.query.tab != "antenna-rotation-details" &&
+               router.query.tab !="device-location-details" &&
                 <div>
                   <MasterDetails
                     masterCateogyId={router && router.query && router.query.id}

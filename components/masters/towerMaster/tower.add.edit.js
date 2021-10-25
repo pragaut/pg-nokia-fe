@@ -243,8 +243,10 @@ class TowerAddEdit extends Wrapper {
                 </div>
                 <br></br>
                 {/* container for save and cancel */}
-                <div style={{ display: 'flex', width: '200px', alignItems: 'center', justifyContent: 'space-between', margin: '10px 0px' }}>
-                    <button className={style.primary_btn} onClick={() => {
+                <div style={{ display: 'flex', width: '200px', alignItems: 'left', justifyContent: 'left', margin: '10px 0px' }}>
+                    <button 
+                    style={{ width: '100px', marginRight: '10px' }}
+                    className={style.primary_btn} onClick={() => {
                         console.log(this.state.tower);
                         const validationText = validateInputs(this.state.tower, this.configs);
                         if (validationText) {
@@ -255,7 +257,9 @@ class TowerAddEdit extends Wrapper {
                         }, 200);
 
                     }}>save</button>
-                    <button className={style.btn_danger} onClick={this.props.onCancel}>cancel</button>
+                    <button 
+                    style={{ width: '100px', marginRight: '10px' }}
+                    className={style.btn_danger} onClick={this.props.onCancel}>cancel</button>
                 </div>
             </div>);
     }

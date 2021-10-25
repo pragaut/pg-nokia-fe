@@ -147,7 +147,9 @@ class NotificationAddEdit extends Wrapper {
                 <br></br>
                 {/* container for save and cancel */}
                 <div style={{ display: 'flex', width: '200px', alignItems: 'center', justifyContent: 'space-between', margin: '10px 0px' }}>
-                    <button className={style.primary_btn} onClick={() => {
+                    <button 
+                    style={{ width: '100px', marginRight: '10px' }}
+                    className={style.primary_btn} onClick={() => {
                         console.log(this.state.notification);
                         const validationText = validateInputs(this.state.notification, this.configs);
                         if (validationText) {
@@ -158,7 +160,9 @@ class NotificationAddEdit extends Wrapper {
                         }, 200);
 
                     }}>save</button>
-                    <button className={style.btn_danger} onClick={this.props.onCancel}>cancel</button>
+                    <button 
+                    style={{ width: '100px', marginRight: '10px' }}
+                    className={style.btn_danger} onClick={this.props.onCancel}>cancel</button>
                 </div>
             </div>);
     }

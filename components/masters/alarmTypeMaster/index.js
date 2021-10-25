@@ -84,13 +84,13 @@ class AlarmTypeIndex extends Wrapper {
                 show: true
             },
             {
-                Header: 'Color',
+                Header: 'Font / Background Color',
                 minWidth: 50,
                 id: 'colorCode',
                 show: true,
                 Cell: row => (
                     <React.Fragment>
-                        <div style={{ color: row.original.colorCode, padding: "3px 5px" }}>
+                        <div style={{ color: row.original.colorCode, background: row.original.bgColorCode,padding: "3px 5px" }}>
                             {row.original.colorCode}
                         </div>
                     </React.Fragment>
@@ -98,24 +98,24 @@ class AlarmTypeIndex extends Wrapper {
                 sortable: false,
                 filterable: false
             },
-            {
-                Header: 'Background',
-                minWidth: 50,
-                id: 'bgColorCode',
-                show: true,
-                Cell: row => (
-                    <React.Fragment>
-                        <div style={{ background: row.original.bgColorCode, padding: "3px 5px" }}>
-                            {row.original.bgColorCode}
-                        </div>
-                    </React.Fragment>
-                ),
-                sortable: false,
-                filterable: false
-            },
+            // {
+            //     Header: 'Background',
+            //     minWidth: 50,
+            //     id: 'bgColorCode',
+            //     show: true,
+            //     Cell: row => (
+            //         <React.Fragment>
+            //             <div style={{ background: row.original.bgColorCode, padding: "3px 5px" }}>
+            //                 {row.original.bgColorCode}
+            //             </div>
+            //         </React.Fragment>
+            //     ),
+            //     sortable: false,
+            //     filterable: false
+            // },
             {
                 Header: 'Is Remarks Required',
-                accessor: d => `${d.isRemarksRequired && d.isRemarksRequired !== true ? d.isRemarksRequired : ''} `,
+                accessor: d => `${d.isRemarksRequired && d.isRemarksRequired !== true ? 'Yes' : 'No'} `,
                 id: 'isRemarksRequired',
                 minWidth: 100,
                 show: true

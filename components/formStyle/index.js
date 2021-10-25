@@ -49,7 +49,7 @@ export const Input = styled.input`
 export const SpanLabelForDDl = styled.span`
 color : blue;
 font-size:13px;
-margin-left : 8px;
+margin-left : 0px;
 
 `;
 

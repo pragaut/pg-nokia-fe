@@ -29,7 +29,7 @@ const dispatchAction = (dispatch, type, data, error, message, recordsCount) => {
     });
 };
 
-//#region  Final Audit Action Plan 
+//#region  antenna rotation Details
 export const getAntennaRotataionDetails = (filters, userId, pageIndex, rowsToReturn) => async dispatch => {
     dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null)
     try {
@@ -70,6 +70,48 @@ export const getAntennaRotataionDetails = (filters, userId, pageIndex, rowsToRet
             dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Antenna Rotation Details error'), null, null);
         }
 
+    }
+    catch (error) {
+        dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+    }
+};
+//#endregion
+
+//#region  device location details
+export const getDeviceLocationDetails = (filters, userId, pageIndex, rowsToReturn) => async dispatch => {
+    dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null)
+    try {
+        let pageIndex = 0;
+
+        //console.log("ActionPlan filters : ", filters);
+        let deviceLocationDetailId = filters && filters.id ? filters.id : '';
+        let deviceRegistrationDetailId = filters && filters.deviceRegistrationDetailId ? filters.deviceRegistrationDetailId : '';
+        let macAddress = filters && filters.macAddress ? filters.macAddress : ''; 
+
+        let url = config.TMC_URL + `tmc/tmcworking/deviceLocationDetails?pageIndex=${pageIndex}`;
+
+        if (deviceLocationDetailId) {
+            url = url + `&deviceLocationDetailId=${deviceLocationDetailId}`;
+        }
+        if (deviceRegistrationDetailId) {
+            url = url + `&deviceRegistrationDetailId=${deviceRegistrationDetailId}`;
+        }
+        if (macAddress) {
+            url = url + `&macAddress=${macAddress}`;
+        }
+
+        const data = await service.get(url, true);
+        console.log("Device Location Details:  ", data);
+
+        if (data && !data.errorMessage) {
+            dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+            dispatchAction(dispatch, workingTypes.DEVICELOCATIONDETAILS_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
+        }
+        else {
+            dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Device Location Details error'), null, null);
+        }
     }
     catch (error) {
         dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);

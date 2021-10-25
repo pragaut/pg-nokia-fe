@@ -244,7 +244,7 @@ class OrganisationEmployeeDetailsAddEdit extends Wrapper {
                 </div>
                 <br></br>
                 {/* container for save and cancel */}
-                <div style={{ display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'center', margin: '10px 0px' }}>
+                <div style={{ display: 'flex', width: '100%', alignItems: 'left', justifyContent: 'left', margin: '10px 0px' }}>
                     <button
                         style={{ width: '100px', marginRight: '10px' }}
                         className={style.primary_btn} onClick={() => {

@@ -373,6 +373,23 @@ app.prepare()
 			});
 		});
 
+		server.get('/aisuAdmin/device-location-details', (req, res) => {
+			const q = req.query;
+			q.tab = 'device-location-details';
+			q.pathname = 'device-location-details';
+			q.pageName = 'Device Location Details';
+			q.MasterName = 'Device Location Details';
+			return app.render(req, res, '/aisuAdmin', {
+				page: q.pageName,
+				MasterName: q.MasterName,
+				tab: q.tab,
+				section: 'working',
+				query: {
+					...q
+				}
+			});
+		});
+
 		//------------------Working Section End----------------------//
 
 		//-------------------Change Password Section Section--------------------//

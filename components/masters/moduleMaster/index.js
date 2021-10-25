@@ -63,9 +63,9 @@ class ModuleIndex extends Wrapper {
                 filterable: false
             },
             {
-                Header: 'Organisation',
-                accessor: 'orgName.orgName',
-                id: 'orgName.orgName',
+                Header: 'Group',
+                accessor: 'group.groupName',
+                id: 'group.groupName',
                 minWidth: 100,
                 show: true
             },

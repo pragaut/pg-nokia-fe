@@ -5,9 +5,7 @@ import * as actions from '../action-types/working.action.types';
 /**
  * 
  */
-const initialState = {
-    
-
+const initialState = {   
 
 };
 
@@ -34,8 +32,17 @@ const workingReducer = (state, action) => {
                 antennaRotationDetailActiontype: action.type,
                 antennaRotationDetailRecordsCount: action.recordsCount,
 
-                type: action.type,
+                type: action.type,  
             };
+            case actions.DEVICELOCATIONDETAILS_LIST_SUCCESS:
+                return {
+                    deviceLocationDetail: state.deviceLocationDetail,
+                    deviceLocationDetails: action.data,
+                    deviceLocationDetailActiontype: action.type,
+                    deviceLocationDetailRecordsCount: action.recordsCount,
+    
+                    type: action.type,
+                };
         //#endregion
 
         // important: we should always give a default, otherwise React gives a cheap warning and it is very annoying
@@ -44,7 +51,12 @@ const workingReducer = (state, action) => {
                 type: state.type,
                 recordsCount: state.recordsCount,
 
-                antennaRotationDetaildetail: state.antennaRotationDetaildetail,
+                deviceLocationDetail: state.deviceLocationDetail,
+                deviceLocationDetails: state.deviceLocationDetails,
+                deviceLocationDetailActiontype: state.deviceLocationDetailActiontype,
+                deviceLocationDetailRecordsCount: state.deviceLocationDetailRecordsCount,
+
+                antennaRotationDetaildetail: state.antennaRotationDetail,
                 antennaRotationDetaildetails: state.antennaRotationDetails,
                 antennaRotationDetailActiontype: state.antennaRotationDetailActiontype,
                 antennaRotationDetailRecordsCount: state.antennaRotationDetailRecordsCount

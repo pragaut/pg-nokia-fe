@@ -129,6 +129,39 @@ export const FormDiv = styled.div`
   }
 `;
 
+export const MainWrapper = styled.div`
+    height: 48vh;
+    min-height:380px;
+    margin: 5px 10px;
+    filter: drop-shadow(-1px 5px 3px #ccc);
+
+    .info-wrapper {
+        margin-top: 15px;
+        font-size:9px;
+        text-align:left !important;
+      }
+      .map-details {
+        text-align: center;
+        font-size: 1.2em;
+      }
+      .map-details span {
+        font-weight: bold;
+      }
+      .search-input {
+        font-size: 1.2em;
+        width: 90%;
+        padding:5px;
+        margin-left:-20px;
+        margin-top:-30px;
+      }
+      @media(max-width:1300px){
+        height: 49vh;
+      }
+      //@media(max-width:1100px){
+      //     height: 50vh;
+      //}
+`;
+
 export const InputControlsDiv = styled.div`
     width : ${props => props.width ? props.width : '20%'};
     height : ${props => props.height ? props.height : 'auto'};

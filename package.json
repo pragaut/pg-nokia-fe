@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "node server.js",
     "start-test": "next start",
-    "pb-dev": "(cd && cd projects/iot-nokia/back-end/tmc/api && gnome-terminal --tab) & (cd && cd projects/iot-nokia/back-end/services.auth/api && gnome-terminal --tab) & npm run start",
-    "open": "(cd && cd projects/iot-nokia/back-end/tmc/api && gnome-terminal --tab) & (cd && cd projects/iot-nokia/back-end/services.auth/api && gnome-terminal --tab) & (cd && cd projects/iot-nokia/back-end/services.email && gnome-terminal --tab)& (cd && cd projects/iot-nokia/back-end/codebase && gnome-terminal --tab)& (cd && cd projects/iot-nokia/front-end/codebase && gnome-terminal --tab)"
+    "pb-dev": "(cd && cd projects/nokia/back-end/tmc/api && gnome-terminal --tab) & (cd && cd projects/nokia/back-end/services.auth/api && gnome-terminal --tab) & npm run start",
+    "open": "(cd && cd projects/nokia/back-end/tmc/api && gnome-terminal --tab) & (cd && cd projects/nokia/back-end/services.auth/api && gnome-terminal --tab) & (cd && cd projects/nokia/back-end/services.email && gnome-terminal --tab)& (cd && cd projects/nokia/back-end/codebase && gnome-terminal --tab)& (cd && cd projects/nokia/front-end/codebase && gnome-terminal --tab)"
   },
   "browser": {
     "child_process": false
@@ -27,6 +27,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "global": "^4.4.0",
+    "google-map-react": "^2.1.10",
     "highcharts": "^9.2.2",
     "highcharts-react-official": "^3.0.0",
     "moment": "^2.29.1",

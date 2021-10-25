@@ -47,7 +47,7 @@ export const saveGroupMasterData = groupMaster => async dispatch => {
 
             dispatch({
                 type: commonTypes.NOTIFICATION_SHOW,
-                message: 'Group Master updated successfully',
+                message: 'Group master submitted successfully',
                 error: undefined,
                 notification: true
             });
@@ -155,7 +155,7 @@ export const saveOrgRelationTypeMasterData = OrgRelationTypeMaster => async disp
 
             dispatch({
                 type: commonTypes.NOTIFICATION_SHOW,
-                message: 'Org relation type master updated successfully',
+                message: 'Org relation type master submitted successfully',
                 error: undefined,
                 notification: true
             });
@@ -271,7 +271,7 @@ export const saveAlarmTypeMasterData = alarmTypeMaster => async dispatch => {
 
             dispatch({
                 type: commonTypes.NOTIFICATION_SHOW,
-                message: 'Alarm Type Master updated successfully',
+                message: 'Alarm type master submitted successfully',
                 error: undefined,
                 notification: true
             });
@@ -386,7 +386,7 @@ export const saveNotificationMasterData = notificationMaster => async dispatch =
 
             dispatch({
                 type: commonTypes.NOTIFICATION_SHOW,
-                message: 'Notification Master updated successfully',
+                message: 'Notification master submitted successfully',
                 error: undefined,
                 notification: true
             });
@@ -501,7 +501,7 @@ export const saveModuleMasterData = moduleMaster => async dispatch => {
 
             dispatch({
                 type: commonTypes.NOTIFICATION_SHOW,
-                message: 'Module Master updated successfully',
+                message: 'Module master submitted successfully',
                 error: undefined,
                 notification: true
             });
@@ -646,7 +646,7 @@ export const saveRoleMasterData = roleMaster => async dispatch => {
 
             dispatch({
                 type: commonTypes.NOTIFICATION_SHOW,
-                message: 'Role Master updated successfully',
+                message: 'Role master submitted successfully',
                 error: undefined,
                 notification: true
             });
@@ -780,7 +780,7 @@ export const saveCompanyMasterData = Company => async dispatch => {
 
             dispatch({
                 type: commonTypes.NOTIFICATION_SHOW,
-                message: 'Group Company updated successfully',
+                message: 'Group company submitted successfully',
                 error: undefined,
                 notification: true
             });
@@ -894,180 +894,180 @@ export const deleteCompanyMaster = MasterIds => async dispatch => {
 };
 //#endregion
 
-//#region Company Plant Master
+// //#region Company Plant Master
 
-export const initPlantMaster = () => dispatch => {
-    dispatchAction(dispatch, adminTypes.PLANTMASTER_INIT, null, null, null, null);
-};
+// export const initPlantMaster = () => dispatch => {
+//     dispatchAction(dispatch, adminTypes.PLANTMASTER_INIT, null, null, null, null);
+// };
 
-export const savePlantMasterData = companyPlant => async dispatch => {
-    //  dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUTH_URL + `audit/admin/plantMaster/`;
-        const data = (typeof companyPlant.id === 'undefined' || companyPlant.id === -1) ? await service.post(url, companyPlant, true)
-            : await service.put(url, companyPlant, true);
+// export const savePlantMasterData = companyPlant => async dispatch => {
+//     //  dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
+//     try {
+//         let url = config.AUTH_URL + `audit/admin/plantMaster/`;
+//         const data = (typeof companyPlant.id === 'undefined' || companyPlant.id === -1) ? await service.post(url, companyPlant, true)
+//             : await service.put(url, companyPlant, true);
 
-        if (data && !data.errorMessage) {
+//         if (data && !data.errorMessage) {
 
-            //if (typeof companyPlant.id === 'undefined') companyPlant.id = data.data.id;
+//             //if (typeof companyPlant.id === 'undefined') companyPlant.id = data.data.id;
 
-            dispatchAction(dispatch, adminTypes.PLANTMASTER_SAVE_SUCCESS, companyPlant, null, data.message, null);
+//             dispatchAction(dispatch, adminTypes.PLANTMASTER_SAVE_SUCCESS, companyPlant, null, data.message, null);
 
-            dispatch({
-                type: commonTypes.NOTIFICATION_SHOW,
-                message: 'Company Plant updated successfully',
-                error: undefined,
-                notification: true
-            });
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Company Plant error'), null, null);
-        }
-    }
-    catch (error) {
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-
-
-export const getPlantMasterById = (id) => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null); 
-    try {
-        let url = config.AUTH_URL + `audit/admin/plantMaster?id=${id}`;
-        const data = await service.get(url, true);
-        if (data && !data.errorMessage) {
-            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-            dispatchAction(dispatch, adminTypes.PLANTMASTER_GET_BY_ID_SUCCESS, data.data, null, data.message, null);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Company Plant error'), null, null);
-        }
-    }
-    catch (error) {
-        console.error('error: ', error);
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-
-};
-
-export const getPlantMasterByGroupCompanyId = (id, pageIndex, rowsToReturn) => async dispatch => {
-    dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        // let url = config.AUTH_URL + `audit/admin/plantMaster/getByGroupCompanyMasterId?companyMasterID=${id}`;
-        //    let url = config.AUTH_URL + `audit/admin/plantMaster/getPlantByCompanyId?pageIndex=${pageIndex}&rows=${rowsToReturn}&companyMasterID=${id}`; 
-        //    const data = await service.get(url, true);
-        //     console.log(" Plant data",data);
-        //console.log("Plant - company id : ",id);
-        let url = config.AUTH_URL + `audit/admin/plantMaster/getByGroupCompanyMasterId?companyMasterID=${JSON.stringify(id)}`;
-        const data = await service.get(url, true);
-        console.log("Plant Data", data);
-        if (data && !data.errorMessage) {
-            dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-            dispatchAction(dispatch, adminTypes.PLANTMASTER_GET_BY_GROUPCOMPANYID_SUCCESS, data.data, null, data.message, null);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Company Plant error'), null, null);
-        }
-    }
-    catch (error) {
-        console.error('error: ', error);
-        dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
+//             dispatch({
+//                 type: commonTypes.NOTIFICATION_SHOW,
+//                 message: 'Company plant submitted successfully',
+//                 error: undefined,
+//                 notification: true
+//             });
+//         }
+//         else {
+//             dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Company Plant error'), null, null);
+//         }
+//     }
+//     catch (error) {
+//         // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+//         dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+//     }
+// };
 
 
-export const getPlantMasterByGroupCompanyId_UsingProcedure = (companyMasterId, yearMasterId, fromDate, todate, validateType) => async dispatch => {
-    dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUTH_URL + `audit/admin/plantMaster/getPlantByCompanyID_UsingProcedure?companyMasterID=${companyMasterId}`;
-        if (yearMasterId) {
-            url = url + `&yearMasterId=${yearMasterId}`;
-        }
-        if (fromDate) {
-            url = url + `&auditFromDate=${fromDate}`;
-        }
-        if (todate) {
-            url = url + `&auditToDate=${todate}`;
-        }
-        const data = await service.get(url, true);
-        console.log("Plant Data", data);
-        if (data && !data.errorMessage) {
-            dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-            dispatchAction(dispatch, adminTypes.PLANTMASTER_GET_BY_GROUPCOMPANYID_SUCCESS, data.data, null, data.message, null);
-        }
-        else {
-            dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Company Plant error'), null, null);
-        }
-    }
-    catch (error) {
-        console.error('error: ', error);
-        dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
+// export const getPlantMasterById = (id) => async dispatch => {
+//     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null); 
+//     try {
+//         let url = config.AUTH_URL + `audit/admin/plantMaster?id=${id}`;
+//         const data = await service.get(url, true);
+//         if (data && !data.errorMessage) {
+//             // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+//             dispatchAction(dispatch, adminTypes.PLANTMASTER_GET_BY_ID_SUCCESS, data.data, null, data.message, null);
+//         }
+//         else {
+//             dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Company Plant error'), null, null);
+//         }
+//     }
+//     catch (error) {
+//         console.error('error: ', error);
+//         // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+//         dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+//     }
+
+// };
+
+// export const getPlantMasterByGroupCompanyId = (id, pageIndex, rowsToReturn) => async dispatch => {
+//     dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
+//     try {
+//         // let url = config.AUTH_URL + `audit/admin/plantMaster/getByGroupCompanyMasterId?companyMasterID=${id}`;
+//         //    let url = config.AUTH_URL + `audit/admin/plantMaster/getPlantByCompanyId?pageIndex=${pageIndex}&rows=${rowsToReturn}&companyMasterID=${id}`; 
+//         //    const data = await service.get(url, true);
+//         //     console.log(" Plant data",data);
+//         //console.log("Plant - company id : ",id);
+//         let url = config.AUTH_URL + `audit/admin/plantMaster/getByGroupCompanyMasterId?companyMasterID=${JSON.stringify(id)}`;
+//         const data = await service.get(url, true);
+//         console.log("Plant Data", data);
+//         if (data && !data.errorMessage) {
+//             dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+//             dispatchAction(dispatch, adminTypes.PLANTMASTER_GET_BY_GROUPCOMPANYID_SUCCESS, data.data, null, data.message, null);
+//         }
+//         else {
+//             dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Company Plant error'), null, null);
+//         }
+//     }
+//     catch (error) {
+//         console.error('error: ', error);
+//         dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+//         dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+//     }
+// };
 
 
-export const getPlantMaster = (pageIndex, rowsToReturn, order, where) => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUTH_URL + `audit/admin/plantMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
+// export const getPlantMasterByGroupCompanyId_UsingProcedure = (companyMasterId, yearMasterId, fromDate, todate, validateType) => async dispatch => {
+//     dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
+//     try {
+//         let url = config.AUTH_URL + `audit/admin/plantMaster/getPlantByCompanyID_UsingProcedure?companyMasterID=${companyMasterId}`;
+//         if (yearMasterId) {
+//             url = url + `&yearMasterId=${yearMasterId}`;
+//         }
+//         if (fromDate) {
+//             url = url + `&auditFromDate=${fromDate}`;
+//         }
+//         if (todate) {
+//             url = url + `&auditToDate=${todate}`;
+//         }
+//         const data = await service.get(url, true);
+//         console.log("Plant Data", data);
+//         if (data && !data.errorMessage) {
+//             dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+//             dispatchAction(dispatch, adminTypes.PLANTMASTER_GET_BY_GROUPCOMPANYID_SUCCESS, data.data, null, data.message, null);
+//         }
+//         else {
+//             dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+//             dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Company Plant error'), null, null);
+//         }
+//     }
+//     catch (error) {
+//         console.error('error: ', error);
+//         dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+//         dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+//     }
+// };
 
-        if (order && order.length > 0) {
-            url = url + `&order=${JSON.stringify(order)}`;
-        }
 
-        if (order && order.length > 0) {
-            url = url + `&where=${JSON.stringify(where)}`;
-        }
-        const data = await service.get(url, true);
+// export const getPlantMaster = (pageIndex, rowsToReturn, order, where) => async dispatch => {
+//     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
+//     try {
+//         let url = config.AUTH_URL + `audit/admin/plantMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
 
-        if (data && !data.errorMessage) {
-            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-            dispatchAction(dispatch, adminTypes.PLANTMASTER_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Company Plant error'), null, null);
-        }
-    }
-    catch (error) {
-        console.error('error: ', error);
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
+//         if (order && order.length > 0) {
+//             url = url + `&order=${JSON.stringify(order)}`;
+//         }
 
-export const deletePlantMaster = MasterIds => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUTH_URL + `audit/admin/plantMaster`;
+//         if (order && order.length > 0) {
+//             url = url + `&where=${JSON.stringify(where)}`;
+//         }
+//         const data = await service.get(url, true);
 
-        const data = await service._delete(url + '?id=' + MasterIds, true);
+//         if (data && !data.errorMessage) {
+//             // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+//             dispatchAction(dispatch, adminTypes.PLANTMASTER_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
+//         }
+//         else {
+//             dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Company Plant error'), null, null);
+//         }
+//     }
+//     catch (error) {
+//         console.error('error: ', error);
+//         // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+//         dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+//     }
+// };
 
-        if (data && !data.errorMessage) {
-            dispatchAction(dispatch, adminTypes.PLANTMASTER_DELETE_SUCCESS, null, null, null, data.message);
+// export const deletePlantMaster = MasterIds => async dispatch => {
+//     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
+//     try {
+//         let url = config.AUTH_URL + `audit/admin/plantMaster`;
 
-            setTimeout(() =>
-                dispatch({
-                    type: commonTypes.NOTIFICATION_SHOW,
-                    message: 'Company Plant(s) deleted successfully',
-                    error: undefined,
-                    notification: true
-                }), 500);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Company Plant error'), null, null);
-        }
-    }
-    catch (error) {
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-//#endregion
+//         const data = await service._delete(url + '?id=' + MasterIds, true);
+
+//         if (data && !data.errorMessage) {
+//             dispatchAction(dispatch, adminTypes.PLANTMASTER_DELETE_SUCCESS, null, null, null, data.message);
+
+//             setTimeout(() =>
+//                 dispatch({
+//                     type: commonTypes.NOTIFICATION_SHOW,
+//                     message: 'Company Plant(s) deleted successfully',
+//                     error: undefined,
+//                     notification: true
+//                 }), 500);
+//         }
+//         else {
+//             dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Company Plant error'), null, null);
+//         }
+//     }
+//     catch (error) {
+//         // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+//         dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+//     }
+// };
+// //#endregion
 
 //#region User
 
@@ -1085,7 +1085,7 @@ export const saveUserData = user => async dispatch => {
 
             dispatch({
                 type: commonTypes.NOTIFICATION_SHOW,
-                message: 'User updated successfully',
+                message: 'User submitted successfully',
                 error: undefined,
                 notification: true
             });
@@ -1368,7 +1368,7 @@ export const saveNotificationMasterDetails = notificationDetails => async dispat
 
             dispatch({
                 type: commonTypes.NOTIFICATION_SHOW,
-                message: 'Notification Master updated successfully',
+                message: 'Notification master submitted successfully',
                 error: undefined,
                 notification: true
             });
@@ -1461,201 +1461,6 @@ export const deleteNotificationMasterDetails = id => async dispatch => {
     }
 };
 
-//#endregion
-
-//#region Year Type Master
-
-export const initYearTypeMaster = () => dispatch => {
-    dispatchAction(dispatch, adminTypes.YEARTYPEMASTER_INIT, null, null, null, null);
-};
-
-export const getYearTypeMasterDataById = (id) => async dispatch => {
-    try {
-        let url = config.AUTH_URL + `audit/admin/yearTypeMaster?id=${id}`;
-        const data = await service.get(url, true);
-        if (data && !data.errorMessage) {
-            dispatchAction(dispatch, adminTypes.YEARTYPEMASTER_GET_BY_ID_SUCCESS, data.data, null, data.message, null);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Year Type Master error'), null, null);
-        }
-    }
-    catch (error) {
-        console.error('error: ', error);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-
-};
-
-export const getYearTypeMasterData = (pageIndex, rowsToReturn, order, where) => async dispatch => {
-    try {
-        let url = config.AUTH_URL + `audit/admin/yearTypeMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
-
-        if (order && order.length > 0) {
-            url = url + `&order=${JSON.stringify(order)}`;
-        }
-
-        if (order && order.length > 0) {
-            url = url + `&where=${JSON.stringify(where)}`;
-        }
-        const data = await service.get(url, true);
-        console.log("yearTypeData", data);
-        if (data && !data.errorMessage) {
-            dispatchAction(dispatch, adminTypes.YEARTYPEMASTER_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Year Type Master error'), null, null);
-        }
-    }
-    catch (error) {
-        console.error('error: ', error);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-
-//#endregion
-
-//#region  Audit Type Auditor Relation Master
-
-export const initAuditTypeAuditorRelationMaster = () => dispatch => {
-    dispatchAction(dispatch, adminTypes.AUDITTYPEAUDITORRELATIONMASTER_INIT, null, null, null, null);
-};
-
-export const saveAuditTypeAuditorRelationMasterData = auditTypeAuditorRelation => async dispatch => {
-    //  dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/auditTypeAuditorRelation/`;
-        const data = (typeof auditTypeAuditorRelation.id === 'undefined' || auditTypeAuditorRelation.id === -1) ? await service.post(url, auditTypeAuditorRelation, true)
-            : await service.put(url, auditTypeAuditorRelation, true);
-
-        if (data && !data.errorMessage) {
-            dispatchAction(dispatch, adminTypes.AUDITTYPEAUDITORRELATIONMASTER_SAVE_SUCCESS, auditTypeAuditorRelation, null, data.message, null);
-
-            dispatch({
-                type: commonTypes.NOTIFICATION_SHOW,
-                message: 'Audit Type Auditor Relation Master updated successfully',
-                error: undefined,
-                notification: true
-            });
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Audit Type Auditor Relation master error !!'), null, null);
-        }
-    }
-    catch (error) {
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-
-
-export const getAuditTypeAuditorRelationMasterDataById = (id) => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null); 
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/auditTypeAuditorRelation?id=${id}`;
-        const data = await service.get(url, true);
-        if (data && !data.errorMessage) {
-            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-            dispatchAction(dispatch, adminTypes.AUDITTYPEAUDITORRELATIONMASTER_GET_BY_ID_SUCCESS, data.data, null, data.message, null);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Audit Type Auditor Relation error'), null, null);
-        }
-    }
-    catch (error) {
-        console.error('error: ', error);
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-
-};
-
-export const getAuditTypeAuditorRelationMasterData = (pageIndex, rowsToReturn, order, where) => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let getType = 'groupdata';
-        let url = config.AUDIT_URL + `audit/auditadmin/auditTypeAuditorRelation?pageIndex=${pageIndex}&rows=${rowsToReturn}&getType=${getType}`;
-
-        if (order && order.length > 0) {
-            url = url + `&order=${JSON.stringify(order)}`;
-        }
-
-        if (order && order.length > 0) {
-            url = url + `&where=${JSON.stringify(where)}`;
-        }
-        const data = await service.get(url, true);
-
-        if (data && !data.errorMessage) {
-            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-            dispatchAction(dispatch, adminTypes.AUDITTYPEAUDITORRELATIONMASTER_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Audit Type Auditor Relation error'), null, null);
-        }
-    }
-    catch (error) {
-        console.error('error: ', error);
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-
-export const getAuditTypeAuditorRelationMasterData_AllUsers = (pageIndex, rowsToReturn, order, where) => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let getType = 'AllUser';
-        let url = config.AUDIT_URL + `audit/auditadmin/auditTypeAuditorRelation?pageIndex=${pageIndex}&rows=${rowsToReturn}&getType=${getType}`;
-
-        if (order && order.length > 0) {
-            url = url + `&order=${JSON.stringify(order)}`;
-        }
-
-        if (order && order.length > 0) {
-            url = url + `&where=${JSON.stringify(where)}`;
-        }
-        const data = await service.get(url, true);
-
-        if (data && !data.errorMessage) {
-            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-            dispatchAction(dispatch, adminTypes.AUDITTYPEAUDITORRELATIONMASTER_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Audit Type Auditor Relation error'), null, null);
-        }
-    }
-    catch (error) {
-        console.error('error: ', error);
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-export const deleteAuditTypeAuditorRelationMasterData = Ids => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/auditTypeAuditorRelation`;
-
-        const data = await service._delete(url + '?id=' + Ids, true);
-
-        if (data && !data.errorMessage) {
-            dispatchAction(dispatch, adminTypes.AUDITTYPEAUDITORRELATIONMASTER_DELETE_SUCCESS, null, null, null, data.message);
-
-            setTimeout(() =>
-                dispatch({
-                    type: commonTypes.NOTIFICATION_SHOW,
-                    message: 'Audit Type Auditor Relation master(s) deleted successfully !!',
-                    error: undefined,
-                    notification: true
-                }), 500);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Audit Type Auditor Relation Master error'), null, null);
-        }
-    }
-    catch (error) {
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
 //#endregion
 
 //#region Country Master
@@ -1806,7 +1611,7 @@ export const saveOrganisationDetails = Organisation => async dispatch => {
 
             dispatch({
                 type: commonTypes.NOTIFICATION_SHOW,
-                message: 'Organisation Details updated successfully',
+                message: 'Organisation details submitted successfully',
                 error: undefined,
                 notification: true
             });
@@ -1914,7 +1719,7 @@ export const saveOrganisationEmployeeDetails = OrganisationEmployee => async dis
 
             dispatch({
                 type: commonTypes.NOTIFICATION_SHOW,
-                message: 'Organisation Employee Details updated successfully',
+                message: 'Organisation employee details submitted successfully',
                   error: undefined,
                 notification: true
             });
@@ -2026,7 +1831,7 @@ export const saveTowerMasterData = towerMaster => async dispatch => {
 
             dispatch({
                 type: commonTypes.NOTIFICATION_SHOW,
-                message: 'Tower Master updated successfully',
+                message: 'Tower master updated successfully',
                 error: undefined,
                 notification: true
             });
@@ -2142,7 +1947,7 @@ export const saveTowerAllotmentMasterData = towerAllotmentMaster => async dispat
 
             dispatch({
                 type: commonTypes.NOTIFICATION_SHOW,
-                message: 'Tower Allotment Master updated successfully',
+                message: 'Tower allotment master submitted successfully',
                 error: undefined,
                 notification: true
             });
@@ -2258,7 +2063,7 @@ export const saveTowerAntennasMasterData = towerAntennasMaster => async dispatch
 
             dispatch({
                 type: commonTypes.NOTIFICATION_SHOW,
-                message: 'Tower Antennas Master updated successfully',
+                message: 'Tower antenna master submitted successfully',
                 error: undefined,
                 notification: true
             });
@@ -2374,7 +2179,7 @@ export const saveDeviceRegistrationMasterData = deviceRegistrationMaster => asyn
 
             dispatch({
                 type: commonTypes.NOTIFICATION_SHOW,
-                message: 'Device Registration Master updated successfully',
+                message: 'Device registration master submitted successfully',
                 error: undefined,
                 notification: true
             });

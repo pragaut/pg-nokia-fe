@@ -9,4 +9,12 @@ export const ANTENNAROTATIONDETAILS_SAVE_SUCCESS = 'modules/antennaRotationDetai
 export const ANTENNAROTATIONDETAILS_SAVE_ERROR = 'modules/antennaRotationDetails/ANTENNAROTATIONDETAILS_SAVE_ERROR';
 //#endregion
 
+//#region  Final Audit Action Plan 
+
+export const DEVICELOCATIONDETAILS_INIT = 'modules/deviceLocationDetails/DEVICELOCATIONDETAILS_INIT';
+export const DEVICELOCATIONDETAILS_LIST_REQUESTED = 'modules/deviceLocationDetails/DEVICELOCATIONDETAILS_LIST_REQUESTED';
+export const DEVICELOCATIONDETAILS_LIST_SUCCESS = 'modules/deviceLocationDetails/DEVICELOCATIONDETAILS_LIST_SUCCESS';
+
+//#endregion
+
 
