@@ -93,7 +93,7 @@ class GroupAddEdit extends Wrapper {
             let media = {};
             this.handleLoad("1");
             const existingGroup = Object.assign({}, this.state.group);
-            fetch(config.TMC_URL + constants.END_POINTS.TMC.IMAGE_CHANGE + '?oprKey=' + process.env.OPR_KEY, {
+            fetch(config.NOKIA_URL + constants.END_POINTS.NOKIA.IMAGE_CHANGE + '?oprKey=' + process.env.OPR_KEY, {
                 method: 'POST',
                 headers: {
                     'x-access-token': sessionHelper.getToken()

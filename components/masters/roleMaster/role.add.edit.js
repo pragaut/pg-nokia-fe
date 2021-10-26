@@ -124,10 +124,10 @@ class RoleAddEdit extends Wrapper {
                                 <SpanLabelForDDl>Module Name</SpanLabelForDDl>
                                 <Gap h="5px" />
                                 <SELECT
-                                    value={this.state.role.orgModulesId} paddingLeft="10px" borderRadius="14px" height="51px"
+                                    value={this.state.role.grpModulesId} paddingLeft="10px" borderRadius="14px" height="51px"
                                     type="text" color="rgba(0,0,0,0.87)" borderColor="rgba(0,0,0,0.54)"
                                     style={{ backgroundColor: "transparent", border: "1px solid #ccc" }}
-                                    onChange={this.onValueChanged('orgModulesId')}
+                                    onChange={this.onValueChanged('grpModulesId')}
                                 >
                                     <option key="a0" value="" >--- Select Module Name ---</option>
                                     {this.state.modules &&

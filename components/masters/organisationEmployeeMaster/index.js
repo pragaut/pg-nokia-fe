@@ -127,12 +127,12 @@ class Index extends Wrapper {
             this.setState({
                 organisations: nextProps.organisations
             })
-        }
-        if (nextProps && nextProps.orgEmployees && nextProps.orgEmployees !== null && nextProps.orgEmployees !== undefined && nextProps.orgEmployees !== 'undefined' && nextProps.orgEmployees !== this.state.orgEmployees) {
+        } 
+        if (nextProps && nextProps.orgEmployees) { 
             this.setState({
                 orgEmployees: nextProps.orgEmployees
             })
-        }
+        } 
 
         const storeInState = (data, key) => {
             // time to store

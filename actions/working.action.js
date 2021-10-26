@@ -41,7 +41,7 @@ export const getAntennaRotataionDetails = (filters, userId, pageIndex, rowsToRet
         let towerId = filters && filters.towerId ? filters.towerId : '';
         let macOrAntennaCode = filters && filters.macOrAntennaCode ? filters.criticamacOrAntennaCodelityMasterId : '';
 
-        let url = config.TMC_URL + `tmc/tmcworking/antennaRotationDetails?pageIndex=${pageIndex}`;
+        let url = config.NOKIA_URL + `nokia/nokiaworking/antennaRotationDetails?pageIndex=${pageIndex}`;
 
         if (id) {
             url = url + `&id=${id}`;
@@ -89,7 +89,7 @@ export const getDeviceLocationDetails = (filters, userId, pageIndex, rowsToRetur
         let deviceRegistrationDetailId = filters && filters.deviceRegistrationDetailId ? filters.deviceRegistrationDetailId : '';
         let macAddress = filters && filters.macAddress ? filters.macAddress : ''; 
 
-        let url = config.TMC_URL + `tmc/tmcworking/deviceLocationDetails?pageIndex=${pageIndex}`;
+        let url = config.NOKIA_URL + `nokia/nokiaworking/deviceLocationDetails?pageIndex=${pageIndex}`;
 
         if (deviceLocationDetailId) {
             url = url + `&deviceLocationDetailId=${deviceLocationDetailId}`;

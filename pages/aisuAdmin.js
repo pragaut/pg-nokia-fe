@@ -222,7 +222,7 @@ export class Index extends Wrapper {
           ParentMasterName: undefined,
           parentMasterCategoryId: '',
           url: "/aisuAdmin/device-location-details",
-          isVisible: true
+          isVisible: false
         }
       ],
       commonMasterLinks: []

@@ -1,5 +1,5 @@
 {
-  "name": "tmc",
+  "name": "nokia",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "node server.js",
     "start-test": "next start",
-    "pb-dev": "(cd && cd projects/nokia/back-end/tmc/api && gnome-terminal --tab) & (cd && cd projects/nokia/back-end/services.auth/api && gnome-terminal --tab) & npm run start",
-    "open": "(cd && cd projects/nokia/back-end/tmc/api && gnome-terminal --tab) & (cd && cd projects/nokia/back-end/services.auth/api && gnome-terminal --tab) & (cd && cd projects/nokia/back-end/services.email && gnome-terminal --tab)& (cd && cd projects/nokia/back-end/codebase && gnome-terminal --tab)& (cd && cd projects/nokia/front-end/codebase && gnome-terminal --tab)"
+    "pb-dev": "(cd && cd projects/nokia/back-end/nokia/api && gnome-terminal --tab) & (cd && cd projects/nokia/back-end/services.auth/api && gnome-terminal --tab) & npm run start",
+    "open": "(cd && cd projects/nokia/back-end/nokia/api && gnome-terminal --tab) & (cd && cd projects/nokia/back-end/services.auth/api && gnome-terminal --tab) & (cd && cd projects/nokia/back-end/services.email && gnome-terminal --tab)& (cd && cd projects/nokia/back-end/codebase && gnome-terminal --tab)& (cd && cd projects/nokia/front-end/codebase && gnome-terminal --tab)"
   },
   "browser": {
     "child_process": false

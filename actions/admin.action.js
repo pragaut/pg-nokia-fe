@@ -35,7 +35,7 @@ export const initGroupMaster = () => dispatch => {
 export const saveGroupMasterData = groupMaster => async dispatch => {
     //  dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.AUTH_URL + `tmc/admin/groupMaster/`;
+        let url = config.AUTH_URL + `nokia/admin/groupMaster/`;
         const data = (typeof groupMaster.id === 'undefined' || groupMaster.id === -1) ? await service.post(url, groupMaster, true)
             : await service.put(url, groupMaster, true);
 
@@ -63,7 +63,7 @@ export const saveGroupMasterData = groupMaster => async dispatch => {
 };
 export const getGroupMasterDataById = (id) => async dispatch => {
     try {
-        let url = config.AUTH_URL + `tmc/admin/groupMaster?id=${id}`;
+        let url = config.AUTH_URL + `nokia/admin/groupMaster?id=${id}`;
         const data = await service.get(url, true);
         if (data && !data.errorMessage) {
             //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
@@ -83,7 +83,7 @@ export const getGroupMasterDataById = (id) => async dispatch => {
 export const getGroupMasterData = (pageIndex, rowsToReturn, order, where) => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.AUTH_URL + `tmc/admin/groupMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
+        let url = config.AUTH_URL + `nokia/admin/groupMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
 
         if (order && order.length > 0) {
             url = url + `&order=${JSON.stringify(order)}`;
@@ -110,7 +110,7 @@ export const getGroupMasterData = (pageIndex, rowsToReturn, order, where) => asy
 export const deleteGroupMasterData = id => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.AUTH_URL + `tmc/admin/groupMaster`;
+        let url = config.AUTH_URL + `nokia/admin/groupMaster`;
 
         const data = await service._delete(url + '?id=' + id, true);
 
@@ -144,7 +144,7 @@ export const initOrgRelationTypeMaster = () => dispatch => {
 export const saveOrgRelationTypeMasterData = OrgRelationTypeMaster => async dispatch => {
     //  dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.AUTH_URL + `tmc/admin/orgRelationTypeMaster/`;
+        let url = config.AUTH_URL + `nokia/admin/orgRelationTypeMaster/`;
         const data = (typeof OrgRelationTypeMaster.id === 'undefined' || OrgRelationTypeMaster.id === -1) ? await service.post(url, OrgRelationTypeMaster, true)
             : await service.put(url, OrgRelationTypeMaster, true);
 
@@ -171,7 +171,7 @@ export const saveOrgRelationTypeMasterData = OrgRelationTypeMaster => async disp
 };
 export const getOrgRelationTypeMasterDataById = (id) => async dispatch => {
     try {
-        let url = config.AUTH_URL + `tmc/admin/orgRelationTypeMaster?id=${id}`;
+        let url = config.AUTH_URL + `nokia/admin/orgRelationTypeMaster?id=${id}`;
         const data = await service.get(url, true);
         if (data && !data.errorMessage) {
             //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
@@ -191,7 +191,7 @@ export const getOrgRelationTypeMasterDataById = (id) => async dispatch => {
 export const getOrgRelationTypeMasterData = (pageIndex, rowsToReturn, order, where, groupId) => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.AUTH_URL + `tmc/admin/orgRelationTypeMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
+        let url = config.AUTH_URL + `nokia/admin/orgRelationTypeMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
 
         if (order && order.length > 0) {
             url = url + `&order=${JSON.stringify(order)}`;
@@ -223,7 +223,7 @@ export const getOrgRelationTypeMasterData = (pageIndex, rowsToReturn, order, whe
 export const deleteOrgRelationTypeMasterData = id => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.AUTH_URL + `tmc/admin/orgRelationTypeMaster`;
+        let url = config.AUTH_URL + `nokia/admin/orgRelationTypeMaster`;
 
         const data = await service._delete(url + '?id=' + id, true);
 
@@ -259,7 +259,7 @@ export const initAlarmTypeMaster = () => dispatch => {
 export const saveAlarmTypeMasterData = alarmTypeMaster => async dispatch => {
     //  dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.AUTH_URL + `tmc/admin/alarmTypeMaster/`;
+        let url = config.AUTH_URL + `nokia/admin/alarmTypeMaster/`;
         const data = (typeof alarmTypeMaster.id === 'undefined' || alarmTypeMaster.id === -1) ? await service.post(url, alarmTypeMaster, true)
             : await service.put(url, alarmTypeMaster, true);
 
@@ -287,9 +287,9 @@ export const saveAlarmTypeMasterData = alarmTypeMaster => async dispatch => {
 };
 
 
-export const getAlarmTypeMasterDataById = (alarm_type_id) => async dispatch => {
+export const getAlarmTypeMasterDataById = (id) => async dispatch => {
     try {
-        let url = config.AUTH_URL + `tmc/admin/alarmTypeMaster?alarm_type_id=${alarm_type_id}`;
+        let url = config.AUTH_URL + `nokia/admin/alarmTypeMaster?id=${id}`;
         const data = await service.get(url, true);
         if (data && !data.errorMessage) {
             //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
@@ -310,7 +310,7 @@ export const getAlarmTypeMasterDataById = (alarm_type_id) => async dispatch => {
 export const getAlarmTypeMasterData = (pageIndex, rowsToReturn, order, where) => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.AUTH_URL + `tmc/admin/alarmTypeMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
+        let url = config.AUTH_URL + `nokia/admin/alarmTypeMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
 
         if (order && order.length > 0) {
             url = url + `&order=${JSON.stringify(order)}`;
@@ -338,7 +338,7 @@ export const getAlarmTypeMasterData = (pageIndex, rowsToReturn, order, where) =>
 export const deleteAlarmTypeMasterData = id => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.AUTH_URL + `tmc/admin/alarmTypeMaster`;
+        let url = config.AUTH_URL + `nokia/admin/alarmTypeMaster`;
 
         const data = await service._delete(url + '?id=' + id, true);
 
@@ -374,7 +374,7 @@ export const initNotificationMaster = () => dispatch => {
 export const saveNotificationMasterData = notificationMaster => async dispatch => {
     //  dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.AUTH_URL + `tmc/admin/notificationMaster/`;
+        let url = config.AUTH_URL + `nokia/admin/notificationMaster/`;
         const data = (typeof notificationMaster.id === 'undefined' || notificationMaster.id === -1) ? await service.post(url, notificationMaster, true)
             : await service.put(url, notificationMaster, true);
 
@@ -402,9 +402,9 @@ export const saveNotificationMasterData = notificationMaster => async dispatch =
 };
 
 
-export const getNotificationMasterDataById = (notification_id) => async dispatch => {
+export const getNotificationMasterDataById = (id) => async dispatch => {
     try {
-        let url = config.AUTH_URL + `tmc/admin/notificationMaster?notification_id=${notification_id}`;
+        let url = config.AUTH_URL + `nokia/admin/notificationMaster?id=${id}`;
         const data = await service.get(url, true);
         if (data && !data.errorMessage) {
             //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
@@ -425,7 +425,7 @@ export const getNotificationMasterDataById = (notification_id) => async dispatch
 export const getNotificationMasterData = (pageIndex, rowsToReturn, order, where) => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.AUTH_URL + `tmc/admin/notificationMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
+        let url = config.AUTH_URL + `nokia/admin/notificationMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
 
         if (order && order.length > 0) {
             url = url + `&order=${JSON.stringify(order)}`;
@@ -453,7 +453,7 @@ export const getNotificationMasterData = (pageIndex, rowsToReturn, order, where)
 export const deleteNotificationMasterData = id => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.AUTH_URL + `tmc/admin/notificationMaster`;
+        let url = config.AUTH_URL + `nokia/admin/notificationMaster`;
 
         const data = await service._delete(url + '?id=' + id, true);
 
@@ -489,7 +489,7 @@ export const initModuleMaster = () => dispatch => {
 export const saveModuleMasterData = moduleMaster => async dispatch => {
     //  dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.AUTH_URL + `tmc/admin/moduleMaster/`;
+        let url = config.AUTH_URL + `nokia/admin/moduleMaster/`;
         const data = (typeof moduleMaster.id === 'undefined' || moduleMaster.id === -1) ? await service.post(url, moduleMaster, true)
             : await service.put(url, moduleMaster, true);
 
@@ -517,9 +517,9 @@ export const saveModuleMasterData = moduleMaster => async dispatch => {
 };
 
 
-export const getModuleMasterDataById = (org_modules_id) => async dispatch => {
+export const getModuleMasterDataById = (id) => async dispatch => {
     try {
-        let url = config.AUTH_URL + `tmc/admin/moduleMaster?org_modules_id=${org_modules_id}`;
+        let url = config.AUTH_URL + `nokia/admin/moduleMaster?id=${id}`;
         const data = await service.get(url, true);
         if (data && !data.errorMessage) {
             //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
@@ -540,7 +540,7 @@ export const getModuleMasterDataById = (org_modules_id) => async dispatch => {
 export const getModuleMasterData = (pageIndex, rowsToReturn, order, where) => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.AUTH_URL + `tmc/admin/moduleMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
+        let url = config.AUTH_URL + `nokia/admin/moduleMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
 
         if (order && order.length > 0) {
             url = url + `&order=${JSON.stringify(order)}`;
@@ -568,7 +568,7 @@ export const getModuleMasterData = (pageIndex, rowsToReturn, order, where) => as
 export const deleteModuleMasterData = id => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.AUTH_URL + `tmc/admin/moduleMaster`;
+        let url = config.AUTH_URL + `nokia/admin/moduleMaster`;
 
         const data = await service._delete(url + '?id=' + id, true);
 
@@ -600,7 +600,7 @@ export const deleteModuleMasterData = id => async dispatch => {
 
 export const getYearMasterData = (pageIndex, rowsToReturn, order, where) => async dispatch => {
     try {
-        let url = config.AUTH_URL + `audit/admin/yearMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
+        let url = config.AUTH_URL + `nokia/admin/yearMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
 
         if (order && order.length > 0) {
             url = url + `&order=${JSON.stringify(order)}`;
@@ -634,7 +634,7 @@ export const initRoleMaster = () => dispatch => {
 export const saveRoleMasterData = roleMaster => async dispatch => {
     //  dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.AUTH_URL + `tmc/admin/roleMaster/`;
+        let url = config.AUTH_URL + `nokia/admin/roleMaster/`;
         const data = (typeof roleMaster.id === 'undefined' || roleMaster.id === -1) ? await service.post(url, roleMaster, true)
             : await service.put(url, roleMaster, true);
 
@@ -661,9 +661,9 @@ export const saveRoleMasterData = roleMaster => async dispatch => {
     }
 };
 
-export const getRoleMasterDataById = (role_id) => async dispatch => {
+export const getRoleMasterDataById = (id) => async dispatch => {
     try {
-        let url = config.AUTH_URL + `tmc/admin/roleMaster?role_id=${role_id}`;
+        let url = config.AUTH_URL + `nokia/admin/roleMaster?id=${id}`;
         const data = await service.get(url, true);
         if (data && !data.errorMessage) {
             //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
@@ -684,7 +684,7 @@ export const getRoleMasterDataById = (role_id) => async dispatch => {
 export const getRoleMasterByModuleId = (org_modules_id) => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null); 
     try {
-        let url = config.AUTH_URL + `tmc/admin/roleMaster/getByModuleId?org_modules_id=${org_modules_id}`;
+        let url = config.AUTH_URL + `nokia/admin/roleMaster/getByModuleId?org_modules_id=${org_modules_id}`;
         const data = await service.get(url, true);
         if (data && !data.errorMessage) {
             // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
@@ -704,7 +704,7 @@ export const getRoleMasterByModuleId = (org_modules_id) => async dispatch => {
 export const getRoleMasterData = (pageIndex, rowsToReturn, order, where) => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.AUTH_URL + `tmc/admin/roleMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
+        let url = config.AUTH_URL + `nokia/admin/roleMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
 
         if (order && order.length > 0) {
             url = url + `&order=${JSON.stringify(order)}`;
@@ -732,7 +732,7 @@ export const getRoleMasterData = (pageIndex, rowsToReturn, order, where) => asyn
 export const deleteRoleMasterData = id => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.AUTH_URL + `tmc/admin/roleMaster`;
+        let url = config.AUTH_URL + `nokia/admin/roleMaster`;
 
         const data = await service._delete(url + '?id=' + id, true);
 
@@ -768,7 +768,7 @@ export const initCompanyMaster = () => dispatch => {
 export const saveCompanyMasterData = Company => async dispatch => {
     //  dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.AUTH_URL + `audit/admin/companyMaster/`;
+        let url = config.AUTH_URL + `nokia/admin/companyMaster/`;
         const data = (typeof Company.id === 'undefined' || Company.id === -1) ? await service.post(url, Company, true)
             : await service.put(url, Company, true);
 
@@ -799,7 +799,7 @@ export const saveCompanyMasterData = Company => async dispatch => {
 export const getCompanyMasterById = (id) => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null); 
     try {
-        let url = config.AUTH_URL + `audit/admin/companyMaster?id=${id}`;
+        let url = config.AUTH_URL + `nokia/admin/companyMaster?id=${id}`;
         const data = await service.get(url, true);
         if (data && !data.errorMessage) {
             // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
@@ -820,7 +820,7 @@ export const getCompanyMasterById = (id) => async dispatch => {
 export const getCompanyMasterByGroupId = (id) => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null); 
     try {
-        let url = config.AUTH_URL + `audit/admin/companyMaster/getByGroupMasterId?groupMasterID=${id}`;
+        let url = config.AUTH_URL + `nokia/admin/companyMaster/getByGroupMasterId?groupMasterID=${id}`;
         const data = await service.get(url, true);
         if (data && !data.errorMessage) {
             // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
@@ -840,7 +840,7 @@ export const getCompanyMasterByGroupId = (id) => async dispatch => {
 export const getCompanyMaster = (pageIndex, rowsToReturn, order, where) => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.AUTH_URL + `audit/admin/companyMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
+        let url = config.AUTH_URL + `nokia/admin/companyMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
 
         if (order && order.length > 0) {
             url = url + `&order=${JSON.stringify(order)}`;
@@ -868,7 +868,7 @@ export const getCompanyMaster = (pageIndex, rowsToReturn, order, where) => async
 export const deleteCompanyMaster = MasterIds => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.AUTH_URL + `audit/admin/companyMaster`;
+        let url = config.AUTH_URL + `nokia/admin/companyMaster`;
 
         const data = await service._delete(url + '?id=' + MasterIds, true);
 
@@ -903,7 +903,7 @@ export const deleteCompanyMaster = MasterIds => async dispatch => {
 // export const savePlantMasterData = companyPlant => async dispatch => {
 //     //  dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
 //     try {
-//         let url = config.AUTH_URL + `audit/admin/plantMaster/`;
+//         let url = config.AUTH_URL + `nokia/admin/plantMaster/`;
 //         const data = (typeof companyPlant.id === 'undefined' || companyPlant.id === -1) ? await service.post(url, companyPlant, true)
 //             : await service.put(url, companyPlant, true);
 
@@ -934,7 +934,7 @@ export const deleteCompanyMaster = MasterIds => async dispatch => {
 // export const getPlantMasterById = (id) => async dispatch => {
 //     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null); 
 //     try {
-//         let url = config.AUTH_URL + `audit/admin/plantMaster?id=${id}`;
+//         let url = config.AUTH_URL + `nokia/admin/plantMaster?id=${id}`;
 //         const data = await service.get(url, true);
 //         if (data && !data.errorMessage) {
 //             // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
@@ -955,7 +955,7 @@ export const deleteCompanyMaster = MasterIds => async dispatch => {
 // export const getPlantMasterByGroupCompanyId = (id, pageIndex, rowsToReturn) => async dispatch => {
 //     dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
 //     try {
-//         // let url = config.AUTH_URL + `audit/admin/plantMaster/getByGroupCompanyMasterId?companyMasterID=${id}`;
+//         // let url = config.AUTH_URL + `nokia/admin/plantMaster/getByGroupCompanyMasterId?companyMasterID=${id}`;
 //         //    let url = config.AUTH_URL + `audit/admin/plantMaster/getPlantByCompanyId?pageIndex=${pageIndex}&rows=${rowsToReturn}&companyMasterID=${id}`; 
 //         //    const data = await service.get(url, true);
 //         //     console.log(" Plant data",data);
@@ -982,7 +982,7 @@ export const deleteCompanyMaster = MasterIds => async dispatch => {
 // export const getPlantMasterByGroupCompanyId_UsingProcedure = (companyMasterId, yearMasterId, fromDate, todate, validateType) => async dispatch => {
 //     dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
 //     try {
-//         let url = config.AUTH_URL + `audit/admin/plantMaster/getPlantByCompanyID_UsingProcedure?companyMasterID=${companyMasterId}`;
+//         let url = config.AUTH_URL + `nokia/admin/plantMaster/getPlantByCompanyID_UsingProcedure?companyMasterID=${companyMasterId}`;
 //         if (yearMasterId) {
 //             url = url + `&yearMasterId=${yearMasterId}`;
 //         }
@@ -1014,7 +1014,7 @@ export const deleteCompanyMaster = MasterIds => async dispatch => {
 // export const getPlantMaster = (pageIndex, rowsToReturn, order, where) => async dispatch => {
 //     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
 //     try {
-//         let url = config.AUTH_URL + `audit/admin/plantMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
+//         let url = config.AUTH_URL + `nokia/admin/plantMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
 
 //         if (order && order.length > 0) {
 //             url = url + `&order=${JSON.stringify(order)}`;
@@ -1043,7 +1043,7 @@ export const deleteCompanyMaster = MasterIds => async dispatch => {
 // export const deletePlantMaster = MasterIds => async dispatch => {
 //     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
 //     try {
-//         let url = config.AUTH_URL + `audit/admin/plantMaster`;
+//         let url = config.AUTH_URL + `nokia/admin/plantMaster`;
 
 //         const data = await service._delete(url + '?id=' + MasterIds, true);
 
@@ -1074,7 +1074,7 @@ export const deleteCompanyMaster = MasterIds => async dispatch => {
 export const saveUserData = user => async dispatch => {
     dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.AUTH_URL + `tmc/user/`;
+        let url = config.AUTH_URL + `nokia/user/`;
         const data = (typeof user.id === 'undefined' || user.id === -1) ? await service.post(url, user, true)
             : await service.put(url, user, true);
         console.log("data", data);
@@ -1121,7 +1121,7 @@ export const unLockAccount = user => async dispatch => {
             lastName: user.lastName,
             email: user.email
         }
-        let url = config.AUTH_URL + `tmc/user/unLockAccount`;
+        let url = config.AUTH_URL + `nokia/user/unLockAccount`;
         const data = await service.put(url, dataToBeSend, true);
 
         if (data && !data.errorMessage) {
@@ -1150,7 +1150,7 @@ export const unLockAccount = user => async dispatch => {
 
 export const getUserDataById = (id) => async dispatch => {
     try {
-        let url = config.AUTH_URL + `tmc/user?id=${id}`;
+        let url = config.AUTH_URL + `nokia/user?id=${id}`;
         const data = await service.get(url, true);
         if (data && !data.errorMessage) {
             // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
@@ -1172,7 +1172,7 @@ export const getUserDetailsP = (pageIndex, rowsToReturn, order, where, userFilte
     dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
         console.log("getUserDetailsP","Get User Details Here");
-        let url = config.AUTH_URL + `tmc/user/getUsersP?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
+        let url = config.AUTH_URL + `nokia/user/getUsersP?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
         url = url + `&userId=${userFilters && userFilters.userId ? userFilters.userId : ''}`; 
         url = url + `&roleMasterId=${userFilters && userFilters.roleMasterId && userFilters.roleMasterId !== null && userFilters.roleMasterId !== '-1' ? userFilters.roleMasterId : ''}`;
        // console.log("url : 1",url);
@@ -1210,7 +1210,7 @@ export const getUserData = (pageIndex, rowsToReturn, order, where) => async disp
         let LoggedUserPlantId = Loggeduser && Loggeduser.plantMasterId;
         let RoleCategory = LoggedUserCategory ? LoggedUserCategory.roleCategory : undefined;
 
-        let url = config.AUTH_URL + `tmc/user?pageIndex=${pageIndex}&rows=${rowsToReturn}`
+        let url = config.AUTH_URL + `nokia/user?pageIndex=${pageIndex}&rows=${rowsToReturn}`
         if (RoleCategory && RoleCategory === "Company Admin") {
             url = url + `&plantMasterId=${LoggedUserPlantId}`;
         }
@@ -1243,7 +1243,7 @@ export const getUserByPlantId = (pageIndex, rowsToReturn, order, where, id) => a
     try {
         let groupId = "";
         let plantId = id ? id : plantId;
-        let url = config.AUTH_URL + `tmc/user/getUsersP?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
+        let url = config.AUTH_URL + `nokia/user/getUsersP?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
         url = url + `&plantMasterId=${id}`;
 
         //let url = config.AUTH_URL + `audit/user/getByPlantId?plantId=${id}`;
@@ -1266,7 +1266,7 @@ export const getUserByPlantId = (pageIndex, rowsToReturn, order, where, id) => a
 export const getUserByPlantDepartmentId = (plantId, departmentId) => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null); 
     try {
-        let url = config.AUTH_URL + `tmc/user/getByPlantId?plantId=${plantId},departmentId=${departmentId}`;
+        let url = config.AUTH_URL + `nokia/user/getByPlantId?plantId=${plantId},departmentId=${departmentId}`;
         const data = await service.get(url, true);
         if (data && !data.errorMessage) {
             // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
@@ -1286,7 +1286,7 @@ export const getUserByPlantDepartmentId = (plantId, departmentId) => async dispa
 export const deleteUserData = userId => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.AUTH_URL + `tmc/user`;
+        let url = config.AUTH_URL + `nokia/user`;
 
         const data = await service._delete(url + '?id=' + userId, true);
 
@@ -1321,7 +1321,7 @@ export const getCurrentUserSessionDetails = () => async dispatch => {
         let userMasterId = Loggeduser && Loggeduser.id;
         let plantMasterId = Loggeduser && Loggeduser.plantMasterId;
         let companyMasterId = Loggeduser && Loggeduser.plantMaster && Loggeduser.plantMaster.companyMasterID;
-        let url = config.AUTH_URL + `tmc/user/getCurrentUserSessionDetails?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
+        let url = config.AUTH_URL + `nokia/user/getCurrentUserSessionDetails?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
 
         url = url + `&userMasterId=${userMasterId && userMasterId ? userMasterId : ''}`;
         url = url + `&plantMasterId=${plantMasterId && plantMasterId ? plantMasterId : ''}`;
@@ -1346,129 +1346,13 @@ export const getCurrentUserSessionDetails = () => async dispatch => {
 };
 
 //#endregion
-
-//#region  Notification Master
-export const initNotificationMasterDetails = () => dispatch => {
-    dispatchAction(dispatch, adminTypes.NOTIFICATIONMASTERDETAILS_INIT, null, null, null, null);
-};
-
-export const saveNotificationMasterDetails = notificationDetails => async dispatch => {
-    //  dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/notificationDetails/`;
-
-        const data = (typeof notificationDetails.id === 'undefined' || notificationDetails.id === -1) ? await service.post(url, notificationDetails, true)
-            : await service.put(url, notificationDetails, true);
-
-        if (data && !data.errorMessage) {
-
-            //if (typeof notificationDetails.id === 'undefined') notificationDetails.id = data.data.id;
-
-            dispatchAction(dispatch, adminTypes.NOTIFICATIONMASTERDETAILS_SAVE_SUCCESS, notificationDetails, null, data.message, null);
-
-            dispatch({
-                type: commonTypes.NOTIFICATION_SHOW,
-                message: 'Notification master submitted successfully',
-                error: undefined,
-                notification: true
-            });
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'DueDays Master error'), null, null);
-        }
-    }
-    catch (error) {
-        //dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-
-export const getNotificationMasterDetails = (pageIndex, rowsToReturn, order, where) => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/notificationDetails?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
-
-        if (order && order.length > 0) {
-            url = url + `&order=${JSON.stringify(order)}`;
-        }
-
-        if (order && order.length > 0) {
-            url = url + `&where=${JSON.stringify(where)}`;
-        }
-        const data = await service.get(url, true);
-        //console.log("otification data : ",data)
-        if (data && !data.errorMessage) {
-            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-            dispatchAction(dispatch, adminTypes.NOTIFICATIONMASTERDETAILS_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'DueDays Master error'), null, null);
-        }
-    }
-    catch (error) {
-        console.error('error: ', error);
-        //  dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-
-
-
-export const getNotificationMasterDetailsById = (id) => async dispatch => {
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/notificationDetails?id=${id}`;
-        const data = await service.get(url, true);
-        if (data && !data.errorMessage) {
-            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-            dispatchAction(dispatch, adminTypes.NOTIFICATIONMASTERDETAILS_GET_BY_ID_SUCCESS, data.data, null, data.message, null);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Notification Master error'), null, null);
-        }
-    }
-    catch (error) {
-        console.error('error: ', error);
-        //  dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-
-export const deleteNotificationMasterDetails = id => async dispatch => {
-    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
-    try {
-        let url = config.AUDIT_URL + `audit/auditadmin/notificationDetails`;
-
-        const data = await service._delete(url + '?id=' + id, true);
-
-        if (data && !data.errorMessage) {
-            dispatchAction(dispatch, adminTypes.NOTIFICATIONMASTERDETAILS_DELETE_SUCCESS, null, null, null, data.message);
-
-            setTimeout(() =>
-                dispatch({
-                    type: commonTypes.NOTIFICATION_SHOW,
-                    message: 'Notification Master(s) deleted successfully',
-                    error: undefined,
-                    notification: true
-                }), 500);
-        }
-        else {
-            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'DueDays Master error'), null, null);
-        }
-    }
-    catch (error) {
-        // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
-        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
-    }
-};
-
-//#endregion
-
+ 
 //#region Country Master
 
 export const getCountryMasterData = (pageIndex, rowsToReturn, order, where) => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.AUTH_URL + `tmc/admin/countryMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
+        let url = config.AUTH_URL + `nokia/admin/countryMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
 
         if (order && order.length > 0) {
             url = url + `&order=${JSON.stringify(order)}`;
@@ -1501,7 +1385,7 @@ export const getCountryMasterData = (pageIndex, rowsToReturn, order, where) => a
 export const getStateMasterData = (pageIndex, rowsToReturn, order, where, countryId) => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.AUTH_URL + `tmc/admin/stateMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
+        let url = config.AUTH_URL + `nokia/admin/stateMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
 
         if (order && order.length > 0) {
             url = url + `&order=${JSON.stringify(order)}`;
@@ -1536,7 +1420,7 @@ export const getStateMasterData = (pageIndex, rowsToReturn, order, where, countr
 export const getCityMasterData = (pageIndex, rowsToReturn, order, where,stateId) => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.AUTH_URL + `tmc/admin/cityMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
+        let url = config.AUTH_URL + `nokia/admin/cityMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
               if (order && order.length > 0) {
             url = url + `&order=${JSON.stringify(order)}`;
         }
@@ -1569,7 +1453,7 @@ export const getCityMasterData = (pageIndex, rowsToReturn, order, where,stateId)
 export const getGenderMasterData = (pageIndex, rowsToReturn, order, where) => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.AUTH_URL + `tmc/admin/genderMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
+        let url = config.AUTH_URL + `nokia/admin/genderMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
 
         if (order && order.length > 0) {
             url = url + `&order=${JSON.stringify(order)}`;
@@ -1602,7 +1486,7 @@ export const initOrganisationDetails = () => dispatch => {
 export const saveOrganisationDetails = Organisation => async dispatch => {
     //  dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.AUTH_URL + `tmc/admin/organisationDetails/`;
+        let url = config.AUTH_URL + `nokia/admin/organisationDetails/`;
         const data = (typeof Organisation.id === 'undefined' || Organisation.id === -1) ? await service.post(url, Organisation, true)
             : await service.put(url, Organisation, true);
 
@@ -1628,7 +1512,7 @@ export const saveOrganisationDetails = Organisation => async dispatch => {
 export const getOrganisationDetailsDataById = (id) => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null); 
     try {
-        let url = config.AUTH_URL + `tmc/admin/organisationDetails?id=${id}`;
+        let url = config.AUTH_URL + `nokia/admin/organisationDetails?id=${id}`;
         const data = await service.get(url, true);
         if (data && !data.errorMessage) {
             // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
@@ -1649,7 +1533,7 @@ export const getOrganisationDetailsData = (pageIndex, rowsToReturn, order, where
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
         let pageIndex = 0;
-        let url = config.AUTH_URL + `tmc/admin/organisationDetails?pageIndex=${pageIndex}`;
+        let url = config.AUTH_URL + `nokia/admin/organisationDetails?pageIndex=${pageIndex}`;
 
         if (filterparameter && filterparameter.groupId && filterparameter.groupId !== null && filterparameter.groupId !== 'undefined' && filterparameter.groupId !== '-1') {
             url = url + `&groupId=${filterparameter.groupId}`;
@@ -1676,7 +1560,7 @@ export const getOrganisationDetailsData = (pageIndex, rowsToReturn, order, where
 export const deleteOrganisationDetailsData = Ids => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.AUTH_URL + `tmc/admin/organisationDetails`;
+        let url = config.AUTH_URL + `nokia/admin/organisationDetails`;
 
         const data = await service._delete(url + '?id=' + Ids, true);
 
@@ -1702,7 +1586,6 @@ export const deleteOrganisationDetailsData = Ids => async dispatch => {
 };
 //#endregion
 
-
 //#region  Organisation Employee Details
 export const initOrganisationEmployeeDetails = () => dispatch => {
     dispatchAction(dispatch, adminTypes.ORGANISATIONEMPLOYEEDETAILS_INIT, null, null, null, null);
@@ -1710,7 +1593,7 @@ export const initOrganisationEmployeeDetails = () => dispatch => {
 export const saveOrganisationEmployeeDetails = OrganisationEmployee => async dispatch => {
     //  dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.AUTH_URL + `tmc/admin/organisationEmployeeDetails/`;
+        let url = config.AUTH_URL + `nokia/admin/organisationEmployeeDetails/`;
         const data = (typeof OrganisationEmployee.id === 'undefined' || OrganisationEmployee.id === -1) ? await service.post(url, OrganisationEmployee, true)
             : await service.put(url, OrganisationEmployee, true);
 
@@ -1736,7 +1619,7 @@ export const saveOrganisationEmployeeDetails = OrganisationEmployee => async dis
 export const getOrganisationEmployeeDetailsDataById = (id) => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null); 
     try {
-        let url = config.AUTH_URL + `tmc/admin/organisationEmployeeDetails?id=${id}`;
+        let url = config.AUTH_URL + `nokia/admin/organisationEmployeeDetails?id=${id}`;
         const data = await service.get(url, true);
         if (data && !data.errorMessage) {
             // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
@@ -1757,7 +1640,7 @@ export const getOrganisationEmployeeDetailsData = (pageIndex, rowsToReturn, orde
     try {
         let pageIndex = 0;
         
-        let url = config.AUTH_URL + `tmc/admin/organisationEmployeeDetails?pageIndex=${pageIndex}`;
+        let url = config.AUTH_URL + `nokia/admin/organisationEmployeeDetails?pageIndex=${pageIndex}`;
 
         console.log("filterparameter: Org Empl : ---------",filterparameter)
 
@@ -1783,7 +1666,7 @@ export const getOrganisationEmployeeDetailsData = (pageIndex, rowsToReturn, orde
 export const deleteOrganisationEmployeeDetailsData = Ids => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.AUTH_URL + `tmc/admin/organisationEmployeeDetails`;
+        let url = config.AUTH_URL + `nokia/admin/organisationEmployeeDetails`;
 
         const data = await service._delete(url + '?id=' + Ids, true);
 
@@ -1819,7 +1702,7 @@ export const saveTowerMasterData = towerMaster => async dispatch => {
     //  dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
        
-        let url = config.TMC_URL + `tmc/tmcadmin/towerMaster/`;
+        let url = config.NOKIA_URL + `nokia/nokiaadmin/towerMaster/`;
         const data = (typeof towerMaster.id === 'undefined' || towerMaster.id === -1) ? await service.post(url, towerMaster, true)
             : await service.put(url, towerMaster, true);
        
@@ -1847,9 +1730,9 @@ export const saveTowerMasterData = towerMaster => async dispatch => {
 };
 
 
-export const getTowerMasterDataById = (tower_id) => async dispatch => {
+export const getTowerMasterDataById = (id) => async dispatch => {
     try {
-        let url = config.TMC_URL + `tmc/tmcadmin/towerMaster?tower_id=${tower_id}`;
+        let url = config.NOKIA_URL + `nokia/nokiaadmin/towerMaster?id=${id}`;
         const data = await service.get(url, true);
         if (data && !data.errorMessage) {
             //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
@@ -1870,7 +1753,7 @@ export const getTowerMasterDataById = (tower_id) => async dispatch => {
 export const getTowerMasterData = (pageIndex, rowsToReturn, order, where) => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.TMC_URL + `tmc/tmcadmin/towerMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
+        let url = config.NOKIA_URL + `nokia/nokiaadmin/towerMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
 
         if (order && order.length > 0) {
             url = url + `&order=${JSON.stringify(order)}`;
@@ -1899,7 +1782,7 @@ export const getTowerMasterData = (pageIndex, rowsToReturn, order, where) => asy
 export const deleteTowerMasterData = id => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.TMC_URL + `tmc/tmcadmin/towerMaster`;
+        let url = config.NOKIA_URL + `nokia/nokiaadmin/towerMaster`;
 
         const data = await service._delete(url + '?id=' + id, true);
 
@@ -1935,7 +1818,7 @@ export const initTowerAllotmentMaster = () => dispatch => {
 export const saveTowerAllotmentMasterData = towerAllotmentMaster => async dispatch => {
     //  dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.TMC_URL + `tmc/tmcadmin/towerAllotmentMaster/`;
+        let url = config.NOKIA_URL + `nokia/nokiaadmin/towerAllotmentMaster/`;
         const data = (typeof towerAllotmentMaster.id === 'undefined' || towerAllotmentMaster.id === -1) ? await service.post(url, towerAllotmentMaster, true)
             : await service.put(url, towerAllotmentMaster, true);
 
@@ -1963,9 +1846,9 @@ export const saveTowerAllotmentMasterData = towerAllotmentMaster => async dispat
 };
 
 
-export const getTowerAllotmentMasterDataById = (tower_id) => async dispatch => {
+export const getTowerAllotmentMasterDataById = (id) => async dispatch => {
     try {
-        let url = config.TMC_URL + `tmc/tmcadmin/towerAllotmentMaster?tower_id=${tower_id}`;
+        let url = config.NOKIA_URL + `nokia/nokiaadmin/towerAllotmentMaster?id=${id}`;
         const data = await service.get(url, true);
         if (data && !data.errorMessage) {
             //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
@@ -1986,7 +1869,7 @@ export const getTowerAllotmentMasterDataById = (tower_id) => async dispatch => {
 export const getTowerAllotmentMasterData = (pageIndex, rowsToReturn, order, where) => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.TMC_URL + `tmc/tmcadmin/towerAllotmentMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
+        let url = config.NOKIA_URL + `nokia/nokiaadmin/towerAllotmentMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
 
         if (order && order.length > 0) {
             url = url + `&order=${JSON.stringify(order)}`;
@@ -2015,7 +1898,7 @@ export const getTowerAllotmentMasterData = (pageIndex, rowsToReturn, order, wher
 export const deleteTowerAllotmentMasterData = id => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.TMC_URL + `tmc/tmcadmin/towerAllotmentMaster`;
+        let url = config.NOKIA_URL + `nokia/nokiaadmin/towerAllotmentMaster`;
 
         const data = await service._delete(url + '?id=' + id, true);
 
@@ -2051,7 +1934,7 @@ export const initTowerAntennasMaster = () => dispatch => {
 export const saveTowerAntennasMasterData = towerAntennasMaster => async dispatch => {
     //  dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.TMC_URL + `tmc/tmcadmin/towerAntennasMaster/`;
+        let url = config.NOKIA_URL + `nokia/nokiaadmin/towerAntennasMaster/`;
         const data = (typeof towerAntennasMaster.id === 'undefined' || towerAntennasMaster.id === -1) ? await service.post(url, towerAntennasMaster, true)
             : await service.put(url, towerAntennasMaster, true);
 
@@ -2079,9 +1962,9 @@ export const saveTowerAntennasMasterData = towerAntennasMaster => async dispatch
 };
 
 
-export const getTowerAntennasMasterDataById = (tower_id) => async dispatch => {
+export const getTowerAntennasMasterDataById = (id) => async dispatch => {
     try {
-        let url = config.TMC_URL + `tmc/tmcadmin/towerAntennasMaster?tower_id=${tower_id}`;
+        let url = config.NOKIA_URL + `nokia/nokiaadmin/towerAntennasMaster?id=${id}`;
         const data = await service.get(url, true);
         if (data && !data.errorMessage) {
             //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
@@ -2102,7 +1985,7 @@ export const getTowerAntennasMasterDataById = (tower_id) => async dispatch => {
 export const getTowerAntennasMasterData = (pageIndex, rowsToReturn, order, where) => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.TMC_URL + `tmc/tmcadmin/towerAntennasMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
+        let url = config.NOKIA_URL + `nokia/nokiaadmin/towerAntennasMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
 
         if (order && order.length > 0) {
             url = url + `&order=${JSON.stringify(order)}`;
@@ -2131,7 +2014,7 @@ export const getTowerAntennasMasterData = (pageIndex, rowsToReturn, order, where
 export const deleteTowerAntennasMasterData = id => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.TMC_URL + `tmc/tmcadmin/towerAntennasMaster`;
+        let url = config.NOKIA_URL + `nokia/nokiaadmin/towerAntennasMaster`;
 
         const data = await service._delete(url + '?id=' + id, true);
 
@@ -2167,7 +2050,7 @@ export const initDeviceRegistrationMaster = () => dispatch => {
 export const saveDeviceRegistrationMasterData = deviceRegistrationMaster => async dispatch => {
     //  dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.TMC_URL + `tmc/tmcadmin/deviceRegistrationMaster/`;
+        let url = config.NOKIA_URL + `nokia/nokiaadmin/deviceRegistrationMaster/`;
         const data = (typeof deviceRegistrationMaster.id === 'undefined' || deviceRegistrationMaster.id === -1) ? await service.post(url, deviceRegistrationMaster, true)
             : await service.put(url, deviceRegistrationMaster, true);
 
@@ -2194,10 +2077,9 @@ export const saveDeviceRegistrationMasterData = deviceRegistrationMaster => asyn
     }
 };
 
-
-export const getDeviceRegistrationMasterDataById = (tower_id) => async dispatch => {
+export const getDeviceRegistrationMasterDataById = (id) => async dispatch => {
     try {
-        let url = config.TMC_URL + `tmc/tmcadmin/deviceRegistrationMaster?tower_id=${tower_id}`;
+        let url = config.NOKIA_URL + `nokia/nokiaadmin/deviceRegistrationMaster?id=${id}`;
         const data = await service.get(url, true);
         if (data && !data.errorMessage) {
             //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
@@ -2218,7 +2100,7 @@ export const getDeviceRegistrationMasterDataById = (tower_id) => async dispatch 
 export const getDeviceRegistrationMasterData = (pageIndex, rowsToReturn, order, where) => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.TMC_URL + `tmc/tmcadmin/deviceRegistrationMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
+        let url = config.NOKIA_URL + `nokia/nokiaadmin/deviceRegistrationMaster?pageIndex=${pageIndex}&rows=${rowsToReturn}`;
 
         if (order && order.length > 0) {
             url = url + `&order=${JSON.stringify(order)}`;
@@ -2247,7 +2129,7 @@ export const getDeviceRegistrationMasterData = (pageIndex, rowsToReturn, order, 
 export const deleteDeviceRegistrationMasterData = id => async dispatch => {
     //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
-        let url = config.TMC_URL + `tmc/tmcadmin/deviceRegistrationMaster`;
+        let url = config.NOKIA_URL + `nokia/nokiaadmin/deviceRegistrationMaster`;
 
         const data = await service._delete(url + '?id=' + id, true);
 
@@ -2272,4 +2154,62 @@ export const deleteDeviceRegistrationMasterData = id => async dispatch => {
     }
 };
 
+//#endregion
+
+//#region Organisation Group Module Details
+
+export const getOrganisationGroupModulesMasterData = (pageIndex, rowsToReturn, order, where,grpModuleId) => async dispatch => {
+    
+    //dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
+    try {
+        let url = config.AUTH_URL + `nokia/admin/organisationGroupModuleDetails?pageIndex=${pageIndex}`;
+        if(grpModuleId && grpModuleId !==null)
+        {
+            url = url + `&grpModuleId=${grpModuleId}`;
+        }
+ 
+        const data = await service.get(url, true);
+        console.log("getOrganisationGroupModulesMasterData data ",data);
+        if (data && !data.errorMessage) {
+            //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+            dispatchAction(dispatch, adminTypes.ORGANISATIONGROUPMODULEMASTER_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
+        }
+        else {
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Organisation Modules Details Getting Error'), null, null);
+        }
+    }
+    catch (error) {
+        console.error('error: ', error);
+        //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+    }
+};
+
+export const saveOrganisationGroupModulesMasterData = dataSubmit => async dispatch => {
+    //  dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
+    try {
+        let url = config.AUTH_URL + `nokia/admin/organisationGroupModuleDetails/`;
+       console.log("dataSubmit -------------", dataSubmit);
+        const data = await service.post(url, dataSubmit, true) 
+        if (data && !data.errorMessage) { 
+            //if (typeof moduleMaster.id === 'undefined') moduleMaster.id = data.data.id;
+
+            dispatchAction(dispatch, adminTypes.ORGANISATIONGROUPMODULEMASTER_SAVE_SUCCESS, dataSubmit, null, data.message, null);
+
+            dispatch({
+                type: commonTypes.NOTIFICATION_SHOW,
+                message: 'Module master submitted successfully',
+                error: undefined,
+                notification: true
+            });
+        }
+        else {
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Module Master error'), null, null);
+        }
+    }
+    catch (error) {
+        //// dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+    }
+};
 //#endregion

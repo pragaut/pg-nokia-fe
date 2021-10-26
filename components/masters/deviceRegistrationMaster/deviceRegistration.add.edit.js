@@ -171,10 +171,9 @@ class DeviceRegistrationAddEdit extends Wrapper {
                             <Input label="MAC Address:" focusbordercolor="#f90707" type='text' defaultValue={this.state.deviceRegistration.macAddress} onChange={this.onValueChanged('macAddress')} />
 
                         </div>
-
                         <div className={style.field_flex_new} style={{ width: '45%' }}>
                             <Input label="Unique Id:" focusbordercolor="#f90707" type='text' defaultValue={this.state.deviceRegistration.uniqueId} onChange={this.onValueChanged('uniqueId')} />
-                            <Input label="Registration Date:" focusbordercolor="#f90707" type='date' defaultValue={this.state.deviceRegistration.registrationDate} onChange={this.onValueChanged('registrationDate')} />
+                            <Input label="Registration Date:" focusbordercolor="#f90707" type='date' defaultValue={deviceRegistrationDate} onChange={this.onValueChanged('registrationDate')} />
                             {/* <Input label="Device Sequence:" focusbordercolor="#f90707" type='text' defaultValue={this.state.deviceRegistration.deviceSequence} onChange={this.onValueChanged('deviceSequence')} /> */}
                             <Input label="Unique Code:" focusbordercolor="#f90707" type='text' defaultValue={this.state.deviceRegistration.uniqueCode} onChange={this.onValueChanged('uniqueCode')} />
 

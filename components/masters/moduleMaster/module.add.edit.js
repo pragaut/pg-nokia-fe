@@ -4,7 +4,7 @@ import { validateInputs } from '../../../utils/editFormHelper';
 import { save, deleteItems, shouldStoreDataInStateByKey } from '../../../utils/editFormHelper';
 import { connect } from 'react-redux';
 import { constants } from '../../../utils/constants';
-import { getModuleMasterData, getOrganisationDetailsData } from '../../../actions/admin.action';
+import { getModuleMasterData, getGroupMasterData } from '../../../actions/admin.action';
 import style from '../../../theme/app.scss';
 import ModalHeader from '../../shared/ModalHeader';
 import Input from '../../shared/InputBox';
@@ -37,12 +37,12 @@ class ModuleAddEdit extends Wrapper {
     constructor(props) {
         super(props);
 
-        this.organisationDetailsIdRefs = React.createRef();
+        this.groupDetailsIdRefs = React.createRef();
 
         this.onFileChange = this.onFileChange.bind(this);
         this.state = {
             module: props.baseObject ? props.baseObject : {},
-            organisations: [],
+            groups: [],
             loadershow: 'false',
 
         };
@@ -63,7 +63,7 @@ class ModuleAddEdit extends Wrapper {
     componentDidMount() {
         const state = {};
         this.props.getModuleMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
-        this.props.getOrganisationDetailsData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined, undefined);
+        this.props.getGroupMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined, undefined);
         this.setState({
             ...state
         }, () => {
@@ -83,9 +83,9 @@ class ModuleAddEdit extends Wrapper {
     };
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.organisations !== null && nextProps.organisations !== undefined && nextProps.organisations !== this.state.organisations) {
+        if (nextProps.groups !== null && nextProps.groups !== undefined && nextProps.groups !== this.state.groups) {
             this.setState({
-                organisations: nextProps.organisations
+                groups: nextProps.groups
             })
         }
     }
@@ -121,18 +121,18 @@ class ModuleAddEdit extends Wrapper {
                     <div className={style.field_flex_wrapper}>
                         <div className={style.field_flex_new} style={{ width: '100%' }}>
                             <div style={{ padding: '10px', width: '100%' }}>
-                                <SpanLabelForDDl>Organisation Details</SpanLabelForDDl>
+                                <SpanLabelForDDl>Group</SpanLabelForDDl>
                                 <Gap h="5px" />
                                 <SELECT
-                                    value={this.state.module.orgDetailsId} paddingLeft="10px" borderRadius="14px" height="51px"
+                                    value={this.state.module.grpDetailsId} paddingLeft="10px" borderRadius="14px" height="51px"
                                     type="text" color="rgba(0,0,0,0.87)" borderColor="rgba(0,0,0,0.54)"
                                     style={{ backgroundColor: "transparent", border: "1px solid #ccc" }}
-                                    onChange={this.onValueChanged('orgDetailsId')}
+                                    onChange={this.onValueChanged('grpDetailsId')}
                                 >
-                                    <option key="a0" value="" >--- Select Organisation Details ---</option>
-                                    {this.state.organisations &&
-                                        this.state.organisations.map((item, index) => {
-                                            return <option key={index} value={item.id}>{item.orgName}</option>
+                                    <option key="a0" value="" >--- Select group ---</option>
+                                    {this.state.groups &&
+                                        this.state.groups.map((item, index) => {
+                                            return <option key={index} value={item.id}>{item.groupName}</option>
                                         })
                                     }
                                 </SELECT>
@@ -174,7 +174,7 @@ ModuleAddEdit.propTypes = {
 };
 
 const mapStateToProps = state => {
-    const { organisation, organisations } = state.adminReducer;
-    return { organisations, organisation };
+    const { group, groups } = state.adminReducer;
+    return { group, groups };
 }
-export default connect(mapStateToProps, { getModuleMasterData, getOrganisationDetailsData })(ModuleAddEdit)
+export default connect(mapStateToProps, { getModuleMasterData, getGroupMasterData })(ModuleAddEdit)

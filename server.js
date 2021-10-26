@@ -187,6 +187,22 @@ app.prepare()
 				}
 			});
 		});
+		server.get('/admin/organisation-group-module-master', (req, res) => {
+			const q = req.query;
+			q.tab = 'organisation-group-module-master';
+			q.pathname = 'organisation-group-module-master';
+			q.pageName = 'Organisation Module Master';
+			q.MasterName = 'Organisation Module Master';
+			return app.render(req, res, '/admin', {
+				page: q.pageName,
+				MasterName: q.MasterName,
+				tab: q.tab,
+				section: 'master',
+				query: {
+					...q
+				}
+			});
+		});
 		server.get('/admin/role-master', (req, res) => {
 			const q = req.query;
 			q.tab = 'role-master';
