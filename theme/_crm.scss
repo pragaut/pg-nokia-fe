@@ -544,3 +544,134 @@
     }
 
 }
+
+.back_button {
+    background-color: #fff;
+    padding-left: 20px;
+    color: #222;
+    border-radius: 4px;
+   
+
+    .primary_btn,
+    .btn_danger,
+    .btn_submit ,
+    .btn_save {
+        position: relative;
+        display: inline-block;
+        box-sizing: border-box;
+        border: none;
+        border-radius: 4px;
+        padding: 0 16px;
+        min-width: 64px;
+        height: 33px;
+        vertical-align: middle;
+        text-align: center;
+        text-overflow: ellipsis;
+        text-transform: uppercase;
+        color: #fff;
+        box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.37), 0 2px 2px 0 rgba(0, 0, 0, 0.09), 0 1px 5px 0 rgba(0, 0, 0, 0.18);
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 33px;
+        overflow: hidden;
+        outline: none;
+        cursor: pointer;
+        transition: box-shadow 0.2s;
+    }
+    .primary_btn{
+        background-color: #00bcd4;
+    }
+    
+    .btn_submit{
+        background-color:  #358856; //#62BD69;
+    }
+    .btn_submit:hover {
+        background-color: #358856; //#62BD69;
+    }
+    .btn_save{
+        background-color:  #FFA701; //#62BD69;
+    }
+    .btn_save:hover {
+        background-color: #FFA701; //#62BD69;
+    }
+    .btn_danger {
+        background-color: #E5343D;
+    }
+    .btn_danger:hover {
+        background-color: #E5343D;
+    }
+
+    .btn_danger::-moz-focus-inner,
+    .primary_btn::-moz-focus-inner,
+    .btn_submit::-moz-focus-inner,
+    .btn_save::-moz-focus-inner{
+        border: none;
+    }
+
+    /* Overlay */
+    .btn_danger::before,
+    .primary_btn::before,
+    .btn_submit::before,
+    .btn_save::before  {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        opacity: 0;
+        transition: opacity 0.2s;
+    }
+
+    /* Ripple */
+    .btn_danger:after,
+    .primary_btn::after,
+    .btn_submit::after ,
+    .btn_save::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        border-radius: 50%;
+        padding: 50%;
+        width: 32px;
+        /* Safari */
+        height: 32px;
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1);
+        transition: opacity 1s, transform 0.5s;
+    }
+
+    /* Hover, Focus */
+    .btn_danger:hover,
+    .btn_submit:hover,
+    .btn_save:hover,
+    .primary_btn:hover,
+    .primary_btn:focus {
+        box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
+    }
+
+    .btn_danger:hover::before,
+    .btn_submit:hover::before,
+    .btn_save:hover::before,
+    .primary_btn:hover::before {
+        opacity: 0.08;
+    }
+
+    .btn_danger:focus::before,
+    .primary_btn:focus::before ,
+    .btn_submit:focus::before ,
+    .btn_save:focus::before {
+        opacity: 0.24;
+    }
+
+    .btn_danger:hover:focus::before,
+    .primary_btn:hover:focus::before,
+    .btn_submit:hover:focus::before,
+    .btn_save:hover:focus::before {
+        opacity: 0.3;
+    }
+    
+ 
+
+}
