@@ -4,45 +4,39 @@ import { withRouter } from 'next/router';
 import Router from "next/router";
 import redirect from 'nextjs-redirect';
 import { connect } from 'react-redux';
-import Main from '../components/main'
+import Main from '../components/comman/main'
 import Wrapper from "../components/shared/Wrapper";
 //import Header from '../components/appHeader';
-import Header from '../components/header'
-import MainBanner from '../components/homePage'
-import { changeWidth, hideRedirectionStatus } from '../actions/window.actions';
-import * as helper from '../helper';
-import AboutRecon from '../components/homePage/aboutRecon'
+import Header from '../components/comman/header' 
+import { changeWidth, hideRedirectionStatus } from '../actions/comman/window.actions';  
 import Footer from '../components/shared/Footer'
-import Gap from '../components/Gap'
-import * as CommonStyle from '../components/commonStyle'
+import Gap from '../components/comman/Gap'
+import * as CommonStyle from '../components/comman/commonStyle'
 import styled from 'styled-components'
 import * as sessionHelper from '../utils/session.helper'
 import style from '../theme/app.scss';
-import { dispatchUserInfo } from "../actions/account.actions";
-import { constants } from '../utils/constants';
-import MasterIndex from '../components/masters';
-import MasterDetails from '../components/masters/masterDetails';
+import { dispatchUserInfo } from "../actions/comman/account.actions"; 
+import MasterIndex from '../components/comman/masters';
 import ModalHeader from '../components/shared/ModalHeader';
-import GroupMaster from '../components/masters/groupMaster';
-import AlarmTypeMaster from '../components/masters/alarmTypeMaster';
-import NotificationMaster from '../components/masters/notificationMaster';
-import OrganisationDetails from '../components/masters/organisationDetails';
-import OrganisationEmployeeMaster from '../components/masters/organisationEmployeeMaster';
-import OrganisationGroupModuleMaster from '../components/masters/organisationGroupModuleMaster';
-import ModuleMaster from '../components/masters/moduleMaster';
-import OrgRelationTypeMaster from '../components/masters/orgRelationTypeMaster';
-import RoleMaster from '../components/masters/roleMaster';
-import TowerMaster from '../components/masters/towerMaster';
-import TowerAllotmentMaster from '../components/masters/towerAllotmentMaster';
-import TowerAntennasMaster from '../components/masters/towerAntennasMaster';
-import DeviceRegistrationMaster from '../components/masters/deviceRegistrationMaster';
-import UserMaster from '../components/masters/userMaster';
-import { showNotification, hideNotification } from '../actions/common.actions';
-import * as commonType from '../action-types/common.action.types';
+import GroupMaster from '../components/comman/masters/groupMaster';
+import AlarmTypeMaster from '../components/comman/masters/alarmTypeMaster';
+import NotificationMaster from '../components/comman/masters/notificationMaster';
+import OrganisationDetails from '../components/comman/masters/organisationDetails';
+import OrganisationEmployeeMaster from '../components/comman/masters/organisationEmployeeMaster';
+import OrganisationGroupModuleMaster from '../components/comman/masters/organisationGroupModuleMaster';
+import ModuleMaster from '../components/comman/masters/moduleMaster';
+import OrgRelationTypeMaster from '../components/comman/masters/orgRelationTypeMaster';
+import RoleMaster from '../components/comman/masters/roleMaster';
+import TowerMaster from '../components/tmc/masters/towerMaster';
+import TowerAllotmentMaster from '../components/tmc/masters/towerAllotmentMaster';
+import TowerAntennasMaster from '../components/aisu/masters/towerAntennasMaster';
+import DeviceRegistrationMaster from '../components/comman/masters/deviceRegistrationMaster';
+import UserMaster from '../components/comman/masters/userMaster';
+import { showNotification, hideNotification } from '../actions/comman/common.actions';
+import * as commonType from '../action-types/comman/common.action.types';
 import NotificationPopUp from '../components/shared/notificationPopUp';
-import { removeLoggedUserRole } from '../utils/session.helper';
-import Can from '../components/auth/can';
-import ChangePassword from '../components/auth/changePassword';
+import { removeLoggedUserRole } from '../utils/session.helper'; 
+import ChangePassword from '../components/comman/auth/changePassword';
 const Image = '../static/'
 const window = require('global/window');
 const AdminMain = styled.div`

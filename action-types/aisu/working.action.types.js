@@ -1,0 +1,28 @@
+//#region  Antenna Roltation Details
+
+export const ANTENNAROTATIONDETAILS_INIT = 'modules/antennaRotationDetails/ANTENNAROTATIONDETAILS_INIT';
+export const ANTENNAROTATIONDETAILS_LIST_REQUESTED = 'modules/antennaRotationDetails/ANTENNAROTATIONDETAILS_LIST_REQUESTED';
+export const ANTENNAROTATIONDETAILS_LIST_SUCCESS = 'modules/antennaRotationDetails/ANTENNAROTATIONDETAILS_LIST_SUCCESS';
+
+export const ANTENNAROTATIONDETAILS_SAVE_REQUESTED = 'modules/antennaRotationDetails/ANTENNAROTATIONDETAILS_SAVE_REQUESTED';
+export const ANTENNAROTATIONDETAILS_SAVE_SUCCESS = 'modules/antennaRotationDetails/ANTENNAROTATIONDETAILS_SAVE_SUCCESS';
+export const ANTENNAROTATIONDETAILS_SAVE_ERROR = 'modules/antennaRotationDetails/ANTENNAROTATIONDETAILS_SAVE_ERROR';
+//#endregion
+
+//#region  Antenna Roltation Detail Logs
+
+export const ANTENNAROTATIONDETAILLOGS_INIT = 'modules/antennaRotationDetailLogs/ANTENNAROTATIONDETAILLOGS_INIT';
+export const ANTENNAROTATIONDETAILLOGS_LIST_REQUESTED = 'modules/antennaRotationDetailLogs/ANTENNAROTATIONDETAILLOGS_LIST_REQUESTED';
+export const ANTENNAROTATIONDETAILLOGS_LIST_SUCCESS = 'modules/antennaRotationDetailLogs/ANTENNAROTATIONDETAILLOGS_LIST_SUCCESS';
+ 
+//#endregion
+
+//#region  Device Location Details
+
+export const DEVICELOCATIONDETAILS_INIT = 'modules/deviceLocationDetails/DEVICELOCATIONDETAILS_INIT';
+export const DEVICELOCATIONDETAILS_LIST_REQUESTED = 'modules/deviceLocationDetails/DEVICELOCATIONDETAILS_LIST_REQUESTED';
+export const DEVICELOCATIONDETAILS_LIST_SUCCESS = 'modules/deviceLocationDetails/DEVICELOCATIONDETAILS_LIST_SUCCESS';
+
+//#endregion
+
+

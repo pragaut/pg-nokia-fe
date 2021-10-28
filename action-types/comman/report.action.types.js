@@ -1,0 +1,28 @@
+//#region  Self Score Vs Final Score
+export const SELF_VS_FINALSCORE_INIT = 'modules/selfvsfinal/SELF_VS_FINALSCORE_INIT';
+export const PENDISELF_VS_FINALSCORE_PLANTWISE_LIST_REQUESTED = 'modules/selfvsfinal/PENDISELF_VS_FINALSCORE_PLANTWISE_LIST_REQUESTED';
+export const SELF_VS_FINALSCORE_PLANTWISE_LIST_SUCCESS = 'modules/selfvsfinal/SELF_VS_FINALSCORE_PLANTWISE_LIST_SUCCESS';
+export const SELF_VS_FINAAuditLSCORE_COMPANYSECTIONWISE_LIST_SUCCESS = 'modules/selfvsfinal/SELF_VS_FINAAuditLSCORE_COMPANYSECTIONWISE_LIST_SUCCESS';
+
+//#endregion 
+
+//#region  Self Audit Score Summary SubSectionWise
+export const SELFAUDITSUMMARY_SUBSECTIONWISE_INIT = 'modules/selfauditsummary/SELFAUDITSUMMARY_SUBSECTIONWISE_INIT';
+export const SELFAUDITSUMMARY_SUBSECTIONWISE_LIST_SUCCESS = 'modules/selfauditsummary/SELFAUDITSUMMARY_SUBSECTIONWISE_LIST_SUCCESS';
+//#endregion
+
+//#region  Self Audit Score Summary SectionWise
+export const SELFAUDITSUMMARY_SECTIONWISE_INIT = 'modules/selfauditsummary/SELFAUDITSUMMARY_SECTIONWISE_INIT';
+export const SELFAUDITSUMMARY_SECTIONWISE_LIST_SUCCESS = 'modules/selfauditsummary/SELFAUDITSUMMARY_SECTIONWISE_LIST_SUCCESS';
+//#endregion
+
+//#region  FINAL Audit Score Summary SubSectionWise
+export const FINALAUDITSUMMARY_SUBSECTIONWISE_INIT = 'modules/finalauditsummary/FINALAUDITSUMMARY_SUBSECTIONWISE_INIT';
+export const FINALAUDITSUMMARY_SUBSECTIONWISE_LIST_SUCCESS = 'modules/finalauditsummary/FINALAUDITSUMMARY_SUBSECTIONWISE_LIST_SUCCESS';
+//#endregion
+
+//#region  FINAL Audit Score Summary SectionWise
+export const FINALAUDITSUMMARY_SECTIONWISE_INIT = 'modules/finalauditsummary/FINALAUDITSUMMARY_SECTIONWISE_INIT';
+export const FINALAUDITSUMMARY_SECTIONWISE_LIST_SUCCESS = 'modules/finalauditsummary/FINALAUDITSUMMARY_SECTIONWISE_LIST_SUCCESS';
+//#endregion
+

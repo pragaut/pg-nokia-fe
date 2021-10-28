@@ -2,16 +2,15 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import { withRouter } from 'next/router';
 import { connect } from 'react-redux';
-import Main from '../components/main'
+import Main from '../components/comman/main'
 import Wrapper from "../components/shared/Wrapper";
-import Header from '../components/header'
-import MainBanner from '../components/homePage'
-import { changeWidth, hideRedirectionStatus } from '../actions/window.actions';
-import { showNotification } from '../actions/common.actions';
-import * as helper from '../helper';
-import AboutRecon from '../components/homePage/aboutRecon';
+import Header from '../components/comman/header'
+import MainBanner from '../components/comman/homePage'
+import { changeWidth, hideRedirectionStatus } from '../actions/comman/window.actions';
+import { showNotification } from '../actions/comman/common.actions';
+import * as helper from '../helper'; 
 import Footer from '../components/shared/Footer';
-import Gap from '../components/Gap';
+import Gap from '../components/comman/Gap';
 //import * as rdd from 'react-device-detect';
 const publicIp = require('public-ip');
 const window = require('global/window');
