@@ -10,8 +10,8 @@ import ModalHeader from '../../../shared/ModalHeader';
 import Input from '../../../shared/InputBox';
 import { SELECT, SelectDiv, SpanLabelForDDl } from '../../../comman/formStyle'; 
 import dynamic from 'next/dynamic';
-const Multiselect = dynamic(() => import('multiselect-react-dropdown').then(module => module.Multiselect), { ssr: false })
-import MultiSelectDDL from "react-multi-select-component"; 
+//const Multiselect = dynamic(() => import('multiselect-react-dropdown').then(module => module.Multiselect), { ssr: false })
+//import {MultiSelectDDL} from "react-multi-select-component"; 
 import styled from 'styled-components';
 import Gap from '../../../comman/Gap'
 const MultiSelectDiv = styled.div` 
@@ -359,7 +359,7 @@ class UserAddEdit extends Wrapper {
                         <div style={{ padding: '0px', width: '100%' }}>
                             <SpanLabelForDDl>Roles</SpanLabelForDDl>
                             <MultiSelectDiv >
-                                <MultiSelectDDL
+                               {/* <MultiSelectDDL
                                     className="width100p"
                                     value={selectedRoleItems && selectedRoleItems.length > 0 ? selectedRoleItems : []}
                                     onChange={this.onValueChangedRole}
@@ -367,7 +367,7 @@ class UserAddEdit extends Wrapper {
                                     hasSelectAll={false}
                                     labelledBy="Select"
                                     styles={customStyles} 
-                                />
+                                />*/}
                                 {/* <ReactSelect
                                     className="width100p"
                                     value={selectedRoleItems && selectedRoleItems.length > 0 ? selectedRoleItems : []}
