@@ -10,7 +10,7 @@ import ModalHeader from '../../../shared/ModalHeader';
 import Input from '../../../shared/InputBox';
 import { SELECT, SelectDiv, SpanLabelForDDl } from '../../../comman/formStyle'; 
 import dynamic from 'next/dynamic';
-const Multiselect = dynamic(() => import('multiselect-react-dropdown').then(module => module.Multiselect), { ssr: false })
+// const Multiselect = dynamic(() => import('multiselect-react-dropdown').then(module => module.Multiselect), { ssr: false })
 import MultiSelectDDL from "react-multi-select-component"; 
 import styled from 'styled-components';
 import Gap from '../../../comman/Gap'
