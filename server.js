@@ -1,6 +1,6 @@
 const next = require('next');
 const dev = process.env.MODE !== 'production';
-const app = next({ dev: false }) //true for development server and false for production server
+const app = next({ dev: true }) //true for development server and false for production server
 const fs = require('fs');
 const Router = require('next/router');
 const express = require('express');
