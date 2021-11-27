@@ -77,6 +77,12 @@ class AntennaRotationDetails extends Wrapper {
                 filterable: false
             },
             {
+                Header: 'Update On',
+                accessor: d => `${d.modifiedOn}`,
+                id: 'modifiedOn',
+                show: true, 
+            },
+            {
                 Header: 'Tower Name',
                 accessor: d => `${d.towerName}`,
                 id: 'towerName',

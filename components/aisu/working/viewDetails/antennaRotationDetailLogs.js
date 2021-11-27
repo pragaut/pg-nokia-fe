@@ -42,6 +42,12 @@ class AntennaRotationDetailLogs extends Wrapper {
                 filterable: false
             },
             {
+                Header: 'Created On',
+                accessor: d => `${d.createdOn}`,
+                id: 'createdOn',
+                show: true, 
+            },
+            {
                 Header: 'Tower Name',
                 accessor: d => `${d.towerName}`,
                 id: 'towerName',
