@@ -150,7 +150,7 @@ class AntennaRotationDetailLogs extends Wrapper {
 
     async componentDidMount() {
         // let's load the groups, for first time
-        this.props.getAntennaRotataionDetailLogs(this.state.antennaRotationDetailId);
+        this.props.getAntennaRotataionDetailLogs(this.state.antennaRotationDetailId); 
         setTimeout(() => {
             this.updateStateAfterStateUpdate();
         }, 100);
@@ -158,8 +158,8 @@ class AntennaRotationDetailLogs extends Wrapper {
     updateColumn = (column) => {
         this.setState({ columns: column });
     } 
-    render() {
-        console.log("Antenna Rotataion Detail Logs", this.state.antennaRotationDetailLogs);
+    render() { 
+        console.log("Antenna Rotataion Detail Logs :---->>>>>>", this.state.antennaRotationDetailLogs);
         const { showEditPopup, columns, antennaRotationDetailLogs } = this.state;
         return (
             <CommonStyle.MainDiv
@@ -201,7 +201,7 @@ class AntennaRotationDetailLogs extends Wrapper {
 
 
 const mapStateToProps = state => {
-    const {  antennaRotationDetailLogs, antennaRotationDetailLog } = state.workingReducer;
+    const {  antennaRotationDetailLogs, antennaRotationDetailLog } = state.workingReducerAisu;
     const errorType = state.errorReducer.type;
     const errorMessage = state.errorReducer.error;
 

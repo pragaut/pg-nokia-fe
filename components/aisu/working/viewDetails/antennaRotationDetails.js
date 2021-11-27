@@ -32,7 +32,7 @@ class AntennaRotationDetails extends Wrapper {
                 this.setState({
                     isAnteenaRotationDetailLogs : true,
                     antennaRotationDetailId : id
-                })
+                }) 
     }
 
     onClickBackButton = () =>{

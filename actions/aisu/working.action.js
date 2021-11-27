@@ -84,8 +84,8 @@ export const getAntennaRotataionDetailLogs = (antennaRotationDetailId) => async 
         //console.log("ActionPlan filters : ", filters);
        // let antennaRotationDetailId = filters && filters.antennaRotationDetailId ? filters.antennaRotationDetailId : '';
         
-        let url = config.NOKIA_URL + `nokia/nokiaworking/antennaRotationDetails?pageIndex=${pageIndex}`;
-
+        let url = config.NOKIA_URL + `nokia/nokiaworking/antennaRotationDetailLogs?pageIndex=${pageIndex}`;
+        console.log("antennaRotationDetailId:::::------->>:  ", antennaRotationDetailId);
         if (antennaRotationDetailId) {
             url = url + `&antennaRotationDetailId=${antennaRotationDetailId}`;
         }  

@@ -30,7 +30,7 @@ class ReactTableIndex extends Wrapper {
             Data: [],
             filterData: [],
             columns: props.columns ? props.columns : undefined,
-            minRows: 3,
+            minRows: 1,
             showPagination: true,
             showPageSizeOptions: true,
         }
@@ -241,7 +241,7 @@ class ReactTableIndex extends Wrapper {
         const { Data, isScorllApplicable } = this.props;
 
         let Count = Data && Data.length;
-        let minRows = this.props.minRows ? this.props.minRows : 3;
+        let minRows = this.props.minRows ? this.props.minRows : 1;
         let defaultPageSize = this.props.defaultPageSize ? this.props.defaultPageSize : 100;
         let showPaginationBottom = this.props.showPaginationBottom ? this.props.showPaginationBottom : true;
         let showPageSizeOptions = this.props.showPageSizeOptions ? this.props.showPageSizeOptions : true;
