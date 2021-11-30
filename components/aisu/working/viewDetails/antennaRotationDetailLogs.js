@@ -19,6 +19,8 @@ class AntennaRotationDetailLogs extends Wrapper {
             antennaRotationDetailLogs: [],
             antennaRotationDetailLog: {},
             antennaRotationDetailId : props.antennaRotationDetailId ? props.antennaRotationDetailId : '',
+            towerName : props.towerName ? props.towerName : '',
+            antennaName : props.antennaName ? props.antennaName : '',
             type: WorkingTypes.ANTENNAROTATIONDETAILLOGS_INIT,
             columns: []
         };
@@ -47,18 +49,18 @@ class AntennaRotationDetailLogs extends Wrapper {
                 id: 'createdOn',
                 show: true, 
             },
-            {
-                Header: 'Tower Name',
-                accessor: d => `${d.towerName}`,
-                id: 'towerName',
-                show: true, 
-            },
-            {
-                Header: 'Antenna',
-                accessor: d => `${d.antennaName}`,
-                id: 'antennaName',
-                show: true, 
-            },
+            // {
+            //     Header: 'Tower Name',
+            //     accessor: d => `${d.towerName}`,
+            //     id: 'towerName',
+            //     show: true, 
+            // },
+            // {
+            //     Header: 'Antenna',
+            //     accessor: d => `${d.antennaName}`,
+            //     id: 'antennaName',
+            //     show: true, 
+            // },
             {
                 Header: 'Azimuth Current',
                 accessor: d => `${d.azimuth}`,
@@ -166,7 +168,7 @@ class AntennaRotationDetailLogs extends Wrapper {
     } 
     render() { 
         console.log("Antenna Rotataion Detail Logs :---->>>>>>", this.state.antennaRotationDetailLogs);
-        const { showEditPopup, columns, antennaRotationDetailLogs } = this.state;
+        const { showEditPopup, columns, antennaRotationDetailLogs, towerName, antennaName } = this.state;
         return (
             <CommonStyle.MainDiv
                 flexdirection={"column"}
@@ -184,8 +186,9 @@ class AntennaRotationDetailLogs extends Wrapper {
                     <CommonStyle.MainDiv
                         width={"100%"}
                         flexdirection={"row"}
-                        justifycontent={"flex-start"}
-                    >  
+                        justifycontent={"center"}
+                    >   
+                        Details of {towerName} & {antennaName} 
                     </CommonStyle.MainDiv>
                     <div
                         style={{ width: '98%' , padding: "13px"}}

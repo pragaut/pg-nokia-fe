@@ -21,6 +21,8 @@ class AntennaRotationDetails extends Wrapper {
             antennaRotationDetail: {},
             isAnteenaRotationDetailLogs:false,
             antennaRotationDetailId : null,
+            towerName : null,
+            antennaName : null,
             type: WorkingTypes.ANTENNAROTATIONDETAILS_INIT,
             columns: []
         };
@@ -28,17 +30,21 @@ class AntennaRotationDetails extends Wrapper {
         // let's load the data from the props
     }
 
-    onClickViewDetailLogDetails = (id) =>{
+    onClickViewDetailLogDetails = (id, towerName, antennaName) =>{
                 this.setState({
                     isAnteenaRotationDetailLogs : true,
-                    antennaRotationDetailId : id
+                    antennaRotationDetailId : id,
+                    towerName : towerName,
+                    antennaName : antennaName,
                 }) 
     }
 
     onClickBackButton = () =>{
         this.setState({
                     isAnteenaRotationDetailLogs : false,
-                    antennaRotationDetailId : null
+                    antennaRotationDetailId : null,
+                    towerName : null,
+                    antennaName : null,
         })
     }
 
@@ -55,7 +61,7 @@ class AntennaRotationDetails extends Wrapper {
 
                         {p.original.id  && p.original.id !==null &&
                             <button className="primary" value={p.original.id} onClick={() =>
-                                this.onClickViewDetailLogDetails(p.original.id)
+                                this.onClickViewDetailLogDetails(p.original.id, p.original.towerName, p.original.antennaName )
                             }>
                                 View Details
                             </button>
@@ -203,7 +209,7 @@ class AntennaRotationDetails extends Wrapper {
     } 
     render() {  
         //console.log("Antenna Rotataion Details", this.state.antennaRotationDetails);
-        const { showEditPopup, columns, antennaRotationDetails, isAnteenaRotationDetailLogs, antennaRotationDetailId } = this.state;
+        const { showEditPopup, columns, antennaRotationDetails, isAnteenaRotationDetailLogs, antennaRotationDetailId ,antennaName, towerName} = this.state;
         return ( 
             <CommonStyle.MainDiv
                 flexdirection={"column"}
@@ -231,6 +237,8 @@ class AntennaRotationDetails extends Wrapper {
             {isAnteenaRotationDetailLogs && isAnteenaRotationDetailLogs ===true ? 
             <AntennaRotationDetailLogs 
             antennaRotationDetailId = {antennaRotationDetailId}
+            antennaName = {antennaName}
+            towerName = {towerName}
             /> :
        
                 <CommonStyle.MainDiv
