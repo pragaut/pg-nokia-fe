@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { constants } from '../../../../utils/constants';
-import { getAntennaRotataionDetailLogs} from '../../../../actions/aisu/working.action';
+import { getAntennaRotataionDetailLogs } from '../../../../actions/aisu/working.action';
 import Wrapper from '../../../shared/Wrapper'
 import Gap from '../../../comman/Gap';
 import { hideError, showError } from '../../../../actions/comman/error.actions';
-import * as WorkingTypes from '../../../../action-types/aisu/working.action.types'; 
+import * as WorkingTypes from '../../../../action-types/aisu/working.action.types';
 import * as CommonStyle from '../../../comman/commonStyle';
 import DatatableView from '../../../comman/ReactTableComponent';
-
+import style from '../../../../theme/app.scss';
 class AntennaRotationDetailLogs extends Wrapper {
     configs = [];
 
@@ -18,9 +18,9 @@ class AntennaRotationDetailLogs extends Wrapper {
         this.state = {
             antennaRotationDetailLogs: [],
             antennaRotationDetailLog: {},
-            antennaRotationDetailId : props.antennaRotationDetailId ? props.antennaRotationDetailId : '',
-            towerName : props.towerName ? props.towerName : '',
-            antennaName : props.antennaName ? props.antennaName : '',
+            antennaRotationDetailId: props.antennaRotationDetailId ? props.antennaRotationDetailId : '',
+            towerName: props.towerName ? props.towerName : '',
+            antennaName: props.antennaName ? props.antennaName : '',
             type: WorkingTypes.ANTENNAROTATIONDETAILLOGS_INIT,
             columns: []
         };
@@ -28,8 +28,15 @@ class AntennaRotationDetailLogs extends Wrapper {
         // let's load the data from the props
     }
 
+    onClickRefreshButton = () => {
+        this.props.getAntennaRotataionDetailLogs(this.state.antennaRotationDetailId);
+        setTimeout(() => {
+            this.updateStateAfterStateUpdate();
+        }, 100);
+    }
+
     updateStateAfterStateUpdate = () => {
-        let columns = [          
+        let columns = [
             {
                 Header: 'Sr#',
                 minWidth: 50,
@@ -47,7 +54,7 @@ class AntennaRotationDetailLogs extends Wrapper {
                 Header: 'Created On',
                 accessor: d => `${d.createdOn}`,
                 id: 'createdOn',
-                show: true, 
+                show: true,
             },
             // {
             //     Header: 'Tower Name',
@@ -65,83 +72,83 @@ class AntennaRotationDetailLogs extends Wrapper {
                 Header: 'Azimuth Current',
                 accessor: d => `${d.azimuth}`,
                 id: 'azimuth',
-                show: true              
-            }, 
+                show: true
+            },
             {
                 Header: 'Azimuth Previous',
                 accessor: d => `${d.azimuthPrev}`,
                 id: 'azimuthPrev',
-                show: true              
-            }, 
+                show: true
+            },
             {
                 Header: 'Height Current',
                 accessor: d => `${d.height}`,
                 id: 'height',
-                show: true              
-            }, 
+                show: true
+            },
             {
                 Header: 'Height Previous',
                 accessor: d => `${d.heightPrev}`,
                 id: 'heightPrev',
-                show: true              
-            }, 
+                show: true
+            },
             {
                 Header: 'Direction Current',
                 accessor: d => `${d.direction}`,
                 id: 'direction',
-                show: true              
-            }, 
+                show: true
+            },
             {
                 Header: 'Direction Previous',
                 accessor: d => `${d.directionPrev}`,
                 id: 'directionPrev',
-                show: true              
-            }, 
+                show: true
+            },
             {
                 Header: 'TiltX Current',
                 accessor: d => `${d.tiltX}`,
                 id: 'tiltX',
-                show: true              
-            }, 
+                show: true
+            },
             {
                 Header: 'TiltX Previous',
                 accessor: d => `${d.tiltXPrev}`,
                 id: 'tiltXPrev',
-                show: true              
-            }, 
+                show: true
+            },
             {
                 Header: 'TiltY Current',
                 accessor: d => `${d.tiltY}`,
                 id: 'tiltY',
-                show: true              
-            }, 
+                show: true
+            },
             {
                 Header: 'TiltY Previous',
                 accessor: d => `${d.tiltYPrev}`,
                 id: 'tiltYPrev',
-                show: true              
-            }, 
+                show: true
+            },
             {
                 Header: 'TiltZ Current',
                 accessor: d => `${d.tiltZ}`,
                 id: 'tiltZ',
-                show: true              
-            }, 
+                show: true
+            },
             {
                 Header: 'TiltZ Previous',
                 accessor: d => `${d.tiltZPrev}`,
                 id: 'tiltZPrev',
-                show: true              
+                show: true
             }
         ]
         this.setState({ columns: columns });
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) {
-        if(nextProps && nextProps.antennaRotationDetailLogs && nextProps.antennaRotationDetailLogs !== this.state.antennaRotationDetailLogs) {
+        if (nextProps && nextProps.antennaRotationDetailLogs && nextProps.antennaRotationDetailLogs !== this.state.antennaRotationDetailLogs) {
             this.setState({ antennaRotationDetailLogs: nextProps.antennaRotationDetailLogs })
         }
-        if(nextProps && nextProps.antennaRotationDetailId && nextProps.antennaRotationDetailId !== this.state.antennaRotationDetailId) {
+        if (nextProps && nextProps.antennaRotationDetailId && nextProps.antennaRotationDetailId !== this.state.antennaRotationDetailId) {
             this.props.getAntennaRotataionDetailLogs(nextProps.antennaRotationDetailId);
             this.setState({ antennaRotationDetailId: nextProps.antennaRotationDetailId })
         }
@@ -158,15 +165,16 @@ class AntennaRotationDetailLogs extends Wrapper {
 
     async componentDidMount() {
         // let's load the groups, for first time
-        this.props.getAntennaRotataionDetailLogs(this.state.antennaRotationDetailId); 
+        this.props.getAntennaRotataionDetailLogs(this.state.antennaRotationDetailId);
         setTimeout(() => {
             this.updateStateAfterStateUpdate();
         }, 100);
-    };  
+    };
+
     updateColumn = (column) => {
         this.setState({ columns: column });
-    } 
-    render() { 
+    }
+    render() {
         console.log("Antenna Rotataion Detail Logs :---->>>>>>", this.state.antennaRotationDetailLogs);
         const { showEditPopup, columns, antennaRotationDetailLogs, towerName, antennaName } = this.state;
         return (
@@ -176,7 +184,7 @@ class AntennaRotationDetailLogs extends Wrapper {
                 textalign={"left"}
                 justifycontent={"flex-start"}
                 alignitems={"baseline"}
-            > 
+            >
                 <CommonStyle.MainDiv
                     flexdirection={"column"}
                     width={"100%"}
@@ -184,14 +192,42 @@ class AntennaRotationDetailLogs extends Wrapper {
                     alignitems={"baseline"}
                 >
                     <CommonStyle.MainDiv
-                        width={"100%"}
                         flexdirection={"row"}
-                        justifycontent={"center"}
-                    >   
-                        Details of {towerName} & {antennaName} 
+                        width={"100%"}
+                        justifycontent={"flex-start"}
+                        alignitems={"baseline"}
+                    >
+                        <CommonStyle.MainDiv
+                            width={"100%"}
+                            flexdirection={"row"}
+                            justifycontent={"center"}
+                        >
+
+                        </CommonStyle.MainDiv>
+                        <CommonStyle.MainDiv
+                            width={"100%"}
+                            flexdirection={"row"}
+                            justifycontent={"center"}
+                        >
+                            Details of {towerName} & {antennaName}
+                        </CommonStyle.MainDiv>
+                        <CommonStyle.MainDiv
+                            width={"100%"}
+                            flexdirection={"row"}
+                            justifycontent={"flex-end"}
+                        >
+                            <div className={style.back_button} >
+
+                                <button
+                                    style={{ width: '100px', marginRight: '10px', paddingTop: '0px !important' }}
+                                    className={style.primary_btn}
+                                    onClick={() => this.onClickRefreshButton()}>Refresh</button>
+                            </div> 
+                        </CommonStyle.MainDiv>
                     </CommonStyle.MainDiv>
+
                     <div
-                        style={{ width: '98%' , padding: "13px"}}
+                        style={{ width: '98%', padding: "13px" }}
                     >
                         <DatatableView
                             Data={antennaRotationDetailLogs}
@@ -210,11 +246,11 @@ class AntennaRotationDetailLogs extends Wrapper {
 
 
 const mapStateToProps = state => {
-    const {  antennaRotationDetailLogs, antennaRotationDetailLog } = state.workingReducerAisu;
+    const { antennaRotationDetailLogs, antennaRotationDetailLog } = state.workingReducerAisu;
     const errorType = state.errorReducer.type;
     const errorMessage = state.errorReducer.error;
 
-    return {  antennaRotationDetailLogs, antennaRotationDetailLog, errorType, errorMessage };
+    return { antennaRotationDetailLogs, antennaRotationDetailLog, errorType, errorMessage };
 };
 
 export default connect(mapStateToProps, { getAntennaRotataionDetailLogs, hideError })(AntennaRotationDetailLogs);
