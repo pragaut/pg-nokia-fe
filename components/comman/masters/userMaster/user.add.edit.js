@@ -8,11 +8,8 @@ import {  getUserData, getUserDetailsP, saveUserData,   getOrgRelationTypeMaster
 import style from '../../../../theme/app.scss'; 
 import ModalHeader from '../../../shared/ModalHeader';  
 import Input from '../../../shared/InputBox';
-import { SELECT, SelectDiv, SpanLabelForDDl } from '../../../comman/formStyle'; 
-import dynamic from 'next/dynamic';
-
-//const Multiselect = dynamic(() => import('multiselect-react-dropdown').then(module => module.Multiselect), { ssr: false })
-import {MultiSelectDDL} from "react-multi-select-component"; 
+import { SELECT, SelectDiv, SpanLabelForDDl } from '../../../comman/formStyle';  
+ import MultiSelect from "react-multi-select-component"; 
 import styled from 'styled-components';
 import Gap from '../../../comman/Gap'
 const MultiSelectDiv = styled.div` 
@@ -101,7 +98,6 @@ class UserAddEdit extends Wrapper {
      
         this.setState({ user: existingUser });
     };
-
     componentDidMount() {
         //  console.log("user state c : ", this.state.user);
         this.props.getRoleMasterData(0, constants.ALL_ROWS_LIST, undefined, undefined);
@@ -133,7 +129,6 @@ class UserAddEdit extends Wrapper {
             this.setState({ roleCategory: RoleCategory, roleDDLVal: roleDDLVal})
         }, 400);
     };
-
     onValueChangedRoleOnPropsChange = selectedIds => {
         const selectedRole = this.state.selectedRoleForSelectedUser;
         const roles = this.state.roles;
@@ -158,7 +153,6 @@ class UserAddEdit extends Wrapper {
             selectedRoleItems: roleOptions
         });
     };
-
     UNSAFE_componentWillReceiveProps(nextProps) {
         //console.log("nextProps.masterDetails : ",nextProps.masterDetailsCategory);
      
@@ -222,9 +216,7 @@ class UserAddEdit extends Wrapper {
 
             this.setState({ ...state });
         }
-    };
-    
-
+    };  
     onValueChangedOrgRelationType = key => event => {
         const existingState = Object.assign({}, this.state.user);
         let SelectedValue = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
@@ -240,7 +232,6 @@ class UserAddEdit extends Wrapper {
         this.props.getOrganisationEmployeeDetailsData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined,NullId);
         this.setState({ user: existingState });
     };
-
     onValueChangedOrganisation = key => event => {
         const existingState = Object.assign({}, this.state.user);
         let SelectedValue = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
@@ -259,7 +250,6 @@ class UserAddEdit extends Wrapper {
             selectedRoles: listItems
         });
     };
-
     onRemove = (selectedList, removedItem) => {
         const listItems = selectedList.map((item) => item.id);
         const existinguser = Object.assign({}, this.state.user);
@@ -360,7 +350,8 @@ class UserAddEdit extends Wrapper {
                         <div style={{ padding: '0px', width: '100%' }}>
                             <SpanLabelForDDl>Roles</SpanLabelForDDl>
                             <MultiSelectDiv >
-                               {/* <MultiSelectDDL
+                                
+                               <MultiSelect
                                     className="width100p"
                                     value={selectedRoleItems && selectedRoleItems.length > 0 ? selectedRoleItems : []}
                                     onChange={this.onValueChangedRole}
@@ -368,7 +359,7 @@ class UserAddEdit extends Wrapper {
                                     hasSelectAll={false}
                                     labelledBy="Select"
                                     styles={customStyles} 
-                                />*/}
+                                />
                                 {/* <ReactSelect
                                     className="width100p"
                                     value={selectedRoleItems && selectedRoleItems.length > 0 ? selectedRoleItems : []}

@@ -14,6 +14,7 @@
     "child_process": false
   },
   "dependencies": {
+    "@babel/core": "^7.16.5",
     "@babel/plugin-proposal-export-default-from": "^7.12.1",
     "@loadable/component": "^5.14.1",
     "@material-ui/core": "^4.11.0",
