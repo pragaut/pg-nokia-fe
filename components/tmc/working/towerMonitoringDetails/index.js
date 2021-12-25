@@ -9,30 +9,14 @@ import { withRouter } from 'next/router';
 class TowerMonitoringDetailsIndex extends Wrapper {
     constructor(props) {
         super(props);
-          this.state = {
+          this.state = { 
            
-           
-        }
-
-    };
-
-
+        } 
+    }; 
     componentDidMount() {
-        this.props.getSelfAuditPlanDetailsById(this.state.auditPlanDetailsId);
-    }
-
+     } 
     UNSAFE_componentWillReceiveProps(nextProps) {
-        if (nextProps.auditPlanDetailsId && nextProps.auditPlanDetailsId != this.state.auditPlanDetailsId) {
-            this.props.getSelfAuditPlanDetailsById(nextProps.auditPlanDetailsId);
-            this.setState({
-                auditPlanDetailsId: nextProps.auditPlanDetailsId
-            });
-        }
-        if (nextProps.selfAuditPlan && nextProps.selfAuditPlan != this.state.selfAuditPlan) {
-            this.setState({
-                selfAuditPlan: nextProps.selfAuditPlan
-            });
-        }
+        
         const storeInState = (data, key) => {
             // time to store
             if (!data) return;
@@ -41,17 +25,15 @@ class TowerMonitoringDetailsIndex extends Wrapper {
 
             this.setState({ ...state });
         }
-    }
-
+    } 
     render() {
-        const { selfAuditPlan } = this.state;
         return (
             <CommonStyle.MainDiv
                 padding="10px 0px"
                 flexdirection="column"
             >
               
-            </CommonStyle.MainDiv >
+            </CommonStyle.MainDiv>
         )
     }
 }
