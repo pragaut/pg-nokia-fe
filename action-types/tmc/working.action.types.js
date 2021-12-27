@@ -1,20 +1,21 @@
-// //#region  Antenna Rotation Action Plan 
+//#region  Device mapping details
 
-// export const ANTENNAROTATIONDETAILS_INIT = 'modules/antennaRotationDetails/ANTENNAROTATIONDETAILS_INIT';
-// export const ANTENNAROTATIONDETAILS_LIST_REQUESTED = 'modules/antennaRotationDetails/ANTENNAROTATIONDETAILS_LIST_REQUESTED';
-// export const ANTENNAROTATIONDETAILS_LIST_SUCCESS = 'modules/antennaRotationDetails/ANTENNAROTATIONDETAILS_LIST_SUCCESS';
+export const DEVICEMAPPINGDETAILS_INIT = 'modules/deviceMappingDetails/DEVICEMAPPINGDETAILS_INIT';
+export const DEVICEMAPPINGDETAILS_LIST_REQUESTED = 'modules/deviceMappingDetails/DEVICEMAPPINGDETAILS_LIST_REQUESTED';
+export const DEVICEMAPPINGDETAILS_LIST_SUCCESS = 'modules/deviceMappingDetails/DEVICEMAPPINGDETAILS_LIST_SUCCESS';
+ 
+//#endregion
 
-// export const ANTENNAROTATIONDETAILS_SAVE_REQUESTED = 'modules/antennaRotationDetails/ANTENNAROTATIONDETAILS_SAVE_REQUESTED';
-// export const ANTENNAROTATIONDETAILS_SAVE_SUCCESS = 'modules/antennaRotationDetails/ANTENNAROTATIONDETAILS_SAVE_SUCCESS';
-// export const ANTENNAROTATIONDETAILS_SAVE_ERROR = 'modules/antennaRotationDetails/ANTENNAROTATIONDETAILS_SAVE_ERROR';
-// //#endregion
+//#region  Tower Notification Details
 
-// //#region  Device Location Action Plan 
+export const TOWERNOTIFICATIONDETAILS_INIT = 'modules/towerNotificationDetails/TOWERNOTIFICATIONDETAILS_INIT';
+export const TOWERNOTIFICATIONDETAILS_LIST_REQUESTED = 'modules/towerNotificationDetails/TOWERNOTIFICATIONDETAILS_LIST_REQUESTED';
+export const TOWERNOTIFICATIONDETAILS_LIST_SUCCESS = 'modules/towerNotificationDetails/TOWERNOTIFICATIONDETAILS_LIST_SUCCESS';
+ 
+export const TOWERNOTIFICATIONDETAILS_SAVE_REQUESTED = 'modules/towerNotificationDetails/TOWERNOTIFICATIONDETAILS_SAVE_REQUESTED';
+export const TOWERNOTIFICATIONDETAILS_SAVE_SUCCESS = 'modules/towerNotificationDetails/TOWERNOTIFICATIONDETAILS_SAVE_SUCCESS';
+export const TOWERNOTIFICATIONDETAILS_SAVE_ERROR = 'modules/towerNotificationDetails/TOWERNOTIFICATIONDETAILS_SAVE_ERROR';
 
-// export const DEVICELOCATIONDETAILS_INIT = 'modules/deviceLocationDetails/DEVICELOCATIONDETAILS_INIT';
-// export const DEVICELOCATIONDETAILS_LIST_REQUESTED = 'modules/deviceLocationDetails/DEVICELOCATIONDETAILS_LIST_REQUESTED';
-// export const DEVICELOCATIONDETAILS_LIST_SUCCESS = 'modules/deviceLocationDetails/DEVICELOCATIONDETAILS_LIST_SUCCESS';
-
-// //#endregion
+//#endregion
 
 

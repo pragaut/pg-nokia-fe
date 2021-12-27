@@ -15,12 +15,14 @@ import * as CommonStyle from '../components/comman/commonStyle'
 import styled from 'styled-components'
 import * as sessionHelper from '../utils/session.helper'
 import style from '../theme/app.scss';
-import { dispatchUserInfo } from "../actions/comman/account.actions"; 
-import ModalHeader from '../components/shared/ModalHeader'; 
+import { dispatchUserInfo } from "../actions/comman/account.actions";
+import ModalHeader from '../components/shared/ModalHeader';
 import { showNotification, hideNotification } from '../actions/comman/common.actions';
-import * as commonType from '../action-types/comman/common.action.types'; 
+import * as commonType from '../action-types/comman/common.action.types';
 import { removeLoggedUserRole } from '../utils/session.helper';
 import ChangePassword from '../components/comman/auth/changePassword';
+import DeviceMappingDetails from '../components/tmc/working/deviceMapping/index';
+import TowerNotificationDetails from '../components/tmc/working/towerNotifications/index';
 const Image = '../static/'
 const window = require('global/window');
 const AdminMain = styled.div`
@@ -36,7 +38,7 @@ width : ${props => props.width ? props.width : '100%'};
 display:flex;
 flex-direction:column;
   
-`; 
+`;
 export class Index extends Wrapper {
     constructor(props) {
         super(props);
@@ -53,7 +55,7 @@ export class Index extends Wrapper {
             type: commonType.NOTIFICATION_HIDE,
             notification: false,
             message: '',
-            isAuthorizedUser: false, 
+            isAuthorizedUser: false,
             isDeviceMappingSection: false
         }
     }
@@ -102,10 +104,10 @@ export class Index extends Wrapper {
         }, 200);
     }
 
-    showHandler = (key) => { 
+    showHandler = (key) => {
         this.setState({
-          [key]: !this.state[key],
-        });  
+            [key]: !this.state[key],
+        });
     }
 
     HeadingMasterDiv = props => {
@@ -135,7 +137,7 @@ export class Index extends Wrapper {
             this.setState({
                 message: nextProps.message
             })
-        } 
+        }
     };
 
     oclickHideNotification = () => {
@@ -163,7 +165,7 @@ export class Index extends Wrapper {
         const user = sessionHelper.getLoggedUser();
         const sideBar = true;
         const ActiveTabname = router && router.query && router.query.tab;
-        
+
         return (
             <div>
                 <Main />
@@ -176,6 +178,16 @@ export class Index extends Wrapper {
                             <ModalHeader
                                 heading={router && router.query && router.query.tab !== "" && router.query.MasterName} //"Group Master"
                             />
+                            {router && (router.query && router.query.tab === "device-mapping-details") && (
+                                <div>
+                                    <DeviceMappingDetails />
+                                </div>
+                            )}
+                            {router && (router.query && router.query.tab === "tower-notification-details") && (
+                                <div>
+                                    <TowerNotificationDetails />
+                                </div>
+                            )}
                             {((router && router.query && router.query.tab === "change-password") || (this.props.query && this.props.query.tab === "change-password")) && (
                                 <div>
                                     <ChangePassword />

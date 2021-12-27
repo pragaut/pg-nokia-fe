@@ -25,15 +25,43 @@ const workingReducer = (state, action) => {
     switch (action.type) {
 
         //#region  TMC Details 
-            case actions.DEVICELOCATIONDETAILS_LIST_SUCCESS:
+            // case actions.DEVICELOCATIONDETAILS_LIST_SUCCESS:
+            //     return {
+            //         deviceLocationDetail: state.deviceLocationDetail,
+            //         deviceLocationDetails: action.data,
+            //         deviceLocationDetailActiontype: action.type,
+            //         deviceLocationDetailRecordsCount: action.recordsCount,
+    
+            //         type: action.type,
+            //     };
+
+                case actions.DEVICEMAPPINGDETAILS_LIST_SUCCESS:
                 return {
-                    deviceLocationDetail: state.deviceLocationDetail,
-                    deviceLocationDetails: action.data,
-                    deviceLocationDetailActiontype: action.type,
-                    deviceLocationDetailRecordsCount: action.recordsCount,
+                    deviceMappingDetail: state.deviceMappingDetail,
+                    deviceMappingDetails: action.data,
+                    deviceMappingDetailActiontype: action.type,
+                    deviceMappingDetailRecordsCount: action.recordsCount,
     
                     type: action.type,
                 };
+
+                case actions.TOWERNOTIFICATIONDETAILS_LIST_SUCCESS:
+                return {
+                    towerNotificationDetail: state.towerNotificationDetail,
+                    towerNotificationDetails: action.data,
+                    towerNotificationDetailActiontype: action.type,
+                    towerNotificationDetailRecordsCount: action.recordsCount,
+    
+                    type: action.type,
+                };
+
+                case actions.TOWERNOTIFICATIONDETAILS_SAVE_SUCCESS:
+                return {
+                    towerNotificationDetail: action.data,
+                    towerNotificationDetails: state.alarms,
+                    towerNotificationDetailActiontype: action.type,
+                    towerNotificationDetailRecordsCount: state.recordsCount,
+            };
         //#endregion
 
         // important: we should always give a default, otherwise React gives a cheap warning and it is very annoying
@@ -42,10 +70,20 @@ const workingReducer = (state, action) => {
                 type: state.type,
                 recordsCount: state.recordsCount,
 
-                deviceLocationDetail: state.deviceLocationDetail,
-                deviceLocationDetails: state.deviceLocationDetails,
-                deviceLocationDetailActiontype: state.deviceLocationDetailActiontype,
-                deviceLocationDetailRecordsCount: state.deviceLocationDetailRecordsCount, 
+                // deviceLocationDetail: state.deviceLocationDetail,
+                // deviceLocationDetails: state.deviceLocationDetails,
+                // deviceLocationDetailActiontype: state.deviceLocationDetailActiontype,
+                // deviceLocationDetailRecordsCount: state.deviceLocationDetailRecordsCount, 
+
+                deviceMappingDetail: state.deviceMappingDetail,
+                deviceMappingDetails: state.deviceMappingDetails,
+                deviceMappingDetailActiontype: state.deviceMappingDetailActiontype,
+                deviceMappingDetailRecordsCount: state.deviceMappingDetailRecordsCount, 
+
+                towerNotificationDetail: state.towerNotificationDetail,
+                towerNotificationDetails: state.towerNotificationDetails,
+                towerNotificationDetailActiontype: state.towerNotificationDetailActiontype,
+                towerNotificationDetailRecordsCount: state.towerNotificationDetailRecordsCount,
 
             };
     }

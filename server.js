@@ -55,8 +55,6 @@ app.prepare()
 				...q,
 			});
 		});
-
-
 		server.get('/admin/master-category', (req, res) => {
 			const q = req.query;
 			q.tab = 'master-category';
@@ -136,8 +134,7 @@ app.prepare()
 					...q
 				}
 			});
-		});
-		
+		});		
 		server.get('/admin/alarm-type-master', (req, res) => {
 			const q = req.query;
 			q.tab = 'alarm-type-master';
@@ -154,7 +151,6 @@ app.prepare()
 				}
 			});
 		});
-
 		server.get('/admin/notification-master', (req, res) => {
 			const q = req.query;
 			q.tab = 'notification-master';
@@ -219,7 +215,6 @@ app.prepare()
 				}
 			});
 		});
-
 		server.get('/admin/tower-master', (req, res) => {
 			const q = req.query;
 			q.tab = 'tower-master';
@@ -235,8 +230,7 @@ app.prepare()
 					...q
 				}
 			});
-		});
-		
+		});		
 		server.get('/admin/tower-allotment-master', (req, res) => {
 			const q = req.query;
 			q.tab = 'tower-allotment-master';
@@ -253,7 +247,6 @@ app.prepare()
 				}
 			});
 		});
-
 		server.get('/admin/tower-antennas-master', (req, res) => {
 			const q = req.query;
 			q.tab = 'tower-antennas-master';
@@ -270,7 +263,6 @@ app.prepare()
 				}
 			});
 		});
-
 		server.get('/admin/device-registration-master', (req, res) => {
 			const q = req.query;
 			q.tab = 'device-registration-master';
@@ -303,7 +295,6 @@ app.prepare()
 				}
 			});
 		});
-
 		server.get('/admin/company-plant', (req, res) => {
 			const q = req.query;
 			q.tab = 'company-plant';
@@ -352,7 +343,6 @@ app.prepare()
 				}
 			});
 		});
-
 		server.get('/admin/country', (req, res) => {
 			return app.render(req, res, '/admin', {
 				page: 'country'
@@ -370,7 +360,7 @@ app.prepare()
 		});
 
 
-		//-------------------Working Section--------------------//
+		//-------------------Working AISU Section--------------------//
 
 		server.get('/aisuAdmin/antenna-rotation-details', (req, res) => {
 			const q = req.query;
@@ -388,7 +378,6 @@ app.prepare()
 				}
 			});
 		});
-
 		server.get('/aisuAdmin/device-location-details', (req, res) => {
 			const q = req.query;
 			q.tab = 'device-location-details';
@@ -406,9 +395,48 @@ app.prepare()
 			});
 		});
 
+
+
+
+		//-------------------Working TMC Section-------------------//
+
+		server.get('/management/device-mapping-details', (req, res) => {
+			const q = req.query;
+			q.tab = 'device-mapping-details';
+			q.pathname = 'device-mapping-details';
+			q.pageName = 'Device Mapping Details';
+			q.MasterName = 'Device Mapping Details';
+			return app.render(req, res, '/management', {
+				page: q.pageName,
+				MasterName: q.MasterName,
+				tab: q.tab,
+				section: 'working',
+				query: {
+					...q
+				}
+			});
+		});
+
+		server.get('/management/tower-notification-details', (req, res) => {
+			const q = req.query;
+			q.tab = 'tower-notification-details';
+			q.pathname = 'tower-notification-details';
+			q.pageName = 'Tower Notification Details';
+			q.MasterName = 'Tower Notification Details';
+			return app.render(req, res, '/management', {
+				page: q.pageName,
+				MasterName: q.MasterName,
+				tab: q.tab,
+				section: 'working',
+				query: {
+					...q
+				}
+			});
+		});
+
 		//------------------Working Section End----------------------//
 
-		//-------------------Change Password Section Section--------------------//
+		//-------------------Change Password Section --------------------//
 		server.get('/corporateCoordinator/change-password', (req, res) => {
 			return app.render(req, res, '/corporateCoordinator', {
 				page: 'Change Password',
