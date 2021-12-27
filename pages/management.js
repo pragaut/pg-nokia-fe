@@ -173,7 +173,7 @@ export class Index extends Wrapper {
             <div>
                 <Main />
                 <Header
-                    layout="loggedUser" //"admin"
+                    layout="loggedUser_management" //"admin"
                 />
                 <div style={{ width: '95%', display: 'flex', justifyContent: 'center', flexDirection: 'column' }}>
                     <AdminMain style={{ width: '100%', padding: '0px 30px' }} className={style.admin_main}>

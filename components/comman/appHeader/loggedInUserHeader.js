@@ -290,7 +290,7 @@ export class AppHeader extends Wrapper {
 
     render() {
 
-        const { data, router } = this.props;
+        const { data, router, layout } = this.props;
         const user = this.loggedUser();
         const userRole = this.getLoggedUserRole()
         const LoggedUserRole = userRole && JSON.parse(userRole);
@@ -316,7 +316,7 @@ export class AppHeader extends Wrapper {
                                 <img className="logo" src="../../static/application_logo.png" title="Nokia Group" alt="logo" />
                             </a>
                         </NavStyle.LogoDiv>
-                        {/* {RoleName === "Management" && */}
+                        {(layout && layout === "loggedUser_management") &&
                             <NavStyle.MainDiv_ForNav>
                                 <NavStyle.LinkSubDiv_Link
                                     isActiveLink={ActiveTabname === "tower-monitoring-details" && true}
@@ -340,7 +340,7 @@ export class AppHeader extends Wrapper {
                                     TMC Details
                                 </NavStyle.LinkSubDiv_Link>
                             </NavStyle.MainDiv_ForNav>
-                        {/* }  */}
+                        }
                         <NavStyle.LogoDiv
                             bgColor={isProfileVisible === true ? 'transparent' : 'transparent'}
                             style={{ cursor: 'pointer' }}

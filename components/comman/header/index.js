@@ -49,7 +49,7 @@ class Header extends Wrapper {
             pageActive={this.props.pageActive}
           />
         }
-        {this.props.layout === "loggedUser" &&
+        {(this.props.layout === "loggedUser" ||this.props.layout ===  "loggedUser_management") &&
           <LoggedInUserHeader
             router={this.props.router}
             isLoggedIn={this.props.isLoggedIn}
@@ -58,6 +58,7 @@ class Header extends Wrapper {
             home={this.props.home} 
             offerPopup={this.props.offerPopup}
             gifthAuth={this.openWindow} 
+            layout={this.props.layout}
             pageActive={this.props.pageActive}
           />
         }

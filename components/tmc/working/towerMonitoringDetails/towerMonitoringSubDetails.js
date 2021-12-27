@@ -166,7 +166,7 @@ class TowerMonitoringSubDetailsIndex extends Wrapper {
                 flexdirection="column"
             >
                 <ReactTable
-                    defaultPageSize={20}
+                    defaultPageSize={10}
                     Data={towerMonitoringSubDetails ? towerMonitoringSubDetails : []}
                     isColumnUpdate={true}
                     updateColumn={this.updateColumn}
