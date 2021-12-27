@@ -43,10 +43,10 @@ class NetworkConnectivityStatuDetailsIndex extends Wrapper {
                         let wifi = item.wlanStatus && item.wlanStatus;
                         let dongle = item.wwanStatus && item.wwanStatus;
                         return <tr key={index}> 
-                            <td style={{ background: wifi === 'Connected' ? 'green' : 'red' }}>
+                            <td style={{ background: wifi === 'Connected' ? 'green' : 'red',color:'#fff' }}>
                                 Mobile Hotspot
                             </td>
-                            <td style={{ background: dongle === 'Connected' ? 'green' : 'red' }}>
+                            <td style={{ background: dongle === 'Connected' ? 'green' : 'red',color:'#fff' }}>
                                 Dongle
                             </td>
                         </tr>

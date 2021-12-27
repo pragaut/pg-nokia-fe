@@ -64,13 +64,13 @@ class DeviceBatteryStatusDetails extends Wrapper {
                             <td>
                                 {item.uniqueId}
                             </td>
-                            <td style={{ background: deviceStatus === 'Connected' ? 'green' : 'red' }}>
+                            <td style={{ background: deviceStatus === 'Connected' ? 'green' : 'red',color:'#fff' }}>
                                 {deviceStatus}
                             </td>
-                            <td style={{ background: child1Status === 'Connected' ? 'green' : 'red' }}>
+                            <td style={{ background: child1Status === 'Connected' ? 'green' : 'red',color:'#fff' }}>
                                 {child1Status}
                             </td>
-                            <td style={{ background: child2Status === 'Connected' ? 'green' : 'red' }}>
+                            <td style={{ background: child2Status === 'Connected' ? 'green' : 'red',color:'#fff' }}>
                                 {child2Status}
                             </td>
                             <td>
