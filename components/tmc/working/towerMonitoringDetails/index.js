@@ -125,6 +125,20 @@ class TowerMonitoringDetailsIndex extends Wrapper {
                 show: true,
             },
             {
+                Header: 'Alarm Types',
+                accessor: 'alarmTypes',
+                id: 'alarmTypes',
+                minWidth: 100,
+                show: true,
+            },
+            {
+                Header: 'Alarm Count',
+                accessor: 'alarmCount',
+                id: 'alarmCount',
+                minWidth: 100,
+                show: true,
+            },
+            {
                 Header: 'Start Time',
                 accessor: d => `${d.startDateTime && d.startDateTime !== null ? moment(d.startDateTime).format("DD-MMM-YYYY hh:mm:ss a") : ''} `,
                 id: 'startDateTime',
@@ -196,8 +210,7 @@ class TowerMonitoringDetailsIndex extends Wrapper {
     }
     render() {
         const { columns, towerMonitoringDetails, towerMonitoringDetail, isViewDetailsPageVisible, parameterWithValues } = this.state;
-        console.log("----render---isViewDetailsPageVisible------", isViewDetailsPageVisible)
-        return (
+         return (
             <CommonStyle.MainDiv
                 padding="10px 0px"
                 flexdirection="column"
@@ -205,6 +218,7 @@ class TowerMonitoringDetailsIndex extends Wrapper {
                 {isViewDetailsPageVisible === true ?
                     <TowerMonitoringDetailsView
                         parameterWithValues={parameterWithValues}
+                        isViewDetailsPageVisible={isViewDetailsPageVisible}
                         towerMonitoringDetail={towerMonitoringDetail}
                         onClickBackButton={this.onClickBackButton}
                     />

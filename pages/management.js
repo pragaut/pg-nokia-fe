@@ -181,14 +181,11 @@ export class Index extends Wrapper {
                             <ModalHeader
                                 heading={router && router.query && router.query.tab !== "" && router.query.MasterName} //"Group Master"
                             />
-                            {/* {((router && router.query && router.query.tab === "") || (this.props.query && this.props.query.tab === "tower-monitoring-details")) && (
+                            {( (ActiveTabname && ActiveTabname === "tower-monitoring-details")) && (
                                 <div>
                                     <TowerMonitoringDetails />
                                 </div>
-                            )} */}
-                            <div>
-                                <TowerMonitoringDetails />
-                            </div>
+                            )} 
                             {router && (router.query && router.query.tab === "device-mapping-details") && (
                                 <div>
                                     <DeviceMappingDetails />

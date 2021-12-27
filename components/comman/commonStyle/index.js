@@ -93,6 +93,12 @@ export const MainDiv = styled.div`
     border : ${props => props.border ? props.border : '0px'};
     border-radius : ${props => props.borderradius ? props.borderradius : '0px'};
     font-family:${props => props.fontfamily ? props.fontfamily : 'Asap'} ;
+    font-weight:  ${props => props.fontWeight ? props.fontWeight : 'normal'};
+    font-stretch: ${props => props.fontstretch ? props.fontstretch : 'normal'} ;
+    font-style:  ${props => props.fontstyle ? props.fontstyle : 'normal'} ;
+    line-height:${props => props.lineheight ? props.lineheight : '1.05'} ;
+    letter-spacing: ${props => props.letterspacing ? props.letterspacing : 'normal'} ;
+   
     color:  ${props => props.color ? props.color : '#000'} ;
     .disabled{
         cursor: not-allowed;
@@ -380,7 +386,7 @@ tr:nth-child(even){background-color: #f2f2f2;}
 tr:hover {background-color: #ddd;}
 th { 
     text-align: left;
-    background-color: teal;
+    background-color: #0d3e99;
     color: white; 
   }
   td{
@@ -726,7 +732,7 @@ color:#000000;
 .rt-td
 {
    padding-left:10px;
-   font-size:12px;
+   font-size:13px;
    border : 1px solid #eaeaea;
    white-space: pre-wrap;
 }
@@ -736,7 +742,9 @@ color:#000000;
 }
 .rt-th{
   font-size:14px;
-    border : 1px solid #eaeaea;
+  background:#0d3e99;
+  border : 1px solid #eaeaea;
+  color:#fff;
 } 
 .primmary{
     border-radius : 3px;

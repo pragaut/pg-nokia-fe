@@ -1,7 +1,7 @@
 import React, { Component, useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import * as CommonStyle from '../../../comman/commonStyle';
-import { getDeviceBatteryStatus, getDeviceStatusDetails, getNetworkConnectivityStatuDetails, getTowerMonitoringSubDetails } from '../../../../actions/tmc/working.action';
+import { getDeviceBatteryStatus, getTowerNotificationDetails, getDeviceStatusDetails, getNetworkConnectivityStatuDetails, getTowerMonitoringSubDetails } from '../../../../actions/tmc/working.action';
 import Wrapper from '../../../shared/Wrapper';
 import moment from 'moment';
 import { withRouter } from 'next/router';
@@ -9,6 +9,7 @@ import DeviceBatteryStatus from './deviceBatteryStatusDetails';
 import DeviceStatus from './deviceStatus';
 import NetworkConnectivityStatus from './networkConnectivityStatus';
 import TowerMonitoringSubDetails from './towerMonitoringSubDetails';
+import AlarmNotificationDetails from './alarmNotificationDetails';
 import Gap from '../../../comman/Gap';
 import { Button } from '../../../comman/formStyle';
 
@@ -22,16 +23,32 @@ class TowerMonitoringDetailedIndex extends Wrapper {
             macAddress: props.macAddress ? props.macAddress : 'no-mac',
             deviceBatteryStatuss: [],
             deviceStatusDetails: [],
+            isViewDetailsPageVisible: props.isViewDetailsPageVisible ? props.isViewDetailsPageVisible : false,
             towerMonitoringDetail: props.towerMonitoringDetail ? props.towerMonitoringDetail : {},
             parameterWithValues: props.parameterWithValues ? props.parameterWithValues : {}
         }
     };
     componentDidMount() {
+        let counter = 1;
         let filterValue = this.state.parameterWithValues;
         this.props.getDeviceBatteryStatus(filterValue);
         this.props.getDeviceStatusDetails(filterValue);
         this.props.getNetworkConnectivityStatuDetails(filterValue);
         this.props.getTowerMonitoringSubDetails(filterValue);
+        this.props.getTowerNotificationDetails(filterValue, undefined, undefined, undefined);
+
+        // setInterval(() => {
+        //     counter = counter + 1;
+        //     console.log("---------counter---------", counter);
+        //     let filterValuenew = this.state.parameterWithValues;
+        //     if (this.state.isViewDetailsPageVisible === true) {
+        //         this.props.getDeviceBatteryStatus(filterValuenew);
+        //         this.props.getDeviceStatusDetails(filterValuenew);
+        //         this.props.getNetworkConnectivityStatuDetails(filterValuenew);
+        //         this.props.getTowerMonitoringSubDetails(filterValuenew);
+        //         this.props.getTowerNotificationDetails(filterValuenew, undefined, undefined, undefined);
+        //     }
+        // }, 60000);
     }
     UNSAFE_componentWillReceiveProps(nextProps) {
         if (nextProps && nextProps.deviceBatteryStatuss && nextProps.deviceBatteryStatuss !== this.state.deviceBatteryStatuss) {
@@ -49,12 +66,17 @@ class TowerMonitoringDetailedIndex extends Wrapper {
         if (nextProps && nextProps.towerMonitoringDetail && nextProps.towerMonitoringDetail !== this.state.towerMonitoringDetail) {
             this.setState({ towerMonitoringDetail: nextProps.towerMonitoringDetail })
         }
+        if (nextProps && nextProps.towerNotificationDetails && nextProps.towerNotificationDetails !== this.state.towerNotificationDetails) {
+            this.setState({ towerNotificationDetails: nextProps.towerNotificationDetails });
+        }
         if (nextProps && nextProps.parameterWithValues && nextProps.parameterWithValues !== this.state.parameterWithValues) {
             let filterValue = nextProps.parameterWithValues;
             this.props.getDeviceBatteryStatus(filterValue);
             this.props.getDeviceStatusDetails(filterValue);
             this.props.getNetworkConnectivityStatuDetails(filterValue);
             this.props.getTowerMonitoringSubDetails(filterValue);
+            this.props.getTowerNotificationDetails(filterValue, undefined, undefined, undefined);
+
             this.setState({ parameterWithValues: nextProps.parameterWithValues })
         }
 
@@ -68,7 +90,7 @@ class TowerMonitoringDetailedIndex extends Wrapper {
         }
     }
     render() {
-        const { deviceBatteryStatuss, towerMonitoringSubDetails, networkConnectivityStatuDetails, deviceStatusDetails, towerMonitoringDetail } = this.state;
+        const { deviceBatteryStatuss, towerNotificationDetails, towerMonitoringSubDetails, networkConnectivityStatuDetails, deviceStatusDetails, towerMonitoringDetail } = this.state;
         return (
             <CommonStyle.MainDiv
                 padding="0px 0px"
@@ -83,10 +105,11 @@ class TowerMonitoringDetailedIndex extends Wrapper {
                     <CommonStyle.MainDiv
                         padding="0px 0px"
                         flexdirection="row"
-                        width={'10%'}
+                        width={'40%'}
+                        justifycontent="flex-start"
                     >
                         <Button
-                            width="90%"
+                            width="80px"
                             height="30px"
                             borderRadius="5px"
                             bgColor="blue"
@@ -98,31 +121,52 @@ class TowerMonitoringDetailedIndex extends Wrapper {
                         >
                             Back
                     </Button>
-                    </CommonStyle.MainDiv>
+                    </CommonStyle.MainDiv> 
                     <CommonStyle.MainDiv
-                        padding="0px 0px"
-                        flexdirection="row"
-                        width={'30%'}
-                    >
-                        <NetworkConnectivityStatus
-                            networkConnectivityStatuDetails={networkConnectivityStatuDetails}
-                        />
-                    </CommonStyle.MainDiv>
-                    <CommonStyle.TextDiv
                         fontsize={"18px"}
                         fontweight={"bold"}
                         justifycontent={"center"}
+                        fontWeight="bold"
+                        bgColor={"#0d3e99"}
+                        color={"#fff"}
+                        height={"30px"}
                         width={'20%'}
                     >
                         {towerMonitoringDetail && towerMonitoringDetail.uniqueId}
-                    </CommonStyle.TextDiv>
+                    </CommonStyle.MainDiv>
                     <CommonStyle.MainDiv
                         padding="0px 0px"
                         flexdirection="row"
                         justifycontent={'flex-end'}
                         width={'40%'}
                     >
-                        Work Start Time -  {towerMonitoringDetail && towerMonitoringDetail.startDateTime && towerMonitoringDetail.startDateTime !== null ? moment(towerMonitoringDetail.startDateTime).format("DD-MMM-YYYY hh:mm:ss a") : ''}
+                      </CommonStyle.MainDiv>
+                </CommonStyle.MainDiv>
+                <CommonStyle.MainDiv
+                    padding="0px 0px"
+                    flexdirection="row"
+                    justifycontent={"space-between"}
+                    alignitems={"baseline"}
+                > 
+                    <CommonStyle.MainDiv
+                        padding="0px 0px"
+                        flexdirection="row"
+                        width={'49%'}
+                    >
+                        <NetworkConnectivityStatus
+                            networkConnectivityStatuDetails={networkConnectivityStatuDetails}
+                        />
+                    </CommonStyle.MainDiv>
+                    <CommonStyle.MainDiv
+                        padding="0px 0px"
+                        height="30px"
+                        flexdirection="row"
+                        justifycontent={'center'}
+                        width={'49%'}
+                        color={"#fff"}
+                        bgColor={"#0d3e99"}
+                    >
+                      <b>Work Start Time - </b>    {towerMonitoringDetail && towerMonitoringDetail.startDateTime && towerMonitoringDetail.startDateTime !== null ? moment(towerMonitoringDetail.startDateTime).format("DD-MMM-YYYY hh:mm:ss a") : ''}
                     </CommonStyle.MainDiv>
                 </CommonStyle.MainDiv>
 
@@ -156,9 +200,21 @@ class TowerMonitoringDetailedIndex extends Wrapper {
                     flexdirection="row"
                     justifycontent={"space-between"}
                     alignitems={"baseline"}
+                    width={'100%'}
                 >
                     <TowerMonitoringSubDetails
                         towerMonitoringSubDetails={towerMonitoringSubDetails}
+                    />
+                </CommonStyle.MainDiv>
+                <Gap h="10px" />
+                <CommonStyle.MainDiv
+                    padding="0px 0px"
+                    flexdirection="row"
+                    justifycontent={"space-between"}
+                    alignitems={"baseline"}
+                >
+                    <AlarmNotificationDetails
+                        towerNotificationDetails={towerNotificationDetails}
                     />
                 </CommonStyle.MainDiv>
                 <Gap h="60px" />
@@ -170,7 +226,7 @@ class TowerMonitoringDetailedIndex extends Wrapper {
 const mapStateToProps = state => {
     const errorType = state.errorReducer.type;
     const errorMessage = state.errorReducer.error;
-    const { deviceBatteryStatuss, deviceStatusDetails, networkConnectivityStatuDetails, towerMonitoringSubDetails } = state.workingReducerTmc;
-    return { errorType, errorMessage, deviceBatteryStatuss, deviceStatusDetails, networkConnectivityStatuDetails, towerMonitoringSubDetails };
+    const { deviceBatteryStatuss, deviceStatusDetails, towerNotificationDetails, networkConnectivityStatuDetails, towerMonitoringSubDetails } = state.workingReducerTmc;
+    return { errorType, errorMessage, towerNotificationDetails, deviceBatteryStatuss, deviceStatusDetails, networkConnectivityStatuDetails, towerMonitoringSubDetails };
 };
-export default withRouter(connect(mapStateToProps, { getDeviceBatteryStatus, getDeviceStatusDetails, getNetworkConnectivityStatuDetails, getTowerMonitoringSubDetails })(TowerMonitoringDetailedIndex));
+export default withRouter(connect(mapStateToProps, { getTowerNotificationDetails, getDeviceBatteryStatus, getDeviceStatusDetails, getNetworkConnectivityStatuDetails, getTowerMonitoringSubDetails })(TowerMonitoringDetailedIndex));

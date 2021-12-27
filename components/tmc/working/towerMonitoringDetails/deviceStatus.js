@@ -74,7 +74,7 @@ class DeviceBatteryStatusDetails extends Wrapper {
                                 {child2Status}
                             </td>
                             <td>
-                                {item.lastUpdatedOn && item.lastUpdatedOn !== null ? moment(item.startDateTime).format("DD-MMM-YYYY hh:mm:ss a") : ''}
+                                {item.lastUpdatedOn && item.lastUpdatedOn !== null ? moment(item.lastUpdatedOn).format("DD-MMM-YYYY hh:mm:ss a") : ''}
                             </td>
                         </tr>
                     })  }

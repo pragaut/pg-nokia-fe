@@ -29,7 +29,7 @@ export class AppHeader extends Wrapper {
     constructor(props) {
         super(props);
         this.wrapperRef = React.createRef();
-       // this.setWrapperRef = this.setWrapperRef.bind(this);
+        // this.setWrapperRef = this.setWrapperRef.bind(this);
         this.handleClickOutside = this.handleClickOutside.bind(this);
         this.state = {
             menuOpen: false,
@@ -116,7 +116,7 @@ export class AppHeader extends Wrapper {
                 {
                     pathname: "/corporateCoordinator",
                     tab: "change-password",
-                    pageName: 'Change Password', 
+                    pageName: 'Change Password',
                     url: "/corporateCoordinator/change-password",
                     isVisible: true,
                     ApplicableFor: 'Working',
@@ -152,13 +152,13 @@ export class AppHeader extends Wrapper {
                 {
                     pathname: "/plantHrHead",
                     tab: "change-password",
-                    pageName: 'Change Password', 
+                    pageName: 'Change Password',
                     url: "/plantHrHead/change-password",
                     isVisible: true,
                     ApplicableFor: 'Working',
                     roleCode: 'PlantHRHead'
                 },
-                 {
+                {
                     pathname: "/auditor",
                     tab: "Dashboard",
                     pageName: 'Dashboard',
@@ -170,7 +170,7 @@ export class AppHeader extends Wrapper {
                 {
                     pathname: "/auditor",
                     tab: "change-password",
-                    pageName: 'Change Password', 
+                    pageName: 'Change Password',
                     url: "/auditor/change-password",
                     isVisible: true,
                     ApplicableFor: 'Working',
@@ -179,7 +179,7 @@ export class AppHeader extends Wrapper {
                 {
                     pathname: "/management",
                     tab: "change-password",
-                    pageName: 'Change Password', 
+                    pageName: 'Change Password',
                     url: "/management/change-password",
                     isVisible: true,
                     ApplicableFor: 'Working',
@@ -197,7 +197,7 @@ export class AppHeader extends Wrapper {
                 {
                     pathname: "/companyHRHead",
                     tab: "change-password",
-                    pageName: 'Change Password', 
+                    pageName: 'Change Password',
                     url: "/companyHRHead/change-password",
                     isVisible: true,
                     ApplicableFor: 'Working',
@@ -206,7 +206,7 @@ export class AppHeader extends Wrapper {
                 {
                     pathname: "/subAdmin",
                     tab: "change-password",
-                    pageName: 'Change Password', 
+                    pageName: 'Change Password',
                     url: "/subAdmin/change-password",
                     isVisible: true,
                     ApplicableFor: 'Working',
@@ -235,7 +235,7 @@ export class AppHeader extends Wrapper {
     }
     activeHeaderLinkClose() {
         //alert(!this.state.isProfileVisible);
-        this.setState({ isProfileVisible: false, isWorkingLinkVisible: false});
+        this.setState({ isProfileVisible: false, isWorkingLinkVisible: false });
     }
     _linkClicked = () => {
         this.setState({ menuOpen: !this.state.menuOpen });
@@ -292,13 +292,16 @@ export class AppHeader extends Wrapper {
 
         const { data, router } = this.props;
         const user = this.loggedUser();
+        const userRole = this.getLoggedUserRole()
+        const LoggedUserRole = userRole && JSON.parse(userRole);
         const smallTab = this.props.width < 1000 && this.props.width > 768;
         const ActiveTabname = router && router.query && router.query.tab;
-        const userName = user && user.employeeName ;
+        const userName = user && user.employeeName;
         let Right = smallTab ? "45px" : "60px";
         // console.log("User between ", user)
+        const RoleName = LoggedUserRole && LoggedUserRole.roleName;
         const { WorkingLink, isProfileVisible, isWorkingLinkVisible } = this.state;
-     
+
         return (
             <div>
                 <Head>
@@ -313,9 +316,33 @@ export class AppHeader extends Wrapper {
                                 <img className="logo" src="../../static/application_logo.png" title="Nokia Group" alt="logo" />
                             </a>
                         </NavStyle.LogoDiv>
-                   
+                        {/* {RoleName === "Management" && */}
+                            <NavStyle.MainDiv_ForNav>
+                                <NavStyle.LinkSubDiv_Link
+                                    isActiveLink={ActiveTabname === "tower-monitoring-details" && true}
+                                    onClick={() => {
+                                        this.props.router.push(
+                                            {
+                                                pathname: "/management",
+                                                tab: 'tower-monitoring-details',
+                                                query: {
+                                                    tab: 'tower-monitoring-details',
+                                                    id: undefined,
+                                                    pageName: 'Tower Monitoring Details',
+                                                    page: 'Tower Monitoring Details',
+                                                    MasterName: 'Tower Monitoring Details',
+                                                }
+                                            },
+                                            "/management"
+                                        );
+                                    }}
+                                >
+                                    TMC Details
+                                </NavStyle.LinkSubDiv_Link>
+                            </NavStyle.MainDiv_ForNav>
+                        {/* }  */}
                         <NavStyle.LogoDiv
-                            bgColor={isProfileVisible === true ? 'transparent' : 'transparent'}                           
+                            bgColor={isProfileVisible === true ? 'transparent' : 'transparent'}
                             style={{ cursor: 'pointer' }}
                             onClick={() => this.toggleprofileOpen()}
                         >
@@ -329,7 +356,7 @@ export class AppHeader extends Wrapper {
                                     <ul style={{ listStyle: 'none', paddingLeft: '10px', }}>
                                         <li style={{ paddingBottom: '20px', color: '#f6d613', fontSize: '16px', fontWeight: 'bold' }}>
                                             {userName}
-                                        </li>                                      
+                                        </li>
                                         <li onClick={() => {
                                             return (
                                                 this.killUser(),
