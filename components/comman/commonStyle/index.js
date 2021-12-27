@@ -341,7 +341,7 @@ width: 100%;
 td 
 {
   border: 1px solid #000;
-  padding: 8px;
+  padding:${props => props.tdPadding ? props.tdPadding : '8px'} ;
   font-family: Asap;
   font-size: 14px  ; 
   font-weight: normal;
@@ -360,7 +360,7 @@ td
 {
  
   border: 1px solid #000;
-  padding: 8px;
+  padding: ${props => props.thPadding ? props.thPadding : '8px'};
   font-family: Asap;
   font-size: 14px  ; 
   font-weight: bold;
@@ -378,9 +378,7 @@ td
 }
 tr:nth-child(even){background-color: #f2f2f2;}
 tr:hover {background-color: #ddd;}
-th {
-    padding-top: 12px;
-    padding-bottom: 12px;
+th { 
     text-align: left;
     background-color: teal;
     color: white; 
@@ -466,6 +464,14 @@ th {
   }
   .textalignleft{
     text-align:  left  ; 
+  }
+  .divClassFlex{
+    display:flex;
+    justify-content:flex-start;
+    align-items: center;
+  }
+  i{
+    margin-right:5px;
   }
 `;
 
@@ -860,6 +866,82 @@ color:#000000;
 }
 .width80px{
   width:80px !important;
+}
+.Single_Clamp_Connected{
+  height: 25px;
+    width: 25px;
+    background-color: orange;
+    border-radius: 50%;
+    display: inline-block;
+    >div{
+      display:none;
+    } 
+  &:hover{
+    overflow:visible;
+    > div{
+      display:flex;
+      justify-content:center;
+      text-align:center;
+      align-items:center;
+      border-radius:5px;
+      height: 25px;
+      background-color: orange;
+      padding:0px 5px;
+      position:absolute;
+      box-shadow: 2px 3px #edebeb;
+    } 
+  }
+}
+.Both_Clamp_Not_Connected{
+  height: 25px;
+  width: 25px;
+  background-color: red;
+  border-radius: 50%;
+  display: inline-block;
+  >div{
+    display:none;
+  }
+
+  &:hover{
+    overflow:visible;
+    > div{
+      display:flex;
+      justify-content:center;
+      text-align:center;
+      align-items:center;
+      border-radius:5px;
+      height: 25px;
+      background-color: red;
+      padding:0px 5px;
+      position:absolute;
+      box-shadow: 2px 3px #edebeb;
+    } 
+  }
+}
+.Both_Clamp_Connected{
+  height: 25px;
+  width: 25px;
+  background-color: green;
+  border-radius: 50%;
+  display: inline-block;
+  >div{
+    display:none;
+  }
+  &:hover{
+    overflow:visible;
+    > div{
+      display:flex;
+      justify-content:center;
+      text-align:center;
+      align-items:center;
+      border-radius:5px;
+      height: 25px;
+      background-color: green;
+      padding:0px 5px;
+      position:absolute;
+      box-shadow: 2px 3px #edebeb;
+    } 
+  }
 }
 
 `;
