@@ -113,9 +113,9 @@ const defaultButton = props => (
       const { anchorEl } = this.state;
 
     return (
-      <div className={classes1(className, '-pagination')} style={this.props.style}>
+      <div className={classes1(className, '-pagination')} style={this.props.style,{alignItems:'center'}}>
         <div className="-previous">
-          <Button  size="small" variant="outlined" className={classes.button} style={{backgroundColor:'white',height:'32px',textTransform: 'lowercase'}}
+          <Button  size="small" variant="outlined" className={classes.button} style={{backgroundColor:'white',height:'22px',textTransform: 'lowercase'}}
              onClick={() => {
               if (!canPrevious)return
               this.changePage(page - 1)
@@ -124,13 +124,13 @@ const defaultButton = props => (
 
         </div>
         <Tooltip id="tooltip-icon" title="on/off">
-        <Button size="small" variant="outlined" className={classes.button} style={{backgroundColor:'white',height:'32px',textTransform: 'lowercase'}}
+        <Button size="small" variant="outlined" className={classes.button} style={{backgroundColor:'white',height:'22px',textTransform: 'lowercase'}}
         onClick={()=>{changeFilter();}}>filter
         </Button>
         </Tooltip>
         <ColumnChooser columns={columns}  onColumnUpdate={onColumnUpdate} />
-        <div className="-center">
-          <span className="-pageInfo">
+        <div  className="-center">
+          <span  style={{height:'22px',fontSize:'12px'}} className="-pageInfo">
 
             {showPageJump ? (
               <div className="-pageJump">
@@ -144,6 +144,7 @@ const defaultButton = props => (
                     }
                     this.setState({ page: this.getSafePage(page) })
                   }}
+                  style={{height:'22px',fontSize:'12px'}}
                   value={this.state.page === '' ? '' : this.state.page + 1}
                   onBlur={this.applyPage}
                   onKeyPress={e => {
@@ -156,16 +157,16 @@ const defaultButton = props => (
             ) : (
               <span className="-currentPage">{page + 1}</span>
             )}{' '}
-            {this.props.ofText} <span className="-totalPages">{pages || 1}</span>
+            {this.props.ofText} <span  style={{height:'22px',fontSize:'12px'}} className="-totalPages">{pages || 1}</span>
           </span>
 
           {showPageSizeOptions && (
 
             <span className="select-wrap -pageSizeOptions">
-            <span style={{textTransform: 'lowercase',fontFamily:'serif',padding:'5px'}}>
+            <span style={{textTransform: 'lowercase',fontFamily:'serif',padding:'5px',fontSize:'12px'}}>
               Now Showing
                 </span>
-              <select onChange={e => onPageSizeChange(Number(e.target.value))} value={pageSize}>
+              <select style={{fontSize:'12px'}} onChange={e => onPageSizeChange(Number(e.target.value))} value={pageSize}>
                 {pageSizeOptions.map((option, i) => (
                   // eslint-disable-next-line react/no-array-index-key
                   <option key={i} value={option}>
@@ -178,7 +179,7 @@ const defaultButton = props => (
 
         </div>
         <Tooltip id="tooltip-icon" title="download grid">
-          <Button variant="outlined"size="small"mini style={{marginRight:2, height:10,padding:'10px'}} onClick={this.handleClick}>
+          <Button variant="outlined"size="small"mini style={{marginRight:2, height:22,padding:'5px',fontSize:'12px',fontFamily:'Asap'}} onClick={this.handleClick}>
                 Export
                  {/* <Download className={classes.rightIcon} style={{color: 'green'}} /> */}
               </Button>
@@ -196,16 +197,16 @@ const defaultButton = props => (
                   vertical: "bottom",
                   horizontal: "bottom"
                 }}>
-                <Typography className={classes.typography} onClick={() => {handleDownloadToJson();}} style ={{padding: "10px",cursor: 'pointer'}} >
+                <Typography className={classes.typography} onClick={() => {handleDownloadToJson();}} style ={{padding: "10px",cursor: 'pointer',fontSize:'12px'}} >
                     json
                 </Typography>
-                <Typography className={classes.typography} onClick={() => {handleDownload();}} style ={{padding: "10px",cursor: 'pointer'}}>
+                <Typography className={classes.typography} onClick={() => {handleDownload();}} style ={{padding: "10px",cursor: 'pointer',fontSize:'12px'}}>
                     csv
                 </Typography>
               </Popover>
 
         <div className="-next">
-          <Button size="small" variant="outlined" style={{backgroundColor:'white',padding:'6px',textTransform: 'lowercase'}}
+          <Button size="small" variant="outlined" style={{backgroundColor:'white',padding:'0px',textTransform: 'lowercase'}}
             onClick={() => {
               if (!canNext) return
               this.changePage(page + 1)

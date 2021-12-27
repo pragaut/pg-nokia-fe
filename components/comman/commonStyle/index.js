@@ -93,6 +93,12 @@ export const MainDiv = styled.div`
     border : ${props => props.border ? props.border : '0px'};
     border-radius : ${props => props.borderradius ? props.borderradius : '0px'};
     font-family:${props => props.fontfamily ? props.fontfamily : 'Asap'} ;
+    font-weight:  ${props => props.fontWeight ? props.fontWeight : 'normal'};
+    font-stretch: ${props => props.fontstretch ? props.fontstretch : 'normal'} ;
+    font-style:  ${props => props.fontstyle ? props.fontstyle : 'normal'} ;
+    line-height:${props => props.lineheight ? props.lineheight : '1.05'} ;
+    letter-spacing: ${props => props.letterspacing ? props.letterspacing : 'normal'} ;
+   
     color:  ${props => props.color ? props.color : '#000'} ;
     .disabled{
         cursor: not-allowed;
@@ -341,7 +347,7 @@ width: 100%;
 td 
 {
   border: 1px solid #000;
-  padding: 8px;
+  padding:${props => props.tdPadding ? props.tdPadding : '8px'} ;
   font-family: Asap;
   font-size: 14px  ; 
   font-weight: normal;
@@ -360,7 +366,7 @@ td
 {
  
   border: 1px solid #000;
-  padding: 8px;
+  padding: ${props => props.thPadding ? props.thPadding : '8px'};
   font-family: Asap;
   font-size: 14px  ; 
   font-weight: bold;
@@ -378,11 +384,9 @@ td
 }
 tr:nth-child(even){background-color: #f2f2f2;}
 tr:hover {background-color: #ddd;}
-th {
-    padding-top: 12px;
-    padding-bottom: 12px;
+th { 
     text-align: left;
-    background-color: teal;
+    background-color: #0d3e99;
     color: white; 
   }
   td{
@@ -466,6 +470,14 @@ th {
   }
   .textalignleft{
     text-align:  left  ; 
+  }
+  .divClassFlex{
+    display:flex;
+    justify-content:flex-start;
+    align-items: center;
+  }
+  i{
+    margin-right:5px;
   }
 `;
 
@@ -720,7 +732,7 @@ color:#000000;
 .rt-td
 {
    padding-left:10px;
-   font-size:12px;
+   font-size:13px;
    border : 1px solid #eaeaea;
    white-space: pre-wrap;
 }
@@ -730,7 +742,9 @@ color:#000000;
 }
 .rt-th{
   font-size:14px;
-    border : 1px solid #eaeaea;
+  background:#0d3e99;
+  border : 1px solid #eaeaea;
+  color:#fff;
 } 
 .primmary{
     border-radius : 3px;
@@ -860,6 +874,82 @@ color:#000000;
 }
 .width80px{
   width:80px !important;
+}
+.Single_Clamp_Connected{
+  height: 25px;
+    width: 25px;
+    background-color: orange;
+    border-radius: 50%;
+    display: inline-block;
+    >div{
+      display:none;
+    } 
+  &:hover{
+    overflow:visible;
+    > div{
+      display:flex;
+      justify-content:center;
+      text-align:center;
+      align-items:center;
+      border-radius:5px;
+      height: 25px;
+      background-color: orange;
+      padding:0px 5px;
+      position:absolute;
+      box-shadow: 2px 3px #edebeb;
+    } 
+  }
+}
+.Both_Clamp_Not_Connected{
+  height: 25px;
+  width: 25px;
+  background-color: red;
+  border-radius: 50%;
+  display: inline-block;
+  >div{
+    display:none;
+  }
+
+  &:hover{
+    overflow:visible;
+    > div{
+      display:flex;
+      justify-content:center;
+      text-align:center;
+      align-items:center;
+      border-radius:5px;
+      height: 25px;
+      background-color: red;
+      padding:0px 5px;
+      position:absolute;
+      box-shadow: 2px 3px #edebeb;
+    } 
+  }
+}
+.Both_Clamp_Connected{
+  height: 25px;
+  width: 25px;
+  background-color: green;
+  border-radius: 50%;
+  display: inline-block;
+  >div{
+    display:none;
+  }
+  &:hover{
+    overflow:visible;
+    > div{
+      display:flex;
+      justify-content:center;
+      text-align:center;
+      align-items:center;
+      border-radius:5px;
+      height: 25px;
+      background-color: green;
+      padding:0px 5px;
+      position:absolute;
+      box-shadow: 2px 3px #edebeb;
+    } 
+  }
 }
 
 `;

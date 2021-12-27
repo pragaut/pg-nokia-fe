@@ -21,6 +21,8 @@ import { showNotification, hideNotification } from '../actions/comman/common.act
 import * as commonType from '../action-types/comman/common.action.types';
 import { removeLoggedUserRole } from '../utils/session.helper';
 import ChangePassword from '../components/comman/auth/changePassword';
+import TowerMonitoringDetails from '../components/tmc/working/towerMonitoringDetails';
+
 import DeviceMappingDetails from '../components/tmc/working/deviceMapping/index';
 import TowerNotificationDetails from '../components/tmc/working/towerNotifications/index';
 import ClosedTowerNotificationDetails from '../components/tmc/working/towerNotifications/closedTowerNotification';
@@ -81,6 +83,7 @@ export class Index extends Wrapper {
         const userRole = this.getLoggedUserRole();
         const LoggedUserRole = userRole && JSON.parse(userRole);
         const RoleName = LoggedUserRole && LoggedUserRole.roleName;
+        console.log("role--name ---", RoleName)
         let AuthorizedUser = this.checkIsAuthorizedUser(RoleName, "user-page:visit", null);
         console.log("Authorized User : ", AuthorizedUser);
         if (!AuthorizedUser) {
@@ -171,7 +174,7 @@ export class Index extends Wrapper {
             <div>
                 <Main />
                 <Header
-                    layout="loggedUser" //"admin"
+                    layout="loggedUser_management" //"admin"
                 />
                 <div style={{ width: '95%', display: 'flex', justifyContent: 'center', flexDirection: 'column' }}>
                     <AdminMain style={{ width: '100%', padding: '0px 30px' }} className={style.admin_main}>
@@ -179,6 +182,11 @@ export class Index extends Wrapper {
                             <ModalHeader
                                 heading={router && router.query && router.query.tab !== "" && router.query.MasterName} //"Group Master"
                             />
+                            {( (ActiveTabname && ActiveTabname === "tower-monitoring-details")) && (
+                                <div>
+                                    <TowerMonitoringDetails />
+                                </div>
+                            )} 
                             {router && (router.query && router.query.tab === "device-mapping-details") && (
                                 <div>
                                     <DeviceMappingDetails />
