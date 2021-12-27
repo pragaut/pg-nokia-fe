@@ -50,7 +50,7 @@ const workingReducer = (state, action) => {
     //console.log("action.type", action.type);
     switch (action.type) {
 
-        //#region  Tower Monitoring Details -- Device Battery Status
+        //#region  TMC Details 
         case actions.DEVICEBATTERYSTATUS_LIST_SUCCESS:
             return {
                 deviceBatteryStatus: state.deviceBatteryStatus,
@@ -113,8 +113,6 @@ const workingReducer = (state, action) => {
                 type: action.type
             };
         //#endregion
-
-
         //#region  Tower Monitoring Details -- Network  Connectivity
         case actions.NETWORKCONNECTIVITYSTATUSDETAILS_LIST_SUCCESS:
             return {
@@ -154,18 +152,58 @@ const workingReducer = (state, action) => {
 
                 type: action.type
             };
+        //#endregion 
+        // case actions.DEVICELOCATIONDETAILS_LIST_SUCCESS:
+        //     return {
+        //         deviceLocationDetail: state.deviceLocationDetail,
+        //         deviceLocationDetails: action.data,
+        //         deviceLocationDetailActiontype: action.type,
+        //         deviceLocationDetailRecordsCount: action.recordsCount,
+
+        //         type: action.type,
+        //     };
+        //#region DEVICE MAPPING DETAILS 
+        case actions.DEVICEMAPPINGDETAILS_LIST_SUCCESS:
+            return {
+                deviceMappingDetail: state.deviceMappingDetail,
+                deviceMappingDetails: action.data,
+                deviceMappingDetailActiontype: action.type,
+                deviceMappingDetailRecordsCount: action.recordsCount,
+
+                type: action.type,
+            };
+
+        case actions.TOWERNOTIFICATIONDETAILS_LIST_SUCCESS:
+            return {
+                towerNotificationDetail: state.towerNotificationDetail,
+                towerNotificationDetails: action.data,
+                towerNotificationDetailActiontype: action.type,
+                towerNotificationDetailRecordsCount: action.recordsCount,
+
+                type: action.type,
+            };
+
+        case actions.TOWERNOTIFICATIONDETAILS_SAVE_SUCCESS:
+            return {
+                towerNotificationDetail: action.data,
+                towerNotificationDetails: state.alarms,
+                towerNotificationDetailActiontype: action.type,
+                towerNotificationDetailRecordsCount: state.recordsCount,
+            };
         //#endregion
+
+
+
         // important: we should always give a default, otherwise React gives a cheap warning and it is very annoying
         default:
             return {
                 type: state.type,
                 recordsCount: state.recordsCount,
 
-                deviceLocationDetail: state.deviceLocationDetail,
-                deviceLocationDetails: state.deviceLocationDetails,
-                deviceLocationDetailActiontype: state.deviceLocationDetailActiontype,
-                deviceLocationDetailRecordsCount: state.deviceLocationDetailRecordsCount,
-
+                // deviceLocationDetail: state.deviceLocationDetail,
+                // deviceLocationDetails: state.deviceLocationDetails,
+                // deviceLocationDetailActiontype: state.deviceLocationDetailActiontype,
+                // deviceLocationDetailRecordsCount: state.deviceLocationDetailRecordsCount, 
                 deviceBatteryStatus: state.deviceBatteryStatus,
                 deviceBatteryStatuss: state.deviceBatteryStatuss,
                 deviceBatteryStatustype: state.deviceBatteryStatustype,
@@ -185,11 +223,21 @@ const workingReducer = (state, action) => {
                 networkConnectivityStatuDetails: state.networkConnectivityStatuDetails,
                 networkConnectivityStatuDetailtype: state.networkConnectivityStatuDetailtype,
                 networkConnectivityStatuDetailRecordsCount: state.networkConnectivityStatuDetailRecordsCount,
-              
+
                 towerMonitoringSubDetail: state.towerMonitoringSubDetail,
                 towerMonitoringSubDetails: state.towerMonitoringSubDetails,
                 towerMonitoringSubDetailtype: state.towerMonitoringSubDetailtype,
                 towerMonitoringSubDetailRecordsCount: state.towerMonitoringSubDetailRecordsCount,
+
+                deviceMappingDetail: state.deviceMappingDetail,
+                deviceMappingDetails: state.deviceMappingDetails,
+                deviceMappingDetailActiontype: state.deviceMappingDetailActiontype,
+                deviceMappingDetailRecordsCount: state.deviceMappingDetailRecordsCount,
+
+                towerNotificationDetail: state.towerNotificationDetail,
+                towerNotificationDetails: state.towerNotificationDetails,
+                towerNotificationDetailActiontype: state.towerNotificationDetailActiontype,
+                towerNotificationDetailRecordsCount: state.towerNotificationDetailRecordsCount,
 
             };
     }

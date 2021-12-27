@@ -1,3 +1,22 @@
+//#region  Device mapping details
+
+export const DEVICEMAPPINGDETAILS_INIT = 'modules/deviceMappingDetails/DEVICEMAPPINGDETAILS_INIT';
+export const DEVICEMAPPINGDETAILS_LIST_REQUESTED = 'modules/deviceMappingDetails/DEVICEMAPPINGDETAILS_LIST_REQUESTED';
+export const DEVICEMAPPINGDETAILS_LIST_SUCCESS = 'modules/deviceMappingDetails/DEVICEMAPPINGDETAILS_LIST_SUCCESS';
+ 
+//#endregion
+
+//#region  Tower Notification Details
+
+export const TOWERNOTIFICATIONDETAILS_INIT = 'modules/towerNotificationDetails/TOWERNOTIFICATIONDETAILS_INIT';
+export const TOWERNOTIFICATIONDETAILS_LIST_REQUESTED = 'modules/towerNotificationDetails/TOWERNOTIFICATIONDETAILS_LIST_REQUESTED';
+export const TOWERNOTIFICATIONDETAILS_LIST_SUCCESS = 'modules/towerNotificationDetails/TOWERNOTIFICATIONDETAILS_LIST_SUCCESS';
+ 
+export const TOWERNOTIFICATIONDETAILS_SAVE_REQUESTED = 'modules/towerNotificationDetails/TOWERNOTIFICATIONDETAILS_SAVE_REQUESTED';
+export const TOWERNOTIFICATIONDETAILS_SAVE_SUCCESS = 'modules/towerNotificationDetails/TOWERNOTIFICATIONDETAILS_SAVE_SUCCESS';
+export const TOWERNOTIFICATIONDETAILS_SAVE_ERROR = 'modules/towerNotificationDetails/TOWERNOTIFICATIONDETAILS_SAVE_ERROR';
+
+//#endregion
 //#region  Tower Monitoring Details
 
 export const DEVICEBATTERYSTATUS_INIT = 'modules/towermonitoring/DEVICEBATTERYSTATUS_INIT';
