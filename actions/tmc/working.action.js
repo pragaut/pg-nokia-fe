@@ -71,6 +71,7 @@ export const getTowerNotificationDetails = (filters, userId, pageIndex, rowsToRe
         let pageIndex = 0;
 
         //console.log("ActionPlan filters : ", filters);
+        //console.log("filters : >>", filters);
         let towerMonitoringSubDetailId = filters && filters.towerMonitoringSubDetailId ? filters.towerMonitoringSubDetailId : '';
         let alarmTypeId = filters && filters.alarmTypeId ? filters.alarmTypeId : '';
         let deviceRegistrationDetailId = filters && filters.deviceRegistrationDetailId ? filters.deviceRegistrationDetailId : '';
@@ -91,13 +92,17 @@ export const getTowerNotificationDetails = (filters, userId, pageIndex, rowsToRe
         }
         if (deviceRegistrationDetailId) {
             url = url + `&deviceRegistrationDetailId=${deviceRegistrationDetailId}`;
-        }
-        if (isClosed) {
+        } 
+        if (isClosed) { 
             url = url + `&isClosed=${isClosed}`;
+        } 
+        else
+        {
+            url = url + `&isClosed=${0}`;
         }
-
+        //console.log("url : 1>>>>>>", url);
         const data = await service.get(url, true);
-        console.log("Tower Notification Details:  ", data);
+        //console.log("Tower Notification Details:  ", data);
 
         if (data && !data.errorMessage) {
           //  dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
@@ -120,7 +125,7 @@ export const updateTowerNotificationDetails = towerNotificationDetails => async 
         let url = config.NOKIA_URL + `nokia/nokiaworking/towerNotificationDetails/`;
         const data = (typeof towerNotificationDetails.id === 'undefined' || towerNotificationDetails.id === -1) ? await service.post(url, towerNotificationDetails, true)
             : await service.put(url, towerNotificationDetails, true);
-        console.log("Tower Notification Details : >>>>>>>>>>>", towerNotificationDetails);
+        //console.log("Tower Notification Details : >>>>>>>>>>>", towerNotificationDetails);
         if (data && !data.errorMessage) {
 
             //if (typeof roleMaster.id === 'undefined') roleMaster.id = data.data.id;

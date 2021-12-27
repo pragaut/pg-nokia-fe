@@ -339,6 +339,69 @@ export class AppHeader extends Wrapper {
                                 >
                                     TMC Details
                                 </NavStyle.LinkSubDiv_Link>
+                                <NavStyle.LinkSubDiv_Link
+                                    isActiveLink={ActiveTabname === "device-mapping-details" && true}
+                                    onClick={() => {
+                                        this.props.router.push(
+                                            {
+                                                pathname: "/management",
+                                                tab: 'device-mapping-details',
+                                                query: {
+                                                    tab: 'device-mapping-details',
+                                                    id: undefined,
+                                                    pageName: 'Device Mapping Details',
+                                                    page: 'Device Mapping Details',
+                                                    MasterName: 'Device Mapping Details',
+                                                }
+                                            },
+                                            "/management"
+                                        );
+                                    }}
+                                >
+                                    Device Mapping
+                                </NavStyle.LinkSubDiv_Link>
+                                <NavStyle.LinkSubDiv_Link
+                                    isActiveLink={ActiveTabname === "tower-notification-details" && true}
+                                    onClick={() => {
+                                        this.props.router.push(
+                                            {
+                                                pathname: "/management",
+                                                tab: 'tower-notification-details',
+                                                query: {
+                                                    tab: 'tower-notification-details',
+                                                    id: undefined,
+                                                    pageName: 'Tower Notification Details',
+                                                    page: 'Tower Notification Details',
+                                                    MasterName: 'Tower Notification Details',
+                                                }
+                                            },
+                                            "/management"
+                                        );
+                                    }}
+                                >
+                                    Open Alarm
+                                </NavStyle.LinkSubDiv_Link>
+                                <NavStyle.LinkSubDiv_Link
+                                    isActiveLink={ActiveTabname === "closed-tower-notification-details" && true}
+                                    onClick={() => {
+                                        this.props.router.push(
+                                            {
+                                                pathname: "/management",
+                                                tab: 'closed-tower-notification-details',
+                                                query: {
+                                                    tab: 'closed-tower-notification-details',
+                                                    id: undefined,
+                                                    pageName: 'Closed Notification Details',
+                                                    page: 'Closed Notification Details',
+                                                    MasterName: 'Closed Notification Details',
+                                                }
+                                            },
+                                            "/management"
+                                        );
+                                    }}
+                                >
+                                    Closed Alarm
+                                </NavStyle.LinkSubDiv_Link>
                             </NavStyle.MainDiv_ForNav>
                         }
                         <NavStyle.LogoDiv
