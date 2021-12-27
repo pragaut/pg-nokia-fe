@@ -15,7 +15,7 @@ import { SELECT, SpanLabelForDDl } from '../../../comman/formStyle';
 import { validateInputs } from '../../../../utils/editFormHelper';
 import { Icon } from "antd";
 import { color } from 'highcharts';
-class TowerNotificationDetails extends Wrapper {
+class ClosedTowerNotificationDetails extends Wrapper {
     configs = [];
 
     constructor(props) {
@@ -101,24 +101,24 @@ class TowerNotificationDetails extends Wrapper {
                     </select>
             },
             {
-                Header: 'Action',
-                accessor: 'id',
-                id: 'id',
+                Header: 'Status Closed By',
+                accessor: d => `${d.employeeName}`,
+                id: 'employeeName',
                 show: true,
-                filterable: false,
-                Cell: p => (
-                    <React.Fragment>
-
-                        {p.original.id && p.original.id !== null && (p.original.isClosed ===false && p.original.isClosed !=null) &&
-                            <button className="primary" value={p.original.id} onClick={() =>
-                                this.onClickUpdateStatus(p.original.id)
-                            }>
-                                Update Status
-                            </button>
-                        }
-                    </React.Fragment>
-                ),
             },
+            {
+                Header: 'Closed On',
+                accessor: d => `${d.statusUpdatedOn}`,
+                id: 'statusUpdatedOn',
+                show: true,
+            },
+            {
+                Header: 'Remarks',
+                accessor: d => `${d.remarks}`,
+                id: 'remarks',
+                show: true,
+            },
+
         ]
         this.setState({ columns: columns });
     }
@@ -126,12 +126,12 @@ class TowerNotificationDetails extends Wrapper {
     async componentDidMount() {
         // let's load the groups, for first time
         let filters = {
-            isClosed : 0
+            isClosed : 1
         }
         this.props.getTowerNotificationDetails(filters, constants.DEFAULT_ROWS_LIST, undefined, undefined);
         this.props.getAlarmTypeMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
         setTimeout(() => {
-            this.updateStateAfterStateUpdate();
+            this.updateStateAfterStateUpdate(); 
         }, 100);
     };
 
@@ -187,7 +187,7 @@ class TowerNotificationDetails extends Wrapper {
     }
     onClickReferesh = (async) => {
         let filters = {
-            isClosed : 0
+            isClosed : 1 
         }
         this.props.getTowerNotificationDetails(filters, constants.DEFAULT_ROWS_LIST, undefined, undefined);
         this.props.getAlarmTypeMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
@@ -206,6 +206,7 @@ class TowerNotificationDetails extends Wrapper {
     render() {
         //console.log("Antenna Rotataion Details", this.state.antennaRotationDetails);
         const { showEditPopup, isModalPopupOpen, columns, towerNotificationDetails, alarms } = this.state;
+        
         return (
             <CommonStyle.MainDiv
                 flexdirection={"column"}
@@ -303,4 +304,4 @@ const mapStateToProps = state => {
     return { towerNotificationDetails, towerNotificationDetail,towerNotificationDetailActiontype, alarms, alarm, errorType, errorMessage };
 };
 
-export default connect(mapStateToProps, { getAlarmTypeMasterData, getTowerNotificationDetails,updateTowerNotificationDetails, hideError })(TowerNotificationDetails);
+export default connect(mapStateToProps, { getAlarmTypeMasterData, getTowerNotificationDetails,updateTowerNotificationDetails, hideError })(ClosedTowerNotificationDetails);

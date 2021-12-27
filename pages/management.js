@@ -23,6 +23,7 @@ import { removeLoggedUserRole } from '../utils/session.helper';
 import ChangePassword from '../components/comman/auth/changePassword';
 import DeviceMappingDetails from '../components/tmc/working/deviceMapping/index';
 import TowerNotificationDetails from '../components/tmc/working/towerNotifications/index';
+import ClosedTowerNotificationDetails from '../components/tmc/working/towerNotifications/closedTowerNotification';
 const Image = '../static/'
 const window = require('global/window');
 const AdminMain = styled.div`
@@ -186,6 +187,11 @@ export class Index extends Wrapper {
                             {router && (router.query && router.query.tab === "tower-notification-details") && (
                                 <div>
                                     <TowerNotificationDetails />
+                                </div>
+                            )}
+                            {router && (router.query && router.query.tab === "closed-tower-notification-details") && (
+                                <div>
+                                    <ClosedTowerNotificationDetails />
                                 </div>
                             )}
                             {((router && router.query && router.query.tab === "change-password") || (this.props.query && this.props.query.tab === "change-password")) && (

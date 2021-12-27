@@ -434,6 +434,23 @@ app.prepare()
 			});
 		});
 
+		server.get('/management/closed-tower-notification-details', (req, res) => {
+			const q = req.query;
+			q.tab = 'closed-tower-notification-details';
+			q.pathname = 'closed-tower-notification-details';
+			q.pageName = 'Closed Notification Details';
+			q.MasterName = 'Closed Notification Details';
+			return app.render(req, res, '/management', {
+				page: q.pageName,
+				MasterName: q.MasterName,
+				tab: q.tab,
+				section: 'working',
+				query: {
+					...q
+				}
+			});
+		});
+
 		//------------------Working Section End----------------------//
 
 		//-------------------Change Password Section --------------------//

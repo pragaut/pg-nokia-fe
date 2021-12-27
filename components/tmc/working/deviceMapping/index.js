@@ -63,6 +63,17 @@ class DeviceMappingDetails extends Wrapper {
                 accessor: d => `${d.startDateTime}`,
                 id: 'startDateTime',
                 show: true,
+            },
+            {
+                Header: 'Rigger',
+                accessor: d => `${d.towerMonitoringDetailId}`,
+                id: 'towerMonitoringDetailId',
+                Cell: row => (
+                    <React.Fragment>
+                       <React.Fragment><Icon style={{color:'green', fontSize:'12px'}} type="check" title="Not mapped" /></React.Fragment>
+                    </React.Fragment>
+                ),
+                show: true,
             }
         ]
 
@@ -87,7 +98,7 @@ class DeviceMappingDetails extends Wrapper {
             let Single = {
                 uniqueId: element.uniqueId,
                 macAddress: element.macAddress,
-                startDateTime: element.startDateTime,
+                startDateTime: element.startDateTime 
             }
             let RoleCombinedData = element.towerMonitoringUserDetails;            
             
