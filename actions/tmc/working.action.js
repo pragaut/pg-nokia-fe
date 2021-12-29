@@ -178,6 +178,40 @@ export const getDeviceBatteryStatus = (filters) => async dispatch => {
         dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
     }
 };
+
+export const getDeviceBatteryStatusLog = (filters) => async dispatch => {
+    // dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null)
+    try {
+        let pageIndex = 0;
+        let towerMonitoringDetailId = filters && filters.towerMonitoringDetailId ? filters.towerMonitoringDetailId : '';
+        let deviceRegistrationDetailId = filters && filters.deviceRegistrationDetailId ? filters.deviceRegistrationDetailId : '';
+        let macAddress = filters && filters.macAddress ? filters.macAddress : '';
+        let url = config.NOKIA_URL + `nokia/nokiaworking/deviceBatteryStatusLog?pageIndex=${pageIndex}`;
+        if (macAddress) {
+            url = url + `&macAddress=${macAddress}`;
+        }
+        if (towerMonitoringDetailId) {
+            url = url + `&towerMonitoringDetailId=${towerMonitoringDetailId}`;
+        }
+        if (deviceRegistrationDetailId) {
+            url = url + `&deviceRegistrationDetailId=${deviceRegistrationDetailId}`;
+        }
+        const data = await service.get(url, true);
+
+        if (data && !data.errorMessage) {
+            //  dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+            dispatchAction(dispatch, workingTypes.DEVICEBATTERYSTATUSLOG_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
+        }
+        else {
+            //  dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Device Battery Status Details error'), null, null);
+        }
+    }
+    catch (error) {
+        //  dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+    }
+};
 //#endregion
 
 
@@ -193,10 +227,15 @@ export const getTowerMonitoringDetails = (filters) => async dispatch => {
         let macAddress = filters && filters.macAddress ? filters.macAddress : '';
         let uniqueId = filters && filters.uniqueId ? filters.uniqueId : '';
         let isOnlyTodayDataRequired = filters && filters.isOnlyTodayDataRequired ? filters.isOnlyTodayDataRequired : '0';
+        let fromDate = filters && filters.fromDate  && filters.fromDate  !== null ? filters.fromDate : null;
+        let toDate = filters && filters.toDate  && filters.toDate !== null ? filters.toDate : null;
         let url = config.NOKIA_URL + `nokia/nokiaworking/towerMonitoringDetails?pageIndex=${pageIndex}`;
 
         if (towerMonitoringDetailId) {
             url = url + `&towerMonitoringDetailId=${towerMonitoringDetailId}`;
+        }
+        if (deviceRegistrationDetailId) {
+            url = url + `&deviceRegistrationDetailId=${deviceRegistrationDetailId}`;
         }
         if (towerMasterId) {
             url = url + `&towerMasterId=${towerMasterId}`;
@@ -210,11 +249,14 @@ export const getTowerMonitoringDetails = (filters) => async dispatch => {
         if (isOnlyTodayDataRequired) {
             url = url + `&isOnlyTodayDataRequired=${isOnlyTodayDataRequired}`;
         }
-        if (deviceRegistrationDetailId) {
-            url = url + `&deviceRegistrationDetailId=${deviceRegistrationDetailId}`;
-        }
         if (macAddress) {
             url = url + `&macAddress=${macAddress}`;
+        }
+        if (fromDate) {
+            url = url + `&fromDate=${fromDate}`;
+        }
+        if (toDate) {
+            url = url + `&toDate=${toDate}`;
         }
         const data = await service.get(url, true);
         if (data && !data.errorMessage) {

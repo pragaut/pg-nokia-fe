@@ -14,6 +14,11 @@ const initialState = {
     deviceBatteryStatuss: undefined,
     deviceBatteryStatusRecordsCount: 0,
 
+    deviceBatteryStatusLogtype: actions.DEVICEBATTERYSTATUSLOG_INIT,
+    deviceBatteryStatusLog: undefined,
+    deviceBatteryStatusLogs: undefined,
+    deviceBatteryStatusLogRecordsCount: 0,
+
     towerMonitoringDetailtype: actions.TOWERMONITORINGDETAILS_INIT,
     towerMonitoringDetail: undefined,
     towerMonitoringDetails: undefined,
@@ -50,7 +55,7 @@ const workingReducer = (state, action) => {
     //console.log("action.type", action.type);
     switch (action.type) {
 
-        //#region  TMC Details 
+        //#region  TMC Details  -- Battery Status
         case actions.DEVICEBATTERYSTATUS_LIST_SUCCESS:
             return {
                 deviceBatteryStatus: state.deviceBatteryStatus,
@@ -69,6 +74,25 @@ const workingReducer = (state, action) => {
 
                 type: action.type
             };
+
+            case actions.DEVICEBATTERYSTATUSLOG_LIST_SUCCESS:
+                return {
+                    deviceBatteryStatusLog: state.deviceBatteryStatusLog,
+                    deviceBatteryStatusLogs: action.data,
+                    deviceBatteryStatusLogtype: action.type,
+                    deviceBatteryStatusLogRecordsCount: action.recordsCount,
+    
+                    type: action.type,
+                };
+            case actions.DEVICEBATTERYSTATUSLOG_INIT:
+                return {
+                    deviceBatteryStatusLog: state.deviceBatteryStatusLog,
+                    deviceBatteryStatusLogs: state.deviceBatteryStatusLogs,
+                    deviceBatteryStatusLogtype: action.type,
+                    deviceBatteryStatusLogRecordsCount: state.deviceBatteryStatusLogRecordsCount,
+    
+                    type: action.type
+                };
         //#endregion
 
 
@@ -208,6 +232,11 @@ const workingReducer = (state, action) => {
                 deviceBatteryStatuss: state.deviceBatteryStatuss,
                 deviceBatteryStatustype: state.deviceBatteryStatustype,
                 deviceBatteryStatusRecordsCount: state.deviceBatteryStatusRecordsCount,
+
+                deviceBatteryStatusLog: state.deviceBatteryStatusLog,
+                deviceBatteryStatusLogs: state.deviceBatteryStatusLogs,
+                deviceBatteryStatusLogtype: state.deviceBatteryStatusLogtype,
+                deviceBatteryStatusLogRecordsCount: state.deviceBatteryStatusLogRecordsCount,
 
                 towerMonitoringDetail: state.towerMonitoringDetail,
                 towerMonitoringDetails: state.towerMonitoringDetails,

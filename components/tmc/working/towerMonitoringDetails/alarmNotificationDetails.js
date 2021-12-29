@@ -44,7 +44,8 @@ class AlarmNotificationDetailsIndex extends Wrapper {
             {
                 Header: 'Date', 
                 id: 'notificationDate',
-                accessor: d => `${d.notificationDate && d.notificationDate !== null ? moment(d.notificationDate).format("DD-MMM-YYYY hh:mm:ss a") : ''} `,
+               // accessor: d => `${d.notificationDate && d.notificationDate !== null ? moment(d.notificationDate).format("DD-MMM-YYYY hh:mm:ss a") : ''} `,
+                accessor: 'notificationDate',
                  show: true,
             }, 
         ]
@@ -84,7 +85,7 @@ class AlarmNotificationDetailsIndex extends Wrapper {
                 flexdirection="column"
             >
                 <ReactTable
-                    defaultPageSize={20}
+                    defaultPageSize={10}
                     Data={towerNotificationDetails ? towerNotificationDetails : []}
                     filter={true}
                     updateColumn={this.updateColumn}

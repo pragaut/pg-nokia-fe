@@ -5,6 +5,7 @@ import Wrapper from '../../../components/shared/Wrapper';
 import AppHeader from "../../../components/comman/appHeader";
 import AdminAppHeader from "../../../components/comman/appHeader/sideBar";
 import LoggedInUserHeader from ".././appHeader/loggedInUserHeader";
+import LoggedInUserHeaderPG from ".././appHeader/loggedInUserPG";
 import { showNotification } from "../../../actions/comman/common.actions";
 import HeadTag from './headTag';
 
@@ -35,7 +36,7 @@ class Header extends Wrapper {
           chapter={this.props.chapter}
           coursesForHead={this.props.coursesForHead}
         />
-        
+
         {this.props.layout === "admin" &&
           <AdminAppHeader
             router={this.props.router}
@@ -43,21 +44,35 @@ class Header extends Wrapper {
             toggleAuth={this.openWindow}
             IsClickedFromHeader={this.state.IsClickedFromHeader}
             home={this.props.home}
-           
+
             offerPopup={this.props.offerPopup}
-            gifthAuth={this.openWindow} 
+            gifthAuth={this.openWindow}
             pageActive={this.props.pageActive}
           />
         }
-        {(this.props.layout === "loggedUser" ||this.props.layout ===  "loggedUser_management") &&
+        {(this.props.layout === "loggedUser" || this.props.layout === "loggedUser_management") &&
           <LoggedInUserHeader
             router={this.props.router}
             isLoggedIn={this.props.isLoggedIn}
             toggleAuth={this.openWindow}
             IsClickedFromHeader={this.state.IsClickedFromHeader}
-            home={this.props.home} 
+            home={this.props.home}
             offerPopup={this.props.offerPopup}
-            gifthAuth={this.openWindow} 
+            gifthAuth={this.openWindow}
+            layout={this.props.layout}
+            pageActive={this.props.pageActive}
+          />
+        }
+
+        {(this.props.layout === "loggedUser_pragaut") &&
+          <LoggedInUserHeaderPG
+            router={this.props.router}
+            isLoggedIn={this.props.isLoggedIn}
+            toggleAuth={this.openWindow}
+            IsClickedFromHeader={this.state.IsClickedFromHeader}
+            home={this.props.home}
+            offerPopup={this.props.offerPopup}
+            gifthAuth={this.openWindow}
             layout={this.props.layout}
             pageActive={this.props.pageActive}
           />
@@ -68,9 +83,9 @@ class Header extends Wrapper {
             isLoggedIn={this.props.isLoggedIn}
             toggleAuth={this.openWindow}
             IsClickedFromHeader={this.state.IsClickedFromHeader}
-            home={this.props.home} 
+            home={this.props.home}
             offerPopup={this.props.offerPopup}
-            gifthAuth={this.openWindow} 
+            gifthAuth={this.openWindow}
             pageActive={this.props.pageActive}
           />
         }
@@ -90,6 +105,6 @@ const mapStateToProps = state => {
 export default withRouter(
   connect(
     mapStateToProps,
-    { showNotification ,connect}
+    { showNotification, connect }
   )(Header)
 );

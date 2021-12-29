@@ -118,12 +118,12 @@ padding:0px 0px 25px 0px;
 export const LinkSubDiv_Link = styled.div` 
 display: flex;  
 flex-direction:column; 
-padding:0px 20px;
+padding:0px 10px;
 justify-content:center;
 align-items:center;
 text-align:center;
-font-size:16px;
-cursor:pointer;
+font-size:14px;
+cursor:pointer; 
 background-color:${props => props.isActiveLink ? "#0d3e99" : "transparent"};
 width:auto; 
 height:100%;    
@@ -131,7 +131,7 @@ color:${props => props.isActiveLink ? "#fff" : "black"};
 &:hover{
     background-color:#0d3e99;
     color:#fff;
-}
+} 
 `;
 
 export const MainDiv_ForNav = styled.div` 
