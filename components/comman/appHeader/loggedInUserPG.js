@@ -39,66 +39,76 @@ export class AppHeader extends Wrapper {
             onHoverActive: false,
             isProfileVisible: false,
             isWorkingLinkVisible: false,
-            WorkingLink: [ 
+            WorkingLink: [
                 {
-                    pathname: "/management",
+                    pathname: "/pragaut",
+                    tab: "user-master",
+                    pageName: 'User Master',
+                    url: "/pragaut/user-master",
+                    isVisible: true,
+                    ApplicableFor: 'Working',
+                    linkName: 'Users',
+                    roleCode: 'PraGaut Admin',
+                },
+                {
+                    pathname: "/pragaut",
                     tab: "tower-monitoring-details",
                     pageName: 'Tower Monitoring Details',
-                    url: "/management/tower-monitoring-details",
+                    url: "/pragaut/tower-monitoring-details",
                     isVisible: true,
                     ApplicableFor: 'Working',
                     linkName: 'TMC Details',
-                    roleCode: 'Management', 
+                    roleCode: 'PraGaut Admin', 
                 },
                 {
-                    pathname: "/management",
+                    pathname: "/pragaut",
                     tab: "device-mapping-details",
                     pageName: 'Device Mapping Details',
-                    url: "/management/device-mapping-details",
+                    url: "/pragaut/device-mapping-details",
                     isVisible: true,
                     ApplicableFor: 'Working',
                     linkName: 'Device Mapping',
-                    roleCode: 'Management', 
+                    roleCode: 'PraGaut Admin'
                 },
                 {
-                    pathname: "/management",
+                    pathname: "/pragaut",
                     tab: "tower-notification-details",
                     pageName: 'Tower Notification Details',
-                    url: "/management/tower-notification-details",
+                    url: "/pragaut/tower-notification-details",
                     isVisible: true,
                     ApplicableFor: 'Working',
                     linkName: 'Notification',
-                    roleCode: 'Management', 
+                    roleCode: 'PraGaut Admin'
                 },
                 {
-                    pathname: "/management",
+                    pathname: "/pragaut",
                     tab: "closed-tower-notification-details",
                     pageName: 'Closed Notification Details',
-                    url: "/management/closed-tower-notification-details",
+                    url: "/pragaut/closed-tower-notification-details",
                     isVisible: true,
                     ApplicableFor: 'Working',
                     linkName: 'Closed Notification',
-                    roleCode: 'Management', 
+                    roleCode: 'PraGaut Admin'
                 },
                 {
-                    pathname: "/management",
+                    pathname: "/pragaut",
                     tab: "tower-monitoring-history",
                     pageName: 'Tower Monitoring History Details',
-                    url: "/management/tower-monitoring-history",
+                    url: "/pragaut/tower-monitoring-history",
                     isVisible: true,
                     ApplicableFor: 'Working',
                     linkName: 'History',
-                    roleCode: 'Management', 
+                    roleCode: 'PraGaut Admin'
                 },
                 {
-                    pathname: "/management",
+                    pathname: "/pragaut",
                     tab: "change-password",
                     pageName: 'Change Password',
-                    url: "/management/change-password",
+                    url: "/pragaut/change-password",
                     isVisible: true,
                     ApplicableFor: 'Working',
                     linkName: 'Change Password',
-                    roleCode: 'Management', 
+                    roleCode: 'PraGaut Admin'
                 },
             ],
         }
@@ -182,12 +192,14 @@ export class AppHeader extends Wrapper {
         const user = this.loggedUser();
         const userRole = this.getLoggedUserRole()
         const LoggedUserRole = userRole && JSON.parse(userRole);
+        const RoleName = LoggedUserRole && LoggedUserRole.roleName;
+
         const smallTab = this.props.width < 1000 && this.props.width > 768;
         const ActiveTabname = router && router.query && router.query.tab;
         const userName = user && user.employeeName;
         let Right = smallTab ? "45px" : "60px";
         // console.log("User between ", user)
-        const RoleName = LoggedUserRole && LoggedUserRole.roleName;
+
         const { WorkingLink, isProfileVisible, isWorkingLinkVisible } = this.state;
 
         return (
@@ -204,7 +216,7 @@ export class AppHeader extends Wrapper {
                                 <img className="logo" src="../../static/application_logo.png" title="Nokia Group" alt="logo" />
                             </a>
                         </NavStyle.LogoDiv>
-                        {(layout && layout === "loggedUser_management") &&
+                        {(layout && layout === "loggedUser_pragaut") &&
                             <NavStyle.MainDiv_ForNav>
                                 {WorkingLink && WorkingLink.length > 0 && WorkingLink.map((itemlink, index) => {
                                     return <NavStyle.LinkSubDiv_Link
@@ -213,7 +225,7 @@ export class AppHeader extends Wrapper {
                                         onClick={() => {
                                             this.props.router.push(
                                                 {
-                                                    pathname: "/management",
+                                                    pathname: "/pragaut",
                                                     tab: itemlink.tab,
                                                     query: {
                                                         tab: itemlink.tab,
@@ -230,7 +242,6 @@ export class AppHeader extends Wrapper {
                                         {itemlink.linkName}
                                     </NavStyle.LinkSubDiv_Link>
                                 })}
-                                
                             </NavStyle.MainDiv_ForNav>
                         }
                         <NavStyle.LogoDiv

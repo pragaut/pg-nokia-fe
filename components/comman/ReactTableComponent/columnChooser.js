@@ -76,7 +76,7 @@ class ColumnChooser extends React.Component {
         return (
             <div>
               <Tooltip id="tooltip-columns" title="Select Columns">
-                <Button size="small" variant="outlined" onClick={this.handleClick} style={{backgroundColor:'white',height:'32px',padding:'2px',marginLeft:'5px'}} >
+                <Button size="small" variant="outlined" onClick={this.handleClick} style={{backgroundColor:'white',height:'22px',padding:'2px',marginLeft:'5px'}} >
                     <AlarmIcon className={classes.icon} />
                 </Button>
                 </Tooltip>

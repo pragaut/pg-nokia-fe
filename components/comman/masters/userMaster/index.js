@@ -5,7 +5,7 @@ import style from '../../../../theme/app.scss';
 import Wrapper from '../../../shared/Wrapper';
 import { constants } from '../../../../utils/constants';
 import * as AdminTypes from '../../../../action-types/comman/admin.action.types';
-import { getUserData, getUserDetailsP, saveUserData,   getOrgRelationTypeMasterData, getOrganisationDetailsData,getOrganisationEmployeeDetailsData, getUserDataById, deleteUserData, getRoleMasterData } from '../../../../actions/comman/admin.action';
+import { getUserData, getUserDetailsP, saveUserData, getOrgRelationTypeMasterData, getOrganisationDetailsData, getOrganisationEmployeeDetailsData, getUserDataById, deleteUserData, getRoleMasterData } from '../../../../actions/comman/admin.action';
 import ListTable from '../../../shared/ListTable';
 import { Button, SELECT, SelectDiv, SpanLabelForDDl } from '../../../comman/formStyle';
 import * as CommonStyle from '../../../comman/commonStyle';
@@ -31,7 +31,7 @@ class Users extends Wrapper {
             roles: null,
             organisations: [],
             orgRelationTypes: [],
-            orgEmployees :[],
+            orgEmployees: [],
             selectedRoleForSelectedUser: [],
             columns: []
         };
@@ -40,59 +40,59 @@ class Users extends Wrapper {
 
     updateStateAfterStateUpdate = () => {
         let columns = [
-                {
-                    Header: 'Action',
-                    accessor: 'id',
-                    id: 'id',
-                    show: true,
-                    minWidth: 180,
-                    Cell: propss => (
-                        <React.Fragment>
-                            <div className="warning width60px" style={{ marginRight: '10px' }} onClick={() => this.onClickEdit(propss.original)}>
-                                Edit
+            {
+                Header: 'Action',
+                accessor: 'id',
+                id: 'id',
+                show: true,
+                minWidth: 180,
+                Cell: propss => (
+                    <React.Fragment>
+                        <div className="warning width60px" style={{ marginRight: '10px' }} onClick={() => this.onClickEdit(propss.original)}>
+                            Edit
                             </div><br></br>
-                            <div className="primary width60px" style={{ marginRight: '10px' }} onClick={() => this.onclickDeleteUser(propss.original.id)}>
-                                Delete
-                            </div>     
-                </React.Fragment>
-                    ),
-                    sortable: false,
-                    filterable: false
-                },
-                {
-                    Header: 'Sr#',
-                    minWidth: 50,
-                    id: 'srnumber',
-                    show: true,
-                    Cell: row => (
-                        <React.Fragment>
-                            {row.index + 1}
-                        </React.Fragment>
-                    ),
-                    sortable: true,
-                    filterable: false
-                },
-                {
-                    Header: 'Organisation',
-                    accessor: d => `${d.orgName}`,
-                    id: 'org Name',
-                    minWidth: 200,
-                    show: true
-                },
-                {
-                    Header: 'User Name',
-                    accessor: d => `${d.userName}`,
-                    id: 'userName',
-                    minWidth: 200,
-                    show: true
-                },
-                {
-                    Header: 'Assigned Roles',
-                    accessor: 'MultiRoleNames',
-                    id: 'MultiRoleNames',
-                    minWidth: 200,
-                    show: true,
-                }
+                        <div className="primary width60px" style={{ marginRight: '10px' }} onClick={() => this.onclickDeleteUser(propss.original.id)}>
+                            Delete
+                            </div>
+                    </React.Fragment>
+                ),
+                sortable: false,
+                filterable: false
+            },
+            {
+                Header: 'Sr#',
+                minWidth: 50,
+                id: 'srnumber',
+                show: true,
+                Cell: row => (
+                    <React.Fragment>
+                        {row.index + 1}
+                    </React.Fragment>
+                ),
+                sortable: true,
+                filterable: false
+            },
+            {
+                Header: 'Organisation',
+                accessor: d => `${d.orgName}`,
+                id: 'org Name',
+                minWidth: 200,
+                show: true
+            },
+            {
+                Header: 'User Name',
+                accessor: d => `${d.userName}`,
+                id: 'userName',
+                minWidth: 200,
+                show: true
+            },
+            {
+                Header: 'Assigned Roles',
+                accessor: 'MultiRoleNames',
+                id: 'MultiRoleNames',
+                minWidth: 200,
+                show: true,
+            }
         ]
         this.setState({ columns: columns });
     }
@@ -175,8 +175,8 @@ class Users extends Wrapper {
         this.onClickRefresh();
     }
     onClickRefresh = () => {
-         this.props.getUserDetailsP(0, constants.ALL_ROWS_LIST, undefined, undefined, this.state.userFilter)
-         console.log("On Click Refresh : " ,"Refresh Page")
+        this.props.getUserDetailsP(0, constants.ALL_ROWS_LIST, undefined, undefined, this.state.userFilter)
+        console.log("On Click Refresh : ", "Refresh Page")
         // this.props.getUserDetailsP(0, constants.ALL_ROWS_LIST, undefined, undefined, undefined)
         setTimeout(() => {
             this.updateStateAfterStateUpdate();
@@ -192,6 +192,7 @@ class Users extends Wrapper {
         this.setState({ columns: column });
     }
     render() {
+        const { pageCallFromPage } = this.props;
         const { columns, users, selectedRoleForSelectedUser, userFilter, user, isOverlayAddedd, isUserAddEditModelvisible } = this.state;
         //console.log("userRecordsCount", this.props.userRecordsCount);
         let userRoleCategory = this.getLoggedUserRole();
@@ -199,7 +200,7 @@ class Users extends Wrapper {
         let loggedUser = this.loggedUser();
         let RoleCategory = LoggedUserCategory ? LoggedUserCategory.roleCategory : undefined;
         let loggedplantMasterId = loggedUser ? loggedUser.plantMasterId : undefined;
-     
+
         return (<div id='userTable' className={style.table_wapper} style={{ width: '100%' }} >
             <CommonStyle.MainDiv
                 flexdirection={"column"}
@@ -207,21 +208,22 @@ class Users extends Wrapper {
                 {isOverlayAddedd && isOverlayAddedd === true &&
                     <>
                         <CommonStyle.Overlay
-                           // onClick={() => this.onClickCancel()}
-                             />
+                        // onClick={() => this.onClickCancel()}
+                        />
                         <CommonStyle.Wrapper_OnOverlay
                             width={isUserAddEditModelvisible ? "80vw" : "20vw"}
                             height={isUserAddEditModelvisible ? "70vh" : "40vh"}
                             alignitems={"baseline"}
                             visible={isOverlayAddedd}
                         >
-                              <CommonStyle.CloseButtonForModel
+                            <CommonStyle.CloseButtonForModel
                                 onClick={() => this.onClickCancel()}
                             >X</CommonStyle.CloseButtonForModel>
                             {isUserAddEditModelvisible && isUserAddEditModelvisible === true &&
                                 <UserAddEdit
                                     onSave={this.props.saveUserData}
                                     actionType={this.props.userActiontype}
+                                    pageCallFromPage={pageCallFromPage}
                                     selectedRoleForSelectedUser={selectedRoleForSelectedUser}
                                     baseObject={user}
                                     onCancel={this.onClickCancel}
@@ -231,7 +233,7 @@ class Users extends Wrapper {
                     </>
                 }
 
-<CommonStyle.MainDiv
+                <CommonStyle.MainDiv
                     width={"100%"}
                     flexdirection={"row"}
                     justifycontent={"flex-start"}
@@ -242,13 +244,13 @@ class Users extends Wrapper {
                         <i className="fas fa-plus"></i>
                     </CommonStyle.Button_Header>
                     <CommonStyle.Button_Header
-                       onClick={() => this.onClickRefresh()}
+                        onClick={() => this.onClickRefresh()}
                     >
                         <i className="fas fa-sync-alt"></i>
                     </CommonStyle.Button_Header>
                 </CommonStyle.MainDiv>
                 <div
-                    style={{ width: '98%' }}
+                    style={{ width: '100%' }}
                 >
                     <ReactTable
                         isScorllApplicable={true}
@@ -280,4 +282,4 @@ const mapStateToProps = state => {
     return { user, users, plants, companys, userActiontype, userRecordsCount, roles, masterDetail, masterDetails, masterDetailCategory, masterDetailsCategory };
 };
 
-export default connect(mapStateToProps, { getUserData, getUserDetailsP,   getOrgRelationTypeMasterData, getOrganisationDetailsData,getOrganisationEmployeeDetailsData, saveUserData, getUserDataById,  deleteUserData, getRoleMasterData })(Users);
+export default connect(mapStateToProps, { getUserData, getUserDetailsP, getOrgRelationTypeMasterData, getOrganisationDetailsData, getOrganisationEmployeeDetailsData, saveUserData, getUserDataById, deleteUserData, getRoleMasterData })(Users);

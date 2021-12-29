@@ -1,18 +1,15 @@
 import Wrapper from '../../../shared/Wrapper';
 import PropTypes from 'prop-types';
-import { validateInputs, validateInputsWithDisplayName } from '../../../../utils/editFormHelper'; 
+import { validateInputs, validateInputsWithDisplayName } from '../../../../utils/editFormHelper';
 import { save, deleteItems, shouldStoreDataInStateByKey } from '../../../../utils/editFormHelper';
 import { connect } from 'react-redux';
-import { constants } from '../../../../utils/constants'; 
-import {  getUserData, getUserDetailsP, saveUserData,   getOrgRelationTypeMasterData, getOrganisationDetailsData,getOrganisationEmployeeDetailsData, getUserDataById, deleteUserData, getRoleMasterData  } from '../../../../actions/comman/admin.action';
-import style from '../../../../theme/app.scss'; 
-import ModalHeader from '../../../shared/ModalHeader';  
+import { constants } from '../../../../utils/constants';
+import { getUserData, getUserDetailsP, saveUserData, getOrgRelationTypeMasterData, getOrganisationDetailsData, getOrganisationEmployeeDetailsData, getUserDataById, deleteUserData, getRoleMasterData } from '../../../../actions/comman/admin.action';
+import style from '../../../../theme/app.scss';
+import ModalHeader from '../../../shared/ModalHeader';
 import Input from '../../../shared/InputBox';
-import { SELECT, SelectDiv, SpanLabelForDDl } from '../../../comman/formStyle'; 
-import dynamic from 'next/dynamic';
-
-//const Multiselect = dynamic(() => import('multiselect-react-dropdown').then(module => module.Multiselect), { ssr: false })
-import {MultiSelectDDL} from "react-multi-select-component"; 
+import { SELECT, SelectDiv, SpanLabelForDDl } from '../../../comman/formStyle';
+import { MultiSelect } from "react-multi-select-component";
 import styled from 'styled-components';
 import Gap from '../../../comman/Gap'
 const MultiSelectDiv = styled.div` 
@@ -25,11 +22,11 @@ padding:0px 10px;
 
 const customStyles = {
     control: base => ({
-      ...base,
-      height: 100,
-      minHeight: 50
+        ...base,
+        height: 100,
+        minHeight: 50
     })
-  };
+};
 
 class UserAddEdit extends Wrapper {
 
@@ -68,11 +65,11 @@ class UserAddEdit extends Wrapper {
             user: props.baseObject ? props.baseObject : {},
             userSelectedRoles: null, //props.baseObject ? props.baseObject.userRoles : {},
             selectedRoleForSelectedUser: props.selectedRoleForSelectedUser ? props.selectedRoleForSelectedUser : undefined,
-           
+            pageCallFromPage: props.pageCallFromPage ? props.pageCallFromPage : 'admin',
             roles: null,
             organisations: [],
-            orgEmployees :[],
-            orgRelationTypes :[],
+            orgEmployees: [],
+            orgRelationTypes: [],
             options: [{}],
             selectedRoles: [{}],
             isValidPassword: false,
@@ -87,21 +84,20 @@ class UserAddEdit extends Wrapper {
         };
     };
 
-   
-  
+
+
     onValueChanged = key => event => {
         const existingUser = Object.assign({}, this.state.user);
         existingUser[key] = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
-      
+
         this.setState({ user: existingUser });
     };
     onTextChange = key => event => {
         const existingUser = Object.assign({}, this.state.user);
         existingUser[key] = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
-     
+
         this.setState({ user: existingUser });
     };
-
     componentDidMount() {
         //  console.log("user state c : ", this.state.user);
         this.props.getRoleMasterData(0, constants.ALL_ROWS_LIST, undefined, undefined);
@@ -127,13 +123,12 @@ class UserAddEdit extends Wrapper {
             let loggedUser = this.loggedUser();
             let RoleCategory = LoggedUserCategory ? LoggedUserCategory.roleCategory : undefined;
             let loggedplantMasterId = loggedUser ? loggedUser.plantMasterId : undefined;
-         
+
             const RoleMaster = this.state.roles && this.state.roles;
-            let roleDDLVal= RoleMaster && RoleMaster;        
-            this.setState({ roleCategory: RoleCategory, roleDDLVal: roleDDLVal})
+            let roleDDLVal = RoleMaster && RoleMaster;
+            this.setState({ roleCategory: RoleCategory, roleDDLVal: roleDDLVal })
         }, 400);
     };
-
     onValueChangedRoleOnPropsChange = selectedIds => {
         const selectedRole = this.state.selectedRoleForSelectedUser;
         const roles = this.state.roles;
@@ -158,20 +153,22 @@ class UserAddEdit extends Wrapper {
             selectedRoleItems: roleOptions
         });
     };
-
     UNSAFE_componentWillReceiveProps(nextProps) {
         //console.log("nextProps.masterDetails : ",nextProps.masterDetailsCategory);
-     
+
         if (nextProps.roles && nextProps.roles !== null && nextProps.roles !== undefined && nextProps.roles !== this.state.roles) {
-
             let LoggedUserCategory = this.getLoggedUserRole_JSONConverted();
-            let RoleCategory = LoggedUserCategory ? LoggedUserCategory.roleCategory : undefined;
-
+            let pageCallFromPage = this.state.pageCallFromPage;
+            console.log("pageCallFromPage ------------------ ", pageCallFromPage);
             const RoleMaster = nextProps.roles;
             let roleDDLVal = null;
-
             if (RoleMaster) {
-                roleDDLVal = RoleMaster && RoleMaster;
+                if (pageCallFromPage === "pragaut") {
+                    roleDDLVal = RoleMaster && RoleMaster;
+                }
+                else {
+                    roleDDLVal = RoleMaster && RoleMaster.filter(item => item.roleName !== 'PraGaut Admin');
+                }
             }
             this.setState({
                 roles: nextProps.roles,
@@ -223,24 +220,20 @@ class UserAddEdit extends Wrapper {
             this.setState({ ...state });
         }
     };
-    
-
     onValueChangedOrgRelationType = key => event => {
         const existingState = Object.assign({}, this.state.user);
         let SelectedValue = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
-        existingState[key] = SelectedValue;   
-        if(!SelectedValue || SelectedValue =='') 
-        {
+        existingState[key] = SelectedValue;
+        if (!SelectedValue || SelectedValue == '') {
             existingState[key] = 'No-Id';
         }
-       let NullId = {
-            orgDetailsId:'No-Id'
+        let NullId = {
+            orgDetailsId: 'No-Id'
         }
         this.props.getOrganisationDetailsData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined, existingState);
-        this.props.getOrganisationEmployeeDetailsData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined,NullId);
+        this.props.getOrganisationEmployeeDetailsData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined, NullId);
         this.setState({ user: existingState });
     };
-
     onValueChangedOrganisation = key => event => {
         const existingState = Object.assign({}, this.state.user);
         let SelectedValue = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
@@ -259,7 +252,6 @@ class UserAddEdit extends Wrapper {
             selectedRoles: listItems
         });
     };
-
     onRemove = (selectedList, removedItem) => {
         const listItems = selectedList.map((item) => item.id);
         const existinguser = Object.assign({}, this.state.user);
@@ -284,7 +276,8 @@ class UserAddEdit extends Wrapper {
 
     };
     render() {
-        const {  selectedRoleItems, roleCategory, roleDDLVal, organisations,orgRelationTypes, orgEmployees} = this.state;
+        const { pageCallFromPage } = this.props;
+        const { selectedRoleItems, roleCategory, roleDDLVal, organisations, orgRelationTypes, orgEmployees } = this.state;
 
         let FocusBorderColor = "#f90707";
         const roleOptions = roleDDLVal && roleDDLVal.length > 0 ? roleDDLVal.map((item, index) => {
@@ -293,12 +286,12 @@ class UserAddEdit extends Wrapper {
 
         console.log('this.state.user', this.state.user);
         return (
-            <div className={style.modal_dialog} style={{ overflow: 'visible', width: '95%', maxHeight: '120vh', maxWidth: '80vw' }}>           
+            <div className={style.modal_dialog} style={{ overflow: 'visible', width: '95%', maxHeight: '120vh', maxWidth: '80vw' }}>
                 <div>
                     {/** idhar saare edit fields aayenge */}
                     <div className={style.field_flex_wrapper} style={{ overflow: 'visible' }}>
                         <div className={style.field_flex_new} style={{ width: '45%', color: "rgba(0,0,0,0.54)", fontSize: "13px", overflow: 'visible', textAlign: 'left' }}>
-                        <div style={{ padding: '10px', width: '100%' }}>
+                            <div style={{ padding: '10px', width: '100%' }}>
                                 <SpanLabelForDDl>Organisation Relation Type</SpanLabelForDDl>
                                 <Gap h="5px" />
                                 <SELECT
@@ -332,7 +325,7 @@ class UserAddEdit extends Wrapper {
                                             return <option key={index} value={item.id}>{item.orgName}</option>
                                         })
                                     }
-                                </SELECT>                                
+                                </SELECT>
                             </div>
                             <div style={{ padding: '10px', width: '100%' }}>
                                 <SpanLabelForDDl>Employee</SpanLabelForDDl>
@@ -351,25 +344,26 @@ class UserAddEdit extends Wrapper {
                                         })
                                     }
                                 </SELECT>
-                                
+
                             </div>
-                          
+
                         </div>
                         <div className={style.field_flex_new} style={{ width: '45%', color: "rgba(0,0,0,0.54)", fontSize: "13px", overflow: 'visible', textAlign: 'left' }}>
-                          
-                        <div style={{ padding: '0px', width: '100%' }}>
-                            <SpanLabelForDDl>Roles</SpanLabelForDDl>
-                            <MultiSelectDiv >
-                               {/* <MultiSelectDDL
-                                    className="width100p"
-                                    value={selectedRoleItems && selectedRoleItems.length > 0 ? selectedRoleItems : []}
-                                    onChange={this.onValueChangedRole}
-                                    options={roleOptions}
-                                    hasSelectAll={false}
-                                    labelledBy="Select"
-                                    styles={customStyles} 
-                                />*/}
-                                {/* <ReactSelect
+
+                            <div style={{ padding: '0px', width: '100%' }}>
+                                <SpanLabelForDDl>Roles</SpanLabelForDDl>
+                                <MultiSelectDiv >
+
+                                    <MultiSelect
+                                        className="width100p"
+                                        value={selectedRoleItems && selectedRoleItems.length > 0 ? selectedRoleItems : []}
+                                        onChange={this.onValueChangedRole}
+                                        options={roleOptions}
+                                        hasSelectAll={false}
+                                        labelledBy="Select"
+                                        styles={customStyles}
+                                    />
+                                    {/* <ReactSelect
                                     className="width100p"
                                     value={selectedRoleItems && selectedRoleItems.length > 0 ? selectedRoleItems : []}
                                     onChange={this.onValueChangedRole}
@@ -377,7 +371,7 @@ class UserAddEdit extends Wrapper {
                                     closeMenuOnSelect={false}
                                     isMulti={true}
                                 /> */}
-                            </MultiSelectDiv>
+                                </MultiSelectDiv>
                             </div>
                             <Input label="User Name:" focusbordercolor="#4954f4" type='text' defaultValue={this.state.user.userName} onChange={this.onValueChanged('userName')} />
                             {this.state.user && this.state.user.id ?
@@ -392,13 +386,13 @@ class UserAddEdit extends Wrapper {
                 <div style={{ display: 'flex', width: '100%', alignItems: 'left', justifyContent: 'left', margin: '10px 0px' }}>
                     <button className={style.primary_btn} style={{ width: '100px', marginRight: '10px' }} onClick={() => {
                         const validationText = validateInputsWithDisplayName(this.state.user, this.configs);
-                
+
                         setTimeout(() => {
                             if (validationText) {
                                 return alert(validationText);
                             }
                         }, 200);
-                       
+
                         if (!this.state.userRoles || this.state.userRoles === null) {
                             const existinguser = Object.assign({}, this.state.user);
                             existinguser["userRoles"] = this.state.selectedRoles;
@@ -406,10 +400,10 @@ class UserAddEdit extends Wrapper {
                         }
                         // console.log("this.state.user 4 : ", this.state.user);
                         if (this.state.selectedRoles && (this.state.selectedRoles).length > 0) {
-                           
-                                setTimeout(() => {
-                                    this.props.onSave(this.state.user, this.props.index);
-                                }, 200);
+
+                            setTimeout(() => {
+                                this.props.onSave(this.state.user, this.props.index);
+                            }, 200);
                         }
                         else {
                             alert("Please select atleast one role !!");
@@ -430,10 +424,10 @@ UserAddEdit.propTypes = {
 };
 
 const mapStateToProps = state => {
-    const { roles, organisations, orgEmployees,orgRelationTypes } = state.adminReducer;
+    const { roles, organisations, orgEmployees, orgRelationTypes } = state.adminReducer;
     const errorType = state.errorReducer.type;
     const errorMessage = state.errorReducer.error;
-    return { roles, organisations, orgEmployees,orgRelationTypes, errorType, errorMessage };
+    return { roles, organisations, orgEmployees, orgRelationTypes, errorType, errorMessage };
 }
 
-export default connect(mapStateToProps, { getUserData, getUserDetailsP,   getOrgRelationTypeMasterData, getOrganisationDetailsData,getOrganisationEmployeeDetailsData, saveUserData, getUserDataById,  deleteUserData, getRoleMasterData })(UserAddEdit)
+export default connect(mapStateToProps, { getUserData, getUserDetailsP, getOrgRelationTypeMasterData, getOrganisationDetailsData, getOrganisationEmployeeDetailsData, saveUserData, getUserDataById, deleteUserData, getRoleMasterData })(UserAddEdit)

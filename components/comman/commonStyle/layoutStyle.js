@@ -115,8 +115,34 @@ top:70px;
 background:#ffffff;
 padding:0px 0px 25px 0px;  
 `;
+export const LinkSubDiv_Link = styled.div` 
+display: flex;  
+flex-direction:column; 
+padding:0px 10px;
+justify-content:center;
+align-items:center;
+text-align:center;
+font-size:14px;
+cursor:pointer; 
+background-color:${props => props.isActiveLink ? "#0d3e99" : "transparent"};
+width:auto; 
+height:100%;    
+color:${props => props.isActiveLink ? "#fff" : "black"};
+&:hover{
+    background-color:#0d3e99;
+    color:#fff;
+} 
+`;
 
-
+export const MainDiv_ForNav = styled.div` 
+display: flex;  
+flex-direction:row; 
+justify-content:flex-start;
+align-items:center;
+text-align:left;  
+width:70%; 
+height:70px;    
+`;
 export const ProfileDiv = styled.div`
 position:absolute;
 display:${props => props.isVisible ? "block" : "none"};

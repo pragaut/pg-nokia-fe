@@ -235,7 +235,7 @@ export class Index extends Wrapper {
           pathname: "/admin",
           tab: "tower-antennas-master",
           id: undefined,
-          MasterName: 'Tower Antennas Master',
+          MasterName: 'Tower Antenna Master',
           ParentMasterName: undefined,
           parentMasterCategoryId: '',
           url: "/admin/tower-antennas-master",
