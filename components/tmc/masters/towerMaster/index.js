@@ -37,13 +37,14 @@ class TowerIndex extends Wrapper {
                 accessor: 'id',
                 id: 'id',
                 show: true,
+                minWidth: 130,
                 Cell: propss => (
                     <React.Fragment>
-                        <button className="warning" style={{ marginRight: '10px' }} value={propss.original.id} onClick={() => this.onClickAdd(propss.original)}>
+                        <button className="warning" style={{ marginRight: '5px' }} value={propss.original.id} onClick={() => this.onClickAdd(propss.original)}>
                             Edit
-                        </button><br />
+                        </button> 
 
-                        <button className="primary" style={{ marginRight: '10px' }} value={propss.original.id} onClick={() =>
+                        <button className="primary" style={{ marginRight: '5px' }} value={propss.original.id} onClick={() =>
                             this.onDeleteRecord(propss.original.id)
                         }>
                             Delete
@@ -74,7 +75,7 @@ class TowerIndex extends Wrapper {
                 show: true,
             },
             {
-                Header: 'Tower Name',
+                Header: 'Tower ID',
                 accessor: 'towerName',
                 id: 'towerName',
                 minWidth: 100,
@@ -153,7 +154,7 @@ class TowerIndex extends Wrapper {
     };
 
     onDeleteRecord = (ids) => {
-        if (confirm('Would you like to delete the record?')) {
+        if (confirm('Would you like to delete the record?')) { 
             this.props.deleteTowerMasterData(ids);
             setTimeout(() => {
                 this.props.getTowerMasterData(0, constants.ALL_ROWS_LIST, undefined, undefined);
@@ -165,7 +166,7 @@ class TowerIndex extends Wrapper {
         this.onClickReferesh();
         this.setState({ showEditPopup: false })
     }
-    onClickAdd = (tower) => {
+    onClickAdd = (tower) => { 
         this.setState({ tower: tower, showEditPopup: true })
     }
     onClickReferesh = (async) => {

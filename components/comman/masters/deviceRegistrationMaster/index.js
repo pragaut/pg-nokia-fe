@@ -34,13 +34,14 @@ class DeviceRegistrationIndex extends Wrapper {
                 accessor: 'id',
                 id: 'id',
                 show: true,
+                minWidth: 130,
                 Cell: propss => (
                     <React.Fragment>
-                        <button className="warning" style={{ marginRight: '10px' }} value={propss.original.id} onClick={() => this.onClickAdd(propss.original)}>
+                        <button className="warning" style={{ marginRight: '5px' }} value={propss.original.id} onClick={() => this.onClickAdd(propss.original)}>
                             Edit
-                        </button><br />
+                        </button> 
 
-                        <button className="primary" style={{ marginRight: '10px' }} value={propss.original.id} onClick={() =>
+                        <button className="primary" style={{ marginRight: '5px' }} value={propss.original.id} onClick={() =>
                             this.onDeleteRecord(propss.original.id)
                         }>
                             Delete
@@ -64,9 +65,9 @@ class DeviceRegistrationIndex extends Wrapper {
                 filterable: false
             },
             {
-                Header: 'Org Details',
-                accessor: 'orgName.orgName',
-                id: 'orgName.orgName',
+                Header: 'Device ID',
+                accessor: 'uniqueId',
+                id: 'uniqueId',
                 minWidth: 100,
                 show: true,
             },
@@ -78,9 +79,9 @@ class DeviceRegistrationIndex extends Wrapper {
                 show: true,
             },
             {
-                Header: 'Unique ID',
-                accessor: 'uniqueId',
-                id: 'uniqueId',
+                Header: 'Org Details',
+                accessor: 'orgName.orgName',
+                id: 'orgName.orgName',
                 minWidth: 100,
                 show: true,
             },
@@ -92,18 +93,25 @@ class DeviceRegistrationIndex extends Wrapper {
                 show: true,
             },
             {
+                Header: 'Module',
+                accessor: 'module.moduleName',
+                id: 'module.moduleName',
+                minWidth: 100,
+                show: true,
+            },
+            {
                 Header: 'Device Sequence',
                 accessor: 'deviceSequence',
                 id: 'deviceSequence',
                 minWidth: 100,
-                show: true,
+                show: false,
             },
             {
                 Header: 'Unique Code',
                 accessor: 'uniqueCode',
                 id: 'uniqueCode',
                 minWidth: 100,
-                show: true,
+                show: false,
             },
         ]
         this.setState({ columns: columns });
@@ -161,6 +169,7 @@ class DeviceRegistrationIndex extends Wrapper {
 
     render() {
         const { showEditPopup, columns, deviceRegistrations, deviceRegistration } = this.state;
+        console.log("deviceRegistrations >>>>>>>>>",deviceRegistrations);
         return (<div id='deviceRegistrationTable' className={style.table_wapper} >
             {showEditPopup === true &&
                 <>

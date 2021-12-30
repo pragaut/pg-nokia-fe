@@ -208,7 +208,7 @@ class TowerAddEdit extends Wrapper {
                                     }
                                 </SELECT>
                             </div>
-                            <Input label="Tower Name:" type='text' defaultValue={this.state.tower.towerName} onChange={this.onValueChanged('towerName')} />
+                            <Input label="Tower ID:" type='text' defaultValue={this.state.tower.towerName} onChange={this.onValueChanged('towerName')} />
                             <Input label="Site Name:" type='text' defaultValue={this.state.tower.siteName} onChange={this.onValueChanged('siteName')} />
                             <div style={{ padding: '10px', width: '100%' }}>
                                 <SpanLabelForDDl>Country</SpanLabelForDDl>

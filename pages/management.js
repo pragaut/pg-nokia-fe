@@ -26,6 +26,7 @@ import TowerMonitoringDetails from '../components/tmc/working/towerMonitoringDet
 import DeviceMappingDetails from '../components/tmc/working/deviceMapping/index';
 import TowerNotificationDetails from '../components/tmc/working/towerNotifications/index';
 import ClosedTowerNotificationDetails from '../components/tmc/working/towerNotifications/closedTowerNotification';
+import TowerActiveStatus from '../components/tmc/working/map/index';
 const Image = '../static/'
 const window = require('global/window');
 const AdminMain = styled.div`
@@ -182,11 +183,11 @@ export class Index extends Wrapper {
                             <ModalHeader
                                 heading={router && router.query && router.query.tab !== "" && router.query.MasterName} //"Group Master"
                             />
-                            {( (ActiveTabname && ActiveTabname === "tower-monitoring-details")) && (
+                            {((ActiveTabname && ActiveTabname === "tower-monitoring-details")) && (
                                 <div>
                                     <TowerMonitoringDetails />
                                 </div>
-                            )} 
+                            )}
                             {router && (router.query && router.query.tab === "device-mapping-details") && (
                                 <div>
                                     <DeviceMappingDetails />
@@ -202,11 +203,21 @@ export class Index extends Wrapper {
                                     <ClosedTowerNotificationDetails />
                                 </div>
                             )}
+                            {router && (router.query && router.query.tab === "tower-active-status") && (
+                                <div>
+                                    <TowerActiveStatus />
+                                </div>
+                            )}
                             {((router && router.query && router.query.tab === "change-password") || (this.props.query && this.props.query.tab === "change-password")) && (
                                 <div>
                                     <ChangePassword />
                                 </div>
                             )}
+                            {(!router || !router.query || router.query.tab === undefined) &&
+                                <div>
+                                     <TowerActiveStatus />
+                                </div>
+                            }
                         </ContentWapper>
                     </AdminMain>
                 </div>

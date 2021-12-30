@@ -32,13 +32,14 @@ class TowerAntennasIndex extends Wrapper {
                 accessor: 'id',
                 id: 'id',
                 show: true,
+                minWidth: 130,
                 Cell: propss => (
                     <React.Fragment>
-                        <button className="warning" style={{ marginRight: '10px' }} value={propss.original.id} onClick={() => this.onClickAdd(propss.original)}>
+                        <button className="warning" style={{ marginRight: '5px' }} value={propss.original.id} onClick={() => this.onClickAdd(propss.original)}>
                             Edit
-                        </button><br />
+                        </button> 
 
-                        <button className="primary" style={{ marginRight: '10px' }} value={propss.original.id} onClick={() =>
+                        <button className="primary" style={{ marginRight: '5px' }} value={propss.original.id} onClick={() =>
                             this.onDeleteRecord(propss.original.id)
                         }>
                             Delete
@@ -62,7 +63,7 @@ class TowerAntennasIndex extends Wrapper {
                 filterable: false
             },
             {
-                Header: 'Tower Name',
+                Header: 'Tower ID',
                 accessor: 'towerName.towerName',
                 id: 'towerName.towerName',
                 minWidth: 100,
@@ -80,7 +81,7 @@ class TowerAntennasIndex extends Wrapper {
                 accessor: 'antennaCode',
                 id: 'antennaCode',
                 minWidth: 100,
-                show: true,
+                show: false,
             },
             {
                 Header: 'MAC Address',

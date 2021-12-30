@@ -1,192 +1,108 @@
-// MyGoogleMaps.js
+import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
 import React, { Component } from 'react';
-import GoogleMapReact from 'google-map-react';
-import styled from 'styled-components'; 
-import Marker from './Marker';
-
+import styled from 'styled-components';
+import { connect } from 'react-redux';
+import { getTowerActiveDetails } from '../../../../actions/tmc/working.action'
 const Wrapper = styled.main`
   width: 100%;
   height: 100%;
 `;
 
-class MyGoogleMap extends Component {
 
-    state = {
-        mapApiLoaded: false,
-        mapInstance: null,
-        mapApi: null,
-        geoCoder: null,
-        places: [],
-        center: [28.502555, 77.012435],
-        zoom: 9,
-        address: '',
-        draggable: true,
-        lat: 28.502555,
-        lng: 77.012435
+export class MapContainer extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            showingInfoWindow: false,
+            activeMarker: {},
+            selectedPlace: {},
+            MapData : props.MapData ? props.MapData : []
+        }
+    } 
+
+    UNSAFE_componentWillReceiveProps(nextProps) {
+
+        if (nextProps.MapData && nextProps.MapData !== null && nextProps.MapData != this.state.MapData) {
+            this.setState({ MapData: nextProps.MapData })
+        }
+
+        const storeInState = (data, key) => {
+            // time to store
+            if (!data) return;
+            const state = Object.assign({}, this.state);
+            state[key] = data;
+
+            this.setState({ ...state });
+        }
     };
 
-    // componentWillMount() {
-    //     //this.setCurrentLocation();
-    // }
-
-    componentDidMount() {
-        setTimeout(() => {
-            this.setCurrentLocation();
-        }, 500);
-    }
-
-    onMarkerInteraction = (childKey, childProps, mouse) => {
+    onMarkerClick = (props, marker, e) =>
         this.setState({
-            draggable: false,
-            lat: mouse.lat,
-            lng: mouse.lng
-        });
-    }
-    onMarkerInteractionMouseUp = (childKey, childProps, mouse) => {
-        this.setState({ draggable: true });
-        this._generateAddress();
-        setTimeout(() => {
-            const { lat, lng, address } = this.state;
-            this.props.getSelectedLocation(lat, lng, address);
-        }, 500);
-    }
-
-    _onChange = ({ center, zoom }) => {
-        this.setState({
-            center: center,
-            zoom: zoom,
-        });
-    }
-
-    _onClick = (value) => {
-        //console.log("_onClick : ", value);
-        this.setState({
-            center: [value.lat, value.lng],
-            lat: value.lat,
-            lng: value.lng
-        });
-        setTimeout(() => {
-            this._generateAddress();
-        }, 50);
-    }
-
-    apiHasLoaded = (map, maps) => {
-        this.setState({
-            mapApiLoaded: true,
-            mapInstance: map,
-            mapApi: maps,
+            selectedPlace: props,
+            activeMarker: marker,
+            showingInfoWindow: true,
+            
         });
 
-        this._generateAddress();
+    onMapClicked = (props) => {
+        if (this.state.showingInfoWindow) {
+            this.setState({
+                showingInfoWindow: false,
+                activeMarker: null
+            })
+        }
     };
 
-    addPlace = (place) => {
-        this.setState({
-            places: [place],
-            lat: place.geometry.location.lat(),
-            lng: place.geometry.location.lng()
-        });
-        this._generateAddress()
-        setTimeout(() => {
-            const { lat, lng, address } = this.state;
-            this.props.getSelectedLocation(lat, lng, address);
-        }, 500);
-    };
 
-    _generateAddress() {
-        const {
-            mapApi
-        } = this.state;
-
-        const geocoder = new mapApi.Geocoder;
-
-        geocoder.geocode({ 'location': { lat: this.state.lat, lng: this.state.lng } }, (results, status) => {
-            //console.log(results);
-            //console.log(status);
-            if (status === 'OK') {
-                if (results[0]) {
-                    this.zoom = 12;
-                    //if (results[1])
-                    //    this.setState({ address: results[1].formatted_address });
-                    //else
-                    this.setState({ address: results[0].formatted_address });
-                } else {
-                    window.alert('No results found');
-                }
-            } else {
-                window.alert('Geocoder failed due to: ' + status);
-            }
-        });
-    }
-
-    // Get Current Location Coordinates
-    setCurrentLocation() {
-        //console.log("setCurrentLocation");
-        setTimeout(() => {
-            if (navigator && 'geolocation' in navigator) {
-                //console.log("setCurrentLocation if condition");
-                navigator.geolocation.getCurrentPosition((position) => {
-                    //console.log("Latitude is :", position.coords.latitude);
-                    //console.log("Longitude is :", position.coords.longitude);
-                    this.setState({
-                        center: [position.coords.latitude, position.coords.longitude],
-                        lat: position.coords.latitude,
-                        lng: position.coords.longitude
-                    });
-                });
-            }
-        }, 600); 
-    }
 
     render() {
         const {
-            places, mapApiLoaded, mapInstance, mapApi,
-        } = this.state;
-        const APIKEY = process.env.GOOGLE_MAP_KEY;
-
+            MapData
+        } = this.state; 
+        console.log("MapData : >>>", MapData);
+        // let points =  [ 
+        //     { lat: 28.5089, lng: 77.5178 , name : 'Faridabad'},
+        //     { lat: 28.50681, lng: 77.0044 , name : 'Gurgaon'}, 
+        // ]
         return (
-            <Wrapper>                
-                <GoogleMapReact
-                    style={{
-                        width: "100%",
-                        height: "280px",
-                        margin: "0px",
-                        padding: "0px",
-                        position: "relative"
-                    }}
-                    center={this.state.center}
-                    zoom={this.state.zoom}
-                    draggable={this.state.draggable}
-                    onChange={this._onChange}
-                    onChildMouseDown={this.onMarkerInteraction}
-                    onChildMouseUp={this.onMarkerInteractionMouseUp}
-                    onChildMouseMove={this.onMarkerInteraction}
-                    onChildClick={() => console.log('child click')}
-                    onClick={this._onClick}
-                    bootstrapURLKeys={{
-                        key: APIKEY, //'AIzaSyAM9uE4Sy2nWFfP-Ha6H8ZC6ghAMKJEKps',
-                        libraries: ['places', 'geometry'],
-                    }}
-                    yesIWantToUseGoogleMapApiInternals
-                    onGoogleApiLoaded={({ map, maps }) => this.apiHasLoaded(map, maps)}
-                >
-                    <Marker
-                        text={this.state.address}
-                        lat={this.state.lat}
-                        lng={this.state.lng}
+            <Map
+                google={this.props.google}
+                initialCenter={{
+                    lat: 28.4089,
+                    lng: 77.3178 
+                }}
+                zoom={9}
+                onClick={this.onMapClicked} 
+            >
+                {MapData && MapData.length >0 && MapData.map(item => {
+
+                    return <Marker
+                        position={{
+                            lat : item.latitude,
+                            lng : item.longitude
+                        }}
+                        name={item.towerName +' <br/>'+ item.towerDetails}
+                        onClick={this.onMarkerClick}
+                        icon = {item.activeStatus =='Red' ? "http://maps.google.com/mapfiles/ms/icons/red-dot.png" : "http://maps.google.com/mapfiles/ms/icons/green-dot.png"}
                     />
-                </GoogleMapReact>
+                })
 
-                <div className="info-wrapper">
-                    {/* <div style={{ color: "#000" }} className="map-details">Latitude: <span>{this.state.lat}</span>, Longitude: <span>{this.state.lng}</span></div> */}
-                    {/* <div style={{ color: "#000" }} className="map-details">Zoom: <span>{this.state.zoom}</span></div> */}
-                    <div style={{ color: "#000" }} className="map-details">Address: {this.state.address}</div>
-                </div>
+                }
 
 
-            </Wrapper >
+                <InfoWindow
+                    marker={this.state.activeMarker}
+                    onClose={this.onMapClicked}
+                    visible={this.state.showingInfoWindow}>
+                    <div style={{color:'#000000', fontSize:'12px'}}>
+                        <span dangerouslySetInnerHTML={{__html:this.state.selectedPlace.name}}></span>
+                    </div>
+                </InfoWindow>
+            </Map>
         );
     }
 }
 
-export default MyGoogleMap;
+export default GoogleApiWrapper({
+    apiKey: process.env.GOOGLE_MAP_KEY
+})(MapContainer)

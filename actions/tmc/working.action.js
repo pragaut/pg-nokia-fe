@@ -66,7 +66,7 @@ export const getDeviceMappingDetails = (filters, userId, pageIndex, rowsToReturn
 
 //#region  Tower Notification Details
 export const getTowerNotificationDetails = (filters, userId, pageIndex, rowsToReturn) => async dispatch => {
-   // dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null)
+    // dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null)
     try {
         let pageIndex = 0;
 
@@ -77,7 +77,7 @@ export const getTowerNotificationDetails = (filters, userId, pageIndex, rowsToRe
         let deviceRegistrationDetailId = filters && filters.deviceRegistrationDetailId ? filters.deviceRegistrationDetailId : '';
         let isClosed = filters && filters.isClosed ? filters.isClosed : '';
         let towerMonitoringDetailId = filters && filters.towerMonitoringDetailId ? filters.towerMonitoringDetailId : '';
-       
+
         let url = config.NOKIA_URL + `nokia/nokiaworking/towerNotificationDetails?pageIndex=${pageIndex}`;
 
 
@@ -92,12 +92,11 @@ export const getTowerNotificationDetails = (filters, userId, pageIndex, rowsToRe
         }
         if (deviceRegistrationDetailId) {
             url = url + `&deviceRegistrationDetailId=${deviceRegistrationDetailId}`;
-        } 
-        if (isClosed) { 
+        }
+        if (isClosed) {
             url = url + `&isClosed=${isClosed}`;
-        } 
-        else
-        {
+        }
+        else {
             url = url + `&isClosed=${0}`;
         }
         //console.log("url : 1>>>>>>", url);
@@ -105,20 +104,19 @@ export const getTowerNotificationDetails = (filters, userId, pageIndex, rowsToRe
         //console.log("Tower Notification Details:  ", data);
 
         if (data && !data.errorMessage) {
-          //  dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+            //  dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
             dispatchAction(dispatch, workingTypes.TOWERNOTIFICATIONDETAILS_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
         }
         else {
-           // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
             dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Error in getting details'), null, null);
         }
     }
     catch (error) {
-      //  dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        //  dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
         dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
     }
 };
-
 export const updateTowerNotificationDetails = towerNotificationDetails => async dispatch => {
     //  dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
@@ -148,9 +146,31 @@ export const updateTowerNotificationDetails = towerNotificationDetails => async 
         dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
     }
 };
+export const getTowerActiveDetails = (filters, userId, pageIndex, rowsToReturn) => async dispatch => {
+    // dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null)
+    try {
+        let pageIndex = 0;
 
+        //  let towerMonitoringSubDetailId = filters && filters.towerMonitoringSubDetailId ? filters.towerMonitoringSubDetailId : '';
+
+        let url = config.NOKIA_URL + `nokia/nokiaworking/towerActiveStatusDetails?pageIndex=${pageIndex}`;
+        //console.log("url : >>>>>>>", url);
+        const data = await service.get(url, true); 
+        if (data && !data.errorMessage) {
+            //  dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+            dispatchAction(dispatch, workingTypes.TOWERACTIVESTATUS_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
+        }
+        else {
+            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Error in getting details'), null, null);
+        }
+    }
+    catch (error) {
+        //  dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+    }
+};
 //#endregion
-
 
 //#region  Device Battery Status
 export const getDeviceBatteryStatus = (filters) => async dispatch => {

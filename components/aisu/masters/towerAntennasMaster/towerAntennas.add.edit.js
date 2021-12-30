@@ -102,8 +102,8 @@ class TowerAntennasAddEdit extends Wrapper {
 
 
     render() {
-        console.log("this.state.towerAntennas", this.state.towerAntennas);
-        console.log("this.state.towers", this.state.towers);
+        //console.log("this.state.towerAntennas", this.state.towerAntennas);
+        //console.log("this.state.towers", this.state.towers);
         return (
             <div className={style.modal_dialog} style={{ width: '95%', maxHeight: '120vh', maxWidth: '80vw' }}>
                 {/* <ModalHeader
@@ -115,7 +115,7 @@ class TowerAntennasAddEdit extends Wrapper {
                     <div className={style.field_flex_wrapper}>
                         <div className={style.field_flex_new} style={{ width: '45%' }}>
                             <div style={{ padding: '10px', width: '100%' }}>
-                                <SpanLabelForDDl>Tower Name</SpanLabelForDDl>
+                                <SpanLabelForDDl>Tower ID</SpanLabelForDDl>
                                 <Gap h="5px" />
                                 <SELECT
                                     value={this.state.towerAntennas.towerId} paddingLeft="10px" borderRadius="14px" height="51px"

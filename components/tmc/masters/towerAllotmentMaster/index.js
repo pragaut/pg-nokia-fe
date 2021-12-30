@@ -33,13 +33,14 @@ class TowerAllotmentIndex extends Wrapper {
                 accessor: 'id',
                 id: 'id',
                 show: true,
+                minWidth: 130,
                 Cell: propss => (
                     <React.Fragment>
-                        <button className="warning" style={{ marginRight: '10px' }} value={propss.original.id} onClick={() => this.onClickAdd(propss.original)}>
+                        <button className="warning" style={{ marginRight: '5px' }} value={propss.original.id} onClick={() => this.onClickAdd(propss.original)}>
                             Edit
-                        </button><br />
+                        </button> 
 
-                        <button className="primary" style={{ marginRight: '10px' }} value={propss.original.id} onClick={() =>
+                        <button className="primary" style={{ marginRight: '5px' }} value={propss.original.id} onClick={() =>
                             this.onDeleteRecord(propss.original.id)
                         }>
                             Delete
@@ -70,7 +71,7 @@ class TowerAllotmentIndex extends Wrapper {
                 show: true,
             },
             {
-                Header: 'Tower Name',
+                Header: 'Tower ID',
                 accessor: 'towerName.towerName',
                 id: 'towerName.towerName',
                 minWidth: 100,
@@ -139,6 +140,7 @@ class TowerAllotmentIndex extends Wrapper {
 
     render() {
         const { showEditPopup, columns, towerAllotments, towerAllotment } = this.state;
+        console.log("towerAllotments  >>>>>", towerAllotments);
         return (<div id='towerAllotmentTable' className={style.table_wapper} >
             {showEditPopup === true &&
                 <>

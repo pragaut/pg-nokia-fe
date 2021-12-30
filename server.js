@@ -451,6 +451,41 @@ app.prepare()
 			});
 		});
 
+		server.get('/management/tower-active-status', (req, res) => {
+			const q = req.query;
+			q.tab = 'tower-active-status';
+			q.pathname = 'tower-active-status';
+			q.pageName = 'tower-active-status';
+			q.MasterName = 'Tower Active Status';
+			return app.render(req, res, '/management', {
+				page: q.pageName,
+				MasterName: q.MasterName,
+				tab: q.tab,
+				section: 'working',
+				query: {
+					...q
+				}
+			});
+		});
+
+		server.get('/management', (req, res) => {
+			const q = req.query;
+			q.tab = 'tower-active-status';
+			q.pathname = 'tower-active-status';
+			q.pageName = 'tower-active-status';
+			q.MasterName = 'Tower Active Status';
+			return app.render(req, res, '/management', {
+				page: q.pageName,
+				MasterName: q.MasterName,
+				tab: q.tab,
+				section: 'working',
+				query: {
+					...q
+				}
+			});
+		});
+
+
 		//------------------Working Section End----------------------//
 
 		//-------------------Change Password Section --------------------//

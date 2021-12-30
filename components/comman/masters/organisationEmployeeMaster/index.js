@@ -41,13 +41,13 @@ class Index extends Wrapper {
                 // accessor: 'id',
                 id: 'id',
                 show: true,
-                minWidth: 80,
+                minWidth: 130,
                 Cell: propss => (
                     <React.Fragment>
-                        <button className="warning" style={{ marginRight: '10px' }} value={propss.original.id} onClick={() => this.onClickAdd(propss.original)}>
+                        <button className="warning" style={{ marginRight: '5px' }} value={propss.original.id} onClick={() => this.onClickAdd(propss.original)}>
                             Edit
-                        </button><br />
-                        <button className="primary" style={{ marginRight: '10px' }} value={propss.original.id} onClick={() =>
+                        </button> 
+                        <button className="primary" style={{ marginRight: '5px' }} value={propss.original.id} onClick={() =>
                             this.onDeleteRecord(propss.original.id)
                         }>
                             Delete
@@ -81,7 +81,8 @@ class Index extends Wrapper {
                 Header: 'Employee Name',
                 accessor: d => `${d.employeeName}`,
                 id: 'employeeName',
-                show: true              
+                show: true ,
+                minWidth: 150            
             }, 
             {
                 Header: 'Employee Code',
@@ -94,13 +95,11 @@ class Index extends Wrapper {
                 accessor: d => `${d.genderName} `,
                 id: 'genderName',
                 show: true,
-                minWidth: 150,
             },{
                 Header: 'Date Of Birth',
                 accessor: d => `${d.dateOfBirth && d.dateOfBirth !== null ? d.dateOfBirth : ''} `,// 'LeadEmail',
                 id: 'dateOfBirth',
-                show: true,
-                minWidth: 150,
+                show: true, 
             },  {
                 Header: 'Father Name',
                 accessor: d => `${d.fatherName && d.fatherName !=null && d.fatherName ? d.fatherName :''}`,

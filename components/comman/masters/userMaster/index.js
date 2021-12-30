@@ -45,13 +45,13 @@ class Users extends Wrapper {
                     accessor: 'id',
                     id: 'id',
                     show: true,
-                    minWidth: 180,
+                    minWidth: 130,
                     Cell: propss => (
                         <React.Fragment>
-                            <div className="warning width60px" style={{ marginRight: '10px' }} onClick={() => this.onClickEdit(propss.original)}>
+                            <div className="warning width60px" style={{ marginRight: '5px' }} onClick={() => this.onClickEdit(propss.original)}>
                                 Edit
-                            </div><br></br>
-                            <div className="primary width60px" style={{ marginRight: '10px' }} onClick={() => this.onclickDeleteUser(propss.original.id)}>
+                            </div>
+                            <div className="primary width60px" style={{ marginRight: '3px' }} onClick={() => this.onclickDeleteUser(propss.original.id)}>
                                 Delete
                             </div>     
                 </React.Fragment>
