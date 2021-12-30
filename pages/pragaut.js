@@ -27,7 +27,9 @@ import TowerMonitoringHistoryDetails from '../components/tmc/working/towerMonito
 import DeviceMappingDetails from '../components/tmc/working/deviceMapping/index';
 import TowerNotificationDetails from '../components/tmc/working/towerNotifications/index';
 import ClosedTowerNotificationDetails from '../components/tmc/working/towerNotifications/closedTowerNotification';
-import TowerActiveStatus from '../components/tmc/working/map/index';
+
+import UserMaster from '../components/comman/masters/userMaster';
+
 const Image = '../static/'
 const window = require('global/window');
 const AdminMain = styled.div`
@@ -85,8 +87,9 @@ export class Index extends Wrapper {
         const userRole = this.getLoggedUserRole();
         const LoggedUserRole = userRole && JSON.parse(userRole);
         const RoleName = LoggedUserRole && LoggedUserRole.roleName;
-        console.log("role--name ---", RoleName)
-        let AuthorizedUser = this.checkIsAuthorizedUser(RoleName, "user-page:visit", null);
+        let Role = RoleName && RoleName;
+        Role = RoleName && RoleName.replace(' ', '');
+        let AuthorizedUser = this.checkIsAuthorizedUser(Role, "user-page:visit", null);
         console.log("Authorized User : ", AuthorizedUser);
         if (!AuthorizedUser) {
             this._logout();
@@ -176,7 +179,7 @@ export class Index extends Wrapper {
             <div>
                 <Main />
                 <Header
-                    layout="loggedUser_management" //"admin"
+                    layout="loggedUser_pragaut" //"admin"
                 />
                 <div style={{ width: '95%', display: 'flex', justifyContent: 'center', flexDirection: 'column' }}>
                     <AdminMain style={{ width: '100%', padding: '0px 30px' }} className={style.admin_main}>
@@ -184,16 +187,25 @@ export class Index extends Wrapper {
                             <ModalHeader
                                 heading={router && router.query && router.query.tab !== "" && router.query.MasterName} //"Group Master"
                             />
+                            {((ActiveTabname && ActiveTabname === "user-master")) && (
+                                <div>
+                                    <UserMaster
+                                        pageCallFromPage="pragaut"
+                                    />
+                                </div>
+                            )}
                             {((ActiveTabname && ActiveTabname === "tower-monitoring-details")) && (
                                 <div>
                                     <TowerMonitoringDetails />
                                 </div>
-                            )} 
-                              {( (ActiveTabname && ActiveTabname === "tower-monitoring-history")) && (
+                            )}
+                            {((ActiveTabname && ActiveTabname === "tower-monitoring-history")) && (
                                 <div>
-                                    <TowerMonitoringHistoryDetails />
+                                    <TowerMonitoringHistoryDetails
+                                        pageCallFromPage="pragaut"
+                                    />
                                 </div>
-                            )} 
+                            )}
                             {router && (router.query && router.query.tab === "device-mapping-details") && (
                                 <div>
                                     <DeviceMappingDetails />
@@ -209,21 +221,11 @@ export class Index extends Wrapper {
                                     <ClosedTowerNotificationDetails />
                                 </div>
                             )}
-                            {router && (router.query && router.query.tab === "tower-active-status") && (
-                                <div>
-                                    <TowerActiveStatus />
-                                </div>
-                            )}
                             {((router && router.query && router.query.tab === "change-password") || (this.props.query && this.props.query.tab === "change-password")) && (
                                 <div>
                                     <ChangePassword />
                                 </div>
                             )}
-                            {(!router || !router.query || router.query.tab === undefined) &&
-                                <div>
-                                     <TowerActiveStatus />
-                                </div>
-                            }
                         </ContentWapper>
                     </AdminMain>
                 </div>

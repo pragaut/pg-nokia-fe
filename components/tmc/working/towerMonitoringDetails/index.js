@@ -3,11 +3,13 @@ import { connect } from 'react-redux';
 import * as CommonStyle from '../../../comman/commonStyle';
 import { getDeviceBatteryStatus, getTowerMonitoringDetails, getDeviceStatusDetails, getNetworkConnectivityStatuDetails, getTowerMonitoringSubDetails } from '../../../../actions/tmc/working.action';
 import Wrapper from '../../../shared/Wrapper';
+import { getRoleMasterData } from '../../../../actions/comman/admin.action'
 import moment from 'moment';
 import { withRouter } from 'next/router';
 import { Button } from '../../../comman/formStyle';
 import ReactTable from '../../../comman/ReactTableComponent';
 import TowerMonitoringDetailsView from './towerMonitoringDetails';
+import { constants } from '../../../../utils/constants';
 
 
 class TowerMonitoringDetailsIndex extends Wrapper {
@@ -18,7 +20,10 @@ class TowerMonitoringDetailsIndex extends Wrapper {
             towerMonitoringDetail: {},
             columns: [],
             parameterWithValues: {},
-            isViewDetailsPageVisible: false
+            isViewDetailsPageVisible: false,
+            towers: [],
+            roles: [],
+            towerMonitoringDetailsNew: []
         }
     };
     functionToSetColumns = () => {
@@ -70,7 +75,7 @@ class TowerMonitoringDetailsIndex extends Wrapper {
                 accessor: 'macAddress',
                 id: 'macAddress',
                 minWidth: 100,
-                show: true,
+                show: false,
             },
             {
                 Header: 'Device Unique ID',
@@ -122,22 +127,23 @@ class TowerMonitoringDetailsIndex extends Wrapper {
                         </div>
                     </React.Fragment>
                 ),
-                show: true,
+                show: false,
             },
             {
                 Header: 'Alarm Types',
                 accessor: 'alarmTypes',
                 id: 'alarmTypes',
                 minWidth: 100,
+                style: { 'white-space': "pre-wrap","text-align":'left' },
                 show: true,
             },
-            {
-                Header: 'Alarm Count',
-                accessor: 'alarmCount',
-                id: 'alarmCount',
-                minWidth: 100,
-                show: true,
-            },
+            // {
+            //     Header: 'Alarm Count',
+            //     accessor: 'alarmCount',
+            //     id: 'alarmCount',
+            //     minWidth: 100,
+            //     show: true,
+            // },
             {
                 Header: 'Start Time',
                 accessor: d => `${d.startDateTime && d.startDateTime !== null ? moment(d.startDateTime).format("DD-MMM-YYYY hh:mm:ss a") : ''} `,
@@ -153,7 +159,43 @@ class TowerMonitoringDetailsIndex extends Wrapper {
                 show: true
             },
         ]
-        this.setState({ columns: columns });
+
+        const rolesName = this.state.roles;
+        const MappingWithDeviceReguiredRoles = rolesName && rolesName.length > 0 && rolesName.filter((item) => item.isMappingWithDeviceRequired == true);
+        //console.log("MappingWithDeviceReguiredRoles >>>>>>>",MappingWithDeviceReguiredRoles);
+        MappingWithDeviceReguiredRoles && MappingWithDeviceReguiredRoles.length > 0 && MappingWithDeviceReguiredRoles.forEach(element => {
+            let RolesArray = {
+                Header: element.roleName,
+                accessor: element.id,
+                id: element.id,
+                minWidth: 100,
+                show: false
+            }
+            columns.push(RolesArray);
+        });
+        let DataArray = [];
+        const towerMonitoringDetails = this.state.towerMonitoringDetails;
+        //console.log("deviceMappingDetailData >>>>>>>", deviceMappingDetailData);
+        towerMonitoringDetails && towerMonitoringDetails.length > 0 && towerMonitoringDetails.forEach(element => {
+            let Single = element;
+            let RoleCombinedData = element.towerMonitoringUserDetails;
+
+            if (RoleCombinedData) {
+                let RoleCombinedDatanew = RoleCombinedData && RoleCombinedData.split('|');
+
+                RoleCombinedDatanew.forEach(_element2 => {
+                    let element2NewArray = _element2 && _element2.split(',');
+                    let key = element2NewArray[0];
+                    let Value = element2NewArray[1];
+                    let stringValue = Value;
+                    const existingState = Object.assign({}, Single);
+                    existingState[key] = stringValue;
+                    Single = existingState;
+                });
+            }
+            DataArray.push(Single);
+        });
+        this.setState({ columns: columns, towerMonitoringDetailsNew: DataArray });
     }
 
     onClickViewDetails = (towerMonitoringDetail, towerMonitoringDetailId, deviceRegistrationDetailId, macAddress) => {
@@ -182,17 +224,30 @@ class TowerMonitoringDetailsIndex extends Wrapper {
         });
     }
     componentDidMount() {
-        this.props.getTowerMonitoringDetails();
+        let parametterValue = {
+            isOnlyTodayDataRequired: 0
+        }
+        this.props.getRoleMasterData(0, constants.ALL_ROWS_LIST, undefined, undefined);
+
+        this.props.getTowerMonitoringDetails(parametterValue);
         // setInterval(() => { 
         //     this.props.getTowerMonitoringDetails();
         // }, 2000);
-        this.functionToSetColumns();
+        setTimeout(() => {
+            this.functionToSetColumns();
+        }, 500);
+
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) {
-
+        if (nextProps && nextProps.roles && nextProps.roles !== this.state.roles) {
+            this.setState({ roles: nextProps.roles })
+        }
         if (nextProps && nextProps.towerMonitoringDetails && nextProps.towerMonitoringDetails !== this.state.towerMonitoringDetails) {
             this.setState({ towerMonitoringDetails: nextProps.towerMonitoringDetails })
+            setTimeout(() => {
+                this.functionToSetColumns();
+            }, 500);
         }
         const storeInState = (data, key) => {
             // time to store
@@ -209,8 +264,10 @@ class TowerMonitoringDetailsIndex extends Wrapper {
         });
     }
     render() {
-        const { columns, towerMonitoringDetails, towerMonitoringDetail, isViewDetailsPageVisible, parameterWithValues } = this.state;
-         return (
+        const { columns, towers, towerMonitoringDetailsNew, towerMonitoringDetails, towerMonitoringDetail, isViewDetailsPageVisible, parameterWithValues } = this.state;
+
+
+        return (
             <CommonStyle.MainDiv
                 padding="10px 0px"
                 flexdirection="column"
@@ -224,7 +281,7 @@ class TowerMonitoringDetailsIndex extends Wrapper {
                     />
                     :
                     <ReactTable
-                        Data={towerMonitoringDetails ? towerMonitoringDetails : []}
+                        Data={towerMonitoringDetailsNew ? towerMonitoringDetailsNew : []}
                         isColumnUpdate={true}
                         updateColumn={this.updateColumn}
                         columns={columns}
@@ -239,7 +296,9 @@ class TowerMonitoringDetailsIndex extends Wrapper {
 const mapStateToProps = state => {
     const errorType = state.errorReducer.type;
     const errorMessage = state.errorReducer.error;
+    const { roles, role } = state.adminReducer;
+
     const { deviceBatteryStatuss, towerMonitoringDetails, deviceStatusDetails, networkConnectivityStatuDetails, towerMonitoringSubDetails } = state.workingReducerTmc;
-    return { errorType, errorMessage, deviceBatteryStatuss, towerMonitoringDetails, deviceStatusDetails, networkConnectivityStatuDetails, towerMonitoringSubDetails };
+    return { errorType, roles, errorMessage, deviceBatteryStatuss, towerMonitoringDetails, deviceStatusDetails, networkConnectivityStatuDetails, towerMonitoringSubDetails };
 };
-export default withRouter(connect(mapStateToProps, { getDeviceBatteryStatus, getTowerMonitoringDetails, getDeviceStatusDetails, getNetworkConnectivityStatuDetails, getTowerMonitoringSubDetails })(TowerMonitoringDetailsIndex));
+export default withRouter(connect(mapStateToProps, { getRoleMasterData, getDeviceBatteryStatus, getTowerMonitoringDetails, getDeviceStatusDetails, getNetworkConnectivityStatuDetails, getTowerMonitoringSubDetails })(TowerMonitoringDetailsIndex));
