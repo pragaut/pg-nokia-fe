@@ -49,18 +49,21 @@ class Index extends Component {
             <Wrapper>
                 <div style={{ zIndex: '100', position: 'fixed', bottom: '50px', left: '40px' }}>
                     <div style={{ backgroundColor: '#ffffff', color: '#000000', height: '40px', width: '170px' }}>
-                        <div style={{paddingTop:'5px', display: 'flex', flexDirection: 'row', alignContent: 'center', justifyContent: 'center', alignItems: 'center' }}>         
+                        <div style={{ paddingTop: '5px', display: 'flex', flexDirection: 'row', alignContent: 'center', justifyContent: 'center', alignItems: 'center' }}>
                             <img
                                 src="http://maps.google.com/mapfiles/ms/icons/red-dot.png"
-                            /> Passive 
+                            /> Passive
                              <img
-                            src="http://maps.google.com/mapfiles/ms/icons/green-dot.png"
-                        /> Active
-                        </div> 
-                        
+                                src="http://maps.google.com/mapfiles/ms/icons/green-dot.png"
+                            /> Active
+                        </div>
+
                     </div>
                 </div>
-                <MyMap MapData={towerActiveDetails} />
+                {towerActiveDetails && towerActiveDetails.length > 0 &&
+                    <MyMap MapData={towerActiveDetails} />
+                }
+
             </Wrapper >
         );
     }

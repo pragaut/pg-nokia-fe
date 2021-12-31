@@ -150,12 +150,8 @@ export const getTowerActiveDetails = (filters, userId, pageIndex, rowsToReturn) 
     // dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null)
     try {
         let pageIndex = 0;
-
-        //  let towerMonitoringSubDetailId = filters && filters.towerMonitoringSubDetailId ? filters.towerMonitoringSubDetailId : '';
-
         let url = config.NOKIA_URL + `nokia/nokiaworking/towerActiveStatusDetails?pageIndex=${pageIndex}`;
-        //console.log("url : >>>>>>>", url);
-        const data = await service.get(url, true); 
+        const data = await service.get(url, true);
         if (data && !data.errorMessage) {
             //  dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
             dispatchAction(dispatch, workingTypes.TOWERACTIVESTATUS_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
@@ -247,8 +243,8 @@ export const getTowerMonitoringDetails = (filters) => async dispatch => {
         let macAddress = filters && filters.macAddress ? filters.macAddress : '';
         let uniqueId = filters && filters.uniqueId ? filters.uniqueId : '';
         let isOnlyTodayDataRequired = filters && filters.isOnlyTodayDataRequired ? filters.isOnlyTodayDataRequired : '0';
-        let fromDate = filters && filters.fromDate  && filters.fromDate  !== null ? filters.fromDate : null;
-        let toDate = filters && filters.toDate  && filters.toDate !== null ? filters.toDate : null;
+        let fromDate = filters && filters.fromDate && filters.fromDate !== null ? filters.fromDate : null;
+        let toDate = filters && filters.toDate && filters.toDate !== null ? filters.toDate : null;
         let url = config.NOKIA_URL + `nokia/nokiaworking/towerMonitoringDetails?pageIndex=${pageIndex}`;
 
         if (towerMonitoringDetailId) {

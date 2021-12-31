@@ -29,6 +29,7 @@ import TowerNotificationDetails from '../components/tmc/working/towerNotificatio
 import ClosedTowerNotificationDetails from '../components/tmc/working/towerNotifications/closedTowerNotification';
 
 import UserMaster from '../components/comman/masters/userMaster';
+import TowerActiveStatus from '../components/tmc/working/map/index';
 
 const Image = '../static/'
 const window = require('global/window');
@@ -187,6 +188,11 @@ export class Index extends Wrapper {
                             <ModalHeader
                                 heading={router && router.query && router.query.tab !== "" && router.query.MasterName} //"Group Master"
                             />
+                            {router && ((router.query && router.query.tab === "tower-active-status") || (!router || !router.query ||  router.query.tab === undefined === '' || router.query.tab === undefined))&& (
+                                <div>
+                                    <TowerActiveStatus />
+                                </div>
+                            )}
                             {((ActiveTabname && ActiveTabname === "user-master")) && (
                                 <div>
                                     <UserMaster

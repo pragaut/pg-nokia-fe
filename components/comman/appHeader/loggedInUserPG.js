@@ -42,6 +42,16 @@ export class AppHeader extends Wrapper {
             WorkingLink: [
                 {
                     pathname: "/pragaut",
+                    tab: "tower-active-status",
+                    pageName: 'Tower Active Status',
+                    url: "/pragaut/tower-active-status",
+                    isVisible: true,
+                    ApplicableFor: 'Working',
+                    linkName: 'Home',
+                    roleCode: 'Management', 
+                },
+                {
+                    pathname: "/pragaut",
                     tab: "user-master",
                     pageName: 'User Master',
                     url: "/pragaut/user-master",
