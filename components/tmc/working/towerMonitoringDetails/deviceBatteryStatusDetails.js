@@ -41,13 +41,13 @@ class DeviceBatteryStatusDetails extends Wrapper {
                     thPadding={"6px"}
                 >
                     <tr>
-                        <th>
+                        <th style={{width:'34%'}}>
                             Main Device
                         </th>
-                        <th>
+                        <th style={{width:'33%'}}>
                             Child 1
                         </th>
-                        <th>
+                        <th  style={{width:'33%'}}>
                             Child 2
                         </th>
                     </tr>

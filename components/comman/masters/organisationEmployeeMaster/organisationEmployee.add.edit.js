@@ -5,7 +5,7 @@ import { validateInputs } from '../../../../utils/editFormHelper';
 import { connect } from 'react-redux';
 import { constants } from '../../../../utils/constants';
 import { SELECT, SpanLabelForDDl } from '../../../comman/formStyle'
-import {getOrgRelationTypeMasterData, getOrganisationDetailsData,getGenderMasterData, getOrganisationEmployeeDetailsData, saveOrganisationEmployeeDetails, deleteOrganisationEmployeeDetailsData, getOrganisationEmployeeDetailsDataById} from '../../../../actions/comman/admin.action';
+import { getOrgRelationTypeMasterData, getOrganisationDetailsData, getGenderMasterData, getOrganisationEmployeeDetailsData, saveOrganisationEmployeeDetails, deleteOrganisationEmployeeDetailsData, getOrganisationEmployeeDetailsDataById } from '../../../../actions/comman/admin.action';
 import style from '../../../../theme/app.scss';
 import * as adminActionType from '../../../../action-types/comman/admin.action.types';
 import ModalHeader from '../../../shared/ModalHeader';
@@ -43,12 +43,12 @@ class OrganisationEmployeeDetailsAddEdit extends Wrapper {
         type: 'string',
         required: true
     }
-    , {
+        , {
         name: 'email',
         type: 'string',
         required: true
     }
-    , {
+        , {
         name: 'mobile',
         type: 'string',
         required: true
@@ -64,7 +64,7 @@ class OrganisationEmployeeDetailsAddEdit extends Wrapper {
             orgRelationTypes: [],
             organisations: [],
             genders: [],
-            isOtherNationalityTBVisible:null
+            isOtherNationalityTBVisible: null
         };
     };
 
@@ -72,22 +72,20 @@ class OrganisationEmployeeDetailsAddEdit extends Wrapper {
     onValueChanged = key => event => {
         const existingState = Object.assign({}, this.state.orgEmployee);
         existingState[key] = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
-       this.setState({ orgEmployee: existingState });
+        this.setState({ orgEmployee: existingState });
     };
     onValueChangedNationality = key => event => {
         const existingState = Object.assign({}, this.state.orgEmployee);
         let SelectedValue = event.target.value && event.target.value;
-        
-        existingState[key] = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;       
-        if(SelectedValue && SelectedValue==="false")
-        {
+
+        existingState[key] = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
+        if (SelectedValue && SelectedValue === "false") {
             this.setState({ isOtherNationalityTBVisible: true });
-            existingState["isIndian"] = false; 
+            existingState["isIndian"] = false;
         }
-        else
-        {
+        else {
             this.setState({ isOtherNationalityTBVisible: false });
-            existingState["isIndian"] = true; 
+            existingState["isIndian"] = true;
             existingState["otherNationality"] = null;
         }
         this.setState({ orgEmployee: existingState });
@@ -98,17 +96,25 @@ class OrganisationEmployeeDetailsAddEdit extends Wrapper {
         let SelectedValue = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
         existingState[key] = SelectedValue;
 
-        this.props.getOrganisationDetailsData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined, existingState);    
+        this.props.getOrganisationDetailsData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined, existingState);
         this.setState({ orgEmployee: existingState });
     };
 
     componentDidMount() {
+        let otherNationality = this.state.orgEmployee && this.state.orgEmployee.otherNationality && this.state.orgEmployee.otherNationality;
+        const existingState = Object.assign({}, this.state.orgEmployee);
+        if (!otherNationality || otherNationality === null || otherNationality === '') {
+            existingState["isIndian"] = true;
+            existingState["otherNationality"] = null;
+            this.setState({ orgEmployee: existingState, isOtherNationalityTBVisible: false });
+        }
+
         this.props.getOrgRelationTypeMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
         this.props.getOrganisationDetailsData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
         this.props.getGenderMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
-        this.props.getOrganisationEmployeeDetailsData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);      
-      
-       
+        this.props.getOrganisationEmployeeDetailsData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
+
+
         // let's pull the relational (child) tables
     };
 
@@ -146,11 +152,10 @@ class OrganisationEmployeeDetailsAddEdit extends Wrapper {
     render() {
         let isIndian = "";
         let isOther = "";
-        if(this.state.orgEmployee && (this.state.orgEmployee.isIndian===false || this.state.orgEmployee.isIndian===0))
-        {
-             isOther = true;
+        if (this.state.orgEmployee && (this.state.orgEmployee.isIndian === false || this.state.orgEmployee.isIndian === 0)) {
+            isOther = true;
         }
-        else{
+        else {
             isIndian = true;
         }
         return (
@@ -225,20 +230,20 @@ class OrganisationEmployeeDetailsAddEdit extends Wrapper {
                                         })
                                     }
                                 </SELECT>
-                            </div>                           
+                            </div>
                             <Gap h="15px" />
                             <div style={{ padding: '10px 10px 20px 10px', width: '100%', display: 'flex' }}>
                                 {/* <input type="checkbox" checked={this.state.orgEmployee.isIndian} onChange={this.onValueChanged('isIndian')} />
                                 <SpanLabelForDDl>Is Indian:</SpanLabelForDDl> */}
-                                <input type="radio" value="true" onChange={this.onValueChangedNationality('isIndian')} name="gender" checked={isIndian}/> Is Indian
-                                <input type="radio" value="false" onChange={this.onValueChangedNationality('isIndian')} name="gender" checked={isOther}/> Other
+                                <input type="radio" value="true" onChange={this.onValueChangedNationality('isIndian')} name="gender" checked={isIndian} /> Is Indian
+                                <input type="radio" value="false" onChange={this.onValueChangedNationality('isIndian')} name="gender" checked={isOther} /> Other
                             </div>
-                            {this.state.orgEmployee && (this.state.orgEmployee.isIndian===false || this.state.orgEmployee.isIndian===0) && 
-                            <>
-                             <Input label="Other Nationality" focusbordercolor="#f90707" type='text' defaultValue={this.state.orgEmployee.otherNationality} onChange={this.onValueChanged('otherNationality')} />
-                            </>                            
+                            {this.state.orgEmployee && (this.state.orgEmployee.isIndian === false || this.state.orgEmployee.isIndian === 0) &&
+                                <>
+                                    <Input label="Other Nationality" focusbordercolor="#f90707" type='text' defaultValue={this.state.orgEmployee.otherNationality} onChange={this.onValueChanged('otherNationality')} />
+                                </>
                             }
-                           
+
                         </div>
                     </div>
                 </div>
@@ -270,11 +275,11 @@ OrganisationEmployeeDetailsAddEdit.propTypes = {
 
 const mapStateToProps = state => {
 
-    const { genders, orgRelationTypes ,organisations, orgEmployees,orgEmployee,orgEmployeeeActiontype, orgEmployeeRecordsCount } = state.adminReducer;
+    const { genders, orgRelationTypes, organisations, orgEmployees, orgEmployee, orgEmployeeeActiontype, orgEmployeeRecordsCount } = state.adminReducer;
 
-    return { genders, orgRelationTypes ,organisations, orgEmployees,orgEmployee,orgEmployeeeActiontype, orgEmployeeRecordsCount };
+    return { genders, orgRelationTypes, organisations, orgEmployees, orgEmployee, orgEmployeeeActiontype, orgEmployeeRecordsCount };
 
 }
 
 
-export default connect(mapStateToProps, { getOrgRelationTypeMasterData, getOrganisationDetailsData,getGenderMasterData, getOrganisationEmployeeDetailsData, saveOrganisationEmployeeDetails, deleteOrganisationEmployeeDetailsData, getOrganisationEmployeeDetailsDataById})(OrganisationEmployeeDetailsAddEdit)
+export default connect(mapStateToProps, { getOrgRelationTypeMasterData, getOrganisationDetailsData, getGenderMasterData, getOrganisationEmployeeDetailsData, saveOrganisationEmployeeDetails, deleteOrganisationEmployeeDetailsData, getOrganisationEmployeeDetailsDataById })(OrganisationEmployeeDetailsAddEdit)

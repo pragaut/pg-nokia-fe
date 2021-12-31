@@ -35,23 +35,39 @@ class NetworkConnectivityStatuDetailsIndex extends Wrapper {
                 padding="10px 0px"
                 flexdirection="column"
             >
-                <CommonStyle.TABLE
-                 tdPadding={"6px"}
-                 thPadding={"6px"}
-                >
-                    {networkConnectivityStatuDetails && networkConnectivityStatuDetails.length > 0 && networkConnectivityStatuDetails.map((item, index) => {
-                        let wifi = item.wlanStatus && item.wlanStatus;
-                        let dongle = item.wwanStatus && item.wwanStatus;
-                        return <tr key={index}> 
-                            <td style={{ background: wifi === 'Connected' ? 'green' : 'red',color:'#fff' }}>
+                {networkConnectivityStatuDetails && networkConnectivityStatuDetails.length > 0 ?
+                    <CommonStyle.TABLE
+                        tdPadding={"6px"}
+                        thPadding={"6px"}
+                    >
+                        {networkConnectivityStatuDetails && networkConnectivityStatuDetails.length > 0 && networkConnectivityStatuDetails.map((item, index) => {
+                            let wifi = item.wlanStatus && item.wlanStatus;
+                            let dongle = item.wwanStatus && item.wwanStatus;
+                            return <tr key={index}>
+                                <td style={{ background: wifi === 'Connected' ? 'green' : 'red', color: '#fff',width:'50%' }}>
+                                    Mobile Hotspot
+                            </td>
+                                <td style={{ background: dongle === 'Connected' ? 'green' : 'red', color: '#fff',width:'50%' }}>
+                                    Dongle
+                            </td>
+                            </tr>
+                        })}
+                    </CommonStyle.TABLE>
+                    :
+                    <CommonStyle.TABLE
+                        tdPadding={"6px"}
+                        thPadding={"6px"}
+                    >
+                        <tr>
+                            <td style={{ background: 'red', color: '#fff',width:'50%' }}>
                                 Mobile Hotspot
                             </td>
-                            <td style={{ background: dongle === 'Connected' ? 'green' : 'red',color:'#fff' }}>
+                            <td style={{ background: 'red', color: '#fff',width:'50%' }}>
                                 Dongle
                             </td>
                         </tr>
-                    })}
-                </CommonStyle.TABLE>
+                    </CommonStyle.TABLE> 
+                } 
             </CommonStyle.MainDiv>
         )
     }

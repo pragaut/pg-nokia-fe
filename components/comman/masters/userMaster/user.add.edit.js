@@ -9,7 +9,7 @@ import style from '../../../../theme/app.scss';
 import ModalHeader from '../../../shared/ModalHeader';
 import Input from '../../../shared/InputBox';
 import { SELECT, SelectDiv, SpanLabelForDDl } from '../../../comman/formStyle';  
- import MultiSelect from "react-multi-select-component"; 
+ import {MultiSelect} from "react-multi-select-component"; 
 import styled from 'styled-components';
 import Gap from '../../../comman/Gap'
 const MultiSelectDiv = styled.div` 

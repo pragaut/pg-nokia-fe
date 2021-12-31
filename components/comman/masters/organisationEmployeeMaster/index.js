@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { constants } from '../../../../utils/constants';
-import { getOrgRelationTypeMasterData, getOrganisationDetailsData,getGenderMasterData, getOrganisationEmployeeDetailsData, saveOrganisationEmployeeDetails, deleteOrganisationEmployeeDetailsData, getOrganisationEmployeeDetailsDataById } from '../../../../actions/comman/admin.action';
+import { getOrgRelationTypeMasterData, getOrganisationDetailsData, getGenderMasterData, getOrganisationEmployeeDetailsData, saveOrganisationEmployeeDetails, deleteOrganisationEmployeeDetailsData, getOrganisationEmployeeDetailsDataById } from '../../../../actions/comman/admin.action';
 import Wrapper from '../../../shared/Wrapper'
 import Gap from '../../../comman/Gap';
 import OrganisationEmployeeDetails from './organisationEmployee.add.edit'
@@ -46,7 +46,7 @@ class Index extends Wrapper {
                     <React.Fragment>
                         <button className="warning" style={{ marginRight: '5px' }} value={propss.original.id} onClick={() => this.onClickAdd(propss.original)}>
                             Edit
-                        </button> 
+                        </button>
                         <button className="primary" style={{ marginRight: '5px' }} value={propss.original.id} onClick={() =>
                             this.onDeleteRecord(propss.original.id)
                         }>
@@ -81,35 +81,35 @@ class Index extends Wrapper {
                 Header: 'Employee Name',
                 accessor: d => `${d.employeeName}`,
                 id: 'employeeName',
-                show: true ,
-                minWidth: 150            
-            }, 
+                show: true,
+                minWidth: 150
+            },
             {
                 Header: 'Employee Code',
                 accessor: d => `${d.employeeCode}`,
                 id: 'employeeCode',
-                show: true              
-            }, 
+                show: true
+            },
             {
                 Header: 'Gender',
                 accessor: d => `${d.genderName} `,
                 id: 'genderName',
                 show: true,
-            },{
+            }, {
                 Header: 'Date Of Birth',
                 accessor: d => `${d.dateOfBirth && d.dateOfBirth !== null ? d.dateOfBirth : ''} `,// 'LeadEmail',
                 id: 'dateOfBirth',
-                show: true, 
-            },  {
+                show: true,
+            }, {
                 Header: 'Father Name',
-                accessor: d => `${d.fatherName && d.fatherName !=null && d.fatherName ? d.fatherName :''}`,
+                accessor: d => `${d.fatherName && d.fatherName != null && d.fatherName ? d.fatherName : ''}`,
                 id: 'fatherName',
-                show: true              
-            },{
+                show: true
+            }, {
                 Header: 'Mobile',
                 accessor: d => `${d.mobile}`,
                 id: 'mobile',
-                show: true              
+                show: true
             },
         ]
         this.setState({ columns: columns });
@@ -126,12 +126,21 @@ class Index extends Wrapper {
             this.setState({
                 organisations: nextProps.organisations
             })
-        } 
-        if (nextProps && nextProps.orgEmployees) { 
+        }
+        if (nextProps && nextProps.orgEmployees) {
             this.setState({
                 orgEmployees: nextProps.orgEmployees
             })
-        } 
+        }
+        if (nextProps && nextProps.orgEmployeeeActiontype && nextProps.orgEmployeeeActiontype === AdminTypes.ORGRELATIONTYPEMASTER_SAVE_SUCCESS && this.state.showEditPopup === true) {
+            this.props.getOrganisationEmployeeDetailsData(0, constants.ALL_ROWS_LIST, undefined, undefined);
+            this.setState({
+                showEditPopup:false
+            })
+            setTimeout(() => {
+                this.updateStateAfterStateUpdate();
+            }, 100);
+        }
 
         const storeInState = (data, key) => {
             // time to store
@@ -145,10 +154,10 @@ class Index extends Wrapper {
 
     async componentDidMount() {
         // let's load the groups, for first time
-        this.props.getOrgRelationTypeMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
-        this.props.getOrganisationDetailsData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
-        this.props.getGenderMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
-        this.props.getOrganisationEmployeeDetailsData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
+        this.props.getOrgRelationTypeMasterData(0, constants.ALL_ROWS_LIST, undefined, undefined);
+        this.props.getOrganisationDetailsData(0, constants.ALL_ROWS_LIST, undefined, undefined);
+        this.props.getGenderMasterData(0, constants.ALL_ROWS_LIST, undefined, undefined);
+        this.props.getOrganisationEmployeeDetailsData(0, constants.ALL_ROWS_LIST, undefined, undefined);
         setTimeout(() => {
             this.updateStateAfterStateUpdate();
         }, 100);
@@ -196,15 +205,15 @@ class Index extends Wrapper {
                         <CommonStyle.Overlay
                         // onClick={() => this.onClickCancel()}
                         />
-                      
+
                         <CommonStyle.Wrapper_OnOverlay
                             width={"80%"}
                             height={"fit-content"}
                             visible={showEditPopup}
                         >
-                              <CommonStyle.CloseButtonForModel
-                            onClick={() => this.onClickCancel()}
-                        >X</CommonStyle.CloseButtonForModel>
+                            <CommonStyle.CloseButtonForModel
+                                onClick={() => this.onClickCancel()}
+                            >X</CommonStyle.CloseButtonForModel>
                             <OrganisationEmployeeDetails
                                 baseObject={orgEmployee}
                                 onCancel={this.onClickCancel}
@@ -255,12 +264,13 @@ class Index extends Wrapper {
 
 
 const mapStateToProps = state => {
-    const { genders, orgRelationTypes ,organisations, orgEmployees,orgEmployee,orgEmployeeeActiontype, orgEmployeeRecordsCount} = state.adminReducer;
+    const { genders, orgRelationTypes, organisations, orgEmployees, orgEmployee, orgEmployeeeActiontype, orgEmployeeRecordsCount } = state.adminReducer;
     const errorType = state.errorReducer.type;
     const errorMessage = state.errorReducer.error;
 
-    return { genders, orgRelationTypes ,organisations, orgEmployees,orgEmployee,orgEmployeeeActiontype, orgEmployeeRecordsCount,errorType, errorMessage };
+    return { genders, orgRelationTypes, organisations, orgEmployees, orgEmployee, orgEmployeeeActiontype, orgEmployeeRecordsCount, errorType, errorMessage };
 };
 
-export default connect(mapStateToProps, { 
-    getOrgRelationTypeMasterData, getOrganisationDetailsData,getGenderMasterData, getOrganisationEmployeeDetailsData, saveOrganisationEmployeeDetails, deleteOrganisationEmployeeDetailsData, getOrganisationEmployeeDetailsDataById, hideError })(Index);
+export default connect(mapStateToProps, {
+    getOrgRelationTypeMasterData, getOrganisationDetailsData, getGenderMasterData, getOrganisationEmployeeDetailsData, saveOrganisationEmployeeDetails, deleteOrganisationEmployeeDetailsData, getOrganisationEmployeeDetailsDataById, hideError
+})(Index);

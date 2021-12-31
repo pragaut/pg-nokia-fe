@@ -304,6 +304,8 @@ export const getDeviceStatusDetails = (filters) => async dispatch => {
         let deviceStatusDetailId = filters && filters.deviceStatusDetailId ? filters.deviceStatusDetailId : '';
         let deviceRegistrationDetailId = filters && filters.deviceRegistrationDetailId ? filters.deviceRegistrationDetailId : '';
         let macAddress = filters && filters.macAddress ? filters.macAddress : '';
+        let towerMonitoringDetailId = filters && filters.towerMonitoringDetailId ? filters.towerMonitoringDetailId : '';
+
         let url = config.NOKIA_URL + `nokia/nokiaworking/deviceStatusDetails?pageIndex=${pageIndex}`;
 
         if (deviceStatusDetailId) {
@@ -314,6 +316,9 @@ export const getDeviceStatusDetails = (filters) => async dispatch => {
         }
         if (macAddress) {
             url = url + `&macAddress=${macAddress}`;
+        }
+        if (towerMonitoringDetailId) {
+            url = url + `&towerMonitoringDetailId=${towerMonitoringDetailId}`;
         }
         const data = await service.get(url, true);
         if (data && !data.errorMessage) {
