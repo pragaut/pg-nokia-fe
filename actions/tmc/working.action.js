@@ -243,6 +243,7 @@ export const getTowerMonitoringDetails = (filters) => async dispatch => {
         let macAddress = filters && filters.macAddress ? filters.macAddress : '';
         let uniqueId = filters && filters.uniqueId ? filters.uniqueId : '';
         let isOnlyTodayDataRequired = filters && filters.isOnlyTodayDataRequired ? filters.isOnlyTodayDataRequired : '0';
+        let isOnlyLiveTMCDataRequired = filters && filters.isOnlyLiveTMCDataRequired ? filters.isOnlyLiveTMCDataRequired : '0';
         let fromDate = filters && filters.fromDate && filters.fromDate !== null ? filters.fromDate : null;
         let toDate = filters && filters.toDate && filters.toDate !== null ? filters.toDate : null;
         let url = config.NOKIA_URL + `nokia/nokiaworking/towerMonitoringDetails?pageIndex=${pageIndex}`;
@@ -264,6 +265,9 @@ export const getTowerMonitoringDetails = (filters) => async dispatch => {
         }
         if (isOnlyTodayDataRequired) {
             url = url + `&isOnlyTodayDataRequired=${isOnlyTodayDataRequired}`;
+        }
+        if (isOnlyLiveTMCDataRequired) {
+            url = url + `&isOnlyLiveTMCDataRequired=${isOnlyLiveTMCDataRequired}`;
         }
         if (macAddress) {
             url = url + `&macAddress=${macAddress}`;

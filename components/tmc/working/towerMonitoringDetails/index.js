@@ -225,7 +225,8 @@ class TowerMonitoringDetailsIndex extends Wrapper {
     }
     componentDidMount() {
         let parametterValue = {
-            isOnlyTodayDataRequired: 0
+            isOnlyTodayDataRequired: 1,
+            isOnlyLiveTMCDataRequired:1
         }
         this.props.getRoleMasterData(0, constants.ALL_ROWS_LIST, undefined, undefined);
 
