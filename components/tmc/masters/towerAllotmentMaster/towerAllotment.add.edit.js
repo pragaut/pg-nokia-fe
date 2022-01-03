@@ -126,8 +126,8 @@ class TowerAllotmentAddEdit extends Wrapper {
 
 
     render() {
-        console.log("this.state.towerAllotment", this.state.towerAllotment);
-        console.log("towers", this.state.towers);
+        // console.log("this.state.towerAllotment", this.state.towerAllotment);
+        // console.log("towers", this.state.towers);
         return (
             <div className={style.modal_dialog} style={{ width: '90%', maxHeight: '120vh', maxWidth: '80vw' }}>
                 {/* <ModalHeader

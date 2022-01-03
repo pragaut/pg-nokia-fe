@@ -125,7 +125,7 @@ class TowerMonitoringSubDetailsIndex extends Wrapper {
             },
             {
                 Header: 'Working Time',
-                accessor: d => `${d.statusOn && d.statusOn !== null ? moment(d.statusOn).format("DD-MMM-YYYY hh:mm:ss a") : ''} `,
+                accessor: d => `${d.statusOn && d.statusOn !== null ? moment(d.statusOn).format("DD-MMM-YYYY | hh:mm:ss a") : ''} `,
                 id: 'statusOn',
                 minWidth: 100,
                 show: true

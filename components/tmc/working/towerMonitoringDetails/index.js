@@ -84,57 +84,86 @@ class TowerMonitoringDetailsIndex extends Wrapper {
                 minWidth: 100,
                 show: true,
             },
+            // {
+            //     Header: 'Height',
+            //     accessor: 'userHeight',
+            //     id: 'userHeight',
+            //     minWidth: 100,
+            //     show: true,
+            // },
+            // {
+            //     Header: 'Height Status',
+            //     accessor: 'heightStatus',
+            //     id: 'heightStatus',
+            //     Cell: row => (
+            //         <React.Fragment>
+            //             {row.original.heightStatus && row.original.heightStatus === 'Asc' ?
+            //                 <i className='fa fa-arrow-up' style={{ color: 'green', fontSize: '20px' }}  ></i>
+            //                 :
+            //                 <>
+            //                     {row.original.heightStatus && row.original.heightStatus === 'Desc' ?
+            //                         <i className='	fa fa-arrow-down' style={{ color: 'orange', fontSize: '20px' }}  ></i>
+            //                         :
+            //                         <span>{row.original.heightStatus}</span>
+            //                     }
+            //                 </>
+            //             }
+            //         </React.Fragment>
+            //     ),
+            //     minWidth: 100,
+            //     show: true,
+            // },
             {
-                Header: 'Height',
-                accessor: 'userHeight',
-                id: 'userHeight',
-                minWidth: 100,
-                show: true,
-            },
-            {
-                Header: 'Height Status',
+                Header: 'Height / Status',
                 accessor: 'heightStatus',
                 id: 'heightStatus',
-                Cell: row => (
-                    <React.Fragment>
-                        {row.original.heightStatus && row.original.heightStatus === 'Asc' ?
-                            <i className='fa fa-arrow-up' style={{ color: 'green', fontSize: '20px' }}  ></i>
-                            :
-                            <>
-                                {row.original.heightStatus && row.original.heightStatus === 'Desc' ?
-                                    <i className='	fa fa-arrow-down' style={{ color: 'orange', fontSize: '20px' }}  ></i>
-                                    :
-                                    <span>{row.original.heightStatus}</span>
-                                }
-                            </>
-                        }
-                    </React.Fragment>
-                ),
+                Cell: row => {
+                    let dataOriginal = row.original.heightAndHeightStatus;
+                    let element2NewArray = dataOriginal && dataOriginal.split('|');
+                    let height = element2NewArray[0];
+                    let heightStatus = element2NewArray[1];
+                    return (
+                        <React.Fragment>
+                            <span>{height}  -   </span>
+                            {heightStatus && heightStatus === 'Asc' || heightStatus === 'WIP' ?
+                                <i className='fa fa-arrow-up' style={{ color: 'green', fontSize: '20px' }}  ></i>
+                                :
+                                <>
+                                    {heightStatus && heightStatus === 'Desc' ?
+                                        <i className='	fa fa-arrow-down' style={{ color: 'orange', fontSize: '20px' }}  ></i>
+                                        :
+                                        <span>{heightStatus}</span>
+                                    }
+                                </>
+                            }
+                        </React.Fragment>
+                    )
+                },
                 minWidth: 100,
                 show: true,
             },
-            {
-                Header: 'Clamp Status',
-                accessor: 'ClampStatus',
-                id: 'ClampStatus',
-                minWidth: 100,
-                Cell: row => (
-                    <React.Fragment>
-                        <div className={row.original.ClampStatus}>
-                            <div>
-                                {row.original.ClampStatus}
-                            </div>
-                        </div>
-                    </React.Fragment>
-                ),
-                show: false,
-            },
+            // {
+            //     Header: 'Clamp Status',
+            //     accessor: 'ClampStatus',
+            //     id: 'ClampStatus',
+            //     minWidth: 100,
+            //     Cell: row => (
+            //         <React.Fragment>
+            //             <div className={row.original.ClampStatus}>
+            //                 <div>
+            //                     {row.original.ClampStatus}
+            //                 </div>
+            //             </div>
+            //         </React.Fragment>
+            //     ),
+            //     show: false,
+            // },
             {
                 Header: 'Alarm Types',
                 accessor: 'alarmTypes',
                 id: 'alarmTypes',
                 minWidth: 100,
-                style: { 'white-space': "pre-wrap","text-align":'left' },
+                style: { 'white-space': "pre-wrap", "text-align": 'left' },
                 show: true,
             },
             // {
@@ -146,14 +175,14 @@ class TowerMonitoringDetailsIndex extends Wrapper {
             // },
             {
                 Header: 'Start Time',
-                accessor: d => `${d.startDateTime && d.startDateTime !== null ? moment(d.startDateTime).format("DD-MMM-YYYY hh:mm:ss a") : ''} `,
+                accessor: d => `${d.startDateTime && d.startDateTime !== null ? moment(d.startDateTime).format("DD-MMM-YYYY | hh:mm:ss a") : ''} `,
                 id: 'startDateTime',
                 minWidth: 100,
                 show: true
             },
             {
                 Header: 'End Time',
-                accessor: d => `${d.endDateTime && d.endDateTime !== null ? moment(d.endDateTime).format("DD-MMM-YYYY hh:mm:ss a") : ''} `,
+                accessor: d => `${d.endDateTime && d.endDateTime !== null ? moment(d.endDateTime).format("DD-MMM-YYYY | hh:mm:ss a") : ''} `,
                 id: 'endDateTime',
                 minWidth: 100,
                 show: true
@@ -226,7 +255,7 @@ class TowerMonitoringDetailsIndex extends Wrapper {
     componentDidMount() {
         let parametterValue = {
             isOnlyTodayDataRequired: 1,
-            isOnlyLiveTMCDataRequired:1
+            isOnlyLiveTMCDataRequired: 1
         }
         this.props.getRoleMasterData(0, constants.ALL_ROWS_LIST, undefined, undefined);
 
@@ -239,7 +268,13 @@ class TowerMonitoringDetailsIndex extends Wrapper {
         }, 500);
 
     }
-
+    refreshData = () => {
+        let parametterValue = {
+            isOnlyTodayDataRequired: 1,
+            isOnlyLiveTMCDataRequired: 1
+        }
+        this.props.getTowerMonitoringDetails(parametterValue);
+    }
     UNSAFE_componentWillReceiveProps(nextProps) {
         if (nextProps && nextProps.roles && nextProps.roles !== this.state.roles) {
             this.setState({ roles: nextProps.roles })
@@ -272,7 +307,31 @@ class TowerMonitoringDetailsIndex extends Wrapper {
             <CommonStyle.MainDiv
                 padding="10px 0px"
                 flexdirection="column"
+                justifycontent="flex-start"
+                alignitems={'flex-start'}
             >
+                {(!isViewDetailsPageVisible || isViewDetailsPageVisible === false) &&
+                    <CommonStyle.MainDiv
+                        padding="0px 0px"
+                        flexdirection="row"
+                        width={'10%'}
+                        justifycontent="flex-start"
+                    >
+                        <Button
+                            width="50px"
+                            height="30px"
+                            borderRadius="5px"
+                            bgColor="blue"
+                            lineheight="1"
+                            border="1px solid blue"
+                            hoverColor="blue"
+                            bgChangeHover="#fff"
+                            onClick={() => this.refreshData()}
+                        >
+                            <i class="fa fa-refresh" aria-hidden="true"></i>
+                        </Button>
+                    </CommonStyle.MainDiv>
+                }
                 {isViewDetailsPageVisible === true ?
                     <TowerMonitoringDetailsView
                         parameterWithValues={parameterWithValues}

@@ -181,8 +181,8 @@ class TowerIndex extends Wrapper {
 
     render() {
         const { showEditPopup, columns, towers, tower } = this.state; 
-        console.log("Tower Props : ++++++++",this.props.towers)
-        console.log("Tower State : ++++++++",towers)
+        // console.log("Tower Props : ++++++++",this.props.towers)
+        // console.log("Tower State : ++++++++",towers)
         return (<div id='towerTable' className={style.table_wapper} >
             {showEditPopup === true &&
                 <>

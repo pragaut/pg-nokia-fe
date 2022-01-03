@@ -54,7 +54,14 @@ class TowerAddEdit extends Wrapper {
 
     onValueChanged = key => event => {
         const existingTower = Object.assign({}, this.state.tower);
-        existingTower[key] = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
+        let selectedValue = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
+        if (key === "towerName") {
+            selectedValue = selectedValue.replace(' ', '-');// this.replaceJSX(selectedValue,' ','-');
+             existingTower[key] = selectedValue;
+        }
+        else {
+            existingTower[key] = selectedValue;
+        }
 
         this.setState({ tower: existingTower });
     };
@@ -162,7 +169,7 @@ class TowerAddEdit extends Wrapper {
 
 
     render() {
-        console.log("this.state.tower", this.state.tower);
+       // console.log("this.state.tower", this.state.tower);
         return (
             <div className={style.modal_dialog} style={{ width: '95%', maxHeight: '120vh', maxWidth: '80vw' }}>
                 {/* <ModalHeader
@@ -207,7 +214,7 @@ class TowerAddEdit extends Wrapper {
                                     }
                                 </SELECT>
                             </div>
-                            <Input label="Tower ID:" type='text' defaultValue={this.state.tower.towerName} onChange={this.onValueChanged('towerName')} />
+                            <Input label="Tower ID:" type='text' value={this.state.tower.towerName} onChange={this.onValueChanged('towerName')} />
                             <Input label="Site Name:" type='text' defaultValue={this.state.tower.siteName} onChange={this.onValueChanged('siteName')} />
                             <div style={{ padding: '10px', width: '100%' }}>
                                 <SpanLabelForDDl>Country</SpanLabelForDDl>

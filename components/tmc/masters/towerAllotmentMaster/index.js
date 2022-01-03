@@ -140,7 +140,7 @@ class TowerAllotmentIndex extends Wrapper {
 
     render() {
         const { showEditPopup, columns, towerAllotments, towerAllotment } = this.state;
-        console.log("towerAllotments  >>>>>", towerAllotments);
+        // console.log("towerAllotments  >>>>>", towerAllotments);
         return (<div id='towerAllotmentTable' className={style.table_wapper} >
             {showEditPopup === true &&
                 <>
