@@ -3,7 +3,8 @@ import * as service from '../../services/data.service';
 import * as workingTypes from '../../action-types/tmc/working.action.types';
 import * as util from '../../utils'
 import config from '../../config';
-import * as errorTypes from '../../action-types/comman/error.action.types';
+import * as errorTypes from '../../action-types/comman/error.action.types'; 
+import * as sessionHelper from '../../utils/session.helper';
 
 
 /**
@@ -235,6 +236,13 @@ export const getDeviceBatteryStatusLog = (filters) => async dispatch => {
 export const getTowerMonitoringDetails = (filters) => async dispatch => {
     //  dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null)
     try {
+
+        const user = sessionHelper.getLoggedUser();
+        const userRole = sessionHelper.getLoggedUserRole_JSONConverted();
+        //console.log("----------current User ---- ",user);
+        //console.log("----------current userRole ---- ",userRole);
+        let orgDetailsId = user && user.orgDetailsId;
+        let roleMasterId = userRole && userRole.id;
         let pageIndex = 0;
         let towerMonitoringDetailId = filters && filters.towerMonitoringDetailId ? filters.towerMonitoringDetailId : '';
         let towerMasterId = filters && filters.towerMasterId && filters.towerMasterId !== null && filters.towerMasterId !== '' && filters.towerMasterId !== '-1' ? filters.towerMasterId : '';
@@ -277,6 +285,12 @@ export const getTowerMonitoringDetails = (filters) => async dispatch => {
         }
         if (toDate) {
             url = url + `&toDate=${toDate}`;
+        }
+        if (orgDetailsId) {
+            url = url + `&orgDetailsId=${orgDetailsId}`;
+        }
+        if (roleMasterId) {
+            url = url + `&roleMasterId=${roleMasterId}`;
         }
         const data = await service.get(url, true);
         if (data && !data.errorMessage) {
