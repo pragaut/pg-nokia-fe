@@ -184,7 +184,7 @@ class TowerAllotmentAddEdit extends Wrapper {
                                     <option key="a0" value="" >--- Select Tower ---</option>
                                     {this.state.towers &&
                                         this.state.towers.map((item, index) => {
-                                            return <option key={index} value={item.towerId}>{item.towerName}</option>
+                                            return <option key={index} value={item.id}>{item.towerName}</option>
                                         })
                                     }
                                 </SELECT>

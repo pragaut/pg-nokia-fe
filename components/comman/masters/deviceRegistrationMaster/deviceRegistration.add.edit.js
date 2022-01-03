@@ -173,7 +173,7 @@ class DeviceRegistrationAddEdit extends Wrapper {
                                 <SpanLabelForDDl>Organisation Relation Type</SpanLabelForDDl>
                                 <Gap h="5px" />
                                 <SELECT
-                                    value={this.state.deviceRegistration && this.state.deviceRegistration.orgName && this.state.deviceRegistration.orgName.orgRelationTypeId} paddingLeft="10px" borderRadius="14px" height="51px"
+                                    value={this.state.deviceRegistration && this.state.deviceRegistration.orgRelationTypeId} paddingLeft="10px" borderRadius="14px" height="51px"
                                     type="text" color="rgba(0,0,0,0.87)" borderColor="rgba(0,0,0,0.54)"
                                     style={{ backgroundColor: "transparent", border: "1px solid #ccc" }}
                                     onChange={this.onValueChangedOrgRelationType('orgRelationTypeId')}
