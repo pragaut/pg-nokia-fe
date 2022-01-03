@@ -120,8 +120,8 @@ class TowerMonitoringDetailsIndex extends Wrapper {
                 Cell: row => {
                     let dataOriginal = row.original.heightAndHeightStatus;
                     let element2NewArray = dataOriginal && dataOriginal.split('|');
-                    let height = element2NewArray[0];
-                    let heightStatus = element2NewArray[1];
+                    let height = element2NewArray && element2NewArray.length > 0 && element2NewArray[0];
+                    let heightStatus =element2NewArray && element2NewArray.length > 1 && element2NewArray[1];
                     return (
                         <React.Fragment>
                             <span>{height}  -   </span>
