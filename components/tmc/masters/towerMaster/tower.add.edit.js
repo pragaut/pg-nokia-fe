@@ -4,8 +4,8 @@ import { validateInputs } from '../../../../utils/editFormHelper';
 import { save, deleteItems, shouldStoreDataInStateByKey } from '../../../../utils/editFormHelper';
 import { connect } from 'react-redux';
 import { constants } from '../../../../utils/constants';
-import { getCityMasterData, getCountryMasterData, getStateMasterData, getOrgRelationTypeMasterData,getOrganisationDetailsData } from '../../../../actions/comman/admin.action';
-import { getTowerMasterData, saveTowerMasterData, deleteTowerMasterData, getTowerMasterDataById} from '../../../../actions/tmc/admin.action';
+import { getCityMasterData, getCountryMasterData, getStateMasterData, getOrgRelationTypeMasterData, getOrganisationDetailsData } from '../../../../actions/comman/admin.action';
+import { getTowerMasterData, saveTowerMasterData, deleteTowerMasterData, getTowerMasterDataById } from '../../../../actions/tmc/admin.action';
 import style from '../../../../theme/app.scss';
 import ModalHeader from '../../../shared/ModalHeader';
 import Input from '../../../shared/InputBox';
@@ -54,7 +54,14 @@ class TowerAddEdit extends Wrapper {
 
     onValueChanged = key => event => {
         const existingTower = Object.assign({}, this.state.tower);
-        existingTower[key] = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
+        let selectedValue = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
+        if (key === "towerName") {
+            selectedValue = selectedValue.replace(' ', '-');// this.replaceJSX(selectedValue,' ','-');
+             existingTower[key] = selectedValue;
+        }
+        else {
+            existingTower[key] = selectedValue;
+        }
 
         this.setState({ tower: existingTower });
     };
@@ -64,10 +71,9 @@ class TowerAddEdit extends Wrapper {
         existingState[key] = SelectedValue;
         existingState["stateId"] = null;
         existingState["cityId"] = null;
-        if(!SelectedValue && SelectedValue ==='')
-        {
+        if (!SelectedValue && SelectedValue === '') {
             SelectedValue = 'No-Id';
-        }   
+        }
         this.props.getStateMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined, SelectedValue);
         this.props.getCityMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined, 'No-Id');
         this.setState({ tower: existingState });
@@ -85,7 +91,7 @@ class TowerAddEdit extends Wrapper {
         let SelectedValue = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
         existingState[key] = SelectedValue;
         existingState["orgDetailsId"] = '';
-        this.props.getOrganisationDetailsData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined, existingState);    
+        this.props.getOrganisationDetailsData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined, existingState);
         this.setState({ tower: existingState });
     };
 
@@ -163,7 +169,7 @@ class TowerAddEdit extends Wrapper {
 
 
     render() {
-        console.log("this.state.tower", this.state.tower);
+       // console.log("this.state.tower", this.state.tower);
         return (
             <div className={style.modal_dialog} style={{ width: '95%', maxHeight: '120vh', maxWidth: '80vw' }}>
                 {/* <ModalHeader
@@ -208,7 +214,7 @@ class TowerAddEdit extends Wrapper {
                                     }
                                 </SELECT>
                             </div>
-                            <Input label="Tower Name:" type='text' defaultValue={this.state.tower.towerName} onChange={this.onValueChanged('towerName')} />
+                            <Input label="Tower ID:" type='text' value={this.state.tower.towerName} onChange={this.onValueChanged('towerName')} />
                             <Input label="Site Name:" type='text' defaultValue={this.state.tower.siteName} onChange={this.onValueChanged('siteName')} />
                             <div style={{ padding: '10px', width: '100%' }}>
                                 <SpanLabelForDDl>Country</SpanLabelForDDl>
@@ -266,8 +272,8 @@ class TowerAddEdit extends Wrapper {
                                     }
                                 </SELECT>
                             </div>
-                            <Input label="Longitude:" type='number' defaultValue={this.state.tower.longitude} onChange={this.onValueChanged('longitude')} />
                             <Input label="Latitude:" type='number' defaultValue={this.state.tower.latitude} onChange={this.onValueChanged('latitude')} />
+                            <Input label="Longitude:" type='number' defaultValue={this.state.tower.longitude} onChange={this.onValueChanged('longitude')} />
 
 
                             {/* <Input
@@ -282,22 +288,22 @@ class TowerAddEdit extends Wrapper {
                 <br></br>
                 {/* container for save and cancel */}
                 <div style={{ display: 'flex', width: '200px', alignItems: 'left', justifyContent: 'left', margin: '10px 0px' }}>
-                    <button 
-                    style={{ width: '100px', marginRight: '10px' }}
-                    className={style.primary_btn} onClick={() => {
-                        console.log(this.state.tower);
-                        const validationText = validateInputs(this.state.tower, this.configs);
-                        if (validationText) {
-                            return alert(validationText);
-                        }
-                        setTimeout(() => {
-                            this.props.onSave(this.state.tower, this.props.index);
-                        }, 200);
+                    <button
+                        style={{ width: '100px', marginRight: '10px' }}
+                        className={style.primary_btn} onClick={() => {
+                            console.log(this.state.tower);
+                            const validationText = validateInputs(this.state.tower, this.configs);
+                            if (validationText) {
+                                return alert(validationText);
+                            }
+                            setTimeout(() => {
+                                this.props.onSave(this.state.tower, this.props.index);
+                            }, 200);
 
-                    }}>save</button>
-                    <button 
-                    style={{ width: '100px', marginRight: '10px' }}
-                    className={style.btn_danger} onClick={this.props.onCancel}>cancel</button>
+                        }}>save</button>
+                    <button
+                        style={{ width: '100px', marginRight: '10px' }}
+                        className={style.btn_danger} onClick={this.props.onCancel}>cancel</button>
                 </div>
             </div>);
     }
@@ -309,7 +315,7 @@ TowerAddEdit.propTypes = {
 };
 
 const mapStateToProps = state => {
-    const { organisations, organisation, citys, city, states, countrys, orgRelationTypes } = state.adminReducer; 
+    const { organisations, organisation, citys, city, states, countrys, orgRelationTypes } = state.adminReducer;
     return { organisations, organisation, citys, city, states, countrys, orgRelationTypes };
 }
 export default connect(mapStateToProps, { getTowerMasterData, saveTowerMasterData, deleteTowerMasterData, getTowerMasterDataById, getOrganisationDetailsData, getOrgRelationTypeMasterData, getCountryMasterData, getStateMasterData, getCityMasterData })(TowerAddEdit)

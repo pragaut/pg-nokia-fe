@@ -42,6 +42,16 @@ export class AppHeader extends Wrapper {
             WorkingLink: [ 
                 {
                     pathname: "/management",
+                    tab: "tower-active-status",
+                    pageName: 'Tower Active Status',
+                    url: "/management/tower-active-status",
+                    isVisible: true,
+                    ApplicableFor: 'Working',
+                    linkName: 'Home',
+                    roleCode: 'Management', 
+                },
+                {
+                    pathname: "/management",
                     tab: "tower-monitoring-details",
                     pageName: 'Tower Monitoring Details',
                     url: "/management/tower-monitoring-details",

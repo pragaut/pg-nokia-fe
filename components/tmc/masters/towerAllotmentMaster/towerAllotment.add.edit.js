@@ -74,7 +74,7 @@ class TowerAllotmentAddEdit extends Wrapper {
         this.props.getTowerAllotmentMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
         this.props.getOrganisationDetailsData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
         this.props.getTowerMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
-        this.props.getOrgRelationTypeMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
+        this.props.getOrgRelationTypeMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);         
     };
 
     UNSAFE_componentWillReceiveProps(nextProps) {
@@ -126,7 +126,8 @@ class TowerAllotmentAddEdit extends Wrapper {
 
 
     render() {
-        console.log("this.state.towerAllotment", this.state.towerAllotment);
+        // console.log("this.state.towerAllotment", this.state.towerAllotment);
+        // console.log("towers", this.state.towers);
         return (
             <div className={style.modal_dialog} style={{ width: '90%', maxHeight: '120vh', maxWidth: '80vw' }}>
                 {/* <ModalHeader
@@ -141,7 +142,7 @@ class TowerAllotmentAddEdit extends Wrapper {
                                 <SpanLabelForDDl>Organisation Relation Type</SpanLabelForDDl>
                                 <Gap h="5px" />
                                 <SELECT
-                                    value={this.state.towerAllotment.orgRelationTypeId} paddingLeft="10px" borderRadius="14px" height="51px"
+                                    value={this.state.towerAllotment && this.state.towerAllotment.orgName && this.state.towerAllotment.orgName.orgRelationTypeId} paddingLeft="10px" borderRadius="14px" height="51px"
                                     type="text" color="rgba(0,0,0,0.87)" borderColor="rgba(0,0,0,0.54)"
                                     style={{ backgroundColor: "transparent", border: "1px solid #ccc" }}
                                     onChange={this.onValueChangedOrgRelationType('orgRelationTypeId')}
@@ -172,7 +173,7 @@ class TowerAllotmentAddEdit extends Wrapper {
                                 </SELECT>
                             </div>
                             <div style={{ padding: '10px', width: '100%' }}>
-                                <SpanLabelForDDl>Tower Name</SpanLabelForDDl>
+                                <SpanLabelForDDl>Tower ID</SpanLabelForDDl>
                                 <Gap h="5px" />
                                 <SELECT
                                     value={this.state.towerAllotment.towerId} paddingLeft="10px" borderRadius="14px" height="51px"

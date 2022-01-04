@@ -27,6 +27,7 @@ import TowerMonitoringHistoryDetails from '../components/tmc/working/towerMonito
 import DeviceMappingDetails from '../components/tmc/working/deviceMapping/index';
 import TowerNotificationDetails from '../components/tmc/working/towerNotifications/index';
 import ClosedTowerNotificationDetails from '../components/tmc/working/towerNotifications/closedTowerNotification';
+import TowerActiveStatus from '../components/tmc/working/map/index';
 const Image = '../static/'
 const window = require('global/window');
 const AdminMain = styled.div`
@@ -84,9 +85,9 @@ export class Index extends Wrapper {
         const userRole = this.getLoggedUserRole();
         const LoggedUserRole = userRole && JSON.parse(userRole);
         const RoleName = LoggedUserRole && LoggedUserRole.roleName;
-        console.log("role--name ---", RoleName)
+       // console.log("role--name ---", RoleName)
         let AuthorizedUser = this.checkIsAuthorizedUser(RoleName, "user-page:visit", null);
-        console.log("Authorized User : ", AuthorizedUser);
+       /// console.log("Authorized User : ", AuthorizedUser);
         if (!AuthorizedUser) {
             this._logout();
             //this.unAuthorizedAccess();
@@ -183,7 +184,12 @@ export class Index extends Wrapper {
                             <ModalHeader
                                 heading={router && router.query && router.query.tab !== "" && router.query.MasterName} //"Group Master"
                             />
-                            {( (ActiveTabname && ActiveTabname === "tower-monitoring-details")) && (
+                            {router && ((router.query && router.query.tab === "tower-active-status") || (!router || !router.query ||  router.query.tab === undefined === '' || router.query.tab === undefined))&& (
+                                <div>
+                                    <TowerActiveStatus />
+                                </div>
+                            )}
+                            {((ActiveTabname && ActiveTabname === "tower-monitoring-details")) && (
                                 <div>
                                     <TowerMonitoringDetails />
                                 </div>
@@ -212,7 +218,7 @@ export class Index extends Wrapper {
                                 <div>
                                     <ChangePassword />
                                 </div>
-                            )}
+                            )} 
                         </ContentWapper>
                     </AdminMain>
                 </div>

@@ -59,17 +59,22 @@ class RoleAddEdit extends Wrapper {
     };
 
     componentDidMount() {
-        const state = {};
+        const role = this.state.role;
         this.props.getRoleMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
         this.props.getModuleMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
-        this.setState({
-            ...state
-        }, () => {
-            // console.log("state", this.state)
-        });
+        if (!role || !role.isMappingWithDeviceRequired) {
+            const existingRole = Object.assign({}, this.state.role);
+            existingRole["isMappingWithDeviceRequired"] = false;
+            this.setState({ role: existingRole });
+        }
     };
 
     UNSAFE_componentWillReceiveProps(nextProps) {
+        if (nextProps.modules !== null && nextProps.modules !== undefined && nextProps.modules !== this.state.modules) {
+            this.setState({
+                modules: nextProps.modules
+            })
+        }
         const storeInState = (data, key) => {
             // time to store
             if (!data) return;
@@ -78,16 +83,7 @@ class RoleAddEdit extends Wrapper {
 
             this.setState({ ...state });
         }
-    };
-
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.modules !== null && nextProps.modules !== undefined && nextProps.modules !== this.state.modules) {
-            this.setState({
-                modules: nextProps.modules
-            })
-        }
-    }
-
+    }; 
     onFileChange = event => {
         if (event.target.files && event.target.files[0]) {
             let img = event.target.files[0];
@@ -138,6 +134,12 @@ class RoleAddEdit extends Wrapper {
                             <Input label="Role Name:" type='text' defaultValue={this.state.role.roleName} onChange={this.onValueChanged('roleName')} />
                             <Input label="Order:" type='number' defaultValue={this.state.role.roleOrder} onChange={this.onValueChanged('roleOrder')} />
                             <Input label="DashBoard URL:" type='text' defaultValue={this.state.role.dashboardUrl} onChange={this.onValueChanged('dashboardUrl')} />
+                            <div style={{ padding: '10px 10px 20px 10px', width: '100%', display: 'flex' }}>
+                                <input type="checkbox" value="true" checked={this.state.role.isMappingWithDeviceRequired} onChange={this.onValueChanged('isMappingWithDeviceRequired')} />
+                                <SpanLabelForDDl>Is Mapping With Device Required</SpanLabelForDDl>
+
+                                {/* <input type="radio" value="false" onChange={this.onValueRemarksRequired('isRemarksRequired')} name="gender" checked={isYes}/> Yes */}
+                            </div>
                         </div>
 
 

@@ -38,6 +38,21 @@ const initialState = {
     towerMonitoringSubDetail: undefined,
     towerMonitoringSubDetails: undefined,
     towerMonitoringSubDetailRecordsCount: 0,
+
+    deviceMappingDetail: actions.DEVICEMAPPINGDETAILS_INIT,
+    deviceMappingDetails: undefined,
+    deviceMappingDetailActiontype: undefined,
+    deviceMappingDetailRecordsCount: 0,
+
+    towerNotificationDetail: actions.TOWERNOTIFICATIONDETAILS_INIT,
+    towerNotificationDetails: undefined,
+    towerNotificationDetailActiontype: undefined,
+    towerNotificationDetailRecordsCount: 0,
+
+    towerActiveDetail: actions.TOWERACTIVESTATUS_INIT,
+    towerActiveDetails: undefined,
+    towerActiveDetailActiontype: undefined,
+    towerActiveDetailRecordsCount: 0,
 };
 
 
@@ -214,6 +229,16 @@ const workingReducer = (state, action) => {
                 towerNotificationDetailActiontype: action.type,
                 towerNotificationDetailRecordsCount: state.recordsCount,
             };
+
+            case actions.TOWERACTIVESTATUS_LIST_SUCCESS:
+                return {
+                towerActiveDetail: state.towerActiveDetail,
+                towerActiveDetails: action.data,
+                towerActiveDetailActiontype: action.type,
+                towerActiveDetailRecordsCount: action.recordsCount,
+
+                type: action.type,
+            }; 
         //#endregion
 
 
@@ -267,6 +292,11 @@ const workingReducer = (state, action) => {
                 towerNotificationDetails: state.towerNotificationDetails,
                 towerNotificationDetailActiontype: state.towerNotificationDetailActiontype,
                 towerNotificationDetailRecordsCount: state.towerNotificationDetailRecordsCount,
+
+                towerActiveDetail: state.towerActiveDetail,
+                towerActiveDetails: state.towerActiveDetails,
+                towerActiveDetailActiontype: state.towerActiveDetailActiontype,
+                towerActiveDetailRecordsCount: state.towerActiveDetailRecordsCount,
 
             };
     }

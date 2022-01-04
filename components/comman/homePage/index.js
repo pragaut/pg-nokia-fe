@@ -36,7 +36,7 @@ class banner extends Wrapper {
                             lineheight="1.71"
                         >
                             &nbsp;
-                  <br />
+                            <br />
                             <Gap h="180px" />
                         </CommonStyle.TextDiv>
                     </CommonStyle.MainDiv>
@@ -50,7 +50,7 @@ class banner extends Wrapper {
             </div>
         );
     }
-}   
+}
 
 const mapStatetoProps = state => {
     const width = state.windowReducer.width;

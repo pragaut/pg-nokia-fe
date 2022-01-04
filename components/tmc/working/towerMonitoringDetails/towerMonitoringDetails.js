@@ -37,18 +37,20 @@ class TowerMonitoringDetailedIndex extends Wrapper {
         this.props.getTowerMonitoringSubDetails(filterValue);
         this.props.getTowerNotificationDetails(filterValue, undefined, undefined, undefined);
 
-        // setInterval(() => {
-        //     counter = counter + 1;
-        //     console.log("---------counter---------", counter);
-        //     let filterValuenew = this.state.parameterWithValues;
-        //     if (this.state.isViewDetailsPageVisible === true) {
-        //         this.props.getDeviceBatteryStatus(filterValuenew);
-        //         this.props.getDeviceStatusDetails(filterValuenew);
-        //         this.props.getNetworkConnectivityStatuDetails(filterValuenew);
-        //         this.props.getTowerMonitoringSubDetails(filterValuenew);
-        //         this.props.getTowerNotificationDetails(filterValuenew, undefined, undefined, undefined);
-        //     }
-        // }, 60000);
+        setInterval(() => {
+            counter = counter + 1;
+            this.refreshData()
+        }, 30000);
+    }
+    refreshData = () => {
+        if (this.state.isViewDetailsPageVisible === true) {
+            let filterValuenew = this.state.parameterWithValues;
+            this.props.getDeviceBatteryStatus(filterValuenew);
+            this.props.getDeviceStatusDetails(filterValuenew);
+            this.props.getNetworkConnectivityStatuDetails(filterValuenew);
+            this.props.getTowerMonitoringSubDetails(filterValuenew);
+            this.props.getTowerNotificationDetails(filterValuenew, undefined, undefined, undefined);
+        }
     }
     UNSAFE_componentWillReceiveProps(nextProps) {
         if (nextProps && nextProps.deviceBatteryStatuss && nextProps.deviceBatteryStatuss !== this.state.deviceBatteryStatuss) {
@@ -117,11 +119,25 @@ class TowerMonitoringDetailedIndex extends Wrapper {
                             border="1px solid blue"
                             hoverColor="blue"
                             bgChangeHover="#fff"
+                            style={{marginRight:'10px'}}
                             onClick={() => this.props.onClickBackButton()}
                         >
                             Back
                     </Button>
-                    </CommonStyle.MainDiv> 
+                        <Button
+                            width="50px"
+                            height="30px"
+                            borderRadius="5px"
+                            bgColor="blue"
+                            lineheight="1"
+                            border="1px solid blue"
+                            hoverColor="blue"
+                            bgChangeHover="#fff"
+                            onClick={() => this.refreshData()}
+                        >
+                          <i class="fa fa-refresh" aria-hidden="true"></i>
+                    </Button>
+                    </CommonStyle.MainDiv>
                     <CommonStyle.MainDiv
                         fontsize={"18px"}
                         fontweight={"bold"}
@@ -140,14 +156,14 @@ class TowerMonitoringDetailedIndex extends Wrapper {
                         justifycontent={'flex-end'}
                         width={'40%'}
                     >
-                      </CommonStyle.MainDiv>
+                    </CommonStyle.MainDiv>
                 </CommonStyle.MainDiv>
                 <CommonStyle.MainDiv
                     padding="0px 0px"
                     flexdirection="row"
                     justifycontent={"space-between"}
                     alignitems={"baseline"}
-                > 
+                >
                     <CommonStyle.MainDiv
                         padding="0px 0px"
                         flexdirection="row"
@@ -166,7 +182,7 @@ class TowerMonitoringDetailedIndex extends Wrapper {
                         color={"#fff"}
                         bgColor={"#0d3e99"}
                     >
-                      <b>Work Start Time - </b>    {towerMonitoringDetail && towerMonitoringDetail.startDateTime && towerMonitoringDetail.startDateTime !== null ? moment(towerMonitoringDetail.startDateTime).format("DD-MMM-YYYY hh:mm:ss a") : ''}
+                        <b>Work Start Time - </b>    {towerMonitoringDetail && towerMonitoringDetail.startDateTime && towerMonitoringDetail.startDateTime !== null ? moment(towerMonitoringDetail.startDateTime).format("DD-MMM-YYYY | hh:mm:ss a") : ''}
                     </CommonStyle.MainDiv>
                 </CommonStyle.MainDiv>
 

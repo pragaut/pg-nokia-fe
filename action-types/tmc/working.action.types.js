@@ -16,6 +16,10 @@ export const TOWERNOTIFICATIONDETAILS_SAVE_REQUESTED = 'modules/towerNotificatio
 export const TOWERNOTIFICATIONDETAILS_SAVE_SUCCESS = 'modules/towerNotificationDetails/TOWERNOTIFICATIONDETAILS_SAVE_SUCCESS';
 export const TOWERNOTIFICATIONDETAILS_SAVE_ERROR = 'modules/towerNotificationDetails/TOWERNOTIFICATIONDETAILS_SAVE_ERROR';
 
+export const TOWERACTIVESTATUS_INIT = 'modules/towerActiveStatusDetails/TOWERACTIVESTATUS_INIT';
+export const TOWERACTIVESTATUS_LIST_REQUESTED = 'modules/towerActiveStatusDetails/TOWERACTIVESTATUS_LIST_REQUESTED';
+export const TOWERACTIVESTATUS_LIST_SUCCESS = 'modules/towerActiveStatusDetails/TOWERACTIVESTATUS_LIST_SUCCESS';
+
 //#endregion
 //#region  Tower Monitoring Details
 

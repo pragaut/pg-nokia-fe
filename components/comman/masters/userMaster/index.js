@@ -40,59 +40,59 @@ class Users extends Wrapper {
 
     updateStateAfterStateUpdate = () => {
         let columns = [
-            {
-                Header: 'Action',
-                accessor: 'id',
-                id: 'id',
-                show: true,
-                minWidth: 180,
-                Cell: propss => (
-                    <React.Fragment>
-                        <div className="warning width60px" style={{ marginRight: '10px' }} onClick={() => this.onClickEdit(propss.original)}>
-                            Edit
-                            </div><br></br>
-                        <div className="primary width60px" style={{ marginRight: '10px' }} onClick={() => this.onclickDeleteUser(propss.original.id)}>
-                            Delete
+                {
+                    Header: 'Action',
+                    accessor: 'id',
+                    id: 'id',
+                    show: true,
+                    minWidth: 130,
+                    Cell: propss => (
+                        <React.Fragment>
+                            <div className="warning width60px" style={{ marginRight: '5px' }} onClick={() => this.onClickEdit(propss.original)}>
+                                Edit
                             </div>
-                    </React.Fragment>
-                ),
-                sortable: false,
-                filterable: false
-            },
-            {
-                Header: 'Sr#',
-                minWidth: 50,
-                id: 'srnumber',
-                show: true,
-                Cell: row => (
-                    <React.Fragment>
-                        {row.index + 1}
-                    </React.Fragment>
-                ),
-                sortable: true,
-                filterable: false
-            },
-            {
-                Header: 'Organisation',
-                accessor: d => `${d.orgName}`,
-                id: 'org Name',
-                minWidth: 200,
-                show: true
-            },
-            {
-                Header: 'User Name',
-                accessor: d => `${d.userName}`,
-                id: 'userName',
-                minWidth: 200,
-                show: true
-            },
-            {
-                Header: 'Assigned Roles',
-                accessor: 'MultiRoleNames',
-                id: 'MultiRoleNames',
-                minWidth: 200,
-                show: true,
-            }
+                            <div className="primary width60px" style={{ marginRight: '3px' }} onClick={() => this.onclickDeleteUser(propss.original.id)}>
+                                Delete
+                            </div>     
+                </React.Fragment>
+                    ),
+                    sortable: false,
+                    filterable: false
+                },
+                {
+                    Header: 'Sr#',
+                    minWidth: 50,
+                    id: 'srnumber',
+                    show: true,
+                    Cell: row => (
+                        <React.Fragment>
+                            {row.index + 1}
+                        </React.Fragment>
+                    ),
+                    sortable: true,
+                    filterable: false
+                },
+                {
+                    Header: 'Organisation',
+                    accessor: d => `${d.orgName}`,
+                    id: 'org Name',
+                    minWidth: 200,
+                    show: true
+                },
+                {
+                    Header: 'User Name',
+                    accessor: d => `${d.userName}`,
+                    id: 'userName',
+                    minWidth: 200,
+                    show: true
+                },
+                {
+                    Header: 'Assigned Roles',
+                    accessor: 'MultiRoleNames',
+                    id: 'MultiRoleNames',
+                    minWidth: 200,
+                    show: true,
+                }
         ]
         this.setState({ columns: columns });
     }

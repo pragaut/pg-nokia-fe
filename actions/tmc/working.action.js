@@ -3,7 +3,8 @@ import * as service from '../../services/data.service';
 import * as workingTypes from '../../action-types/tmc/working.action.types';
 import * as util from '../../utils'
 import config from '../../config';
-import * as errorTypes from '../../action-types/comman/error.action.types';
+import * as errorTypes from '../../action-types/comman/error.action.types'; 
+import * as sessionHelper from '../../utils/session.helper';
 
 
 /**
@@ -30,7 +31,12 @@ export const getDeviceMappingDetails = (filters, userId, pageIndex, rowsToReturn
     dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null)
     try {
         let pageIndex = 0;
-
+        const user = sessionHelper.getLoggedUser();
+        const userRole = sessionHelper.getLoggedUserRole_JSONConverted();
+        // console.log("----------current User ---- ",user);
+        //console.log("----------current userRole ---- ",userRole);
+        let orgDetailsId = user && user.orgDetailsId;
+        let roleMasterId = userRole && userRole.id;
         //console.log("ActionPlan filters : ", filters);
         let deviceRegistrationDetailId = filters && filters.deviceRegistrationDetailId ? filters.deviceRegistrationDetailId : '';
         let towerId = filters && filters.towerId ? filters.towerId : '';
@@ -44,7 +50,12 @@ export const getDeviceMappingDetails = (filters, userId, pageIndex, rowsToReturn
         if (towerId) {
             url = url + `&towerId=${towerId}`;
         }
-
+        if (orgDetailsId) {
+            url = url + `&orgDetailsId=${orgDetailsId}`;
+        }
+        if (roleMasterId) {
+            url = url + `&roleMasterId=${roleMasterId}`;
+        }
         const data = await service.get(url, true);
         console.log("Device Mapping Details:  ", data);
 
@@ -66,18 +77,25 @@ export const getDeviceMappingDetails = (filters, userId, pageIndex, rowsToReturn
 
 //#region  Tower Notification Details
 export const getTowerNotificationDetails = (filters, userId, pageIndex, rowsToReturn) => async dispatch => {
-   // dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null)
+    // dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null)
     try {
         let pageIndex = 0;
 
         //console.log("ActionPlan filters : ", filters);
         //console.log("filters : >>", filters);
+        const user = sessionHelper.getLoggedUser();
+        const userRole = sessionHelper.getLoggedUserRole_JSONConverted();
+        // console.log("----------current User ---- ",user);
+        //console.log("----------current userRole ---- ",userRole);
+        let orgDetailsId = user && user.orgDetailsId;
+        let roleMasterId = userRole && userRole.id;
+
         let towerMonitoringSubDetailId = filters && filters.towerMonitoringSubDetailId ? filters.towerMonitoringSubDetailId : '';
         let alarmTypeId = filters && filters.alarmTypeId ? filters.alarmTypeId : '';
         let deviceRegistrationDetailId = filters && filters.deviceRegistrationDetailId ? filters.deviceRegistrationDetailId : '';
         let isClosed = filters && filters.isClosed ? filters.isClosed : '';
         let towerMonitoringDetailId = filters && filters.towerMonitoringDetailId ? filters.towerMonitoringDetailId : '';
-       
+
         let url = config.NOKIA_URL + `nokia/nokiaworking/towerNotificationDetails?pageIndex=${pageIndex}`;
 
 
@@ -92,12 +110,17 @@ export const getTowerNotificationDetails = (filters, userId, pageIndex, rowsToRe
         }
         if (deviceRegistrationDetailId) {
             url = url + `&deviceRegistrationDetailId=${deviceRegistrationDetailId}`;
-        } 
-        if (isClosed) { 
+        }
+        if (orgDetailsId) {
+            url = url + `&orgDetailsId=${orgDetailsId}`;
+        }
+        if (roleMasterId) {
+            url = url + `&roleMasterId=${roleMasterId}`;
+        }
+        if (isClosed) {
             url = url + `&isClosed=${isClosed}`;
-        } 
-        else
-        {
+        }
+        else {
             url = url + `&isClosed=${0}`;
         }
         //console.log("url : 1>>>>>>", url);
@@ -105,20 +128,19 @@ export const getTowerNotificationDetails = (filters, userId, pageIndex, rowsToRe
         //console.log("Tower Notification Details:  ", data);
 
         if (data && !data.errorMessage) {
-          //  dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+            //  dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
             dispatchAction(dispatch, workingTypes.TOWERNOTIFICATIONDETAILS_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
         }
         else {
-           // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
             dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Error in getting details'), null, null);
         }
     }
     catch (error) {
-      //  dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        //  dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
         dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
     }
 };
-
 export const updateTowerNotificationDetails = towerNotificationDetails => async dispatch => {
     //  dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null);
     try {
@@ -148,9 +170,40 @@ export const updateTowerNotificationDetails = towerNotificationDetails => async 
         dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
     }
 };
+export const getTowerActiveDetails = (filters, userId, pageIndex, rowsToReturn) => async dispatch => {
+    // dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null)
+    try {
+        let pageIndex = 0;
+        const user = sessionHelper.getLoggedUser();
+        const userRole = sessionHelper.getLoggedUserRole_JSONConverted();
+        // console.log("----------current User ---- ",user);
+        //console.log("----------current userRole ---- ",userRole);
+        let orgDetailsId = user && user.orgDetailsId;
+        let roleMasterId = userRole && userRole.id;
 
+        let url = config.NOKIA_URL + `nokia/nokiaworking/towerActiveStatusDetails?pageIndex=${pageIndex}`;
+        if (orgDetailsId) {
+            url = url + `&orgDetailsId=${orgDetailsId}`;
+        }
+        if (roleMasterId) {
+            url = url + `&roleMasterId=${roleMasterId}`;
+        }
+        const data = await service.get(url, true);
+        if (data && !data.errorMessage) {
+            //  dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+            dispatchAction(dispatch, workingTypes.TOWERACTIVESTATUS_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
+        }
+        else {
+            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Error in getting details'), null, null);
+        }
+    }
+    catch (error) {
+        //  dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+    }
+};
 //#endregion
-
 
 //#region  Device Battery Status
 export const getDeviceBatteryStatus = (filters) => async dispatch => {
@@ -219,6 +272,13 @@ export const getDeviceBatteryStatusLog = (filters) => async dispatch => {
 export const getTowerMonitoringDetails = (filters) => async dispatch => {
     //  dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null)
     try {
+
+        const user = sessionHelper.getLoggedUser();
+        const userRole = sessionHelper.getLoggedUserRole_JSONConverted();
+        //console.log("----------current User ---- ",user);
+        //console.log("----------current userRole ---- ",userRole);
+        let orgDetailsId = user && user.orgDetailsId;
+        let roleMasterId = userRole && userRole.id;
         let pageIndex = 0;
         let towerMonitoringDetailId = filters && filters.towerMonitoringDetailId ? filters.towerMonitoringDetailId : '';
         let towerMasterId = filters && filters.towerMasterId && filters.towerMasterId !== null && filters.towerMasterId !== '' && filters.towerMasterId !== '-1' ? filters.towerMasterId : '';
@@ -227,8 +287,9 @@ export const getTowerMonitoringDetails = (filters) => async dispatch => {
         let macAddress = filters && filters.macAddress ? filters.macAddress : '';
         let uniqueId = filters && filters.uniqueId ? filters.uniqueId : '';
         let isOnlyTodayDataRequired = filters && filters.isOnlyTodayDataRequired ? filters.isOnlyTodayDataRequired : '0';
-        let fromDate = filters && filters.fromDate  && filters.fromDate  !== null ? filters.fromDate : null;
-        let toDate = filters && filters.toDate  && filters.toDate !== null ? filters.toDate : null;
+        let isOnlyLiveTMCDataRequired = filters && filters.isOnlyLiveTMCDataRequired ? filters.isOnlyLiveTMCDataRequired : '0';
+        let fromDate = filters && filters.fromDate && filters.fromDate !== null ? filters.fromDate : null;
+        let toDate = filters && filters.toDate && filters.toDate !== null ? filters.toDate : null;
         let url = config.NOKIA_URL + `nokia/nokiaworking/towerMonitoringDetails?pageIndex=${pageIndex}`;
 
         if (towerMonitoringDetailId) {
@@ -249,6 +310,9 @@ export const getTowerMonitoringDetails = (filters) => async dispatch => {
         if (isOnlyTodayDataRequired) {
             url = url + `&isOnlyTodayDataRequired=${isOnlyTodayDataRequired}`;
         }
+        if (isOnlyLiveTMCDataRequired) {
+            url = url + `&isOnlyLiveTMCDataRequired=${isOnlyLiveTMCDataRequired}`;
+        }
         if (macAddress) {
             url = url + `&macAddress=${macAddress}`;
         }
@@ -257,6 +321,12 @@ export const getTowerMonitoringDetails = (filters) => async dispatch => {
         }
         if (toDate) {
             url = url + `&toDate=${toDate}`;
+        }
+        if (orgDetailsId) {
+            url = url + `&orgDetailsId=${orgDetailsId}`;
+        }
+        if (roleMasterId) {
+            url = url + `&roleMasterId=${roleMasterId}`;
         }
         const data = await service.get(url, true);
         if (data && !data.errorMessage) {
@@ -284,6 +354,8 @@ export const getDeviceStatusDetails = (filters) => async dispatch => {
         let deviceStatusDetailId = filters && filters.deviceStatusDetailId ? filters.deviceStatusDetailId : '';
         let deviceRegistrationDetailId = filters && filters.deviceRegistrationDetailId ? filters.deviceRegistrationDetailId : '';
         let macAddress = filters && filters.macAddress ? filters.macAddress : '';
+        let towerMonitoringDetailId = filters && filters.towerMonitoringDetailId ? filters.towerMonitoringDetailId : '';
+
         let url = config.NOKIA_URL + `nokia/nokiaworking/deviceStatusDetails?pageIndex=${pageIndex}`;
 
         if (deviceStatusDetailId) {
@@ -294,6 +366,9 @@ export const getDeviceStatusDetails = (filters) => async dispatch => {
         }
         if (macAddress) {
             url = url + `&macAddress=${macAddress}`;
+        }
+        if (towerMonitoringDetailId) {
+            url = url + `&towerMonitoringDetailId=${towerMonitoringDetailId}`;
         }
         const data = await service.get(url, true);
         if (data && !data.errorMessage) {
