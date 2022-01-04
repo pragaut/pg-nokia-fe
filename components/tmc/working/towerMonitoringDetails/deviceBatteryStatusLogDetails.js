@@ -12,8 +12,8 @@ class DeviceBatteryStatusDetails extends Wrapper {
         super(props);
         this.state = {
             deviceBatteryStatusLogs: props.deviceBatteryStatusLogs ? props.deviceBatteryStatusLogs : [],
-            columns:[]
-       
+            columns: []
+
         }
     };
     functionToSetColumns = () => {
@@ -30,39 +30,42 @@ class DeviceBatteryStatusDetails extends Wrapper {
                 ),
                 sortable: true,
                 filterable: false
-            }, 
+            },
             {
                 Header: 'Main Device',
                 accessor: 'mainDeviceBattery',
                 id: 'mainDeviceBattery',
                 Cell: singleData => (
                     <React.Fragment>
-                       {singleData.original && singleData.original.mainDeviceBattery > 75
+                        {singleData.original && singleData.original.mainDeviceBattery === 100
+                            ?
+                            <div className="divClassFlex">
+                                <i className="fa fa-battery-full" style={{ fontSize: '24px', color: 'green' }}></i> {singleData.original.mainDeviceBattery}%
+                            </div>
+                            :
+                            <>
+                                {singleData.original && singleData.original.mainDeviceBattery === 70
                                     ?
                                     <div className="divClassFlex">
-                                        <i className="fa fa-battery-full" style={{ fontSize: '24px', color: 'green' }}></i> 100%
+                                        <i className="fa fa-battery-three-quarters" style={{ fontSize: '24px', color: 'blue' }}></i>  {singleData.original.mainDeviceBattery}%
+
                                     </div>
                                     :
                                     <>
-                                        {singleData.original && singleData.original.mainDeviceBattery <= 75 && singleData.original.mainDeviceBattery > 50
-                                            ?
-                                            <div className="divClassFlex">
-                                                <i className="fa fa-battery-three-quarters" style={{ fontSize: '24px', color: 'green' }}></i>  75%
-
-                                            </div>
-                                            :
-                                            <>
-                                                {singleData.original && singleData.original.mainDeviceBattery <= 50 && singleData.original.mainDeviceBattery > 25
+                                        <div className="divClassFlex">
+                                            <i className="fa fa-battery-quarter" style={{ fontSize: '24px', color: 'red' }}></i> {singleData.original.mainDeviceBattery}%
+                                        </div>
+                                        {/* {singleData.original && singleData.original.mainDeviceBattery <= 50 && singleData.original.mainDeviceBattery > 25
                                                     ?
                                                     <div className="divClassFlex">
-                                                        <i className="fa fa-battery-half" style={{ fontSize: '24px', color: '#F0851B' }}></i>  50%
+                                                        <i className="fa fa-battery-half" style={{ fontSize: '24px', color: 'blue' }}></i>  {singleData.original.mainDeviceBattery}%
                                                     </div>
                                                     :
                                                     <>
                                                         {singleData.original && singleData.original.mainDeviceBattery <= 25 && singleData.original.mainDeviceBattery > 0
                                                             ?
                                                             <div className="divClassFlex">
-                                                                <i className="fa fa-battery-quarter" style={{ fontSize: '24px', color: 'red' }}></i> 25%
+                                                                <i className="fa fa-battery-quarter" style={{ fontSize: '24px', color: 'red' }}></i> {singleData.original.mainDeviceBattery}%
                                                             </div>
                                                             :
                                                             <>
@@ -72,12 +75,12 @@ class DeviceBatteryStatusDetails extends Wrapper {
                                                             </>
                                                         }
                                                     </>
-                                                }
-                                            </>
-                                        }
+                                                } */}
                                     </>
-
                                 }
+                            </>
+
+                        }
                     </React.Fragment>
                 ),
                 show: true,
@@ -88,47 +91,47 @@ class DeviceBatteryStatusDetails extends Wrapper {
                 id: 'child1DeviceBattery',
                 Cell: singleData => (
                     <React.Fragment>
-                       {singleData.original && singleData.original.child1DeviceBattery > 75
+                        {singleData.original && singleData.original.child1DeviceBattery > 75
+                            ?
+                            <div className="divClassFlex">
+                                <i className="fa fa-battery-full" style={{ fontSize: '24px', color: 'green' }}></i> 100%
+                            </div>
+                            :
+                            <>
+                                {singleData.original && singleData.original.child1DeviceBattery <= 75 && singleData.original.child1DeviceBattery > 50
                                     ?
                                     <div className="divClassFlex">
-                                        <i className="fa fa-battery-full" style={{ fontSize: '24px', color: 'green' }}></i> 100%
+                                        <i className="fa fa-battery-three-quarters" style={{ fontSize: '24px', color: 'green' }}></i>  75%
+
                                     </div>
                                     :
                                     <>
-                                        {singleData.original && singleData.original.child1DeviceBattery <= 75 && singleData.original.child1DeviceBattery > 50
+                                        {singleData.original && singleData.original.child1DeviceBattery <= 50 && singleData.original.child1DeviceBattery > 25
                                             ?
                                             <div className="divClassFlex">
-                                                <i className="fa fa-battery-three-quarters" style={{ fontSize: '24px', color: 'green' }}></i>  75%
-
+                                                <i className="fa fa-battery-half" style={{ fontSize: '24px', color: '#F0851B' }}></i>  50%
                                             </div>
                                             :
                                             <>
-                                                {singleData.original && singleData.original.child1DeviceBattery <= 50 && singleData.original.child1DeviceBattery > 25
+                                                {singleData.original && singleData.original.child1DeviceBattery <= 25 && singleData.original.child1DeviceBattery > 0
                                                     ?
                                                     <div className="divClassFlex">
-                                                        <i className="fa fa-battery-half" style={{ fontSize: '24px', color: '#F0851B' }}></i>  50%
+                                                        <i className="fa fa-battery-quarter" style={{ fontSize: '24px', color: 'red' }}></i> 25%
                                                     </div>
                                                     :
                                                     <>
-                                                        {singleData.original && singleData.original.child1DeviceBattery <= 25 && singleData.original.child1DeviceBattery > 0
-                                                            ?
-                                                            <div className="divClassFlex">
-                                                                <i className="fa fa-battery-quarter" style={{ fontSize: '24px', color: 'red' }}></i> 25%
-                                                            </div>
-                                                            :
-                                                            <>
-                                                                <div className="divClassFlex">
-                                                                    <i className="fa fa-battery-0" style={{ fontSize: '24px' }}></i> 0%
-                                                                </div>
-                                                            </>
-                                                        }
+                                                        <div className="divClassFlex">
+                                                            <i className="fa fa-battery-0" style={{ fontSize: '24px' }}></i> 0%
+                                                        </div>
                                                     </>
                                                 }
                                             </>
                                         }
                                     </>
-
                                 }
+                            </>
+
+                        }
                     </React.Fragment>
                 ),
                 show: true,
@@ -139,55 +142,55 @@ class DeviceBatteryStatusDetails extends Wrapper {
                 id: 'child2DeviceBattery',
                 Cell: singleData => (
                     <React.Fragment>
-                       {singleData.original && singleData.original.child2DeviceBattery > 75
+                        {singleData.original && singleData.original.child2DeviceBattery > 75
+                            ?
+                            <div className="divClassFlex">
+                                <i className="fa fa-battery-full" style={{ fontSize: '24px', color: 'green' }}></i> 100%
+                            </div>
+                            :
+                            <>
+                                {singleData.original && singleData.original.child2DeviceBattery <= 75 && singleData.original.child2DeviceBattery > 50
                                     ?
                                     <div className="divClassFlex">
-                                        <i className="fa fa-battery-full" style={{ fontSize: '24px', color: 'green' }}></i> 100%
+                                        <i className="fa fa-battery-three-quarters" style={{ fontSize: '24px', color: 'green' }}></i>  75%
                                     </div>
                                     :
                                     <>
-                                        {singleData.original && singleData.original.child2DeviceBattery <= 75 && singleData.original.child2DeviceBattery > 50
+                                        {singleData.original && singleData.original.child2DeviceBattery <= 50 && singleData.original.child2DeviceBattery > 25
                                             ?
                                             <div className="divClassFlex">
-                                                <i className="fa fa-battery-three-quarters" style={{ fontSize: '24px', color: 'green' }}></i>  75%
+                                                <i className="fa fa-battery-half" style={{ fontSize: '24px', color: '#F0851B' }}></i>  50%
                                             </div>
                                             :
                                             <>
-                                                {singleData.original && singleData.original.child2DeviceBattery <= 50 && singleData.original.child2DeviceBattery > 25
+                                                {singleData.original && singleData.original.child2DeviceBattery <= 25 && singleData.original.child2DeviceBattery > 0
                                                     ?
                                                     <div className="divClassFlex">
-                                                        <i className="fa fa-battery-half" style={{ fontSize: '24px', color: '#F0851B' }}></i>  50%
+                                                        <i className="fa fa-battery-quarter" style={{ fontSize: '24px', color: 'red' }}></i> 25%
                                                     </div>
                                                     :
                                                     <>
-                                                        {singleData.original && singleData.original.child2DeviceBattery <= 25 && singleData.original.child2DeviceBattery > 0
-                                                            ?
-                                                            <div className="divClassFlex">
-                                                                <i className="fa fa-battery-quarter" style={{ fontSize: '24px', color: 'red' }}></i> 25%
-                                                            </div>
-                                                            :
-                                                            <>
-                                                                <div className="divClassFlex">
-                                                                    <i className="fa fa-battery-0" style={{ fontSize: '24px' }}></i> 0%
-                                                                </div>
-                                                            </>
-                                                        }
+                                                        <div className="divClassFlex">
+                                                            <i className="fa fa-battery-0" style={{ fontSize: '24px' }}></i> 0%
+                                                        </div>
                                                     </>
                                                 }
                                             </>
                                         }
                                     </>
                                 }
+                            </>
+                        }
                     </React.Fragment>
                 ),
                 show: true,
-            }, 
+            },
             {
-                Header: 'Updated At', 
+                Header: 'Updated At',
                 id: 'createdOn',
                 accessor: d => `${d.createdOn && d.createdOn !== null ? moment(d.createdOn).format("DD-MMM-YYYY hh:mm:ss a") : ''} `,
-                 show: true,
-            }, 
+                show: true,
+            },
         ]
         this.setState({ columns: columns });
     }
@@ -213,7 +216,7 @@ class DeviceBatteryStatusDetails extends Wrapper {
         });
     }
     render() {
-        const { deviceBatteryStatusLogs ,columns} = this.state;
+        const { deviceBatteryStatusLogs, columns } = this.state;
         return (
             <CommonStyle.MainDiv
                 padding="10px 0px"
