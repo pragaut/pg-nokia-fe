@@ -44,7 +44,8 @@ export class AppHeader extends Wrapper {
                     pathname: "/management",
                     tab: "tower-active-status",
                     pageName: 'Tower Active Status',
-                    url: "/management/tower-active-status",
+                    url: "/management/tower-active-status", 
+                    activeTabName: "tower-active-status",
                     isVisible: true,
                     ApplicableFor: 'Working',
                     linkName: 'Home',
@@ -55,6 +56,7 @@ export class AppHeader extends Wrapper {
                     tab: "tower-monitoring-details",
                     pageName: 'Tower Monitoring Details',
                     url: "/management/tower-monitoring-details",
+                    activeTabName: "tower-monitoring-details",
                     isVisible: true,
                     ApplicableFor: 'Working',
                     linkName: 'TMC Details',
@@ -65,6 +67,7 @@ export class AppHeader extends Wrapper {
                     tab: "device-mapping-details",
                     pageName: 'Device Mapping Details',
                     url: "/management/device-mapping-details",
+                    activeTabName: "device-mapping-details",
                     isVisible: true,
                     ApplicableFor: 'Working',
                     linkName: 'Device Mapping',
@@ -72,29 +75,42 @@ export class AppHeader extends Wrapper {
                 },
                 {
                     pathname: "/management",
+                    tab: "device-location-details",
+                    pageName: 'Device Location Details',
+                    url: "/management/device-location-details",
+                    activeTabName: "device-location-details",
+                    isVisible: true,
+                    ApplicableFor: 'Working',
+                    linkName: 'Device Location',
+                    roleCode: 'Management', 
+                },
+                {
+                    pathname: "/management",
                     tab: "tower-notification-details",
                     pageName: 'Tower Notification Details',
                     url: "/management/tower-notification-details",
+                    activeTabName: "tower-notification-details",
                     isVisible: true,
                     ApplicableFor: 'Working',
                     linkName: 'Notification',
                     roleCode: 'Management', 
                 },
-                {
-                    pathname: "/management",
-                    tab: "closed-tower-notification-details",
-                    pageName: 'Closed Notification Details',
-                    url: "/management/closed-tower-notification-details",
-                    isVisible: true,
-                    ApplicableFor: 'Working',
-                    linkName: 'Closed Notification',
-                    roleCode: 'Management', 
-                },
+                // {
+                //     pathname: "/management",
+                //     tab: "closed-tower-notification-details",
+                //     pageName: 'Closed Notification Details',
+                //     url: "/management/closed-tower-notification-details",
+                //     isVisible: true,
+                //     ApplicableFor: 'Working',
+                //     linkName: 'Closed Notification',
+                //     roleCode: 'Management', 
+                // },
                 {
                     pathname: "/management",
                     tab: "tower-monitoring-history",
                     pageName: 'Tower Monitoring History Details',
                     url: "/management/tower-monitoring-history",
+                    activeTabName: "tower-monitoring-history",
                     isVisible: true,
                     ApplicableFor: 'Working',
                     linkName: 'History',
@@ -105,6 +121,7 @@ export class AppHeader extends Wrapper {
                     tab: "change-password",
                     pageName: 'Change Password',
                     url: "/management/change-password",
+                    activeTabName: "change-password",
                     isVisible: true,
                     ApplicableFor: 'Working',
                     linkName: 'Change Password',
@@ -194,6 +211,7 @@ export class AppHeader extends Wrapper {
         const LoggedUserRole = userRole && JSON.parse(userRole);
         const smallTab = this.props.width < 1000 && this.props.width > 768;
         const ActiveTabname = router && router.query && router.query.tab;
+        const activeLinkTabName = router && router.query && router.query.activeTabName;
         const userName = user && user.employeeName;
         let Right = smallTab ? "45px" : "60px";
         // console.log("User between ", user)
@@ -219,7 +237,7 @@ export class AppHeader extends Wrapper {
                                 {WorkingLink && WorkingLink.length > 0 && WorkingLink.map((itemlink, index) => {
                                     return <NavStyle.LinkSubDiv_Link
                                         key={index}
-                                        isActiveLink={ActiveTabname === itemlink.tab && true}
+                                        isActiveLink={activeLinkTabName === itemlink.activeTabName && true}
                                         onClick={() => {
                                             this.props.router.push(
                                                 {
@@ -229,8 +247,9 @@ export class AppHeader extends Wrapper {
                                                         tab: itemlink.tab,
                                                         id: undefined,
                                                         pageName: itemlink.pageName,
-                                                        page: itemlink.pageName,
+                                                        page: itemlink.pageName, 
                                                         MasterName: itemlink.pageName,
+                                                        activeTabName:itemlink.activeTabName
                                                     }
                                                 },
                                                 itemlink.url

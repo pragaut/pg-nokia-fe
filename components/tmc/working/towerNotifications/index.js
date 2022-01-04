@@ -6,15 +6,16 @@ import { getTowerNotificationDetails, updateTowerNotificationDetails } from '../
 import Wrapper from '../../../shared/Wrapper'
 import Gap from '../../../comman/Gap';
 import { hideError, showError } from '../../../../actions/comman/error.actions';
-import * as WorkingTypes from '../../../../action-types/tmc/working.action.types'; 
+import * as WorkingTypes from '../../../../action-types/tmc/working.action.types';
 import * as CommonStyle from '../../../comman/commonStyle';
 import DatatableView from '../../../comman/ReactTableComponent';
 import style from '../../../../theme/app.scss';
 import Input from '../../../shared/InputBox';
-import { SELECT, SpanLabelForDDl } from '../../../comman/formStyle';
+import { SELECT, SpanLabelForDDl ,Button} from '../../../comman/formStyle';
 import { validateInputs } from '../../../../utils/editFormHelper';
 import { Icon } from "antd";
-import { color } from 'highcharts';
+import { color } from 'highcharts'; 
+import { withRouter } from "next/router";
 class TowerNotificationDetails extends Wrapper {
     configs = [];
 
@@ -109,7 +110,7 @@ class TowerNotificationDetails extends Wrapper {
                 Cell: p => (
                     <React.Fragment>
 
-                        {p.original.id && p.original.id !== null && (p.original.isClosed ===false && p.original.isClosed !=null) &&
+                        {p.original.id && p.original.id !== null && (p.original.isClosed === false && p.original.isClosed != null) &&
                             <button className="primary" value={p.original.id} onClick={() =>
                                 this.onClickUpdateStatus(p.original.id)
                             }>
@@ -126,7 +127,7 @@ class TowerNotificationDetails extends Wrapper {
     async componentDidMount() {
         // let's load the groups, for first time
         let filters = {
-            isClosed : 0
+            isClosed: 0
         }
         this.props.getTowerNotificationDetails(filters, constants.DEFAULT_ROWS_LIST, undefined, undefined);
         this.props.getAlarmTypeMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
@@ -143,13 +144,12 @@ class TowerNotificationDetails extends Wrapper {
             }, 100);
         }
         if (nextProps && nextProps.alarms && nextProps.alarms !== this.state.alarms) {
-            this.setState({ alarms: nextProps.alarms }); 
+            this.setState({ alarms: nextProps.alarms });
         }
-        if(nextProps && nextProps.towerNotificationDetailActiontype && nextProps.towerNotificationDetailActiontype  === WorkingTypes.TOWERNOTIFICATIONDETAILS_SAVE_SUCCESS)
-        {
+        if (nextProps && nextProps.towerNotificationDetailActiontype && nextProps.towerNotificationDetailActiontype === WorkingTypes.TOWERNOTIFICATIONDETAILS_SAVE_SUCCESS) {
             setTimeout(() => {
-            this.onClickCancel();
-            this.setState({ towerNotificationDetail: {} });
+                this.onClickCancel();
+                this.setState({ towerNotificationDetail: {} });
             }, 300);
         }
 
@@ -172,22 +172,52 @@ class TowerNotificationDetails extends Wrapper {
 
     onClickUpdateStatus = (id, isModalPopupOpen) => {
         const existingTowerNotification = Object.assign({}, this.state.towerNotificationDetail);
-        existingTowerNotification['id'] =id;
-      
+        existingTowerNotification['id'] = id;
+
         this.setState({
-            isModalPopupOpen: true, 
+            isModalPopupOpen: true,
             towerNotificationDetailId: id,
             towerNotificationDetail: existingTowerNotification
         })
     }
     onClickCancel = () => {
         this.onClickReferesh();
-        this.setState({ isModalPopupOpen: false,
-            towerNotificationDetailId: null })
+        this.setState({
+            isModalPopupOpen: false,
+            towerNotificationDetailId: null
+        })
+    }
+    onClickClosedNotificationPage = () => {
+        let LinkData = {
+            pathname: "/management",
+            tab: "closed-tower-notification-details",
+            pageName: 'Closed Notification Details',
+            url: "/management/closed-tower-notification-details",
+            activetabname: "tower-notification-details",
+            isVisible: true,
+            ApplicableFor: 'Working',
+            linkName: 'Closed Notification',
+            roleCode: 'Management',
+        }
+        this.props.router.push(
+            {
+                pathname: LinkData.pathname,
+                tab: LinkData.tab,
+                query: {
+                    tab: LinkData.tab,
+                    id: undefined,
+                    pageName: LinkData.pageName,
+                    page: LinkData.pageName,
+                    MasterName: LinkData.pageName,
+                    activetabname:LinkData.activetabname
+                }
+            },
+            LinkData.url
+        );
     }
     onClickReferesh = (async) => {
         let filters = {
-            isClosed : 0
+            isClosed: 0
         }
         this.props.getTowerNotificationDetails(filters, constants.DEFAULT_ROWS_LIST, undefined, undefined);
         this.props.getAlarmTypeMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
@@ -214,6 +244,46 @@ class TowerNotificationDetails extends Wrapper {
                 justifycontent={"flex-start"}
                 alignitems={"baseline"}
             >
+                <CommonStyle.MainDiv
+                    padding="0px 0px"
+                    flexdirection="row"
+                    width={'100%'}
+                    justifycontent="flex-start"
+                >
+                    <Button
+                         width="200px"
+                        height="30px"
+                        borderRadius="5px"
+                        bgColor="#fff"
+                        color="#0d3e99"
+                        padding="0px 10px"
+                        lineheight="1"
+                        border="1px solid #0d3e99"
+                        fontsize="14px"
+                        textTranform="capitalize"
+                        hoverColor="#fff"
+                        bgChangeHover="#0d3e99"
+                        style={{marginRight:'10px'}}
+                    >
+                        Notification
+                    </Button>
+                    <Button
+                        width="200px"
+                        height="30px"
+                        borderRadius="5px"
+                        bgColor="#0d3e99"
+                        fontsize="14px"
+                        lineheight="1"
+                        padding="0px 10px"
+                        border="1px solid #0d3e99"
+                        hoverColor="#0d3e99"
+                        textTranform="capitalize"
+                        bgChangeHover="#fff"
+                        onClick={() => this.onClickClosedNotificationPage()}
+                    >
+                        Closed Notification
+                    </Button>
+                </CommonStyle.MainDiv>
                 {isModalPopupOpen && isModalPopupOpen === true &&
 
                     <>
@@ -222,21 +292,21 @@ class TowerNotificationDetails extends Wrapper {
                         />
                         <CommonStyle.Wrapper_OnOverlay
                             width={"80%"}
-                            height={"fit-content"} 
+                            height={"fit-content"}
                             visible={isModalPopupOpen}
-                        > 
-                         <CommonStyle.CloseButtonForModel
-                            onClick={() => this.onClickCancel()}
-                        >X</CommonStyle.CloseButtonForModel>
+                        >
+                            <CommonStyle.CloseButtonForModel
+                                onClick={() => this.onClickCancel()}
+                            >X</CommonStyle.CloseButtonForModel>
                             <div className={style.modal_dialog} style={{ width: '95%', maxHeight: '120vh', maxWidth: '80vw' }}>
- 
+
                                 <div>
                                     <div className={style.field_flex_wrapper}>
                                         <div className={style.field_flex_new} style={{ width: '45%' }}>
                                             <Input label="Remarks:" type='text' defaultValue={this.state.towerNotificationDetail.remarks} onChange={this.onValueChanged('remarks')} />
                                         </div>
                                     </div>
-                                </div> 
+                                </div>
                                 {/* container for save and cancel */}
                                 <div style={{ display: 'flex', width: '200px', alignItems: 'left', justifyContent: 'left', margin: '10px 0px' }}>
                                     <button
@@ -275,7 +345,7 @@ class TowerNotificationDetails extends Wrapper {
                     >
                     </CommonStyle.MainDiv>
                     <div
-                        style={{ width: '98%', padding: "13px" }}
+                        style={{ width: '100%', padding: "0px" }}
                     >
                         <DatatableView
                             Data={towerNotificationDetails ? towerNotificationDetails : []}
@@ -295,12 +365,11 @@ class TowerNotificationDetails extends Wrapper {
 
 
 const mapStateToProps = state => {
-    const { towerNotificationDetails, towerNotificationDetail,towerNotificationDetailActiontype} = state.workingReducerTmc;
+    const { towerNotificationDetails, towerNotificationDetail, towerNotificationDetailActiontype } = state.workingReducerTmc;
     const { alarms, alarm } = state.adminReducer;
     const errorType = state.errorReducer.type;
     const errorMessage = state.errorReducer.error;
 
-    return { towerNotificationDetails, towerNotificationDetail,towerNotificationDetailActiontype, alarms, alarm, errorType, errorMessage };
+    return { towerNotificationDetails, towerNotificationDetail, towerNotificationDetailActiontype, alarms, alarm, errorType, errorMessage };
 };
-
-export default connect(mapStateToProps, { getAlarmTypeMasterData, getTowerNotificationDetails,updateTowerNotificationDetails, hideError })(TowerNotificationDetails);
+export default withRouter(connect(mapStateToProps, { getAlarmTypeMasterData, getTowerNotificationDetails, updateTowerNotificationDetails, hideError })(TowerNotificationDetails));

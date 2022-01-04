@@ -53,6 +53,12 @@ const initialState = {
     towerActiveDetails: undefined,
     towerActiveDetailActiontype: undefined,
     towerActiveDetailRecordsCount: 0,
+
+
+    deviceLocationDetail: actions.DEVICELOCATIONDETAILS_INIT,
+    deviceLocationDetails: undefined,
+    deviceLocationDetailActiontype: undefined,
+    deviceLocationDetailRecordsCount: 0,
 };
 
 
@@ -90,24 +96,24 @@ const workingReducer = (state, action) => {
                 type: action.type
             };
 
-            case actions.DEVICEBATTERYSTATUSLOG_LIST_SUCCESS:
-                return {
-                    deviceBatteryStatusLog: state.deviceBatteryStatusLog,
-                    deviceBatteryStatusLogs: action.data,
-                    deviceBatteryStatusLogtype: action.type,
-                    deviceBatteryStatusLogRecordsCount: action.recordsCount,
-    
-                    type: action.type,
-                };
-            case actions.DEVICEBATTERYSTATUSLOG_INIT:
-                return {
-                    deviceBatteryStatusLog: state.deviceBatteryStatusLog,
-                    deviceBatteryStatusLogs: state.deviceBatteryStatusLogs,
-                    deviceBatteryStatusLogtype: action.type,
-                    deviceBatteryStatusLogRecordsCount: state.deviceBatteryStatusLogRecordsCount,
-    
-                    type: action.type
-                };
+        case actions.DEVICEBATTERYSTATUSLOG_LIST_SUCCESS:
+            return {
+                deviceBatteryStatusLog: state.deviceBatteryStatusLog,
+                deviceBatteryStatusLogs: action.data,
+                deviceBatteryStatusLogtype: action.type,
+                deviceBatteryStatusLogRecordsCount: action.recordsCount,
+
+                type: action.type,
+            };
+        case actions.DEVICEBATTERYSTATUSLOG_INIT:
+            return {
+                deviceBatteryStatusLog: state.deviceBatteryStatusLog,
+                deviceBatteryStatusLogs: state.deviceBatteryStatusLogs,
+                deviceBatteryStatusLogtype: action.type,
+                deviceBatteryStatusLogRecordsCount: state.deviceBatteryStatusLogRecordsCount,
+
+                type: action.type
+            };
         //#endregion
 
 
@@ -230,19 +236,36 @@ const workingReducer = (state, action) => {
                 towerNotificationDetailRecordsCount: state.recordsCount,
             };
 
-            case actions.TOWERACTIVESTATUS_LIST_SUCCESS:
-                return {
+        case actions.TOWERACTIVESTATUS_LIST_SUCCESS:
+            return {
                 towerActiveDetail: state.towerActiveDetail,
                 towerActiveDetails: action.data,
                 towerActiveDetailActiontype: action.type,
                 towerActiveDetailRecordsCount: action.recordsCount,
 
                 type: action.type,
-            }; 
+            };
         //#endregion
 
 
-
+        //#region  Tower Monitoring Details -- Device Location
+        case actions.DEVICELOCATIONDETAILS_LIST_SUCCESS:
+            return {
+                deviceLocationDetail: state.deviceLocationDetail,
+                deviceLocationDetails: action.data,
+                deviceLocationDetailActiontype: action.type,
+                deviceLocationDetailRecordsCount: action.recordsCount,
+                type: action.type,
+            };
+        case actions.DEVICELOCATIONDETAILS_INIT:
+            return {
+                deviceLocationDetail: state.deviceLocationDetail,
+                deviceLocationDetails: state.deviceLocationDetails,
+                deviceLocationDetailActiontype: action.type,
+                deviceLocationDetailRecordsCount: state.deviceLocationDetailRecordsCount,
+                type: action.type
+            };
+        //#endregion 
         // important: we should always give a default, otherwise React gives a cheap warning and it is very annoying
         default:
             return {
@@ -298,6 +321,10 @@ const workingReducer = (state, action) => {
                 towerActiveDetailActiontype: state.towerActiveDetailActiontype,
                 towerActiveDetailRecordsCount: state.towerActiveDetailRecordsCount,
 
+                deviceLocationDetail: state.deviceLocationDetail,
+                deviceLocationDetails: state.deviceLocationDetails,
+                deviceLocationDetailActiontype: state.deviceLocationDetailActiontype,
+                deviceLocationDetailRecordsCount: state.deviceLocationDetailRecordsCount,
             };
     }
 };

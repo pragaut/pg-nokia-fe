@@ -28,6 +28,7 @@ import DeviceMappingDetails from '../components/tmc/working/deviceMapping/index'
 import TowerNotificationDetails from '../components/tmc/working/towerNotifications/index';
 import ClosedTowerNotificationDetails from '../components/tmc/working/towerNotifications/closedTowerNotification';
 import TowerActiveStatus from '../components/tmc/working/map/index';
+import DeviceLocation from '../components/tmc/working/deviceLocation';
 const Image = '../static/'
 const window = require('global/window');
 const AdminMain = styled.div`
@@ -38,7 +39,7 @@ justify-content:center;
 `;
 
 const ContentWapper = styled.div` 
-padding : ${props => props.padding ? props.padding : '0px 55px 0px 55px'};
+padding : ${props => props.padding ? props.padding : '0px 0px 0px 0px'};
 width : ${props => props.width ? props.width : '100%'};
 display:flex;
 flex-direction:column;
@@ -179,7 +180,7 @@ export class Index extends Wrapper {
                     layout="loggedUser_management" //"admin"
                 />
                 <div style={{ width: '95%', display: 'flex', justifyContent: 'center', flexDirection: 'column' }}>
-                    <AdminMain style={{ width: '100%', padding: '0px 30px' }} className={style.admin_main}>
+                    <AdminMain style={{ width: '100%',display: 'flex', padding: '0px 30px' }} className={style.admin_main}>
                         <ContentWapper padding="0px">
                             <ModalHeader
                                 heading={router && router.query && router.query.tab !== "" && router.query.MasterName} //"Group Master"
@@ -202,6 +203,11 @@ export class Index extends Wrapper {
                             {router && (router.query && router.query.tab === "device-mapping-details") && (
                                 <div>
                                     <DeviceMappingDetails />
+                                </div>
+                            )}
+                             {router && (router.query && router.query.tab === "device-location-details") && (
+                                <div>
+                                    <DeviceLocation />
                                 </div>
                             )}
                             {router && (router.query && router.query.tab === "tower-notification-details") && (

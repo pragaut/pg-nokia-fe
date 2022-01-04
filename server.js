@@ -503,6 +503,24 @@ app.prepare()
 		});
 
 
+		server.get('/management/device-location-details', (req, res) => {
+			const q = req.query;
+			q.tab = 'device-location-details';
+			q.pathName = 'management';
+			q.pageName = 'Device Location Details';
+			q.MasterName = 'Device Location Details';
+			return app.render(req, res, '/management', {
+				page: q.pageName,
+				MasterName: q.MasterName,
+				tab: q.tab,
+				section: 'working',
+				query: {
+					...q
+				}
+			});
+		});
+
+
 		//------------------Working Section End----------------------//
 
 		server.get('/management/tower-monitoring-history', (req, res) => {
@@ -522,6 +540,23 @@ app.prepare()
 			});
 		});
 
+
+		server.get('/pragaut/device-location-details', (req, res) => {
+			const q = req.query;
+			q.tab = 'device-location-details';
+			q.pathName = 'pragaut';
+			q.pageName = 'Device Location Details';
+			q.MasterName = 'Device Location Details';
+			return app.render(req, res, '/pragaut', {
+				page: q.pageName,
+				MasterName: q.MasterName,
+				tab: q.tab,
+				section: 'working',
+				query: {
+					...q
+				}
+			});
+		});
 
 
 		server.get('/pragaut/device-mapping-details', (req, res) => {
