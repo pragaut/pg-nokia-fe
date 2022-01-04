@@ -63,9 +63,7 @@ class Index extends Component {
 
                     </div>
                 </div>
-                {deviceLocationDetails && deviceLocationDetails.length > 0 &&
-                    <MyMap MapData={deviceLocationDetails} />
-                }
+                <MyMap MapData={deviceLocationDetails} />
 
             </Wrapper >
         );

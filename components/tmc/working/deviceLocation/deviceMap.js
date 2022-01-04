@@ -1,10 +1,10 @@
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
 import React, { Component } from 'react';
-import styled from 'styled-components'; 
+import styled from 'styled-components';
 const Wrapper = styled.main`
   width: 100%;
   height: 100%;
-`; 
+`;
 export class MapContainer extends Component {
     constructor(props) {
         super(props);
@@ -12,9 +12,9 @@ export class MapContainer extends Component {
             showingInfoWindow: false,
             activeMarker: {},
             selectedPlace: {},
-            MapData : props.MapData ? props.MapData : []
+            MapData: props.MapData ? props.MapData : []
         }
-    } 
+    }
 
     UNSAFE_componentWillReceiveProps(nextProps) {
 
@@ -37,7 +37,7 @@ export class MapContainer extends Component {
             selectedPlace: props,
             activeMarker: marker,
             showingInfoWindow: true,
-            
+
         });
 
     onMapClicked = (props) => {
@@ -54,43 +54,51 @@ export class MapContainer extends Component {
     render() {
         const {
             MapData
-        } = this.state;   
+        } = this.state;
         return (
             <Map
                 google={this.props.google}
                 initialCenter={{
                     lat: 28.4089,
-                    lng: 77.3178 
+                    lng: 77.3178
                 }}
                 zoom={9}
                 style={{
-                    width:'96vw',
-                    height:'90vh'
+                    width: '96vw',
+                    height: '90vh'
                 }}
-                onClick={this.onMapClicked} 
+                onClick={this.onMapClicked}
             >
-                {MapData && MapData.length >0 && MapData.map(item => {
+                {MapData && MapData.length > 0 && MapData.map(item => {
 
                     return <Marker
                         position={{
-                            lat : item.latitude,
-                            lng : item.longitude
+                            lat: item.latitude,
+                            lng: item.longitude
                         }}
                         name={item.descriptionDetails}
                         onClick={this.onMarkerClick}
-                        icon = {item.activeStatus =='Red' ? "http://maps.google.com/mapfiles/ms/icons/red-dot.png" : "http://maps.google.com/mapfiles/ms/icons/green-dot.png"}
+                        icon={item.activeStatus == 'Red' ? "http://maps.google.com/mapfiles/ms/icons/red-dot.png" : "http://maps.google.com/mapfiles/ms/icons/green-dot.png"}
                     />
-                })
-
-                }
+                })}
+                {/* {(!MapData || (MapData.length === 0)) &&
+                    <Marker
+                        position={{
+                            lat: '28.502555',
+                            lng: '77.0102463'
+                        }}
+                        name={'Advenjour'}
+                        onClick={this.onMarkerClick}
+                    />
+                } */}
 
 
                 <InfoWindow
                     marker={this.state.activeMarker}
                     onClose={this.onMapClicked}
                     visible={this.state.showingInfoWindow}>
-                    <div style={{color:'#000000', fontSize:'12px'}}>
-                        <span dangerouslySetInnerHTML={{__html:this.state.selectedPlace.name}}></span>
+                    <div style={{ color: '#000000', fontSize: '12px' }}>
+                        <span dangerouslySetInnerHTML={{ __html: this.state.selectedPlace.name }}></span>
                     </div>
                 </InfoWindow>
             </Map>
