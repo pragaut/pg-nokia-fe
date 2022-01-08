@@ -181,7 +181,7 @@ class TowerNotificationDetails extends Wrapper {
         })
     }
     onClickCancel = () => {
-        this.onClickReferesh();
+        this.refreshData();
         this.setState({
             isModalPopupOpen: false,
             towerNotificationDetailId: null
