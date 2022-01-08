@@ -23,7 +23,7 @@ function lazyWithPreload(factory) {
     return Component;
 }
 const style = lazyWithPreload(() => import("../../../static/scss/main.scss"));
-
+ 
 
 export class AppHeader extends Wrapper {
     constructor(props) {
@@ -87,12 +87,13 @@ export class AppHeader extends Wrapper {
                 {
                     pathname: "/management",
                     tab: "tower-notification-details",
-                    pageName: 'Tower Notification Details',
+                    pageName: 'Open Alarm Details',
                     url: "/management/tower-notification-details",
                     activeTabName: "tower-notification-details",
                     isVisible: true,
                     ApplicableFor: 'Working',
-                    linkName: 'Notification',
+                    //linkName: 'Notification',
+                    linkName: 'Alarm',
                     roleCode: 'Management', 
                 },
                 // {
@@ -267,8 +268,8 @@ export class AppHeader extends Wrapper {
                             style={{ cursor: 'pointer' }}
                             onClick={() => this.toggleprofileOpen()}
                         >
-                            <img className="sideLogo" src="../../static/logout-icon-256.png" title="logout" alt="logo" />
-
+                            {/* <img className="sideLogo" src="../../static/logout-icon-256.png" title="logout" alt="logo" /> */}
+                            <span>Logout</span>
                             <NavStyle.ProfileDiv
                                 className="account"
                                 isVisible={isProfileVisible === true ? true : undefined}

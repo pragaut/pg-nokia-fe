@@ -110,13 +110,13 @@ class TowerNotificationDetails extends Wrapper {
                 Cell: p => (
                     <React.Fragment>
 
-                        {p.original.id && p.original.id !== null && (p.original.isClosed === false && p.original.isClosed != null) &&
+                        {p.original.id && p.original.id !== null && (p.original.isRemarksRequired ===true || p.original.isRemarksRequired===1 ) && (p.original.isClosed === 0 || p.original.isClosed === false || p.original.isClosed === null) &&
                             <button className="primary" value={p.original.id} onClick={() =>
                                 this.onClickUpdateStatus(p.original.id)
                             }>
                                 Update Status
                             </button>
-                        }
+                        } 
                     </React.Fragment>
                 ),
             },
@@ -181,7 +181,7 @@ class TowerNotificationDetails extends Wrapper {
         })
     }
     onClickCancel = () => {
-        this.onClickReferesh();
+        this.refreshData();
         this.setState({
             isModalPopupOpen: false,
             towerNotificationDetailId: null
@@ -191,7 +191,7 @@ class TowerNotificationDetails extends Wrapper {
         let LinkData = {
             pathname: "/management",
             tab: "closed-tower-notification-details",
-            pageName: 'Closed Notification Details',
+            pageName: 'Closed Alarm Details',
             url: "/management/closed-tower-notification-details",
             activetabname: "tower-notification-details",
             isVisible: true,
@@ -215,7 +215,7 @@ class TowerNotificationDetails extends Wrapper {
             LinkData.url
         );
     }
-    onClickReferesh = (async) => {
+    refreshData = (async) => {
         let filters = {
             isClosed: 0
         }
@@ -236,6 +236,7 @@ class TowerNotificationDetails extends Wrapper {
     render() {
         //console.log("Antenna Rotataion Details", this.state.antennaRotationDetails);
         const { showEditPopup, isModalPopupOpen, columns, towerNotificationDetails, alarms } = this.state;
+        console.log("Tower Notification Details", towerNotificationDetails);
         return (
             <CommonStyle.MainDiv
                 flexdirection={"column"}
@@ -265,7 +266,7 @@ class TowerNotificationDetails extends Wrapper {
                         bgChangeHover="#0d3e99"
                         style={{marginRight:'10px'}}
                     >
-                        Notification
+                        Open Alarm
                     </Button>
                     <Button
                         width="200px"
@@ -280,8 +281,22 @@ class TowerNotificationDetails extends Wrapper {
                         textTranform="capitalize"
                         bgChangeHover="#fff"
                         onClick={() => this.onClickClosedNotificationPage()}
+                        style={{marginRight:'10px'}}
                     >
-                        Closed Notification
+                        Closed Alarm
+                    </Button>
+                    <Button
+                            width="50px"
+                            height="30px"
+                            borderRadius="5px"
+                            bgColor="blue"
+                            lineheight="1"
+                            border="1px solid blue"
+                            hoverColor="blue"
+                            bgChangeHover="#fff"
+                            onClick={() => this.refreshData()}
+                        >
+                          <i class="fa fa-refresh" aria-hidden="true"></i>
                     </Button>
                 </CommonStyle.MainDiv>
                 {isModalPopupOpen && isModalPopupOpen === true &&

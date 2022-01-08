@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { getDeviceLocationDetails } from '../../../../actions/tmc/working.action'
 import MyMap from './deviceMap';
+import * as CommonStyle from '../../../comman/commonStyle';
+import { Button } from '../../../comman/formStyle';
 const Wrapper = styled.div`
   width: 100%;
   height: 100%;
@@ -42,6 +44,10 @@ class Index extends Component {
         }
     };
 
+    refreshData = () => { 
+        this.props.getDeviceLocationDetails();
+    }
+
     render() {
         const {
             places, mapApiLoaded, mapInstance, mapApi, deviceLocationDetails
@@ -50,6 +56,26 @@ class Index extends Component {
         // console.log("Tower Active Details : >>>>>>>>", towerActiveDetails);
         return (
             <Wrapper>
+                 <div style={{ zIndex: '100', position: 'fixed', top: '100px', left: '40px' }}>
+                    <div style={{ backgroundColor: '#ffffff', color: '#000000', height: '40px', width: '170px' }}>
+                        <div style={{ paddingTop: '5px',paddingLeft: '10px', display: 'flex', flexDirection: 'row', alignContent: 'left', justifyContent: 'flext-start', alignItems: 'center' }}>
+                        <Button
+                            width="50px"
+                            height="30px"
+                            borderRadius="5px"
+                            bgColor="blue"
+                            lineheight="1"
+                            border="1px solid blue"
+                            hoverColor="blue"
+                            bgChangeHover="#fff"
+                            onClick={() => this.refreshData()}
+                        >
+                          <i class="fa fa-refresh" aria-hidden="true"></i>
+                    </Button>
+                        </div>
+
+                    </div>
+                </div>
                 <div style={{ zIndex: '100', position: 'fixed', bottom: '50px', left: '40px' }}>
                     <div style={{ backgroundColor: '#ffffff', color: '#000000', height: '40px', width: '170px' }}>
                         <div style={{ paddingTop: '5px', display: 'flex', flexDirection: 'row', alignContent: 'center', justifyContent: 'center', alignItems: 'center' }}>

@@ -259,8 +259,8 @@ export class AppHeader extends Wrapper {
                             style={{ cursor: 'pointer' }}
                             onClick={() => this.toggleprofileOpen()}
                         >
-                            <img className="sideLogo" src="../../static/logout-icon-256.png" title="logout" alt="logo" />
-
+                            {/* <img className="sideLogo" src="../../static/logout-icon-256.png" title="logout" alt="logo" /> */}
+                             Logout                               
                             <NavStyle.ProfileDiv
                                 className="account"
                                 isVisible={isProfileVisible === true ? true : undefined}
