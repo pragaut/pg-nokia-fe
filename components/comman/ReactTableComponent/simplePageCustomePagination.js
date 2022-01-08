@@ -1,21 +1,7 @@
-import React, { Component } from 'react'
-import classnames from 'classnames'
-import Button from "@material-ui/core/Button";
-//import Download from "@material-ui/icons/FileDownload";
-import { withStyles } from "@material-ui/core/styles";
-//import  classes  from "classnames";
-import Tooltip from '@material-ui/core/Tooltip';
-import ColumnChooser from './columnChooser.js';
-import mouseOverPopper from './mouseOverPopper.js';
-// import _ from './utils'
-import { exportTableToCSV } from'./export.js';
-import { exportTableToJSON } from './export.js';
-import Icon from '@material-ui/core/Icon';
-import IconButton from '@material-ui/core/IconButton';
-import  classes1  from "classnames";
-import Typography from "@material-ui/core/Typography";
-import Popover from "@material-ui/core/Popover"
-
+import React, { Component } from 'react' 
+import Button from "@material-ui/core/Button"; 
+import { withStyles } from "@material-ui/core/styles"; 
+import  classes1  from "classnames"; 
 const styles = {
      button: {
         minWidth: 20,
@@ -123,12 +109,7 @@ const defaultButton = props => (
              }}disabled={!canPrevious}>back</Button>
 
         </div>
-        <Tooltip id="tooltip-icon" title="on/off">
-        <Button size="small" variant="outlined" className={classes.button} style={{backgroundColor:'white',height:'22px',textTransform: 'lowercase'}}
-        onClick={()=>{changeFilter();}}>filter
-        </Button>
-        </Tooltip>
-        <ColumnChooser columns={columns}  onColumnUpdate={onColumnUpdate} />
+        {/* <ColumnChooser columns={columns}  onColumnUpdate={onColumnUpdate} /> */}
         <div  style={{display:"flex",justifyContent:'space-around',flexDirection:'row',flexWrap:'nowrap'}} className="-center">
           <span  style={{height:'22px',fontSize:'12px'}} className="-pageInfo">
 
@@ -167,8 +148,7 @@ const defaultButton = props => (
               Now Showing
                 </span> */}
               <select style={{fontSize:'12px'}} onChange={e => onPageSizeChange(Number(e.target.value))} value={pageSize}>
-                {pageSizeOptions.map((option, i) => (
-                  // eslint-disable-next-line react/no-array-index-key
+                {pageSizeOptions.map((option, i) => ( 
                   <option key={i} value={option}>
                     {`${option} ${this.props.rowsText}`}
                   </option>
@@ -178,11 +158,10 @@ const defaultButton = props => (
           )}
 
         </div>
-        <Tooltip id="tooltip-icon" title="download grid">
+        {/* <Tooltip id="tooltip-icon" title="download grid">
           <Button variant="outlined"size="small"mini style={{marginRight:2, height:22,padding:'5px',fontSize:'12px',fontFamily:'Asap'}} onClick={this.handleClick}>
                 Export
-                 {/* <Download className={classes.rightIcon} style={{color: 'green'}} /> */}
-              </Button>
+               </Button>
               </Tooltip>
               <Popover
               
@@ -203,7 +182,7 @@ const defaultButton = props => (
                 <Typography className={classes.typography} onClick={() => {handleDownload();}} style ={{padding: "10px",cursor: 'pointer',fontSize:'12px'}}>
                     csv
                 </Typography>
-              </Popover>
+              </Popover> */}
 
         <div className="-next">
           <Button size="small" variant="outlined" style={{backgroundColor:'white',padding:'0px',textTransform: 'lowercase'}}

@@ -119,7 +119,7 @@ class TowerMonitoringDetailedIndex extends Wrapper {
                             border="1px solid blue"
                             hoverColor="blue"
                             bgChangeHover="#fff"
-                            style={{marginRight:'10px'}}
+                            style={{ marginRight: '10px' }}
                             onClick={() => this.props.onClickBackButton()}
                         >
                             Back
@@ -135,8 +135,8 @@ class TowerMonitoringDetailedIndex extends Wrapper {
                             bgChangeHover="#fff"
                             onClick={() => this.refreshData()}
                         >
-                          <i class="fa fa-refresh" aria-hidden="true"></i>
-                    </Button>
+                            <i class="fa fa-refresh" aria-hidden="true"></i>
+                        </Button>
                     </CommonStyle.MainDiv>
                     <CommonStyle.MainDiv
                         fontsize={"18px"}
@@ -218,21 +218,32 @@ class TowerMonitoringDetailedIndex extends Wrapper {
                     alignitems={"baseline"}
                     width={'100%'}
                 >
-                    <TowerMonitoringSubDetails
-                        towerMonitoringSubDetails={towerMonitoringSubDetails}
-                    />
+                    <CommonStyle.MainDiv
+                        padding="0px 0px"
+                        flexdirection="row"
+                        justifycontent={"space-between"}
+                        alignitems={"baseline"}
+                        width={'59%'}
+                    >
+                        <TowerMonitoringSubDetails
+                            towerMonitoringSubDetails={towerMonitoringSubDetails}
+                        />
+                    </CommonStyle.MainDiv>
+                    <CommonStyle.MainDiv
+                        padding="0px 0px"
+                        flexdirection="row"
+                        justifycontent={"space-between"}
+                        alignitems={"baseline"}
+                        width={'39%'}
+                    >
+                        <AlarmNotificationDetails
+                            towerNotificationDetails={towerNotificationDetails}
+                        />
+                    </CommonStyle.MainDiv>
                 </CommonStyle.MainDiv>
+
                 <Gap h="10px" />
-                <CommonStyle.MainDiv
-                    padding="0px 0px"
-                    flexdirection="row"
-                    justifycontent={"space-between"}
-                    alignitems={"baseline"}
-                >
-                    <AlarmNotificationDetails
-                        towerNotificationDetails={towerNotificationDetails}
-                    />
-                </CommonStyle.MainDiv>
+
                 <Gap h="60px" />
             </CommonStyle.MainDiv>
         )
