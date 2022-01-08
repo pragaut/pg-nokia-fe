@@ -187,7 +187,16 @@ class ClosedTowerNotificationDetails extends Wrapper {
             towerNotificationDetailId: null
         })
     }
-    onClickReferesh = (async) => {
+    // onClickReferesh = (async) => {
+    //     let filters = {
+    //         isClosed: 1
+    //     }
+    //     this.props.getTowerNotificationDetails(filters, constants.DEFAULT_ROWS_LIST, undefined, undefined);
+    //     this.props.getAlarmTypeMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
+    //     this.updateStateAfterStateUpdate();
+    // }
+
+    refreshData = (async) => {
         let filters = {
             isClosed: 1
         }
@@ -199,7 +208,7 @@ class ClosedTowerNotificationDetails extends Wrapper {
         let LinkData = {
             pathname: "/management",
             tab: "tower-notification-details",
-            pageName: 'Tower Notification Details',
+            pageName: 'Open Alarm Details',
             url: "/management/tower-notification-details",
             activetabname: "tower-notification-details",
             isVisible: true,
@@ -265,7 +274,7 @@ class ClosedTowerNotificationDetails extends Wrapper {
                         onClick={() => this.onClickAllNotificationPage()}
                         style={{ marginRight: '10px' }}
                     >
-                        Notification
+                        Open Alarm
                     </Button>
                     <Button
                        width="200px"
@@ -280,11 +289,23 @@ class ClosedTowerNotificationDetails extends Wrapper {
                         textTranform="capitalize"
                         hoverColor="#fff"
                         bgChangeHover="#0d3e99"
-
+                        style={{marginRight:'10px'}}
                     >
-                        Closed Notification
+                        Closed Alarm
                     </Button>
-
+                    <Button
+                            width="50px"
+                            height="30px"
+                            borderRadius="5px"
+                            bgColor="blue"
+                            lineheight="1"
+                            border="1px solid blue"
+                            hoverColor="blue"
+                            bgChangeHover="#fff"
+                            onClick={() => this.refreshData()}
+                        >
+                          <i class="fa fa-refresh" aria-hidden="true"></i>
+                    </Button>
                 </CommonStyle.MainDiv>
                 {isModalPopupOpen && isModalPopupOpen === true &&
 

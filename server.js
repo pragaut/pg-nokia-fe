@@ -438,8 +438,8 @@ app.prepare()
 			const q = req.query;
 			q.tab = 'tower-notification-details';
 			q.pathName = 'management';
-			q.pageName = 'Tower Notification Details';
-			q.MasterName = 'Tower Notification Details';
+			q.pageName = 'Open Alarm Details';
+			q.MasterName = 'Open Alarm Details';
 			return app.render(req, res, '/management', {
 				page: q.pageName,
 				MasterName: q.MasterName,
@@ -455,8 +455,8 @@ app.prepare()
 			const q = req.query;
 			q.tab = 'closed-tower-notification-details';
 			q.pathName = 'management';
-			q.pageName = 'Closed Notification Details';
-			q.MasterName = 'Closed Notification Details';
+			q.pageName = 'Closed Alarm Details';
+			q.MasterName = 'Closed Alarm Details';
 			return app.render(req, res, '/management', {
 				page: q.pageName,
 				MasterName: q.MasterName,
@@ -580,8 +580,8 @@ app.prepare()
 			const q = req.query;
 			q.tab = 'tower-notification-details';
 			q.pathName = 'pragaut';
-			q.pageName = 'Tower Notification Details';
-			q.MasterName = 'Tower Notification Details';
+			q.pageName = 'Open Alarm Details';
+			q.MasterName = 'Open Alarm Details';
 			return app.render(req, res, '/pragaut', {
 				page: q.pageName,
 				MasterName: q.MasterName,
@@ -597,8 +597,8 @@ app.prepare()
 			const q = req.query;
 			q.tab = 'closed-tower-notification-details';
 			q.pathName = 'pragaut';
-			q.pageName = 'Closed Notification Details';
-			q.MasterName = 'Closed Notification Details';
+			q.pageName = 'Closed Alarm Details';
+			q.MasterName = 'Closed Alarm Details';
 			return app.render(req, res, '/pragaut', {
 				page: q.pageName,
 				MasterName: q.MasterName,

@@ -28,7 +28,7 @@ height: 70px;
 
 
 export const LogoDiv = styled.div`
-width : 200px;
+width : 100px;
 height:70px;
 display:flex;
 justify-content:center;
@@ -36,6 +36,7 @@ flex-direction:column;
 margin-right:${props => props.marginRight ? props.marginRight : "0px"};
 background : ${props => props.bgColor ? props.bgColor : "transparent"};
 border : ${props => props.border ? props.border : "0px"};
+color:#000;
 align-items:center;
 .logo{
     width : 100%;
@@ -45,6 +46,10 @@ align-items:center;
     width : 35%;
     height:40px;
 }
+&:hover{
+    background-color:#0d3e99;
+    color:#fff;
+} 
 `;
 
 export const MainDiv_ForLinkWapper = styled.div`
