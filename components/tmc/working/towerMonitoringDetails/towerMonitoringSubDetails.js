@@ -100,7 +100,7 @@ class TowerMonitoringSubDetailsIndex extends Wrapper {
                 accessor: 'userHeight',
                 id: 'userHeight',
                 minWidth: 100,
-                show: true,
+                show: false,
             },
             // {
             //     Header: 'Rigger Height New 2',
