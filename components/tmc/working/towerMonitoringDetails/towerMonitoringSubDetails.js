@@ -40,7 +40,7 @@ class TowerMonitoringSubDetailsIndex extends Wrapper {
                 Header: 'User Height',
                 accessor: 'userHeight1',
                 id: 'userHeight1',
-                minWidth: 100,
+                minWidth: 60,
                 show: true,
             },
             {

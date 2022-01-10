@@ -34,6 +34,7 @@ class AlarmNotificationDetailsIndex extends Wrapper {
                 accessor: d => `${d.alarmTypeName}`,
                 id: 'alarmTypeName',
                 show: true,
+                minWidth: 80,
             },
             {
                 Header: 'Notification',
