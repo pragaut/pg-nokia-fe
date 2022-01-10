@@ -139,6 +139,8 @@ class NotificationAddEdit extends Wrapper {
                             </div>
                             <Input label="Notification Name:" type='text' defaultValue={this.state.notification.notificationName} onChange={this.onValueChanged('notificationName')} />
                             <Input label="Code:" type='text' defaultValue={this.state.notification.notificationCode} onChange={this.onValueChanged('notificationCode')} />
+                            <Input label="Title:" type='text' defaultValue={this.state.notification.title} onChange={this.onValueChanged('title')} />
+                            <Input label="Message:" type='text' defaultValue={this.state.notification.message} onChange={this.onValueChanged('message')} />
                             <Input label="Order:" type='text' defaultValue={this.state.notification.notificationOrder} onChange={this.onValueChanged('notificationOrder')} />
 
                         </div>
