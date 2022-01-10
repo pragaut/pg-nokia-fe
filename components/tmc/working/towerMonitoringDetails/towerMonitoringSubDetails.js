@@ -37,9 +37,9 @@ class TowerMonitoringSubDetailsIndex extends Wrapper {
             //     show: true,
             // },
             {
-                Header: 'Height',
-                accessor: 'userHeight',
-                id: 'userHeight',
+                Header: 'User Height',
+                accessor: 'userHeight1',
+                id: 'userHeight1',
                 minWidth: 100,
                 show: true,
             },
@@ -97,8 +97,8 @@ class TowerMonitoringSubDetailsIndex extends Wrapper {
             },
             {
                 Header: 'Rigger Height New 1',
-                accessor: 'userHeight1',
-                id: 'userHeight1',
+                accessor: 'userHeight',
+                id: 'userHeight',
                 minWidth: 100,
                 show: true,
             },
