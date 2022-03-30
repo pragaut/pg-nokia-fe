@@ -36,8 +36,8 @@ class DeviceBatteryStatusDetails extends Wrapper {
                 flexdirection="column"
             >
                 <CommonStyle.TABLE
-                 tdPadding={"8px"}
-                 thPadding={"8px"}
+                    tdPadding={"8px"}
+                    thPadding={"8px"}
                 >
                     <tr>
                         <th>
@@ -53,6 +53,12 @@ class DeviceBatteryStatusDetails extends Wrapper {
                             Child 2 Status
                         </th>
                         <th>
+                            Height
+                        </th>
+                        <th>
+                            Height Status
+                        </th>
+                        <th>
                             Updated On
                         </th>
                     </tr>
@@ -64,20 +70,36 @@ class DeviceBatteryStatusDetails extends Wrapper {
                             <td>
                                 {item.uniqueId}
                             </td>
-                            <td style={{ background: deviceStatus === 'Connected' ? 'green' : 'red',color:'#fff' }}>
+                            <td style={{ background: deviceStatus === 'Connected' ? 'green' : 'red', color: '#fff' }}>
                                 {deviceStatus}
                             </td>
-                            <td style={{ background: child1Status === 'Connected' ? 'green' : 'red',color:'#fff' }}>
+                            <td style={{ background: child1Status === 'Connected' ? 'green' : 'red', color: '#fff' }}>
                                 {child1Status}
                             </td>
-                            <td style={{ background: child2Status === 'Connected' ? 'green' : 'red',color:'#fff' }}>
+                            <td style={{ background: child2Status === 'Connected' ? 'green' : 'red', color: '#fff' }}>
                                 {child2Status}
+                            </td>
+                            <td >
+                                {item.userHeight1}
+                            </td>
+                            <td >
+                                {item.heightStatus && item.heightStatus === 'Asc' ?
+                                    <i className='fa fa-arrow-up' style={{ color: 'green', fontSize: '20px' }}  ></i>
+                                    :
+                                    <>
+                                        {item.heightStatus && item.heightStatus === 'Desc' ?
+                                            <i className='	fa fa-arrow-down' style={{ color: 'orange', fontSize: '20px' }}  ></i>
+                                            :
+                                            <span>{item.heightStatus}</span>
+                                        }
+                                    </>
+                                }
                             </td>
                             <td>
                                 {item.lastUpdatedOn && item.lastUpdatedOn !== null ? moment(item.lastUpdatedOn).format("DD-MMM-YYYY | hh:mm:ss a") : ''}
                             </td>
                         </tr>
-                    })  }
+                    })}
                 </CommonStyle.TABLE>
             </CommonStyle.MainDiv>
         )
