@@ -172,57 +172,85 @@ class TowerMonitoringDetailedIndex extends Wrapper {
                     </CommonStyle.MainDiv>
                     
                 </CommonStyle.MainDiv> */}
-                <CommonStyle.MainDiv
-                    padding="0px 0px"
-                    flexdirection="row"
-                    justifycontent={"space-between"}
-                    alignitems={"baseline"}
-                    width={'100%'}
-                >
-                    <TowerMonitoringSubDetails
-                        towerMonitoringSubDetails={towerMonitoringSubDetails}
-                    />
-                </CommonStyle.MainDiv>
+
+
                 <Gap h="10px" />
                 {pageCallFromPage === "pragaut"
                     ?
                     <CommonStyle.MainDiv
                         padding="0px 0px"
-                        flexdirection="row"
+                        flexdirection="column"
                         justifycontent={"space-between"}
                         alignitems={"baseline"}
+                        width={'100%'}
                     >
                         <CommonStyle.MainDiv
                             padding="0px 0px"
                             flexdirection="row"
-                            width={'49%'}
+                            justifycontent={"space-between"}
+                            alignitems={"baseline"}
+                            width={'100%'}
                         >
-                            <DeviceBatteryStatus
-                                deviceBatteryStatusLogs={deviceBatteryStatusLogs}
+                            <TowerMonitoringSubDetails
+                                towerMonitoringSubDetails={towerMonitoringSubDetails}
                             />
                         </CommonStyle.MainDiv>
                         <CommonStyle.MainDiv
                             padding="0px 0px"
                             flexdirection="row"
-                            width={'49%'}
+                            justifycontent={"space-between"}
+                            alignitems={"baseline"}
+                        >
+                            <CommonStyle.MainDiv
+                                padding="0px 0px"
+                                flexdirection="row"
+                                width={'49%'}
+                            >
+                                <DeviceBatteryStatus
+                                    deviceBatteryStatusLogs={deviceBatteryStatusLogs}
+                                />
+                            </CommonStyle.MainDiv>
+                            <CommonStyle.MainDiv
+                                padding="0px 0px"
+                                flexdirection="row"
+                                width={'49%'}
+                            >
+                                <AlarmNotificationDetails
+                                    towerNotificationDetails={towerNotificationDetails}
+                                />
+                            </CommonStyle.MainDiv>
+                        </CommonStyle.MainDiv>
+                    </CommonStyle.MainDiv>
+
+                    :
+                    <CommonStyle.MainDiv
+                        padding="0px 0px"
+                        flexdirection="row"
+                        justifycontent={"space-between"}
+                        alignitems={"baseline"}
+                        width={'100%'}
+                    >
+                         <CommonStyle.MainDiv
+                            padding="0px 0px"
+                            flexdirection="row"
+                            justifycontent={"space-between"}
+                            alignitems={"baseline"}
+                            width={'59%'}
+                        >
+                            <TowerMonitoringSubDetails
+                                towerMonitoringSubDetails={towerMonitoringSubDetails}
+                            />
+                        </CommonStyle.MainDiv>
+                        <CommonStyle.MainDiv
+                            padding="0px 0px"
+                            flexdirection="row"
+                            width={'39%'}
                         >
                             <AlarmNotificationDetails
                                 towerNotificationDetails={towerNotificationDetails}
                             />
                         </CommonStyle.MainDiv>
                     </CommonStyle.MainDiv>
-                    :
-                    <CommonStyle.MainDiv
-                        padding="0px 0px"
-                        flexdirection="row"
-                        width={'100%'}
-                    >
-                        <AlarmNotificationDetails
-                            towerNotificationDetails={towerNotificationDetails}
-                        />
-                    </CommonStyle.MainDiv>
-
-
                 }
 
                 <Gap h="60px" />

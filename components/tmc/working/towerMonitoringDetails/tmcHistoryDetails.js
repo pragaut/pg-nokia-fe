@@ -89,35 +89,64 @@ class TowerMonitoringHistoryDetailsIndex extends Wrapper {
                 minWidth: 100,
                 show: true,
             },
+            // {
+            //     Header: 'Height',
+            //     accessor: 'userHeight',
+            //     id: 'userHeight',
+            //     minWidth: 100,
+            //     show: true,
+            // },
             {
-                Header: 'Height',
-                accessor: 'userHeight',
-                id: 'userHeight',
-                minWidth: 100,
-                show: true,
-            },
-            {
-                Header: 'Height Status',
+                Header: 'Height / Status',
                 accessor: 'heightStatus',
                 id: 'heightStatus',
-                Cell: row => (
-                    <React.Fragment>
-                        {row.original.heightStatus && row.original.heightStatus === 'Asc' ?
-                            <i className='fa fa-arrow-up' style={{ color: 'green', fontSize: '20px' }}  ></i>
-                            :
-                            <>
-                                {row.original.heightStatus && row.original.heightStatus === 'Desc' ?
-                                    <i className='	fa fa-arrow-down' style={{ color: 'orange', fontSize: '20px' }}  ></i>
-                                    :
-                                    <span>{row.original.heightStatus}</span>
-                                }
-                            </>
-                        }
-                    </React.Fragment>
-                ),
+                Cell: row => {
+                    let dataOriginal = row.original.heightAndHeightStatus;
+                    let element2NewArray = dataOriginal && dataOriginal.split('|');
+                    let height = element2NewArray && element2NewArray.length > 0 && element2NewArray[0];
+                    let heightStatus =element2NewArray && element2NewArray.length > 1 && element2NewArray[1];
+                    return (
+                        <React.Fragment>
+                            <span>{height}  -   </span>
+                            {heightStatus && heightStatus === 'Asc' || heightStatus === 'WIP' ?
+                                <i className='fa fa-arrow-up' style={{ color: 'green', fontSize: '20px' }}  ></i>
+                                :
+                                <>
+                                    {heightStatus && heightStatus === 'Desc' ?
+                                        <i className='	fa fa-arrow-down' style={{ color: 'orange', fontSize: '20px' }}  ></i>
+                                        :
+                                        <span>{heightStatus}</span>
+                                    }
+                                </>
+                            }
+                        </React.Fragment>
+                    )
+                },
                 minWidth: 100,
                 show: true,
             },
+            // {
+            //     Header: 'Height Status',
+            //     accessor: 'heightStatus',
+            //     id: 'heightStatus',
+            //     Cell: row => (
+            //         <React.Fragment>
+            //             {row.original.heightStatus && row.original.heightStatus === 'Asc' ?
+            //                 <i className='fa fa-arrow-up' style={{ color: 'green', fontSize: '20px' }}  ></i>
+            //                 :
+            //                 <>
+            //                     {row.original.heightStatus && row.original.heightStatus === 'Desc' ?
+            //                         <i className='	fa fa-arrow-down' style={{ color: 'orange', fontSize: '20px' }}  ></i>
+            //                         :
+            //                         <span>{row.original.heightStatus}</span>
+            //                     }
+            //                 </>
+            //             }
+            //         </React.Fragment>
+            //     ),
+            //     minWidth: 100,
+            //     show: true,
+            // },
             {
                 Header: 'Clamp Status',
                 accessor: 'ClampStatus',

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import "react-table-6/react-table.css" ;
 import { MainDivForReactTable } from '../../comman/commonStyle'
 import Wrapper from '../../shared/Wrapper';
+import CustomPagination from "./simplePageCustomePagination";
 
 class ReactTableIndex extends Wrapper {
 
@@ -111,6 +112,7 @@ class ReactTableIndex extends Wrapper {
                         changeFilter={this.changeFilter}
                         columns={columns}
                         defaultFilterMethod={this.filterCaseInsensitive}
+                        PaginationComponent={CustomPagination}
                         pageSizeOptions={[3, 5, 10, 20, 30, 50, 100, 500, 1000, 5000, 10000, 20000, 50000]}
                         minRows={minRows}
                         defaultPageSize={defaultPageSize}

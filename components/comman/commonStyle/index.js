@@ -920,12 +920,42 @@ color:#000000;
       border-radius:5px;
       height: 25px;
       background-color: red;
+      color:#fff;
       padding:0px 5px;
       position:absolute;
       box-shadow: 2px 3px #edebeb;
     } 
   }
 }
+
+.Both_Clamp_InActive{
+  height: 25px;
+  width: 25px;
+  background-color: red;
+  border-radius: 50%;
+  display: inline-block;
+  >div{
+    display:none;
+  }
+
+  &:hover{
+    overflow:visible;
+    > div{
+      display:flex;
+      justify-content:center;
+      text-align:center;
+      align-items:center;
+      border-radius:5px;
+      height: 25px;
+      background-color: red;
+      color:#fff;
+      padding:0px 5px;
+      position:absolute;
+      box-shadow: 2px 3px #edebeb;
+    } 
+  }
+}
+
 .Both_Clamp_Connected{
   height: 25px;
   width: 25px;
@@ -945,6 +975,7 @@ color:#000000;
       border-radius:5px;
       height: 25px;
       background-color: green;
+      color:#fff;
       padding:0px 5px;
       position:absolute;
       box-shadow: 2px 3px #edebeb;

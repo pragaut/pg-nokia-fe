@@ -18,7 +18,7 @@ class TowerMonitoringSubDetailsIndex extends Wrapper {
         let columns = [
             {
                 Header: 'Sr#',
-                minWidth: 50,
+                minWidth: 40,
                 id: 'srnumber',
                 show: true,
                 Cell: row => (
@@ -69,7 +69,7 @@ class TowerMonitoringSubDetailsIndex extends Wrapper {
                 Header: 'Clamp Status',
                 accessor: 'ClampStatus',
                 id: 'ClampStatus',
-                minWidth: 100,
+                minWidth: 70,
                 Cell: row => (
                     <React.Fragment>
                         <div className={row.original.ClampStatus}>
@@ -96,33 +96,40 @@ class TowerMonitoringSubDetailsIndex extends Wrapper {
                 show: true,
             },
             {
-                Header: 'Rigger Height New 2',
-                accessor: 'userHeight2',
-                id: 'userHeight2',
+                Header: 'Rigger Height New 1',
+                accessor: 'userHeight1',
+                id: 'userHeight1',
                 minWidth: 100,
                 show: true,
             },
-            {
-                Header: 'Rigger Height New 3',
-                accessor: 'userHeight3',
-                id: 'userHeight3',
-                minWidth: 100,
-                show: true,
-            },
-            {
-                Header: 'Height Margin',
-                accessor: 'heightMargin',
-                id: 'heightMargin',
-                minWidth: 100,
-                show: true,
-            },
-            {
-                Header: 'Working Minutes',
-                accessor: 'workingMinutes',
-                id: 'workingMinutes',
-                minWidth: 100,
-                show: true,
-            },
+            // {
+            //     Header: 'Rigger Height New 2',
+            //     accessor: 'userHeight2',
+            //     id: 'userHeight2',
+            //     minWidth: 100,
+            //     show: true,
+            // },
+            // {
+            //     Header: 'Rigger Height New 3',
+            //     accessor: 'userHeight3',
+            //     id: 'userHeight3',
+            //     minWidth: 100,
+            //     show: true,
+            // },
+            // {
+            //     Header: 'Height Margin',
+            //     accessor: 'heightMargin',
+            //     id: 'heightMargin',
+            //     minWidth: 100,
+            //     show: true,
+            // },
+            // {
+            //     Header: 'Working Minutes',
+            //     accessor: 'workingMinutes',
+            //     id: 'workingMinutes',
+            //     minWidth: 100,
+            //     show: true,
+            // },
             {
                 Header: 'Working Time',
                 accessor: d => `${d.statusOn && d.statusOn !== null ? moment(d.statusOn).format("DD-MMM-YYYY | hh:mm:ss a") : ''} `,
