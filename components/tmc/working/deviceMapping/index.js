@@ -12,6 +12,7 @@ import DatatableView from '../../../comman/ReactTableComponent';
 import style from '../../../../theme/app.scss'; 
 import { Icon } from "antd";
 import { color } from 'highcharts';
+import { Button } from '../../../comman/formStyle';
 class DeviceMappingDetails extends Wrapper {
     configs = [];
 
@@ -145,6 +146,13 @@ class DeviceMappingDetails extends Wrapper {
         }
     };
 
+    refreshData = () => { 
+        this.props.getDeviceMappingDetails(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
+        this.props.getRoleMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
+        setTimeout(() => {
+            this.updateStateAfterStateUpdate();
+        }, 100);
+    }
 
     async componentDidMount() {
         // let's load the groups, for first time
@@ -175,7 +183,26 @@ class DeviceMappingDetails extends Wrapper {
                 justifycontent={"flex-start"}
                 alignitems={"baseline"}
             >
-
+                    <CommonStyle.MainDiv
+                        padding="0px 15px"
+                        flexdirection="row"
+                        width={'40%'}
+                        justifycontent="flex-start"
+                    > 
+                        <Button
+                            width="50px"
+                            height="30px"
+                            borderRadius="5px"
+                            bgColor="blue"
+                            lineheight="1"
+                            border="1px solid blue"
+                            hoverColor="blue"
+                            bgChangeHover="#fff"
+                            onClick={() => this.refreshData()}
+                        >
+                          <i class="fa fa-refresh" aria-hidden="true"></i>
+                    </Button>
+                    </CommonStyle.MainDiv>
                 <CommonStyle.MainDiv
                     flexdirection={"column"}
                     width={"100%"}

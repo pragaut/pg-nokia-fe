@@ -1,19 +1,23 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { getTowerActiveDetails } from '../../../../actions/tmc/working.action'
-import MyMap from './MyGoogleMap'
+import { getDeviceLocationDetails } from '../../../../actions/tmc/working.action'
+import MyMap from './deviceMap';
+import * as CommonStyle from '../../../comman/commonStyle';
 import { Button } from '../../../comman/formStyle';
-const Wrapper = styled.main`
+const Wrapper = styled.div`
   width: 100%;
   height: 100%;
+  display:flex;
+  flex-direction:column;
+  padding: 0px 20px;
 `;
 
 class Index extends Component {
 
     state = {
-        towerActiveDetail: {},
-        towerActiveDetails: []
+        deviceLocationDetail: {},
+        deviceLocationDetails: []
     };
 
     // componentWillMount() {
@@ -21,17 +25,13 @@ class Index extends Component {
     // }
 
     componentDidMount() {
-        this.props.getTowerActiveDetails(0, undefined, undefined, undefined);
-    }
-
-    refreshData = () => { 
-        this.props.getTowerActiveDetails(0, undefined, undefined, undefined);
+        this.props.getDeviceLocationDetails();
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) {
 
-        if (nextProps.towerActiveDetails && nextProps.towerActiveDetails !== null && nextProps.towerActiveDetails != this.state.towerActiveDetails) {
-            this.setState({ towerActiveDetails: nextProps.towerActiveDetails })
+        if (nextProps.deviceLocationDetails && nextProps.deviceLocationDetails !== null && nextProps.deviceLocationDetails != this.state.deviceLocationDetails) {
+            this.setState({ deviceLocationDetails: nextProps.deviceLocationDetails })
         }
 
         const storeInState = (data, key) => {
@@ -44,15 +44,19 @@ class Index extends Component {
         }
     };
 
+    refreshData = () => { 
+        this.props.getDeviceLocationDetails();
+    }
+
     render() {
         const {
-            places, mapApiLoaded, mapInstance, mapApi, towerActiveDetails
+            places, mapApiLoaded, mapInstance, mapApi, deviceLocationDetails
         } = this.state;
         const APIKEY = process.env.GOOGLE_MAP_KEY;
         // console.log("Tower Active Details : >>>>>>>>", towerActiveDetails);
         return (
             <Wrapper>
-                <div style={{ zIndex: '100', position: 'fixed', top: '100px', left: '40px' }}>
+                 <div style={{ zIndex: '100', position: 'fixed', top: '100px', left: '40px' }}>
                     <div style={{ backgroundColor: '#ffffff', color: '#000000', height: '40px', width: '170px' }}>
                         <div style={{ paddingTop: '5px',paddingLeft: '10px', display: 'flex', flexDirection: 'row', alignContent: 'left', justifyContent: 'flext-start', alignItems: 'center' }}>
                         <Button
@@ -85,18 +89,16 @@ class Index extends Component {
 
                     </div>
                 </div>
-                {towerActiveDetails && towerActiveDetails.length > 0 &&
-                    <MyMap MapData={towerActiveDetails} />
-                }
+                <MyMap MapData={deviceLocationDetails} />
 
             </Wrapper >
         );
     }
 }
 const mapStateToProps = state => {
-    const { towerActiveDetail, towerActiveDetails } = state.workingReducerTmc;
+    const { deviceLocationDetail, deviceLocationDetails } = state.workingReducerTmc;
 
-    return { towerActiveDetail, towerActiveDetails };
+    return { deviceLocationDetails, deviceLocationDetail };
 };
 
-export default connect(mapStateToProps, { getTowerActiveDetails })(Index);
+export default connect(mapStateToProps, { getDeviceLocationDetails })(Index);

@@ -245,6 +245,19 @@ class TowerMonitoringHistoryDetailsIndex extends Wrapper {
         const parametterValue = this.state.parametterValue;
         this.props.getTowerMonitoringDetails(parametterValue);
     }
+    refreshData = () => { 
+        let parametterValue = {
+            isOnlyTodayDataRequired: 0
+        }
+        this.props.getTowerMasterData(0, constants.ALL_ROWS_LIST, undefined, undefined);
+        this.props.getTowerMonitoringDetails(parametterValue);
+        this.props.getDeviceRegistrationMasterData(0, constants.ALL_ROWS_LIST, undefined, undefined);
+
+        // setInterval(() => { 
+        //     this.props.getTowerMonitoringDetails();
+        // }, 2000);
+        this.functionToSetColumns();
+    }
     InputTextBoxDateField = props => {
         return <CommonStyle.InputControlsDiv
             width={props.width ? props.width : "15%"}
@@ -362,6 +375,26 @@ class TowerMonitoringHistoryDetailsIndex extends Wrapper {
                                 onClick={() => this.onClickSearch()}
                             >
                                 Search
+                    </Button>
+                    
+                        </CommonStyle.ButtonDiv>
+                        <CommonStyle.ButtonDiv
+                            width="15%"
+                            padding={"30px 0px 0px 0px"}
+                            justifycontent="flex-end"
+                        >
+                            <Button
+                            width="50px"
+                            height="30px"
+                            borderRadius="5px"
+                            bgColor="blue"
+                            lineheight="1"
+                            border="1px solid blue"
+                            hoverColor="blue"
+                            bgChangeHover="#fff"
+                            onClick={() => this.refreshData()}
+                        >
+                          <i class="fa fa-refresh" aria-hidden="true"></i>
                     </Button>
                         </CommonStyle.ButtonDiv>
                     </CommonStyle.MainDiv>

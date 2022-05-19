@@ -3,7 +3,7 @@ import * as service from '../../services/data.service';
 import * as workingTypes from '../../action-types/tmc/working.action.types';
 import * as util from '../../utils'
 import config from '../../config';
-import * as errorTypes from '../../action-types/comman/error.action.types'; 
+import * as errorTypes from '../../action-types/comman/error.action.types';
 import * as sessionHelper from '../../utils/session.helper';
 
 
@@ -469,6 +469,42 @@ export const getTowerMonitoringSubDetails = (filters) => async dispatch => {
     }
     catch (error) {
         //dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+        dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
+    }
+};
+//#endregion
+
+
+//#region  Device Location
+
+export const getDeviceLocationDetails = () => async dispatch => {
+    // dispatchAction(dispatch, commonTypes.LOADING_SHOW, null, null, null, null)
+    try {
+        let pageIndex = 0;
+        const user = sessionHelper.getLoggedUser();
+        const userRole = sessionHelper.getLoggedUserRole_JSONConverted();
+        let orgDetailsId = user && user.orgDetailsId;
+        let roleMasterId = userRole && userRole.id;
+
+        let url = config.NOKIA_URL + `nokia/nokiaworking/getTMCDeviceLocationDetails?pageIndex=${pageIndex}`;
+        if (orgDetailsId) {
+            url = url + `&orgDetailsId=${orgDetailsId}`;
+        }
+        if (roleMasterId) {
+            url = url + `&roleMasterId=${roleMasterId}`;
+        }
+        const data = await service.get(url, true);
+        if (data && !data.errorMessage) {
+            //  dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+            dispatchAction(dispatch, workingTypes.DEVICELOCATIONDETAILS_LIST_SUCCESS, data.data, null, data.message, data.recordsCount);
+        }
+        else {
+            // dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
+            dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, util.generateError(data.errorMessage, data.code, 'Error in getting details'), null, null);
+        }
+    }
+    catch (error) {
+        //  dispatchAction(dispatch, commonTypes.LOADING_HIDE, null, null, null, null);
         dispatchAction(dispatch, errorTypes.SHOW_ERROR, null, error, null, null);
     }
 };
