@@ -195,7 +195,7 @@ class TowerMonitoringDetailedIndex extends Wrapper {
                     <CommonStyle.MainDiv
                         padding="0px 0px"
                         flexdirection="row"
-                        width={'49%'}
+                        width={'30%'}
                     >
                         <DeviceBatteryStatus
                             deviceBatteryStatuss={deviceBatteryStatuss}
@@ -204,7 +204,7 @@ class TowerMonitoringDetailedIndex extends Wrapper {
                     <CommonStyle.MainDiv
                         padding="0px 0px"
                         flexdirection="row"
-                        width={'49%'}
+                        width={'69%'}
                     >
                         <DeviceStatus
                             deviceStatusDetails={deviceStatusDetails}

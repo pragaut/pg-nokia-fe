@@ -41,7 +41,7 @@ class TowerMonitoringSubDetailsIndex extends Wrapper {
                 accessor: 'userHeight1',
                 id: 'userHeight1',
                 minWidth: 60,
-                show: true,
+                show: false,
             },
             {
                 Header: 'Height Status',
@@ -63,7 +63,7 @@ class TowerMonitoringSubDetailsIndex extends Wrapper {
                     </React.Fragment>
                 ),
                 minWidth: 100,
-                show: true,
+                show: false,
             },
             {
                 Header: 'Clamp Status',
