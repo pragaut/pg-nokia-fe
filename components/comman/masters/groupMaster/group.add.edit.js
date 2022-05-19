@@ -1,6 +1,6 @@
 import Wrapper from '../../../shared/Wrapper';
 import PropTypes from 'prop-types';
-import { validateInputs } from '../../../../utils/editFormHelper';
+import { validateInputs ,validateInputsWithDisplayName_New} from '../../../../utils/editFormHelper';
 import { save, deleteItems, shouldStoreDataInStateByKey } from '../../../../utils/editFormHelper';
 import { connect } from 'react-redux';
 import { constants } from '../../../../utils/constants';
@@ -18,7 +18,8 @@ class GroupAddEdit extends Wrapper {
     configs = [{
         name: 'groupName',
         type: 'string',
-        required: true
+        required: true,
+        displayname:'Group'
     }];
 
     constructor(props) {
@@ -42,22 +43,7 @@ class GroupAddEdit extends Wrapper {
         existingGroup[key] = Object.keys(event.target).indexOf('checked') > -1 ? event.target.checked : event.target.value;
         this.setState({ group: existingGroup });
     };
-
-    componentDidMount() {
-        this.props.getGroupMasterData(0, constants.DEFAULT_ROWS_LIST, undefined, undefined);
-    };
-
-    UNSAFE_componentWillReceiveProps(nextProps) {       
-        const storeInState = (data, key) => {
-            // time to store
-            if (!data) return;
-            const state = Object.assign({}, this.state);
-            state[key] = data;
-
-            this.setState({ ...state });
-        }
-    };
-
+ 
     onFileChange = event => {
         if (event.target.files && event.target.files[0]) {
             let img = event.target.files[0];
@@ -163,7 +149,7 @@ class GroupAddEdit extends Wrapper {
                     style={{ width: '100px', marginRight: '10px' }}
                     className={style.primary_btn} onClick={() => {
                         console.log(this.state.group);
-                        const validationText = validateInputs(this.state.group, this.configs);
+                        const validationText = validateInputsWithDisplayName_New(this.state.group, this.configs);
                         if (validationText) {
                             return alert(validationText);
                         }

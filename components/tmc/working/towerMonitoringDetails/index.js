@@ -35,9 +35,11 @@ class TowerMonitoringDetailsIndex extends Wrapper {
                 show: true,
                 Cell: propss => (
                     <React.Fragment>
-                        <button className="info" style={{ marginRight: '10px' }} value={propss.original.id} onClick={() => this.onClickViewDetails(propss.original, propss.original.towerMonitoringDetailId, propss.original.deviceRegistrationDetailId, propss.original.macAddress)}>
-                            View Details
-                        </button>
+                        {propss.original.tmcWorkingStarted && propss.original.tmcWorkingStarted > 0 &&
+                            <button className="info" style={{ marginRight: '10px' }} value={propss.original.id} onClick={() => this.onClickViewDetails(propss.original, propss.original.towerMonitoringDetailId, propss.original.deviceRegistrationDetailId, propss.original.macAddress)}>
+                                View Details
+                            </button>
+                        } 
                     </React.Fragment>
                 ),
                 sortable: false,
@@ -121,7 +123,7 @@ class TowerMonitoringDetailsIndex extends Wrapper {
                     let dataOriginal = row.original.heightAndHeightStatus;
                     let element2NewArray = dataOriginal && dataOriginal.split('|');
                     let height = element2NewArray && element2NewArray.length > 0 && element2NewArray[0];
-                    let heightStatus =element2NewArray && element2NewArray.length > 1 && element2NewArray[1];
+                    let heightStatus = element2NewArray && element2NewArray.length > 1 && element2NewArray[1];
                     return (
                         <React.Fragment>
                             <span>{height}  -   </span>
