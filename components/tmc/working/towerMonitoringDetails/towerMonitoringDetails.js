@@ -199,6 +199,7 @@ class TowerMonitoringDetailedIndex extends Wrapper {
                     >
                         <DeviceBatteryStatus
                             deviceBatteryStatuss={deviceBatteryStatuss}
+                            deviceStatusDetails={deviceStatusDetails}
                         />
                     </CommonStyle.MainDiv>
                     <CommonStyle.MainDiv
