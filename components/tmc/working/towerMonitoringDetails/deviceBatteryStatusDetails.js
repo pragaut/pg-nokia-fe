@@ -32,7 +32,7 @@ class DeviceBatteryStatusDetails extends Wrapper {
         const { deviceBatteryStatuss } = this.state;
         const singleData = deviceBatteryStatuss && deviceBatteryStatuss.length > 0 && deviceBatteryStatuss[0];
         console.log("-------------battery singleData ---------", singleData);
-        console.log(singleData && (singleData.child1DeviceBattery && parseInt(singleData.child1DeviceBattery) === 100 || singleData.child1DeviceBattery == '100')?"Child 1 ":"no child 1");
+        console.log("child 1 b : ",parseInt(singleData.child1DeviceBattery));
         return (
             <CommonStyle.MainDiv
                 padding="10px 0px"
