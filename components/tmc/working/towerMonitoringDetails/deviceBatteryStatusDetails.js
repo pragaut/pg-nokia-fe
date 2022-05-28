@@ -31,7 +31,7 @@ class DeviceBatteryStatusDetails extends Wrapper {
     render() {
         const { deviceBatteryStatuss } = this.state;
         const singleData = deviceBatteryStatuss && deviceBatteryStatuss.length > 0 && deviceBatteryStatuss[0];
-        console.log("-------------battery singleData ---------", singleData);
+        //console.log("-------------battery singleData ---------", singleData);
         console.log("PB");
         console.log("child 1 b : ",singleData.child1DeviceBattery);
         return (
