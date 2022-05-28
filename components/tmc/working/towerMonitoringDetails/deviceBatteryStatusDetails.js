@@ -31,7 +31,7 @@ class DeviceBatteryStatusDetails extends Wrapper {
     render() {
         const { deviceBatteryStatuss } = this.state;
         const singleData = deviceBatteryStatuss && deviceBatteryStatuss.length > 0 && deviceBatteryStatuss[0];
-        // console.log("-------------battery singleData ---------",singleData);
+        //console.log("-------------battery singleData ---------", singleData);
         return (
             <CommonStyle.MainDiv
                 padding="10px 0px"
@@ -99,25 +99,31 @@ class DeviceBatteryStatusDetails extends Wrapper {
                             }
                         </td>
                         <td>
-                            {singleData && singleData.child1DeviceBattery === 100
-                                ?
+                            {singleData && (singleData.child1DeviceBattery === 'Inactive' || singleData.child1DeviceBattery === 'InActive') ?
                                 <div className="divClassFlex">
-                                    <i className="fa fa-battery-full" style={{ fontSize: '24px', color: 'green' }}></i> 100%
+                                    <i className="fa fa-battery-quarter" style={{ fontSize: '24px', color: 'red' }}></i> Inactive
                                 </div>
                                 :
                                 <>
-                                    {singleData && singleData.child1DeviceBattery === 70
+                                    {singleData && singleData.child1DeviceBattery === 100
                                         ?
                                         <div className="divClassFlex">
-                                            <i className="fa fa-battery-three-quarters" style={{ fontSize: '24px', color: 'blue' }}></i>  70%
-
+                                            <i className="fa fa-battery-full" style={{ fontSize: '24px', color: 'green' }}></i> 100%
                                         </div>
                                         :
                                         <>
-                                            <div className="divClassFlex">
-                                                <i className="fa fa-battery-quarter" style={{ fontSize: '24px', color: 'red' }}></i> 20%
-                                            </div>
-                                            {/* {singleData && singleData.child1DeviceBattery <= 50 && singleData.child1DeviceBattery > 25
+                                            {singleData && singleData.child1DeviceBattery === 70
+                                                ?
+                                                <div className="divClassFlex">
+                                                    <i className="fa fa-battery-three-quarters" style={{ fontSize: '24px', color: 'blue' }}></i>  70%
+
+                                                </div>
+                                                :
+                                                <>
+                                                    <div className="divClassFlex">
+                                                        <i className="fa fa-battery-quarter" style={{ fontSize: '24px', color: 'red' }}></i> 20%
+                                                    </div>
+                                                    {/* {singleData && singleData.child1DeviceBattery <= 50 && singleData.child1DeviceBattery > 25
                                                 ?
                                                 <div className="divClassFlex">
                                                     <i className="fa fa-battery-half" style={{ fontSize: '24px', color: '#F0851B' }}></i>  50%
@@ -138,32 +144,40 @@ class DeviceBatteryStatusDetails extends Wrapper {
                                                     }
                                                 </>
                                             } */}
+                                                </>
+                                            }
                                         </>
+
                                     }
                                 </>
-
                             }
                         </td>
                         <td>
-                            {singleData && singleData.child2DeviceBattery === 100
-                                ?
+                            {singleData && (singleData.child1DeviceBattery === 'Inactive' || singleData.child1DeviceBattery === 'InActive') ?
                                 <div className="divClassFlex">
-                                    <i className="fa fa-battery-full" style={{ fontSize: '24px', color: 'green' }}></i> 100%
+                                    <i className="fa fa-battery-quarter" style={{ fontSize: '24px', color: 'red' }}></i> Inactive
                                 </div>
                                 :
                                 <>
-                                    {singleData && singleData.child2DeviceBattery === 70
+                                    {singleData && singleData.child2DeviceBattery === 100
                                         ?
                                         <div className="divClassFlex">
-                                            <i className="fa fa-battery-three-quarters" style={{ fontSize: '24px', color: 'blue' }}></i>  70%
-
+                                            <i className="fa fa-battery-full" style={{ fontSize: '24px', color: 'green' }}></i> 100%
                                         </div>
                                         :
                                         <>
-                                            <div className="divClassFlex">
-                                                <i className="fa fa-battery-quarter" style={{ fontSize: '24px', color: 'red' }}></i> 20%
-                                            </div>
-                                            {/* {singleData && singleData.child2DeviceBattery <= 50 && singleData.child2DeviceBattery > 25
+                                            {singleData && singleData.child2DeviceBattery === 70
+                                                ?
+                                                <div className="divClassFlex">
+                                                    <i className="fa fa-battery-three-quarters" style={{ fontSize: '24px', color: 'blue' }}></i>  70%
+
+                                                </div>
+                                                :
+                                                <>
+                                                    <div className="divClassFlex">
+                                                        <i className="fa fa-battery-quarter" style={{ fontSize: '24px', color: 'red' }}></i> 20%
+                                                    </div>
+                                                    {/* {singleData && singleData.child2DeviceBattery <= 50 && singleData.child2DeviceBattery > 25
                                                 ?
                                                 <div className="divClassFlex">
                                                     <i className="fa fa-battery-half" style={{ fontSize: '24px', color: '#F0851B' }}></i>  50%
@@ -184,10 +198,11 @@ class DeviceBatteryStatusDetails extends Wrapper {
                                                     }
                                                 </>
                                             } */}
+                                                </>
+                                            }
                                         </>
                                     }
                                 </>
-
                             }
                         </td>
 
