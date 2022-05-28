@@ -63,9 +63,9 @@ class DeviceBatteryStatusDetails extends Wrapper {
                     </tr>
                     <tr>
                         <td>
-                            {deviceStatus && (deviceStatus === "InActive" || deviceStatus === "Inactive")?
+                            {deviceStatus && (deviceStatus === "Not Connected" || deviceStatus === "InActive" || deviceStatus === "Inactive") ?
                                 <div className="divClassFlex">
-                                    <i className="fa fa-battery-quarter" style={{ fontSize: '24px', color: 'red' }}></i> Inactive
+                                    <i className="fa fa-battery-quarter" style={{ fontSize: '24px', color: 'red' }}></i> Not Connected
                                 </div>
                                 :
                                 <>
