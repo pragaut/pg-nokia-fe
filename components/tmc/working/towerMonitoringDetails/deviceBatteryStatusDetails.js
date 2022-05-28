@@ -31,7 +31,7 @@ class DeviceBatteryStatusDetails extends Wrapper {
     render() {
         const { deviceBatteryStatuss } = this.state;
         const singleData = deviceBatteryStatuss && deviceBatteryStatuss.length > 0 && deviceBatteryStatuss[0];
-        //console.log("-------------battery singleData ---------", singleData);
+        console.log("-------------battery singleData ---------", singleData);
         return (
             <CommonStyle.MainDiv
                 padding="10px 0px"
@@ -153,7 +153,7 @@ class DeviceBatteryStatusDetails extends Wrapper {
                             }
                         </td>
                         <td>
-                            {singleData && (singleData.child1DeviceBattery === 'Inactive' || singleData.child1DeviceBattery === 'InActive') ?
+                            {singleData && (singleData.child2DeviceBattery === 'Inactive' || singleData.child2DeviceBattery === 'InActive') ?
                                 <div className="divClassFlex">
                                     <i className="fa fa-battery-quarter" style={{ fontSize: '24px', color: 'red' }}></i> Inactive
                                 </div>
