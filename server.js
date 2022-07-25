@@ -487,10 +487,10 @@ app.prepare()
 
 		server.get('/management', (req, res) => {
 			const q = req.query;
-			q.tab = 'tower-active-status';
-			q.pathname = 'tower-active-status';
-			q.pageName = 'tower-active-status';
-			q.MasterName = 'Tower Active Status';
+			q.tab = 'dashboard';
+			q.pathname = 'dashboard';
+			q.pageName = 'dashboard';
+			q.MasterName = 'Dashboard';
 			return app.render(req, res, '/management', {
 				page: q.pageName,
 				MasterName: q.MasterName,
@@ -501,6 +501,24 @@ app.prepare()
 				}
 			});
 		});
+
+		server.get('/management/dashboard', (req, res) => {
+			const q = req.query;
+			q.tab = 'dashboard';
+			q.pathname = 'dashboard';
+			q.pageName = 'dashboard';
+			q.MasterName = 'Dashboard';
+			return app.render(req, res, '/management', {
+				page: q.pageName,
+				MasterName: q.MasterName,
+				tab: q.tab,
+				section: 'working',
+				query: {
+					...q
+				}
+			});
+		});
+
 		server.get('/management/tower-active-status', (req, res) => {
 			const q = req.query;
 			q.tab = 'tower-active-status';

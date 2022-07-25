@@ -29,6 +29,8 @@ import TowerNotificationDetails from '../components/tmc/working/towerNotificatio
 import ClosedTowerNotificationDetails from '../components/tmc/working/towerNotifications/closedTowerNotification';
 import TowerActiveStatus from '../components/tmc/working/map/index';
 import DeviceLocation from '../components/tmc/working/deviceLocation';
+import ManagementDashboard from '../components/tmc/reports/index';
+
 const Image = '../static/'
 const window = require('global/window');
 const AdminMain = styled.div`
@@ -86,9 +88,9 @@ export class Index extends Wrapper {
         const userRole = this.getLoggedUserRole();
         const LoggedUserRole = userRole && JSON.parse(userRole);
         const RoleName = LoggedUserRole && LoggedUserRole.roleName;
-       // console.log("role--name ---", RoleName)
+        // console.log("role--name ---", RoleName)
         let AuthorizedUser = this.checkIsAuthorizedUser(RoleName, "user-page:visit", null);
-       /// console.log("Authorized User : ", AuthorizedUser);
+        /// console.log("Authorized User : ", AuthorizedUser);
         if (!AuthorizedUser) {
             this._logout();
             //this.unAuthorizedAccess();
@@ -172,7 +174,7 @@ export class Index extends Wrapper {
         const user = sessionHelper.getLoggedUser();
         const sideBar = true;
         const ActiveTabname = router && router.query && router.query.tab;
-
+        //console.log("ActiveTabname : ", ActiveTabname);
         return (
             <div>
                 <Main />
@@ -180,12 +182,18 @@ export class Index extends Wrapper {
                     layout="loggedUser_management" //"admin"
                 />
                 <div style={{ width: '95%', display: 'flex', justifyContent: 'center', flexDirection: 'column' }}>
-                    <AdminMain style={{ width: '100%',display: 'flex', padding: '0px 30px' }} className={style.admin_main}>
+                    <AdminMain style={{ width: '100%', display: 'flex', padding: '0px 30px' }} className={style.admin_main}>
                         <ContentWapper padding="0px">
                             <ModalHeader
-                                heading={router && router.query && router.query.tab !== "" && router.query.MasterName} //"Group Master"
+                                heading={router && router.query && router.query.tab !== "" ? router.query.MasterName : "Dashboard"} //"Group Master"
                             />
-                            {router && ((router.query && router.query.tab === "tower-active-status") || (!router || !router.query ||  router.query.tab === undefined === '' || router.query.tab === undefined))&& (
+                            {(!router || !router.query || router.query.tab === undefined === '' || router.query.tab === undefined || router.query.tab === "dashboard") && (
+                                <div>
+                                    <ManagementDashboard />
+                                </div>
+                            )}
+                            {/* {router && ((router.query && router.query.tab === "tower-active-status") || (!router || !router.query ||  router.query.tab === undefined === '' || router.query.tab === undefined))&& ( */}
+                            {(router && (router.query && router.query.tab === "tower-active-status")) && (
                                 <div>
                                     <TowerActiveStatus />
                                 </div>
@@ -194,18 +202,18 @@ export class Index extends Wrapper {
                                 <div>
                                     <TowerMonitoringDetails />
                                 </div>
-                            )} 
-                              {( (ActiveTabname && ActiveTabname === "tower-monitoring-history")) && (
+                            )}
+                            {((ActiveTabname && ActiveTabname === "tower-monitoring-history")) && (
                                 <div>
                                     <TowerMonitoringHistoryDetails />
                                 </div>
-                            )} 
+                            )}
                             {router && (router.query && router.query.tab === "device-mapping-details") && (
                                 <div>
                                     <DeviceMappingDetails />
                                 </div>
                             )}
-                             {router && (router.query && router.query.tab === "device-location-details") && (
+                            {router && (router.query && router.query.tab === "device-location-details") && (
                                 <div>
                                     <DeviceLocation />
                                 </div>
@@ -224,7 +232,7 @@ export class Index extends Wrapper {
                                 <div>
                                     <ChangePassword />
                                 </div>
-                            )} 
+                            )}
                         </ContentWapper>
                     </AdminMain>
                 </div>

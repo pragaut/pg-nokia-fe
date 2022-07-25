@@ -62,6 +62,7 @@ export const Wrapper_OnOverlay = styled.div`
       height: 80vh !important;
     }
 `;
+
 export const CloseButtonForModel = styled.div`
 display:flex;
 position:absolute;
@@ -78,10 +79,51 @@ text-align:center;
 font-size:18px;
 font-weight:bold;
 cursor:pointer;
-`
+`;
+
+
+export const MainWrapper = styled.div`
+    display : ${props => props.display ? props.display : 'flex'};
+    flex-direction :  ${props => props.flexDirection ? props.flexDirection : 'column'};
+    justify-content : ${props => props.justifyContent ? props.justifyContent : 'center'};
+    height : ${props => props.height ? props.height : '48vh'};
+    min-height : ${props => props.minHeight ? props.minHeight : '380px'};
+    background-color:${props => props.bgColor ? props.bgColor : 'transparent'};
+    margin: ${props => props.margin ? props.margin : "5px 10px"};
+    padding : ${props => props.padding ? props.padding : '0px 0px 0px 0px'};
+    filter: drop-shadow(-1px 5px 3px #ccc);
+
+    .info-wrapper {
+        margin-top: 15px;
+        font-size:9px;
+        text-align:left !important;
+      }
+      .map-details {
+        text-align: center;
+        font-size: 1.2em;
+      }
+      .map-details span {
+        font-weight: bold;
+      }
+      .search-input {
+        font-size: 1.2em;
+        width: 90%;
+        padding:5px;
+        margin-left:-20px;
+        margin-top:-30px;
+      }
+      @media(max-width:1300px){
+        height: 49vh;
+      }
+      //@media(max-width:1100px){
+      //     height: 50vh;
+      //}
+`;
+
 export const MainDiv = styled.div`
     width : ${props => props.width ? props.width : '100%'};
     height : ${props => props.height ? props.height : 'auto'};
+    min-height : ${props => props.minHeight ? props.minHeight : 'auto'};
     background-color:${props => props.bgColor ? props.bgColor : 'transparent'};
     padding : ${props => props.padding ? props.padding : '0px 0px 0px 0px'};
     flex-wrap : ${props => props.flexwrap ? props.flexwrap : 'nowrap'};
@@ -121,6 +163,33 @@ export const MainDiv = styled.div`
     } 
 `;
 
+
+export const TextDiv = styled.div` 
+    width: ${props => props.width ? props.width : 'auto'};
+    max-width : ${props => props.maxwidth ? props.maxwidth : '100%'};
+    min-height: ${props => props.minheight ? props.minheight : 'auto'};
+    padding : ${props => props.padding ? props.padding : '0px 0px 0px 0px'};
+    font-family:${props => props.fontfamily ? props.fontfamily : 'Asap'} ;
+    font-size:${props => props.fontsize ? props.fontsize : '14px'} ;
+    display : ${props => props.display ? props.display : 'flex'};
+    justify-content : ${props => props.justifycontent ? props.justifycontent : 'start'};
+    align-items : ${props => props.alignitems ? props.alignitems : 'left'};
+    font-weight:  ${props => props.fontWeight ? props.fontWeight : 'bold'};
+    font-stretch: ${props => props.fontstretch ? props.fontstretch : 'normal'} ;
+    font-style:  ${props => props.fontstyle ? props.fontstyle : 'normal'} ;
+    line-height:${props => props.lineheight ? props.lineheight : '1.05'} ;
+    letter-spacing: ${props => props.letterspacing ? props.letterspacing : 'normal'} ;
+    text-align: ${props => props.textalign ? props.textalign : 'left'} ;
+    color:  ${props => props.color ? props.color : '#000'} ;
+    margin: ${props => props.margin ? props.margin : "0px"};
+    a{
+        font-family:${props => props.fontfamily ? props.fontfamily : 'Asap'} ;
+        font-size:${props => props.fontsize ? props.fontsize : '14px'} ;
+        color:  ${props => props.acolor ? props.acolor : '#000'} ;
+    }
+`;
+
+
 export const FormDiv = styled.div` 
   width:${props => props.width ? props.width : "100%"}; 
   display : ${props => props.display ? props.display : 'flex'};
@@ -133,39 +202,6 @@ export const FormDiv = styled.div`
   {
     width : 100;
   }
-`;
-
-export const MainWrapper = styled.div`
-    height: 48vh;
-    min-height:380px;
-    margin: 5px 10px;
-    filter: drop-shadow(-1px 5px 3px #ccc);
-
-    .info-wrapper {
-        margin-top: 15px;
-        font-size:9px;
-        text-align:left !important;
-      }
-      .map-details {
-        text-align: center;
-        font-size: 1.2em;
-      }
-      .map-details span {
-        font-weight: bold;
-      }
-      .search-input {
-        font-size: 1.2em;
-        width: 90%;
-        padding:5px;
-        margin-left:-20px;
-        margin-top:-30px;
-      }
-      @media(max-width:1300px){
-        height: 49vh;
-      }
-      //@media(max-width:1100px){
-      //     height: 50vh;
-      //}
 `;
 
 export const InputControlsDiv = styled.div`
@@ -187,18 +223,18 @@ export const InputControlsDiv = styled.div`
 `;
 
 export const ChevroletButton = styled.button`
-border:unset;
-position: absolute;
-background: transparent;
-cursor:pointer;
+    border:unset;
+    position: absolute;
+    background: transparent;
+    cursor:pointer;
 
-transform:${props => props.translateY ? props.translateY : 'translateY(0px)'} ;
-margin :  ${props => props.margin ? props.margin : '0px 0px 0px 0px'};
-height : 66px; 
-img{
-    height : 66px;
-width:33px;
-}
+    transform:${props => props.translateY ? props.translateY : 'translateY(0px)'} ;
+    margin :  ${props => props.margin ? props.margin : '0px 0px 0px 0px'};
+    height : 66px; 
+    img{
+        height : 66px;
+    width:33px;
+    }
 `;
 
 export const DivWithBgImage = styled.div`
@@ -226,30 +262,6 @@ export const DivWithBgImage = styled.div`
     }
     @media (min-width: 1440px) {
       height : ${props => props.height ? props.height : '400px'};
-    }
-`;
-
-export const TextDiv = styled.div` 
-    width: ${props => props.width ? props.width : '100%'};
-    max-width : ${props => props.maxwidth ? props.maxwidth : '100%'};
-    min-height: ${props => props.minheight ? props.minheight : 'auto'};
-    padding : ${props => props.padding ? props.padding : '0px 0px 0px 0px'};
-    font-family:${props => props.fontfamily ? props.fontfamily : 'Asap'} ;
-    font-size:${props => props.fontsize ? props.fontsize : '14px'} ;
-    display : ${props => props.display ? props.display : 'flex'};
-    justify-content : ${props => props.justifycontent ? props.justifycontent : 'start'};
-    align-items : ${props => props.alignitems ? props.alignitems : 'baseline'};
-    font-weight:  ${props => props.fontWeight ? props.fontWeight : 'bold'};
-    font-stretch: ${props => props.fontstretch ? props.fontstretch : 'normal'} ;
-    font-style:  ${props => props.fontstyle ? props.fontstyle : 'normal'} ;
-    line-height:${props => props.lineheight ? props.lineheight : '1.05'} ;
-    letter-spacing: ${props => props.letterspacing ? props.letterspacing : 'normal'} ;
-    text-align: ${props => props.textalign ? props.textalign : 'center'} ;
-    color:  ${props => props.color ? props.color : '#000'} ;
-    a{
-        font-family:${props => props.fontfamily ? props.fontfamily : 'Asap'} ;
-        font-size:${props => props.fontsize ? props.fontsize : '14px'} ;
-        color:  ${props => props.acolor ? props.acolor : '#000'} ;
     }
 `;
 
@@ -283,10 +295,10 @@ export const InputLabel = styled.div`
 `;
 
 export const ButtonDiv = styled.div`
-width:${props => props.width ? props.width : "100%"} ;
-padding: ${props => props.padding ? props.padding : "0px 0px 0px 0px"} ;
-display:flex;
-justify-content: ${props => props.justifycontent ? props.justifycontent : "space-between"};
+    width:${props => props.width ? props.width : "100%"} ;
+    padding: ${props => props.padding ? props.padding : "0px 0px 0px 0px"} ;
+    display:flex;
+    justify-content: ${props => props.justifycontent ? props.justifycontent : "space-between"};
 `;
 
 
