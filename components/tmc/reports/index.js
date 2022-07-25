@@ -88,7 +88,7 @@ class index extends Wrapper {
                             color='#2a474b'
                             width="100%"
                         >
-                            Monitor and control the SYMDE infra
+                            Monitor and control the SMYDE infra
                         </CommonStyle.TextDiv>
                     </CommonStyle.MainDiv>
                     <Gap h="20px" />
@@ -110,7 +110,7 @@ class index extends Wrapper {
                                 fontsize="20px"
                                 width="100%"
                             >
-                                SYMDE
+                                SMYDE
                             </CommonStyle.TextDiv>
                             <Gap h="20px" />
                             <CommonStyle.TextDiv
@@ -126,7 +126,7 @@ class index extends Wrapper {
                                 color='#5e5e5e'
                                 width="100%"
                             >
-                                Total SYMDE
+                                Total SMYDE
                             </CommonStyle.TextDiv>
                         </CommonStyle.MainDiv>
                         <Gap w="20px" />
@@ -210,7 +210,7 @@ class index extends Wrapper {
                                 fontsize="20px"
                                 width="100%"
                             >
-                                SYMDE-R on Ground
+                                SMYDE-R on Ground
                             </CommonStyle.TextDiv>
                             <Gap h="1px" />
                             <CommonStyle.TextDiv
@@ -255,7 +255,7 @@ class index extends Wrapper {
                                 color='#5e5e5e'
                                 width="100%"
                             >
-                                Active SYMDE
+                                Active SMYDE
                             </CommonStyle.TextDiv>
                         </CommonStyle.MainDiv>
                     </CommonStyle.MainDiv>
@@ -273,7 +273,7 @@ class index extends Wrapper {
                             fontsize="20px"
                             width="100%"
                         >
-                            SYMDE Working Time
+                            SMYDE Working Time
                         </CommonStyle.TextDiv>
                         <Gap h="10px" />
                         <CommonStyle.TextDiv
@@ -281,7 +281,7 @@ class index extends Wrapper {
                             color='#2a474b'
                             width="100%"
                         >
-                            Average worling time per day 8.7hrs
+                            Average working time per day 8.7hrs
                         </CommonStyle.TextDiv>
                         {ScreenWidth &&
                             <BarChart
