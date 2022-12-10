@@ -59,11 +59,16 @@ export class MapContainer extends Component {
         const {
             MapData
         } = this.state; 
-        console.log("MapData : >>>", MapData);
+        console.log("GOOGLE_MAP_KEY : ", process.env.GOOGLE_MAP_KEY);
         // let points =  [ 
         //     { lat: 28.5089, lng: 77.5178 , name : 'Faridabad'},
         //     { lat: 28.50681, lng: 77.0044 , name : 'Gurgaon'}, 
         // ]
+        let google = {
+            google:this.props.google,
+            apiKey :this.props.APIKEY
+        };
+
         return (
             <Map
                 google={this.props.google}

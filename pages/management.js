@@ -187,13 +187,13 @@ export class Index extends Wrapper {
                             <ModalHeader
                                 heading={router && router.query && router.query.tab !== "" ? router.query.MasterName : "Dashboard"} //"Group Master"
                             />
-                            {(!router || !router.query || router.query.tab === undefined === '' || router.query.tab === undefined || router.query.tab === "dashboard") && (
+                            {/* {(!router || !router.query || router.query.tab === undefined === '' || router.query.tab === undefined || router.query.tab === "dashboard") && (
                                 <div>
                                     <ManagementDashboard />
                                 </div>
-                            )}
-                            {/* {router && ((router.query && router.query.tab === "tower-active-status") || (!router || !router.query ||  router.query.tab === undefined === '' || router.query.tab === undefined))&& ( */}
-                            {(router && (router.query && router.query.tab === "tower-active-status")) && (
+                            )} */}
+                            {/* {(router && (router.query && router.query.tab === "tower-active-status")) && ( */}
+                            {router && ((router.query && router.query.tab === "tower-active-status") || (!router || !router.query ||  router.query.tab === undefined === '' || router.query.tab === undefined || router.query.tab === "dashboard"))&& (
                                 <div>
                                     <TowerActiveStatus />
                                 </div>

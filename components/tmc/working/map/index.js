@@ -24,7 +24,7 @@ class Index extends Component {
         this.props.getTowerActiveDetails(0, undefined, undefined, undefined);
     }
 
-    refreshData = () => { 
+    refreshData = () => {
         this.props.getTowerActiveDetails(0, undefined, undefined, undefined);
     }
 
@@ -54,22 +54,21 @@ class Index extends Component {
             <Wrapper>
                 <div style={{ zIndex: '100', position: 'fixed', top: '100px', left: '40px' }}>
                     <div style={{ backgroundColor: '#ffffff', color: '#000000', height: '40px', width: '170px' }}>
-                        <div style={{ paddingTop: '5px',paddingLeft: '10px', display: 'flex', flexDirection: 'row', alignContent: 'left', justifyContent: 'flext-start', alignItems: 'center' }}>
-                        <Button
-                            width="50px"
-                            height="30px"
-                            borderRadius="5px"
-                            bgColor="blue"
-                            lineheight="1"
-                            border="1px solid blue"
-                            hoverColor="blue"
-                            bgChangeHover="#fff"
-                            onClick={() => this.refreshData()}
-                        >
-                          <i class="fa fa-refresh" aria-hidden="true"></i>
-                    </Button>
+                        <div style={{ paddingTop: '5px', paddingLeft: '10px', display: 'flex', flexDirection: 'row', alignContent: 'left', justifyContent: 'flext-start', alignItems: 'center' }}>
+                            <Button
+                                width="50px"
+                                height="30px"
+                                borderRadius="5px"
+                                bgColor="blue"
+                                lineheight="1"
+                                border="1px solid blue"
+                                hoverColor="blue"
+                                bgChangeHover="#fff"
+                                onClick={() => this.refreshData()}
+                            >
+                                <i class="fa fa-refresh" aria-hidden="true"></i>
+                            </Button>
                         </div>
-
                     </div>
                 </div>
                 <div style={{ zIndex: '100', position: 'fixed', bottom: '50px', left: '40px' }}>
@@ -78,7 +77,7 @@ class Index extends Component {
                             <img
                                 src="http://maps.google.com/mapfiles/ms/icons/red-dot.png"
                             /> Passive
-                             <img
+                            <img
                                 src="http://maps.google.com/mapfiles/ms/icons/green-dot.png"
                             /> Active
                         </div>
@@ -86,7 +85,7 @@ class Index extends Component {
                     </div>
                 </div>
                 {towerActiveDetails && towerActiveDetails.length > 0 &&
-                    <MyMap MapData={towerActiveDetails} />
+                    <MyMap MapData={towerActiveDetails} APIKEY={APIKEY} />
                 }
 
             </Wrapper >
