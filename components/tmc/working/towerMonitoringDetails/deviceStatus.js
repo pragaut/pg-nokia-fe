@@ -44,13 +44,13 @@ class DeviceBatteryStatusDetails extends Wrapper {
                             Device ID
                         </th>
                         <th>
-                            Device Status
+                            Device Connectivity <br />With Internet
                         </th>
                         <th>
-                            Child 1 Status
+                            Child 1 Connectivity <br />With Device
                         </th>
                         <th>
-                            Child 2 Status
+                            Child 2 Connectivity <br />With Device
                         </th>
                         <th>
                             Height
@@ -90,7 +90,7 @@ class DeviceBatteryStatusDetails extends Wrapper {
                                         {item.heightStatus && item.heightStatus === 'Desc' ?
                                             <i className='	fa fa-arrow-down' style={{ color: 'orange', fontSize: '20px' }}  ></i>
                                             :
-                                            <span>{item.heightStatus}</span>
+                                            <span>{item.heightStatus == "Start" ? "Not Climbing" : item.heightStatus}</span>
                                         }
                                     </>
                                 }
