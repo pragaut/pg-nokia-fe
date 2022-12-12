@@ -12,7 +12,7 @@ import TowerMonitoringSubDetails from './towerMonitoringSubDetails';
 import AlarmNotificationDetails from './alarmNotificationDetails';
 import Gap from '../../../comman/Gap';
 import { Button } from '../../../comman/formStyle';
-
+import Link from "next/link";
 
 class TowerMonitoringDetailedIndex extends Wrapper {
     constructor(props) {
@@ -41,6 +41,8 @@ class TowerMonitoringDetailedIndex extends Wrapper {
             counter = counter + 1;
             this.refreshData()
         }, 30000);
+
+        this.autorefreshdata();
     }
     refreshData = () => {
         if (this.state.isViewDetailsPageVisible === true) {
@@ -91,6 +93,14 @@ class TowerMonitoringDetailedIndex extends Wrapper {
             this.setState({ ...state });
         }
     }
+
+    autorefreshdata = () => {
+        setInterval(() => {
+            console.log("Auto refreshed");
+            this.refreshData()
+        }, 10);
+    }
+
     render() {
         const { deviceBatteryStatuss, towerNotificationDetails, towerMonitoringSubDetails, networkConnectivityStatuDetails, deviceStatusDetails, towerMonitoringDetail } = this.state;
         return (
@@ -123,7 +133,7 @@ class TowerMonitoringDetailedIndex extends Wrapper {
                             onClick={() => this.props.onClickBackButton()}
                         >
                             Back
-                    </Button>
+                        </Button>
                         <Button
                             width="50px"
                             height="30px"
@@ -136,6 +146,21 @@ class TowerMonitoringDetailedIndex extends Wrapper {
                             onClick={() => this.refreshData()}
                         >
                             <i class="fa fa-refresh" aria-hidden="true"></i>
+                        </Button>
+                        <Button
+                            width="50px"
+                            height="30px"
+                            borderRadius="5px"
+                            bgColor="blue"
+                            lineheight="1"
+                            border="1px solid blue"
+                            hoverColor="blue"
+                            bgChangeHover="#fff"
+                            onClick={() => this.refreshData()}
+                        >
+                            <Link href="https://livestream.pragaut.com/" target="_blank" rel="noopener noreferrer">
+                                <a style={{ fontWeight: '900' }} target="_blank" rel="noopener noreferrer"> Live Stream</a>
+                            </Link>
                         </Button>
                     </CommonStyle.MainDiv>
                     <CommonStyle.MainDiv

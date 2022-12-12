@@ -39,7 +39,7 @@ class TowerMonitoringDetailsIndex extends Wrapper {
                             <button className="info" style={{ marginRight: '10px' }} value={propss.original.id} onClick={() => this.onClickViewDetails(propss.original, propss.original.towerMonitoringDetailId, propss.original.deviceRegistrationDetailId, propss.original.macAddress)}>
                                 View Details
                             </button>
-                        } 
+                        }
                     </React.Fragment>
                 ),
                 sortable: false,
@@ -268,7 +268,7 @@ class TowerMonitoringDetailsIndex extends Wrapper {
         setTimeout(() => {
             this.functionToSetColumns();
         }, 500);
-
+        this.autorefreshdata();
     }
     refreshData = () => {
         let parametterValue = {
@@ -301,6 +301,14 @@ class TowerMonitoringDetailsIndex extends Wrapper {
             columns: column
         });
     }
+
+    autorefreshdata = () => {
+        setInterval(() => {
+            console.log("Auto refreshed");
+            this.refreshData()
+        }, 10);
+    }
+
     render() {
         const { columns, towers, towerMonitoringDetailsNew, towerMonitoringDetails, towerMonitoringDetail, isViewDetailsPageVisible, parameterWithValues } = this.state;
 

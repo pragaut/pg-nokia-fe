@@ -22,6 +22,7 @@ class Index extends Component {
 
     componentDidMount() {
         this.props.getTowerActiveDetails(0, undefined, undefined, undefined);
+        this.autorefreshdata();
     }
 
     refreshData = () => {
@@ -43,6 +44,14 @@ class Index extends Component {
             this.setState({ ...state });
         }
     };
+
+    autorefreshdata = () => {
+        setInterval(() => {
+            console.log("Auto refreshed");
+            this.refreshData()
+        }, 10);
+    }
+
 
     render() {
         const {
