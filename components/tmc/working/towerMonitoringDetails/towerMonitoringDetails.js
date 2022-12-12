@@ -157,7 +157,7 @@ class TowerMonitoringDetailedIndex extends Wrapper {
                              bgChangeHover="#fff"
                              style={{ marginRight: '10px' }}
                         >
-                            <Link href="https://livestream.pragaut.com/" target="_blank" rel="noopener noreferrer">
+                            <Link href="http://livestream.pragaut.com/" target="_blank" rel="noopener noreferrer">
                                 <a style={{ fontWeight: '900' }} target="_blank" rel="noopener noreferrer"> Live Stream</a>
                             </Link>
                         </Button>
