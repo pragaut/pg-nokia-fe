@@ -98,7 +98,7 @@ class TowerMonitoringDetailedIndex extends Wrapper {
         setInterval(() => {
             console.log("Auto refreshed");
             this.refreshData()
-        }, 10);
+        }, 10000);
     }
 
     render() {
