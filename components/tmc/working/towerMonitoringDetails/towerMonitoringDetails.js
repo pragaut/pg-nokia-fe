@@ -148,6 +148,7 @@ class TowerMonitoringDetailedIndex extends Wrapper {
                             <i class="fa fa-refresh" aria-hidden="true"></i>
                         </Button>
                         <Button
+                             width="150px"
                              height="30px"
                              borderRadius="5px"
                              bgColor="blue"
