@@ -53,7 +53,7 @@ class DeviceBatteryStatusDetails extends Wrapper {
                             Child 2 Connectivity <br />With Device
                         </th>
                         <th>
-                            Height (M)
+                            Height (m)
                         </th>
                         <th>
                             Height Status
