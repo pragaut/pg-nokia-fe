@@ -147,6 +147,7 @@ class TowerMonitoringDetailedIndex extends Wrapper {
                         >
                             <i class="fa fa-refresh" aria-hidden="true"></i>
                         </Button>
+                        <Gap w="10px" />
                         <Button
                              width="150px"
                              height="30px"
