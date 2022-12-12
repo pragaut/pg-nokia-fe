@@ -148,15 +148,14 @@ class TowerMonitoringDetailedIndex extends Wrapper {
                             <i class="fa fa-refresh" aria-hidden="true"></i>
                         </Button>
                         <Button
-                            width="150px"
-                            height="30px"
-                            borderRadius="5px"
-                            bgColor="blue"
-                            lineheight="1"
-                            border="1px solid blue"
-                            hoverColor="blue"
-                            bgChangeHover="#fff"
-                            onClick={() => this.refreshData()}
+                             height="30px"
+                             borderRadius="5px"
+                             bgColor="blue"
+                             lineheight="1"
+                             border="1px solid blue"
+                             hoverColor="blue"
+                             bgChangeHover="#fff"
+                             style={{ marginRight: '10px' }}
                         >
                             <Link href="https://livestream.pragaut.com/" target="_blank" rel="noopener noreferrer">
                                 <a style={{ fontWeight: '900' }} target="_blank" rel="noopener noreferrer"> Live Stream</a>
